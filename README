@@ -1,0 +1,128 @@
+= Sow -- Tending Project Ecology
+
+  http://sow.rubyforge.org
+
+
+== Introduction
+
+Sow is a project scaffolding generator. Techincally it is a simple
+templating system based on eRuby, but it is designed with project
+templating squarely in mind.
+
+
+
+== Installation
+
+Install using RubyGems as you would expect:
+
+  $ gem install sow
+
+To install manually please use Ruby Setup.
+
+  $ setup.rb all
+
+If you don't have Ruby Setup it is easy enough to get. Surf over
+to http://setup.rubyforge.org, or using RubyGems:
+
+  $ gem install setup
+
+(*NOTE* Ruby Setup may not be release yet. It is beta at time of writing.)
+
+
+
+== Usage
+
+In general usage is simply:
+
+  reap [generator] [options] [arguments]
+
+For instance to scaffold a new project in the current directory
+with the name 'myapp':
+
+  $ sow reap myapp
+
+When scaffolding a new project, 'reap' is the default type, so 
+
+  sow myproj
+
+will work just as well. If you prefer a different default,
+you can set the default type in '$HOME/.etc/sow/default_type'.
+
+Once you have a project Sow can be used as a generator too.
+First the project must be "sow-ready", which is as simple as
+addig a .sow directory in the project's root folder.
+
+For instance to generate a testunit file.
+
+  $ cd myapp
+  $ sow testunit mytest
+
+Scaffolds themselves support partial scaffolding when sow is in
+generation mode. For instance you may want to add a standard
+Rakefile. You can do that with Sow:
+
+  $ sow ruby Rakefile
+
+Sow can also be used for general project templating. To do this, add
+template files to the temps/ or admin/temps directory, reflecting the
+same layout of your project. For example:
+
+  myapp/
+    lib/
+      myapp/
+        myapp.rb
+    temps/
+      lib/
+        myapp/
+          myapp.rb.erb
+    meta/
+      ...
+
+Change into your project directory and type @sow@ with no arguments.
+
+  $ sow
+
+Project files will be generated based on the templates and your porjects
+metadata.
+
+For more details please see the documentation provided under doc/manual
+or on Sow's website.
+
+
+
+== Hoe Users
+
+Hoe users will notice that the sow command that comes with Hoe is
+overwritten by Sow. Sow support Hoe projects, so there is nothing lost.
+Simply use:
+
+  $ sow hoe
+
+Note, that Hoe scaffolding does not support the in-project templating
+system. To get that you need to create a meta/ direcroty in your project,
+and a place to store templates, eg. temps/.
+
+
+
+== Development
+
+
+
+
+== Copying
+
+Copyright (c) 2007, 2008 TigerOps & Thomas Sawyer
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+

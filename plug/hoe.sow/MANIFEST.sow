@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+# Scaffold a new Hoe ready project.
+
+argument :name do |name|
+  abort "Project name argument required." unless name
+  metadata.name = name
+end
+
+copy "**/*", '.'
+

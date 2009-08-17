@@ -1,0 +1,162 @@
+<h1>On Configuration Storage Format for Project Metadata</h1>
+
+
+	<h2>Ruby Script</h2>
+
+
+	<p>Ruby-scripts as configuration is popular among gung-ho Ruby-enthusiests. And there is certainly
+some merit to it&#8217;s use, but along with the powerful advantages are serious disadvantages as well.</p>
+
+
+	<h3>Advantages</h3>
+
+
+	<ul>
+	<li>Computable settings is very flexiable.</li>
+		<li>Support full type support&#8212;Array, String, Integer, etc.</li>
+	</ul>
+
+
+	<h3>Disadvantages</h3>
+
+
+	<ul>
+	<li>Using Ruby code as configuration limits their use to Ruby programs.</li>
+		<li>Providing the full power of a scriptling language presents a higher security risk.</li>
+		<li>Automated modification of configuration scripts is difficult.</li>
+	</ul>
+
+
+	<p>Ruby scripts are not an uncommon configuration format, especailly in the area of
+project tools&#8212;.gemspec files for instance are Ruby scripts. Their greatest advantage
+is in their flexability&#8212;properties can be set computationally. However, the issues
+of interoperability, security and editing automation make them a very limited
+option.</p>
+
+
+	<h2><span class="caps">YAML</span></h2>
+
+
+	<p>In the world Ruby programming <span class="caps">YAML</span> is certainly the most common choice
+of configuration storage. Since <span class="caps">YAML</span> is a human-readable serialization format,
+this stand to reason.</p>
+
+
+	<h3>Advantages</h3>
+
+
+	<ul>
+	<li>Popular format amoung Rubyists; and becoming more popular with other languages.</li>
+		<li>Supports serialization types (string, array, hash, integer, time, etc).</li>
+		<li>Easy to en masse edit, as all settings can be in a single file.</li>
+	</ul>
+
+
+	<h3>Disadvantages</h3>
+
+
+	<ul>
+	<li>Requires dependency on a hefty parser library.</li>
+		<li>Difficult to automate selective modification. (Whole file needs to rewritten.)</li>
+	</ul>
+
+
+	<p><span class="caps">YAML</span> has the advantage of en masse editing, which will certainly seems more comfortable
+to the average Ruby coder. However, this advantage is limited primarily to first-time
+editing of configuration data since, in our usecase, most properties will not
+change once set.</p>
+
+
+	<p><span class="caps">YAML</span> also has the advantage of supporting of basic types like String, Array, Hash,
+and, in the Syck implementation, Time and Integer as well. These types provide some
+extra information that can be used in determining the value of a property. However,
+this also opens us up to greater potenial of data-type errors.</p>
+
+
+	<h2><span class="caps">INI</span></h2>
+
+
+	<h3>Advantages</h3>
+
+
+	<ul>
+	<li><span class="caps">INI</span> files are very human readible and easy to edit.</li>
+	</ul>
+
+
+	<h3>Disadvantages</h3>
+
+
+	<ul>
+	<li>Requires parser library (but much smaller than <span class="caps">YAML</span>&#8217;s).</li>
+		<li>Entries are generally limited to a single line entry.</li>
+		<li>No data types&#8212;all data are strings.</li>
+	</ul>
+
+
+	<p><span class="caps">INI</span> files are even easier to read and write than <span class="caps">YAML</span> files. However they lack
+serialization types. So all properties are strings and it&#8217;s up to the application
+to determine the type of data.  Also, on the whole entries are limited
+to a single line. This means list entries usually need to be separated by
+a deliminator [,:;], and long description entries need special consideration.</p>
+
+
+	<p>While <span class="caps">INI</span> files are conceptually simpler than <span class="caps">YAML</span> files, and in so being are
+a more attractive solution (IMO), the difference between <span class="caps">YAML</span> and <span class="caps">INI</span>
+does not seem great enough to warrant their use over the convention of
+Rubyists to use <span class="caps">YAML</span> instead.</p>
+
+
+	<h2>Per-Property Files</h2>
+
+
+	<p>The use of one file per property has some significant advantages, but likewise
+has a few issues that keep it from being a perfect solution.</p>
+
+
+	<h3>Advantages</h3>
+
+
+	<ul>
+	<li>No special parser library is required.</li>
+		<li>Individual file can be selectively loaded.</li>
+		<li>Very easy to automate selective update.</li>
+		<li>Usable by any language or tool.</li>
+	</ul>
+
+
+	<h3>Disadvantages</h3>
+
+
+	<ul>
+	<li>Cumbursome to edit properties en masse.</li>
+		<li>No data types&#8212;all data are strings (unless we use file extensions).</li>
+		<li>Wastes file system space (ie. block size).</li>
+		<li>Not as easily scrapable by search engines.</li>
+		<li>Highly unconventional appraoch.</li>
+	</ul>
+
+
+	<p>While some may take serious issue with the waste of file system space, this is increasingly
+a negligable downside. Some modern file systems handle small files quite gacefully, and
+the number of potential properties limits the waste in anycase.</p>
+
+
+	<p>While not being able to easily edit en masse might seem like a show-stopper, for this
+usecase it is usually only needed for the initial editing. After that, editing metadata
+tends to be very selective.</p>
+
+
+	<p>While per-propery files do not support data types per-se, if neccessary file extensions on
+header comment lines (shebang lines) could be used to convey type.</p>
+
+
+	<p>Probably the biggest downside to the per-propery file approach though is the lack of convention
+for doing so. It no doubt will strike most developers as a &#8220;bad thing&#8221;, at least at first.</p>
+
+
+	<h2>Analysis</h2>
+
+
+	<p>In considering the possible configuration formats, it becomes clear there are trade-offs.
+No solution is perfect, but no solution is without it&#8217;s merits either.</p>

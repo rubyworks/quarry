@@ -1,0 +1,13 @@
+Readme2Web v1.0 // 2008-08-11
+
+  sow readme2web [output]
+
+Generates a basic website based on a README
+file. It does this by sectioning the README
+into tabs based on <h2>'s.
+
+If output is not given, generates to the first
+location it finds called website, web or site,
+in the project's root directory. Defaults to
+'web' if none is found.
+

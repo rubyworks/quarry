@@ -1,0 +1,24 @@
+
+         body { font-family: sans-serif; margin: 20px; color: #222222; font-size: 11pt;}
+           hr { margin: 0 auto; width: 710px; }
+           li { font-size: 1em; }
+            p { font-size: 1em; line-height: 1.2em; }
+           h1 { margin-top: 50px; }
+           h2 { margin-top: 40px; }
+         code { color: green; font-size: 0.9em; }
+          pre { color: green; font-size: 0.9em; background: #f5fff5; }
+          sup { font-size: .7em; }
+
+      #header { margin: 0 auto; width: 700px; text-align: left; margin-bottom: 30px; }
+   #container { margin: 0 auto; width: 700px; text-align: justify; margin-bottom: 30px; }
+       #title { color: orange; font-family: monospace; font-size: 56pt;
+                letter-spacing: 10pt; font-weight: bold; }
+    #subtitle { color: black; font-size: 9pt; padding-left: 0px; font-weight: bold; }
+         #rev { background: red; color: white; }
+        #copy { margin: 0 auto; width: 700px; font-size: 0.8em; margin-top: 30px; }
+
+         .red { color: red; }
+         .sow { color: darkorange; font-weight: bold; background: #fff3f0; }
+        .foot { font-size: .7em; font-style: italic; }
+   .important { color: red; font-size: .8em; }
+

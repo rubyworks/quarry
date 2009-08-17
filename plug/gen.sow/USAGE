@@ -1,0 +1,12 @@
+Generic Generator v1.0 // 2008-08-27
+
+Provides a simple per-project templating system.
+Just put your ERB templates in the temps/ or templates/
+directory, either under admin/ or projet's root,
+to reflect the layout of your project and they
+will be generated into your project accordingly.
+
+This is Sow's default generator.
+
+No special options apply.
+

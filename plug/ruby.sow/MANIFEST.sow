@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+# Scaffold a new traditional ruby project.
+
+help "Scaffold a traditional ruby project."
+
+argument(:name, 'name of new project') do |name|
+  abort "Project name argument required." unless name
+  metadata.name = name
+  name
+end
+
+manifest do
+  copy('**/*', '.')
+  copy('.meta/*', metadir)
+end
+

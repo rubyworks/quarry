@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+require 'sow/application'
+
+application = Sow::Application.new
+
+#if new?
+#  if cli.arguments.empty?
+#    arguments << type
+#    type = nil
+#  end
+#end
+
+#begin
+  application.generate
+#rescue => error
+#  if cli.trace? or cli.debug?
+#    raise error
+#  else
+#    warn error.to_s
+#  end
+#end
+
+#def help
+#c = application.plugins.collect do |plugin|
+#  plugin.config['plugin']
+#end
+#puts HELP % c.join('  ')
+#puts cli.to_s_help # FIXME
+#end
+

@@ -1,0 +1,8 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+bin/<%= name %>
+lib/<%= name %>.rb
+test/test_<%= name %>.rb
+

@@ -1,0 +1,355 @@
+<html>
+<head>
+  <title>Sowing the Seeds of Software</title>
+
+  <link REL="SHORTCUT ICON" HREF="images/flower2.jpg"/>
+
+  <link rel="stylesheet" href="index.css" type="text/css" media="screen, projection, print"/>
+</head>
+
+<body>
+
+<div id="canvas">
+
+  <div id="menu">
+  <a href="#news">What's New</a>          &#160;
+  <a href="#overview">Getting Started</a>    &#160;
+  <!-- <a href="overview.html">manual</a>         &#160; -->
+  <a href="rdoc/index.html">Documentation</a> &#160;
+  <a href="http://rubyforge.org/projects/sow">Development</a>
+  </div>
+
+<div id="head">
+  <div id="title">SOW</div>
+
+  <div id="subtitle">tending to project ecology</div>
+
+  <div id="formats">
+    README <br/> bin <br/> lib <br/> test <br/> . . .
+  </div>
+</div>
+
+<div class="main">
+
+<h1> USER MANUAL </h1>
+
+<h1> Table of Contents </h1>
+
+  <ol>
+   <li> <a href="#ch_info">Introduction</a>
+    <ol>
+      <li><a href="#ch_about">   What is Sow? </a></li>
+      <li><a href="#ch_feature"> Feature Highlights      </a></li>
+      <li><a href="#ch_install"> How to Install          </a></li>
+      <li><a href="#ch_who">     Who Developed This?     </a></li>
+
+    </ol>
+   </li>
+   <li> <a href="#ch_user">Sowing for End Users</a>
+    <ol>
+      <li><a href="#ch_quick">   Basic Usage             </a></li>
+      <li><a href="#ch_remote">  Remote Packages         </a></li>
+      <li><a href="#ch_alt">     Alternate Formats       </a></li>
+      <li><a href="#ch_gen">     Generating Packages     </a></li>
+    </ol>
+   </li>
+   <li> <a href="#ch_dev">Sowing for Developers</a>
+    <ol>
+      <!-- <li><a href="#ch_libver">   Library Versioning     </a></li> -->
+      <li><a href="#ch_layout">  Project Layout          </a></li>
+      <li><a href="#ch_meta">    Metadata                </a></li>
+      <li><a href="#ch_reap">    Reap and Sow            </a></li>
+      <li><a href="#ch_roll">    Roll Support            </a></li>
+      <li><a href="#ch_run">     Live Development        </a></li>
+    </ol>
+   </li>
+   <li> <a href="#ch_choose">Conclusion</a>
+    <ol>
+      <li><a href="#ch_maint">   Benefits to Package Maintainers  </a></li>
+      <li><a href="#ch_gems">    Sow and Gems?                    </a></li>
+      <li><a href="#ch_concl">   Is Sow for you?                  </a></li>
+    </ol>
+   </li>
+  </ol>
+
+<br/>
+
+<span class="important"><b>IMPORTANT NOTICE</b></span>
+THIS IS STILL VERY MUCH A WORK IN PROGRESS AND THUS DOES NOT NECESSARILY MATCH WITH THE CURRENT STATE OF DEVELOPMENT.
+
+
+<h1 id="ch_info"> Introduction </h1>
+
+<h2 id="ch_about"> What is Sow? </h2>
+
+<p>
+<span class="sow">Sow</span> is a project scaffolding system. It makes it easy to generate new project layouts based on built in templates, and maintain 
+per-project scaffolding.
+</p>
+
+
+<h2 id="ch_feature"> Feature Highlights </h2>
+
+  <ul style="line-height: 2em;">
+  <li>Install source packages in system's native format</li>
+  <li>Supports a wide variery of package formats<sup>1</sup></li>
+  <li>Promotes standard conventions and setup.rb</li>
+  <li>Can download packages from remote locations</li>
+  <li>Trusted computing with package signitures [coming soon]</li>
+  </ul>
+
+<div class="foot"><sup>1</sup>Currently Debian, RubyGems and Source packages are supported. The rest are in development.</div>
+
+
+<h2 id="ch_install">Requirements</h2>
+
+<p>Sow does a lot of its work by calling on other subsystems. This is advantageous because those systems are well maintained. But it also means Sow has a few dependencies. For instance, to use Sow with the Debian package format, <b>dpkg</b> needs to be installed. All Debian systems will of course have this by default. Likewise to have Sow handle gem packages, <a href="rubygems.rubyforge.org">RubyGems</a> must be installed.</p>
+
+<p>For compression, you'll at least have to have <b>tar</b> and <b>gzip</b> installed. [Note this is being internalized and will not be need soon!] The other common formats, <b>bzip2</b> and <b>zip</b> can also be used for some functions but are optional.</p>
+
+<p>Of course Sow requires <a href="ruby-lang.org">Ruby</a>, 1.8 or higher. It also requires the <a href="http://facets.rubyforge.org">Facets</a> support library.</p>
+
+
+<h2 id="ch_install">How to Install</h2>
+
+<p>Installation is straight-forward. Download the package file, decompress it, 'cd' into the uncompressed directory and run <code>setup.rb</code>.</p>
+
+<pre>
+  % wget http://rubyforge.org/frs/download.php/11057/sow-0.2.0.tar.gz
+  % tar -xvvjf sow-0.2.0
+  % cd sow-0.2.0
+  % sudo ruby setup.rb
+</pre>
+
+<p>When that's done you're ready to sow. If your using Sow as an end user you can set the SOW_TYPE evironment variable to your systems native package type (or to 'gem' if you prefer).</p>
+
+<pre>
+  % export SOW_TYPE="debian"
+</pre>
+
+<p>You may want to add this to the master profile or to your own .bashrc file so it starts automatically in the future.</p>
+
+
+<h2 id="ch_who"> Who Developed This? </h2>
+
+<p>Sow was written by Trans (aka Thomas Sawyer).</p>
+
+
+<!-- USING -->
+
+<h1 id="ch_user"> Sowing for End User </h1>
+
+<h2 id="ch_quick"> Basic Usage </h2>
+
+<p>Using Sow is increadibly easy. If you've ever used a command line package tool before, like apt-get for instance, then you already have a good idea how to use Sow.</p>
+
+<p>First make sure you've set the SOW_TYPE evirnoment variable. Sow recognizes typcila labels for of package types. Generally the extension of the package format will suffice. For instance, on my Ubuntu
+system the package manger is Debian's which has .deb packages. So using 'deb' will work.</p>
+
+<pre>
+    % export SOW_TYPE="deb"
+</pre>
+
+<p>Be sure to use YOUR operating systems format. Alternatively you can specify that sow use RubyGems, just put "gem" for the format type.</p>
+
+<p>Now every time you issue a command to sow it will take this type into account and manage your sow packages accordingly. Let's try it. In a shell console, navigate to Sow's demo folder in the Sow source package. Once there, have a look at the contents.</p>
+
+<pre>
+    % cd sow-0.6.0
+    % cd demo
+    % ls
+    sow_demo  sow_demo.tar.gz
+</pre>
+
+<p>You notice a simple but complete copy of source in the sow_demo directory and a pre-built source tar.gz source package. Lets go ahead and install the sow_demo package.</p>
+
+<pre>
+    % sow install sow_demo
+</pre>
+
+<p>Sow reads in the .tar.gz package file, converts it into the package type specified by SOW_TYPE (in my case 'debian') and then installs it. Simple as that. You can try out the demo to make sure it indeed install correctly via <code>irb</code>.</p>
+
+<pre>
+    % irb
+    % require 'sow_demo/tryme'
+    Now your Sowing!
+</pre>
+
+<p>When your done you can uninstall the package just as easily.</p>
+
+<pre>
+    % sow uninstall sow_demo
+</pre>
+
+<p>That's the basics of installing and uninstall software with Sow.</p>
+
+
+<h2 id="ch_remote"> Remote Packages </h2>
+
+<p>Sow also recognizes URLs. So if you would like to install a package without manually having to download it just tell sow where the package is located.</p>
+
+<pre>
+    % sow install http://sow.rubyforge.org/demo/sow_demo.tar.gz
+</pre>
+
+<p>Sow will first download tha package, then convert it and install it as before.</p>
+
+<p>In the future Sow will support package signitures to make such operations more secure, but for now
+<code>be sure you trust your source!!!</code>. Unistalling is done by name only, so it is not neccessary to specify the entire address. Just:</p>
+
+<pre>
+    % sow uninstall sow_demo
+</pre>
+
+
+<h2 id="ch_alt"> Alternate Formats </h2>
+
+<p>You can specify an alternate package format using the <code>-t</code> or <code>--type</code> option.</p>
+
+<pre>
+    % sow install -t gem sow_demo
+</pre>
+
+<p>When specifying the type on the commandline the SOW_TYPE environment variable is temporary ignored. <span class="important">[IMPORTANT]</span> But, keep in mind you will have to specify the alternate type used again if you go to uninstall the package.</p>
+
+<pre>
+    % sow uninstall -t gem sow_demo
+</pre>
+
+<p>Sow also handles some of your more mundane formats. For instance it can install a package directly from source using setup.rb.</p>
+
+<pre>
+    % sow install -t source sow_demo
+</pre>
+
+<p><span class="important">[IMPORTANT]</span> Understand that source installs CANNOT be unistalled automatically.</p>
+
+
+<h2 id="ch_gen"> Generating Pacakges </h2>
+
+<p>You can use Sow to simply generate packages, rather then use it to install and unistall software. To do this use the <code>package</code> command.</p>
+
+<pre>
+    % sow package sow_demo/
+</pre>
+
+<p>In this example, Sow will generate a package file in the native format as set by SOW_TYPE. You can of course specify any type you would like.</p>
+
+  <pre>
+      % sow package -t gem sow_demo/
+  </pre>
+
+<p>In this case a .gem file will be created. Sow also supports packaging in a variety of different compression formats: tar.gz (gzip), tar.bz2 (bzip2) or zip.</p>
+
+  <pre>
+      % sow package -t zip sow_demo/
+  </pre>
+
+<p>Keep in mind that Sow simply shells out this work to the typical operating system tools, so be sure to have those installed to use this feature.</p>
+
+<p><span class="important">[IMPORTANT]</span> Also notice the use of the '/' at the end of the name. This tells Sow you are refereing to a source <i>folder</i> and not a package file.</p>
+
+<p>Sow can also <i>repackage</i> one type of source package to another, including gems.</p>
+
+  <pre>
+      % sow package -t zip sow_demo.gem
+  </pre>
+
+<p>This will convert a gem to a zip source package. Conversely,</p>
+
+  <pre>
+      % sow package -t gem sow_demo.zip
+  </pre>
+
+<p>This will convert a zip source package to a gem.</p>
+
+
+<!-- DEVELOPING -->
+
+<h1 id="ch_dev"> Sowing for Developers </h1>
+
+<h2 id="ch_layout"> Project Layout </h2>
+
+<p>Your directory layout should follow the general conventions set by Minero Aoki's <code>setup.rb</code>. You can deviated from these convension as much as you wish, just so long as you supply translation rules in the metadata file for rearranging the files into a conventional format.</p>
+
+<p>A typical layout looks something like this.</p>
+
+<pre>
+    sow_demo/
+      bin/
+        ...
+      conf/
+        sow_demo/
+          ...
+      data/
+        sow_demo/
+          ...
+      lib/
+        sow_demo/
+          ...
+      meta/
+        data
+</pre>
+
+<p>You can learn more about the conventional layout at <a href=""></a>.</p>
+
+
+<h2 id="ch_meta"> Metadata File </h2>
+
+<p>So how does Sow know what to do with a package? The answer likes in the meta/data file.</p>
+
+<p>If you use Reap and have a projectinfo file, but no data file. Sow will attempt to create the data file automatically.</p>
+
+<p><span class="important">[IMPORTANT]</span>The name of the file 'data' probably will change to something more telling of the function is serves.</p>
+
+
+<h2 id="ch_reap"> Reap and Sow </h2>
+
+<p>The latest version of Reap, the awesome project assitant tool, depends on Sow for it's packaging task. In fact, Sow was born out of Reap's package task. So Reap is sort of Sow's "pappy" ;)</p>
+
+
+<h2 id="ch_roll"> Roll Support </h2>
+
+<p>One of the nicest things about Sow is that it works seemlessly with Roll. Sow has a special feature [coming soon] to automatically "roll" a package --adding supprt for versioning and library metadata
+The developer doesn't have to do anything special for this work (unless they want to take advantage of Roll's optional features, of course). How cool is that?</p>
+
+
+<!-- CHOOSING -->
+
+<h1 id="ch_choose"> Conclusion </h1>
+
+
+<h2 id="ch_maint"> Benefits to Package Maintainers </h2>
+
+<p>Because Sow is "meta" in character, it makes it easy for operating system package maintainers to build native packages. In fact we ecourage package manintainers to contribute to Sow so it can offer a vast and robust set of format adapters to everyone's adavantage.</p>
+
+
+<h2 id="ch_gems"> Sow and Gems? </h2>
+
+<p> So how does Sow effect Gems? It actually doesn't directly compete since Gems is <i>mostly</i> a traditional package manager. It does some thing very well that Sow deos not, such as downloading packages on demand from a central repository, and maintining dependencies.</p>
+
+<p>In the future it would be nice to see greater interoperability between Sow and Gems. If Gems could handle Sow packages for instance (and in truth the diffrence between a sow package and a gem package is rather small) then Sow would gain the remote repository and dependency features of Gems and likewise Gems would gain the "practically prepare-less" packages of Rcck, as well as Sow's mutiple package support. Imagine, for example, a Gems that uses
+your own operating systems package system.</p>
+
+<p>I should point-out, though, for this ineroperability to be possible, Gems would also need to embrace Roll. And in fact that fuctionality is even more important then Sow's. While I think it would be ashame for interoperability between RubyGems and Sow'n'Roll not to be reached, the lack thereof will only mean that Sow will be expanded to include it's own central repository and dependency support. This support will probably come in a very straigt-foward manner through package signitures and a remote but loosly orchistrated repository via RAA or RubyForge.</p>
+
+
+<h2 id="ch_concl"> Is Sow for You? </h2>
+
+<p>So are you Ready to Sow?</p>
+
+<p>If you have packages to deliver in native formats or mutiple formats then Sow's your ticket. If you have a special package format, feel free to write a new adapter. Sow's API is very simple and flexible.
+If you are an end user and would rather your Ruby software be installed using your operating system's native format, but realize that it's just not feasible for every Ruby developer to keep up with all the different package formats, yours included, then encourage the developers of the software you use to add Sow support. When you do that, your not the only one who  benefits, but every user of every supported package format benefits.</p>
+
+<!-- <p>&nbsp;&nbsp;&nbsp;&nbsp;<img src="img/ready.png"/></p> -->
+
+<!--
+<div id="footnotes">
+Footnotes:<br/>
+[1] <a href="http://www.newsforge.com/article.pl?sid=05/06/08/136214&from=rss">Decline and fall of the version number</a>
+</div>
+-->
+
+</body>
+</html>
+

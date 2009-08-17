@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<HTML>
+<HEAD>
+  <TITLE><%= metadata.name.capitalize %></TITLE>
+
+  <LINK REL="SHORTCUT ICON" HREF="_assets/images/ruby.gif"/>
+  <LINK href="_assets/readme2web.css" rel="stylesheet" type="text/css"/>
+
+  <SCRIPT language="javascript" src="_assets/jquery/jquery.js"></script>
+
+  <SCRIPT type="text/javascript">
+    $(document).ready(function() {
+      $('.section').hide();
+      $('.section:first').show();
+    });
+    function section(n) {
+      $('.section').hide();
+      $('#'+n).show();
+    };
+  </SCRIPT>
+
+</HEAD>
+<BODY>
+
+<div id="headerbar" class="bkgoff">
+
+  <div id="menubar">
+    <div id="menu">
+      <ul>
+        <% helper.sections.each do |i, s| %>
+          <li><a href="javascript: section('section_<%= i %>');"><%= s %></a></li>
+        <% end %>
+        <!--
+        <li>&middot;</li>
+        <li><a href="rdoc/index.html">API</a> &nbsp;&nbsp;</li>
+        <li><a href="https://rubyforge.org/projects/ratchets/">Devsite</a></li>
+        <li><a href="src/">Source</a></li>
+        -->
+      </ul>
+    </div>
+  </div>
+
+  <div id="header" style="text-align: left;">
+    <%= helper.header %>
+  </div>
+</div>
+
+<div id="insert" class="bkg">
+
+  <!-- SIDE BAR -->
+
+  <div id="aside" class="bkg">
+    <%= project.metadata.sidebar || plugin.parts.sidebar %>
+  </div>
+
+  <!-- MAIN TEXT -->
+
+  <div id="container" class="bkg">
+    <%= helper.body %>
+  </div>
+
+</div>
+
+<!-- Copyright -->
+
+<div id="copybar" class="bkgoff">
+<div id="copy">
+    <!-- <img src="_assets/images/runneth.png" align="left" style="border: 1px solid black; margin-right: 10px;"/> -->
+    <!-- <img src="_assets/images/icon/license.png" align="left" style="margin-bottom: 60px;"/> -->
+
+    Copyright &copy; <%= project.metadata.copyright %> <br/>
+    Distributed under the terms of the <%= project.metadata.license %>.<br/>
+
+    <br/>
+
+    THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS
+    OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+    PARTICULAR PURPOSE.<br/> <br/>
+    <br/>
+</div>
+</div>
+
+</BODY>
+</HTML>
+
+
+<!--
+    b.p { color: #777799; }
+    b.r { color: #FF0033; }
+
+    td#slogon {
+      font-family: monospace;
+      vertical-align: middle; text-align: left;
+      color: gray; font-size: 12pt; padding-left: 10px;
+      white-space: nowrap; line-height: 12pt;
+    }
+
+  <table style="padding-top: 900px;">
+    <tr>
+    <td id="slogon">
+      <b class="p">W H E N</b> <br/>
+      <b class="p">Y O U R</b> <br/>
+      <b class="r">R U B Y</b> <br/>
+      <b class="p">R U N N E T H</b> <br/>
+      <b class="p">O V E R</b>&nbsp;
+    </td>
+    </tr>
+  </table>
+-->

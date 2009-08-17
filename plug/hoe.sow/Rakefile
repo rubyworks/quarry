@@ -1,0 +1,13 @@
+# -*- ruby -*-
+
+require 'rubygems'
+require 'hoe'
+require './lib/<%= unixname %>.rb'
+
+Hoe.new('<%= unixname %>', <%= unixname.capitalize %>::VERSION) do |p|
+  # p.rubyforge_name = '<%= unixname %>' # if different than lowercase project name
+  # p.developer('FIX', 'FIX@example.com')
+end
+
+# vim: syntax=Ruby
+

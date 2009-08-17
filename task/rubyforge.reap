@@ -1,0 +1,6 @@
+---
+rubyforge:
+  service: Rubyforge
+  sitemap:
+    site: sow
+  active: true
