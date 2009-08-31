@@ -2,5 +2,6 @@
 rubyforge:
   service: Rubyforge
   sitemap:
-    site: sow
+    site: <%= package %>
   active: true
+
