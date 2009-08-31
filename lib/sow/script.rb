@@ -1,5 +1,3 @@
-reuqire 'sow/plugin'
-
 module Sow
 
   # A Sow Script provides a simple DSL for specifying
@@ -48,16 +46,16 @@ module Sow
     #end
 
     # Describe the purpose of this generator.
-    def help(htext)
-      @help = htext
+    def about(text)
+      @about = text
     end
 
     # Give a one line usage template.
     # Eg. 'reap [options] <name>'
     # "Usage: sow" is automatically prefixed to this.
-    #def usage(usage)
-    #  @usage = usage
-    #end
+    def usage(usage)
+      @usage = usage
+    end
 
     # Define the commandline argument.
     def argument(name, desc=nil, &valid)
