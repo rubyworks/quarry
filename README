@@ -1,52 +1,53 @@
 = Sow -- Tending Project Ecology
 
-  http://sow.rubyforge.org
+* http://proutils.rubyforge.org/sow
 
 
 == Introduction
 
-Sow is a project scaffolding generator. Techincally it is a simple
-templating system based on eRuby, but it is designed with project
-templating squarely in mind.
-
+Sow is a scaffold generator. Techincally it is a simple
+templating system based on eRuby, but it is designed 
+with project templating squarely in mind.
 
 
 == Installation
+
+=== RubyGems Install
 
 Install using RubyGems as you would expect:
 
   $ gem install sow
 
-To install manually please use Ruby Setup.
+This will install Sow, it's Facets dependency if not alreay installed,
+and a number of built-in plugins. Keep in mind that some plugins
+come from the packages with which they are associated. For example,
+the Reap plugin is distributed with the Reap package.
 
-  $ setup.rb all
+=== Site Install
 
-If you don't have Ruby Setup it is easy enough to get. Surf over
-to http://setup.rubyforge.org, or using RubyGems:
+Old-fashion site installs require Ruby Setup (see http://proutils.rubyforge.org/setup).
+If you don't have Ruby Setup you can install it via Rubygems:
 
   $ gem install setup
 
-(*NOTE* Ruby Setup may not be release yet. It is beta at time of writing.)
+With Setup in place, download the Sow tarball (.tar.gz) and unpack it,
+then install by invoking setup.rb.
+
+  $ tar -xvvzf sow-1.0.0.tar.gz
+  $ cd sow-1.0.0 
+  $ sudo setup.rb all
 
 
-
-== Usage
+== Synopsis
 
 In general usage is simply:
 
-  reap [generator] [options] [arguments]
+  sow [options] --<plugin>[=argument] ... [destination-path]
 
-For instance to scaffold a new project in the current directory
-with the name 'myapp':
+For instance to scaffold a new basic ruby project with the
+name 'myapp' in the directory 'myapp':
 
-  $ sow reap myapp
-
-When scaffolding a new project, 'reap' is the default type, so 
-
-  sow myproj
-
-will work just as well. If you prefer a different default,
-you can set the default type in '$HOME/.etc/sow/default_type'.
+  $ sow --ruby myapp
 
 Once you have a project Sow can be used as a generator too.
 First the project must be "sow-ready", which is as simple as
@@ -55,16 +56,19 @@ addig a .sow directory in the project's root folder.
 For instance to generate a testunit file.
 
   $ cd myapp
-  $ sow testunit mytest
+  $ sow --testunit=mytest
+
+
+== IGNORE
 
 Scaffolds themselves support partial scaffolding when sow is in
 generation mode. For instance you may want to add a standard
 Rakefile. You can do that with Sow:
 
-  $ sow ruby Rakefile
+  $ sow --ruby[Rakefile]
 
 Sow can also be used for general project templating. To do this, add
-template files to the temps/ or admin/temps directory, reflecting the
+template files to the temps/ directory, reflecting the
 same layout of your project. For example:
 
   myapp/
@@ -85,6 +89,9 @@ Change into your project directory and type @sow@ with no arguments.
 Project files will be generated based on the templates and your porjects
 metadata.
 
+== END IGNORE
+
+
 For more details please see the documentation provided under doc/manual
 or on Sow's website.
 
@@ -92,26 +99,45 @@ or on Sow's website.
 
 == Hoe Users
 
-Hoe users will notice that the sow command that comes with Hoe is
-overwritten by Sow. Sow support Hoe projects, so there is nothing lost.
-Simply use:
+Hoe users will notice that the +sow+ command that comes with Hoe will
+be overwritten by Sow. This may seem a shity thing to do, but truth be
+told Sow is a slightly older project than Hoe (albeit orginally it was
+very different program). Since there is no command called +hoe+, I 
+recommend renaming Hoe's +sow+ command.
 
-  $ sow hoe
+  sudo mv /usr/bin/sow /usr/bin/hoe
+
+As an alternative, Sow ships with a How plug, so there is nothing lost even
+if Hoe's +sow+ command is overwritten, simply use:
+
+  $ sow --hoe <name>
 
 Note, that Hoe scaffolding does not support the in-project templating
-system. To get that you need to create a meta/ direcroty in your project,
-and a place to store templates, eg. temps/.
-
+system. To get that you need to create a .meta/ directory to your project.
 
 
 == Development
 
+Sow is being developed on <a href="http://hithub.com">GitHub</a>, as part of the
+ProUtils set of project development tools. You can browse the project here:
 
+  http://github.com/proutils/sow/tree/master
 
+Sow's public repository can be pulled via:
+
+ 	 git://github.com/proutils/sow.git 
+
+Please feel free to fork the project and submit pull requests. Discussion of
+Sow occurs on the TigerOps Community Mailinglist.
+
+  http://groups.google.com/group/tigerops-community?hl=en
+
+(For the moment you will have to sign up on Rubyforge before using the Google
+Groups site.)
 
 == Copying
 
-Copyright (c) 2007, 2008 TigerOps & Thomas Sawyer
+Copyright (c) 2007, 2009 Thomas Sawyer
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
