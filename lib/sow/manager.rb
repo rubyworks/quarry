@@ -3,6 +3,7 @@ require 'sow/plugin'
 module Sow
 
   # The Manager class locates sow plugins.
+  #
   class Manager
 
     def initialize
@@ -31,10 +32,10 @@ module Sow
       @plugins ||= plugin_locations.keys
     end
 
-    def plugin(name, arguments, options)
+    def plugin(session, name, value, pathname)
       location = plugin_locations[name]
       raise "unknown scaffolding -- #{name}" unless location
-      Plugin.new(location, arguments, options)
+      Plugin.new(session, location, value, pathname)
     end
 
     # Convert path into plugin.

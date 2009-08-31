@@ -1,94 +1,188 @@
-require 'facets/argvector' # TODO: replace with Clio::Usage
 require 'sow/manager'
+require 'facets/string/tabto'
 
 module Sow
 
+  # Sow Commandline Utility.
+  #
+  # TODO: Provide help messages for individual plugins.
+  #
   class Command
 
-    def self.run
-      new.run
+    # Initialize and execute command.
+    def self.execute
+      new.execute
     end
 
-    attr :cmd
-    attr :args
-    attr :opts
+    # Commandline arguments.
+    attr :argv
 
-    #
+    # New Command.
     def initialize(argv=ARGV)
-      cli = Argvector.new(argv)
-
-      @cmd, @args, @opts = *cli.subcommand
-
-      #@use['--help -h', "Display this help infromation"]
-
-      #@use['--create -c', "Create scaffolding (default)"]
-      #@use['--update -u', "Update scaffolding (default)"]
-      #@use['--delete -d', "Delete scaffolding (default)"]
-
-      #@use['--output=PATH -o', "Output directory [.]"]
-
-      #manager.plugins.each do |name|
-      #  @use.subcommand(name)
-      #end
+      @argv = argv.dup
     end
 
-    #
+    # Plugin manger.
     def manager
       @manager ||= Manager.new
     end
 
+    # Run command.
     #
-    def run
-      name = cmd
+    # TODO: Should we look up the directory tree for a .config/sow.yaml
+    # file to determine if this has been previously sowed and maybe
+    # change directory to that location?
+    #
+    def execute
+      arguments, cooptions = *parse_argv(argv)
 
-      if opts['help'] || opts['h']
-        if name
-          puts "help to do #{name}"
-        else
-          puts "help to do"
-        end
+      # Extract standard commandline options.
+      options, cooptions = standard_options(cooptions)
+
+      if options[:help]
+        puts help
         exit
       end
 
-      del = opts['d'] || opts['delete']
+      # Ensure only one command type selected.
+      if %{create delete update}.map{ |e| options[e.to_sym] }.compact.size > 1
+        raise "Conflicting commands. Choose one: create, delete or update."
+      end
 
-      unless name
-        puts "Scaffold name required."
+      # Path to destination is the last argument, if given. Otherwise it is
+      # the current working path.
+      pathname = (arguments.pop || '.').chomp('/')
+
+      options[:output] = pathname
+
+      # All options should appear after plugin/scaffold name.
+      # however, it is able to look past purely flag switches.
+      #name = arguments.find{ |e| e !~ /^\-/ }
+
+      session = Session.new(arguments, options)
+
+      command = session.mode
+
+      # Collect all the selected plugins.
+      plugins = cooptions.map do |(name, value)|
+        # Get plugin by name
+        plugin = manager.plugin(session, name, value, pathname)
+        # Setup the plugin
+        plugin.setup #(command, arguments, options)
+        #
+        plugin
+      end
+
+      # Abort if no scaffold type given.
+      if plugins.empty?
+        $stderr.puts "No scaffold type given."
         exit
       end
 
-      command = del ? :delete : :create
-      arguments = [name]
+      # Get copylists from each plugin and combine them into
+      # a single compylist.
+      copylist = plugins.inject([]) do |array, plugin|
+        array.concat(plugin.copylist)
+      end
 
       begin
-        send(command, *arguments)
+        case command
+        when :create
+          generator = Generators::Create.new(session, copylist)
+          generator.generate
+        when :update
+          generator = Generators::Update.new(session, copylist)
+          generator.generate
+        when :delete
+          generator = Generators::Create.new(session, copylist)
+          generator.generate
+        else
+          raise "[IMPOSSIBLE] Unknow command type."
+        end
       rescue => err
-        if trace?
+        if options[:debug]
           raise err
         else
           puts err
-          puts "try --help or --trace"
+          puts "try --help or --debug"
           exit
         end
       end
-
     end
 
-    def create(name)
-      plugin = manager.plugin(name, @args, @opts.dup)
-      plugin.create
+    # Very simply ARGV parser. In the future we may make
+    # this a bit smarter. We do it manually to preserve the
+    # order of plugin options.
+    def parse_argv(argv)
+      args = []
+      opts = []
+      argv.each_with_index do |arg, idx|
+        case arg
+        when /^--/
+          opts << arg
+        else
+          args << arg
+        end
+      end
+      opts = opts.map{ |o| o.sub(/^\-*/, '').split('=') }
+      return args, opts
     end
 
-    def delete(name)
-      plugin = manager.plugin(name, @args, @opts.dup)
-      plugin.delete
+    # Return command type based on option.
+    def command(options)
+      return :create if options[:create] #|| options[:c]
+      return :update if options[:update] #|| options[:u]
+      return :delete if options[:delete] #|| options[:d]
+      nil
     end
 
-    def trace?
-      @opts['trace']
+    STANDARD_OPTIONS = {
+      'create' => :create, 'c' => :create,
+      'update' => :update, 'u' => :update,
+      'delete' => :delete, 'd' => :delete,
+      'quiet'  => :quiet , 'q' => :quiet ,
+      'prompt' => :prompt, 'p' => :prompt,
+      'skip'   => :skip  , 's' => :skip  ,
+      'force'  => :force , 'f' => :force ,
+      'trial'  => :trial , 't' => :trial ,
+      'help'   => :help  , 'h' => :help  ,
+      'debug'  => :debug ,
+    }
+
+    # Returns a hash of standard options and an assoc array
+    # of plugin options.
+    def standard_options(opts)
+      h, o = {}, []
+      opts.each do |(k,v)|
+        if opt = STANDARD_OPTIONS[k]
+          h[opt] = true
+        else
+          o << [k,v]
+        end
+      end
+      return h, o
     end
 
-  end
+    # General help message.
+    def help
+      <<-END.tabto(0)
+      Usage: sow [options] --<plugin>[=<value>] ... [<path>]
 
-end
+      Options:
+        -c --create         Create scaffolding
+        -u --update         Update scaffolding
+        -d --delete         Delete scaffolding
+        -p --prompt         Prompt on overwrites
+        -s --skip           Skip overwrites
+        -f --force          Force restricted operations
+        -q --quiet          Supress output messages
+        -t --trial          Trial run (won't write to disk)
+           --debug          Provide debuging information
+        -h --help           Show this message
+      END
+    end
+
+  end#class Command
+
+end#module Sow
 

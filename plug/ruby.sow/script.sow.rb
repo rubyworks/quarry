@@ -2,18 +2,15 @@
 
 help "Scaffold a traditional ruby project."
 
-usage "ruby [options] <name>"
+#usage "--ruby[=<package-name>]"
 
-#option(:dummy, "just a dummy option") do |val|
-#  metadata.dummy = val
-#end
-
-argument(:name, 'name of new project') do |val|
+argument(:name, 'package name of new application/library') do |val|
+  val = val || pathname
   abort "Name is required." unless val
   metadata.package = val
 end
 
-manifest do
+scaffold do
   copy('**/*', '.')
   copy('.meta/*', metadir)
 end

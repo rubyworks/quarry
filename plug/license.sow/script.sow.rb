@@ -2,7 +2,7 @@
 
 help "Add specified license to project."
 
-usage "license [options] <license>"
+#usage "--license=<name>"
 
 LICENSES = %w[gpl lgpl mit]
 
@@ -11,8 +11,8 @@ argument(:license) do |val|
   metadata.license = val.upcase
 end
 
-manifest do
+scaffold do
   copy "META/*", metadir
-  copy "*", '.', :cd => argv[:license].downcase 
+  copy "*", '.', :cd => metadata.license.downcase 
 end
 

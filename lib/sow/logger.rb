@@ -1,46 +1,36 @@
 module Sow
 
-  #
-  #def self.loggers
-  #  @loggers ||= {}
-  #end
-
-  # = Logger
+  # The Logger class routes output to the console.
   #
   class Logger
 
-    #def self.inherited(subclass)
-    #  key = subclass.basename.chomp('Logger').downcase.to_sym
-    #  Sow.loggers[key] = subclass
-    #end
+    #
+    attr :generator
 
     #
-    attr :plugin
-
-    #
-    def initialize(plugin)
-      @plugin = plugin
+    def initialize(generator)
+      @generator = generator
     end
 
-    ### If there is nothing to generate this will be called
-    ### to display a message to the effect.
+    # If there is nothing to generate this will be called
+    # to display a message to the effect.
     def report_nothing_to_generate
       report "Nothing to generate."
     end
 
-    ### Output to provide on startup of generation.
-    def report_startup(source) # FIXME: pass what info?
+    # Output to provide on startup of generation.
+    def report_startup(source, output) # FIXME: pass what info?
       @time = Time.now
       dir = File.basename(source) #File.basename(File.dirname(source))
-      report "Generating #{dir} in #{File.basename(Dir.pwd)}:\n\n"
+      report "Generating #{dir} in #{File.basename(output)}:\n\n"
     end
 
-    ### Output to provide when generation is complete.
+    # Output to provide when generation is complete.
     def report_complete
       report "\nFinished in %.3f seconds." % [Time.now - @time]
     end
 
-    ### Output to provide as generation is progressing.
+    # Output to provide as generation is progressing.
     def report_create(file, how, atime)
       report "%10s [%.4fs] %s" % [how, (Time.now - atime), file]
     end
@@ -74,7 +64,7 @@ module Sow
   private
 
     def report(message)
-      puts message unless plugin.quiet? or plugin.trial?
+      puts message unless generator.quiet? or generator.trial?
     end
 
   end

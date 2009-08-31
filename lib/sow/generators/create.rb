@@ -8,18 +8,18 @@ module Sow
     #
     class Create < Base
 
-      ###
-      def copy(src, dest)
-        tmp = File.join(source, src)
+      #
+      def copy(loc, src, dest, opts)
+        tmp = File.join(loc, src)
         if File.directory?(tmp)
-          copy_dir(src, dest)
+          copy_dir(loc, src, dest, opts)
         else
-          copy_doc(src,dest)
+          copy_doc(loc, src, dest, opts)
         end
       end
 
-      ###
-      def copy_dir(src, dest)
+      #
+      def copy_dir(loc, src, dest, opts)
         if File.exist?(dest) #&& src == dest
           how = 'same'
         else
@@ -29,28 +29,29 @@ module Sow
         return how, dest
       end
 
-      ###
-      def copy_doc(src, dest)
-        tmp = File.join(source, src)
+      # TODO: Can .stub be used to prevent erb?
+      def copy_doc(loc, src, dest, opts)
+        tmp = File.join(loc, src)
         #ext = File.extname(src)
         #case ext
         #when '.erb'
-          #file = tname.chomp('.erb')
-          text = erb(tmp)
+        if opts[:verbatim]
+          how = (File.exist?(dest) ? 'update' : 'create')
+          #file = tmp_file.chomp('.stub')
+          cp(tmp, dest)
+        else
+          #file = tname.chomp('.erb') # old way
+          text = erb(tmp) 
           how = (File.exist?(dest) ? 'update' : 'create')
           write(dest, text)
-        #else
-        #  how = (File.exist?(dest) ? 'update' : 'create')
-        #  #file = tmp_file.chomp('.stub') #? Can .stub be used to prevent erb?
-        #  cp(tmp, dest)
-        #end
+        end
         return how, dest
       end
 
       #
-      def erb(file)
-        plugin.erb(file)
-      end
+      #def erb(file)
+      #  plugin.erb(file)
+      #end
 
 =begin
       ###

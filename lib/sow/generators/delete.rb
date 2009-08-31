@@ -8,35 +8,23 @@ module Sow
     #
     class Delete < Base
 
-      ###
-      def manifest_prepare(manifest)
-        manifest = manifest_glob(manifest)
-        manifest = manifest_dest(manifest)
-        manifest = manifest_sort(manifest)
-        #manifest.each do |s, d|
-        #  puts "%40s %40s" % [s, d]
-        #end
-        manifest = manifest_delete(manifest)
-        manifest = manifest_safe(manifest)
-        return manifest
+      def mark; 'delete'; end
+
+      #
+      def actionlist_check(list)
+        list
       end
 
-      ### Sort the manifest files before directory.
-      ### This is opposite of Construct::Create.
-      def manifest_sort(manifest)
-        dirs, files = *manifest.partition{ |src, dest| (source + src).directory? }
-        expanded = files.sort + dirs.sort
+      # Sort the manifest files before directory.
+      # This is opposite of Construct::Create.
+      def actionlist_sort(list)
+        list.reverse
+        #dirs, files = *list.partition{ |src, dest, opts| (source + src).directory? }
+        #files.sort{|a,b| a[1]<=>b[1]} + dirs.sort{|a,b| a[1]<=>b[1]}
       end
 
-      ### Add delete action to manifest.
-      def manifest_delete(manifest)
-        manifest.collect do |src, dest|
-          [:delete, src, dest]
-        end
-      end
-
-      ### Delete template file.
-      def delete(src, dest)
+      # Delete template file.
+      def delete(loc, src, dest, opts)
         if File.exist?
           how = 'delete'
           rm(dest)
@@ -46,9 +34,9 @@ module Sow
         return how, dest
       end
 
-    end#Destroyer
+    end#class Delete
 
-  end#Build
+  end#module Generators
 
 end#module Sow
 

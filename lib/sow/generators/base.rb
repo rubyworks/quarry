@@ -9,269 +9,176 @@ module Sow
 
     # Base Class for the generators. This provides the
     # backbone of Sow's operations. Essentially a plugin
-    # provides a manifest to the generator, which cleans
+    # provides a copylist to the generator, which cleans
     # it up and uses it for it's specific task,
-    # eg. create, update or destroy.
+    # eg. create, update or delete.
     #
     class Base
 
-      attr :plugin
+      attr :session
+      #attr :location
+      attr :copylist
 
-      #attr :metadata
-      #attr :logger
-      #attr :output
+      attr :context
+      attr :logger
 
-      #attr :runmode
-      #attr :command  # best name for this ?
+      def initialize(session, copylist)
+        @session   = session
+        #@location  = location
+        @copylist  = copylist
 
-      def initialize(plugin)
-        @plugin   = plugin
-        #@metadata = plugin.metadata
-        #@logger   = plugin.logger
-        #@output   = plugin.output
-
-        #@runmode = plugin.runmode
-        #@command = plugin.command
+        @logger    = Logger.new(self)
+        @context   = Context.new(metadata)
       end
-
-      def inspect
-        "#<#{self.class} @plugin=#{@plugin.inspect}>"
-      end
-
-      def trial?  ; plugin.trial?  ; end
-      def quiet?  ; plugin.quiet?  ; end
-      def trace?  ; plugin.trace?  ; end
-      def force?  ; plugin.force?  ; end
-      def skip?   ; plugin.skip?   ; end
-      def prompt? ; plugin.prompt? ; end
 
       #
-      #def command
-      #  plugin.command
-      #end
-
-      # Metadata provided by plugin.
       def metadata
-        plugin.metadata
-        #  plugin.context
+        session.metadata
       end
 
-      # Metadata provided by plugin.
-      def manifest
-        plugin.manifest
-      end
+      # Where to find plugin files.
+      #alias_method :source, :location
 
-      # Metadata provided by plugin.
-      def logger
-        plugin.logger
-      end
-
-      # Where to place generated files.
+      #
       def output
-        @output ||= Pathname.new(plugin.output)
+        @output ||= (
+          #if session.create? && plugin.name #scaffold && session.scaffold?
+          #  session.output + plugin.name
+          #else
+            session.output
+          #end
+        )
       end
 
-      # Where to find plugin templates.
-      def location
-        @location ||= Pathname.new(plugin.location)
+      #
+      def arguments
+        session.arguments
       end
-      alias_method :source, :location
+
+      def trial?  ; session.trial?  ; end
+      def debug?  ; session.debug?  ; end
+      def quiet?  ; session.quiet?  ; end
+      def force?  ; session.force?  ; end
+      def prompt? ; session.prompt? ; end
+      def skip?   ; session.skip?   ; end
+
+      # New project?
+      def newproject?
+        session.newproject?
+      end
 
       # Main command called to generate files.
       #
       def generate #(args, opts)
-        plugin.prepare # prepare manifest copylist
-        actionlist = manifest_prepare(manifest.copylist)
+        actionlist = actionlist(copylist)
+
         if actionlist.empty?
           logger.report_nothing_to_generate
           return
         end
-        logger.report_startup(source)
+source = '' # FIXME
+        logger.report_startup(source, output)
         mkdir_p(output) #unless File.directory?(output)
         Dir.chdir(output) do
-          actionlist.each do |action, src, dest|
+          actionlist.each do |action, loc, src, dest, opts|
             atime = Time.now
-            result, fulldest = *send(action, src, dest)
+            result, fulldest = *__send__(action, loc, src, dest, opts)
             logger.report_create(relative_to_output(dest), result, atime)
             #logger.report_create(dest, result, atime)
           end
         end
         logger.report_complete
-        logger.report_fixes #if plugin.newproject? #&& project.new?
+        logger.report_fixes #if session.newproject?
       end
 
     private
 
-      # Prepares the manifest for operation. This method
-      # passes the given manifest through a set of filters,
-      # such as sorting and querying the user about duplicates,
-      # finally arriving at a finalized manifest ready for
-      # processing.
-      #
-      def manifest_prepare(manifest)
-        manifest = manifest_glob(manifest)
-        #manifest = manifest_dest(manifest)
-        manifest = manifest_sort(manifest)
-        #manifest.each do |s, d|
-        #  puts "%40s %40s" % [s, d]
-        #end
-        manifest = manifest_copy(manifest)
-        manifest = manifest_safe(manifest)
-
-        check_manifest(manifest)  # TODO: should this come before or after prompt?
-        check_overwrite(manifest)
-
-        return manifest
+      # Processes with erb.
+      def erb(file)
+        context.erb(file)
+        #metadata.erb(file)
       end
 
       #
-      def manifest_glob(manifest)
-        allfiles = {}
-        dotpaths = ['.', '..']
-        manifest.each do |match, into, opts|
-          from = opts[:cd] || '.'
-          srcs = []
-          Dir.chdir(source + from) do
-            srcs = Dir.glob(match, File::FNM_DOTMATCH)
-            srcs = srcs.reject{ |d| File.basename(d) =~ /^[.]{1,2}$/ }
-          end
-          srcs = filter(srcs)
-          srcs.each do |src|
-            case into
-            when /\/$/
-              dest = File.join(into, File.basename(src))
-            when '.'
-              dest = src
-            else
-              dest = into
-            end
-            allfiles[from == '.' ? src : File.join(from, src)] = template_to_filename(dest) #dest
-          end
-        end
-        allfiles.map do |f, t| 
-          #if File.directory?(t)
-          #  [f, File.join(t, File.basename(f))]
-          #else
-            [f,t]
-          #end
+      def mark; 'copy'; end
+
+      def actionlist(list)
+        list = actionlist_sort(list)
+        list = actionlist_mark(list)
+        list = actionlist_safe(list)
+        list = actionlist_check(list)
+        list
+      end
+
+      def actionlist_sort(list)
+        list
+      end
+
+      # Add copy action.
+      def actionlist_mark(list)
+        list.map do |args|
+          [mark, *args]
         end
       end
 
-=begin
-      # Complete destination.
-      def manifest_dest(manifest)
-        manifest.collect do |src, dest|
-          case dest
-          when nil
-            dest = src
-          when '/.'
-            dest = src
-          when /\/[.]$/
-            dest = File.join(dest.chomp('/.'), src)
-          when '/', '.'
-            dest = File.basename(src)
-          when /\/$/
-            #dest = File.join(dest, template_to_filename(File.basename(src)))
-            dest = File.join(dest, File.basename(src))
-          #else
-          #  dest = dest
-          end
-          dest = template_to_filename(dest)
-          [src, dest]
-        end
-      end
-=end
-
-      # Sort the manifest, directory before files and
-      # in alphabetical order.
-      def manifest_sort(manifest)
-        dirs, files = *manifest.partition{ |src, dest| (source + src).directory? }
-        expanded = dirs.sort + files.sort
-      end
-
-      ### Add copy action.
-      def manifest_copy(manifest)
-        manifest.collect do |src, dest|
-          [:copy, src, dest]
-        end
-      end
-
-      # Convert a template pathname into a destination pathname.
-      # This allows for substitution in the pathnames themselves
-      # by using '__name__' notation.
-      #
-      def template_to_filename(template)
-        name = template.dup #chomp('.erb')
-        name = name.gsub(/__(.*?)__/) do |md|
-          metadata.send($1)
-        end
-        #if md =~ /^(.*?)[-]$/
-        #  name = metadata[md[1]] || plugin.metadata(md[1]) || name
-        #end
-        name
-      end
-
-      # Filter out special files/directories.
-      #
-      def filter(paths)
-        plugin.filter.each do |re|
-          paths = paths.reject{ |pn| re =~ pn.to_s }
-        end
-        paths
-      end
-
-      # If in prompt mode, returns a manifest filtered of overwrites
-      # as selected by the end user. If in skip mode, mark duplicates to
+      # If in prompt mode, returns a list filtered of overwrites
+      # as selected by the user. If in skip mode, mark duplicates to
       # skipped. If not in prompt or skip mode, simply return the 
-      # current manifest.
+      # current list.
       #
-      def manifest_safe(manifest)
-        return manifest unless (prompt? or skip?)
-        return manifest if manifest.empty?
+      def actionlist_safe(list)
+        return list unless (prompt? or skip?)
+        return list if list.empty?
         safe = []
         dups = []
-        manifest.each do |action, tname, fname|
-          dups << [action, tname, fname, (output + fname).file?]
+        list.each do |action, loc, tname, fname, opts|
+          dups << [action, loc, tname, fname, opts, (output + fname).file?]
         end
         puts "Select (y/n) which files to overwrite:\n" if prompt? unless quiet?
-        dups.each do |action, tname, fname, check|
+        dups.each do |action, loc, tname, fname, opts, check|
           if check
             if skip?
-              safe << [:skip, tname, fname]
+              safe << [:skip, loc, tname, fname, opts]
             else
               f = relative_to_output(fname)
               case ans = ask("      #{f}? ").downcase.strip
               when 'y', 'yes'
-                safe << [action, tname, fname]
+                safe << [action, loc, tname, fname, opts]
               else
-                safe << [:skip, tname, fname]
+                safe << [:skip, loc, tname, fname, opts]
               end
             end
           else
-            safe << [action, tname, fname]
+            safe << [action, loc, tname, fname, opts]
           end
         end
         puts
         return safe
       end
 
+      def actionlist_check(list)
+        check_conflicts(list)  # TODO: should this come before or after prompt?
+        check_overwrite(list)
+        list
+      end       
+
       # Check for any overwrites. If generator allows overwrites
       # this will be skipped, otherewise an error will be raised.
       #
-      # TODO: Make this a manifest filter with check for "identical" files?
-      def check_overwrite(manifest)
+      # TODO: Make this a list filter with check for "identical" files?
+      def check_overwrite(list)
         return if force?
         return if prompt?
         return if skip?
-        #return if plugin.overwrite?  # TODO: not so sure overwirte? option is a good idea.
+        #return if session.overwrite?  # TODO: not so sure overwirte? option is a good idea.
 
-        if plugin.newproject? && !output.glob('**/*').empty? # FIXME?
+        if newproject? && !output.glob('**/*').empty? # FIXME?
           abort "New project isn't empty. Use --force, --skip or --prompt."
         end
 
         clobbers = []
-        manifest.each do |action, tname, fname|
-          tpath = source + tname
+        list.each do |action, loc, tname, fname, opts|
+          tpath = loc + tname
           fpath = output + fname
           if fpath.file? #fpath.exist?
             clobbers << relative_to_output(fname)
@@ -289,10 +196,10 @@ module Sow
       # directory. This will raise an error if any of these
       # conditions are found, unless force? is set to true.
       #
-      def check_manifest(manifest)
+      def check_conflicts(list)
         #return if force?
-        manifest.each do |action, tname, fname|
-          tpath = source + tname
+        list.each do |action, loc, tname, fname, opts|
+          tpath = loc + tname
           fpath = output + fname
           if File.exist?(fpath)
             if tpath.directory?
@@ -309,9 +216,9 @@ module Sow
       end
 
       #
-      def skip(src, dest)
-        return 'skip', dest
-      end
+      #def skip(src, dest)
+      #  return 'skip', dest
+      #end
 
       # Access to FileUtils
       def fu
@@ -321,7 +228,7 @@ module Sow
       #
       def cp(src, dest)
         if trial?
-          s = relative_to_source(src)
+          s = src #relative_to_source(src)
           d = relative_to_output(dest)
           puts "cp #{s} #{d}"
         else
@@ -345,6 +252,7 @@ module Sow
           f = relative_to_output(file)
           puts "write #{f}"
         else
+          mkdir_p(File.dirname(file))
           File.open(file, 'w'){ |f| f << text }
         end
       end
@@ -368,10 +276,10 @@ module Sow
         end
       end
 
-      #
-      def relative_to_source(src)
-        Pathname.new(src).relative_path_from(source)
-      end
+      # FIXME
+      #def relative_to_source(src)
+      #  Pathname.new(src).relative_path_from(source)
+      #end
 
       #
       def relative_to_output(dest)
@@ -380,6 +288,11 @@ module Sow
         else
           dest
         end
+      end
+
+      #
+      def inspect
+        "#<#{self.class} @session=#{@session.inspect}>"
       end
 
     end

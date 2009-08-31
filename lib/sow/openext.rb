@@ -1,8 +1,9 @@
-### = OpenExtension
-###
-### This class evaluates the generator.rb script in 
-### a generator's files. Hence the Generator class provides the 
-### DSL available to generator scripts.
+# = OpenExtension
+#
+# This class evaluates the generator.rb script in
+# a generator's files. Hence the Generator class provides the
+# DSL available to generator scripts.
+#
 class OpenExtension < Module
   PRESERVE = /^(__|inspect$|instance_|object_|define_|send$|module_)/
   instance_methods.each{ |m| undef_method(m) unless m.to_s =~ PRESERVE }

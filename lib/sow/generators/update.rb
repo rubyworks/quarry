@@ -10,14 +10,8 @@ module Sow
 
     # = Update Generator
     #
-    # Updater is the same as the Generator with the exception
-    # that it will automatically skip duplicate static files.
-    # This allows files created by a generator to code to be
-    # modified without loosing the changes.
-    #
-    # A thoughtfully designed generator can often take advantage
-    # of this fact. In the future we may allow it to determine
-    # which files are updateable or not.
+    # Update is the same as the Create Generator with the exception
+    # that it pulls all metadata from the destination.
     #
     class Update < Create
 
