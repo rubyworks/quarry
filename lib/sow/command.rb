@@ -118,13 +118,13 @@ module Sow
       opts = []
       argv.each_with_index do |arg, idx|
         case arg
-        when /^--/
+        when /^-/
           opts << arg
         else
           args << arg
         end
       end
-      opts = opts.map{ |o| o.sub(/^\-*/, '').split('=') }
+      opts = opts.map{ |o| o.sub(/^\-+/, '').split('=') }
       return args, opts
     end
 

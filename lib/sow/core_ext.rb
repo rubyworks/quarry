@@ -12,6 +12,7 @@ require 'facets/string/modulize'
 require 'facets/string/methodize'
 
 # Facets More
+require 'facets/ostruct'
 require 'facets/pathname'
 
 # ARE THESE NEEDED?
