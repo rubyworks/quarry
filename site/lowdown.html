@@ -14,11 +14,10 @@
 <!--0-------------- HEADER ------------------->
 
 <div id="menu">
-  <a href="#overview">Overview</a>        &#160;
-  <a href="#news">What's New</a>          &#160;
-  <!-- <a href="overview.xml">manual</a>     &#160; -->
-  <a href="rdoc/index.html">API</a>       &#160;
-  <a href="http://rubyforge.org/projects/sow">Development</a>
+  <a href="lowdown.html">Overview</a>       &#160;
+  <a href="plugins.html">Plugin Gallery</a> &#160;
+  <a href="rdoc/index.html">RDocs</a>       &#160;
+  <a href="http://github.com/proutils/sow">Development</a>
 </div>
 
 <div id="head">
@@ -31,19 +30,23 @@
 
 <div id="main">
 
+
 <!--1--------------- OVERVIEW ------------------->
 
 <div id="overview" class="section">
 
-<h1>Sow</h1>
-
-<h3>Tending Project Ecology</h3>
-
 <h2>Introduction</h2>
 
-<p>Sow is a project scaffolding generator. Techincally it is a simple
-templating system based on eRuby, but it is designed with project
-templating squarely in mind.</p>
+<p>Sow is a project scaffolding generator. Techincally it is a simple,
+plugable templating system based on eRuby, but it is designed with
+project scaffolding squarely in mind.</p>
+
+</div>
+
+
+<!--2--------------- INSTALL ------------------->
+
+<div id="install" class="section">
 
 <h2>Installation</h2>
 
@@ -53,61 +56,59 @@ templating squarely in mind.</p>
   $ gem install sow
 </pre>
 
-<p>There is no manual install at the moment. This will be fixed in a future
-release.</p>
+<p>Manual site installation can be achived via Ruby Setup. Please see the
+<a href="http://rdoc/README.html">README</a> included in the 
+<a href="http://">tarball</a> for more information.</p>
+
+</div>
+
+
+<!--3--------------- USAGE ------------------->
+
+<div id="usage" class="section">
 
 <h2>Usage</h2>
 
-<p>To start a new project simply use:</p>
+<p>To start a new Ruby project simply use:</p>
 
 <pre>
-  $ sow myapp
+  $ sow --ruby=myapp
 </pre>
 
 <p>You will see the following outout:</p>
 
 <pre>
-  Transferring reap/**/* to myapp/:
+  Transferring ruby files to myapp/:
 
-      create  CHANGES
-      create  COPYING
-      create  NOTES
-      create  README
-      create  admin
-      create  admin/config
-      create  admin/pkg
-      create  admin/temps
-      create  admin/temps/lib
-      create  admin/temps/lib/myapp
-      create  admin/temps/lib/myapp/about.rb.erb
-      create  admin/web
       create  bin
       create  data
       create  doc
-      create  doc/rdoc
-      create  doc/ri
+      create  doc
       create  lib
-      create  lib/my-app
+      create  lib/myapp
       create  meta
+      create  test
+      create  HISTORY.rdoc
+      create  COPYING.rdoc
+      create  README.rdoc
       create  meta/authors
       create  meta/created
       create  meta/description
       create  meta/email
       create  meta/homepage
       create  meta/license
-      create  meta/name
+      create  meta/package
       create  meta/repository
-      create  meta/status
       create  meta/title
       create  meta/version
-      create  test
 
-  You need to fix the occurances of 'FIX' in the following files:
+  You need to fix the occurances of &#8216;__FIX__&#8217; in the following files:
 
       README
       meta/description
 </pre>
 
+<!--
 <p>Notice the mention of &#8216;reap/**/*&#8217;. By default Sow scaffolds-out
 a project layout suited to use by Reap build system. This is a good project
 layout even if you aren&#8217;t using Reap, but you may want to add a
@@ -123,13 +124,12 @@ you can do:</p>
 <pre>
   $ sow ruby myapp
 </pre>
-
-<p>You can change the default project type by editing
-$HOME/.etc/sow/default_type.</p>
+-->
 
 <p>With you project setup, be sure to go over the contents and fine-tune it.
-In particular, edit the files that contain &#8216;FIX&#8217; entries.</p>
+In particular, edit all the files that contain &#8216;__FIX__&#8217; entries.</p>
 
+<!--
 <p>Sow can continue to be used for in-project templates. To do this, add
 templates to the temps/ or admin/temps directories, reflecting the same
 layout of your project. For example:</p>
@@ -155,25 +155,96 @@ layout of your project. For example:</p>
 
 <p>Project files will be generated based on the templates and metadata
 entries.</p>
+-->
+</div>
+
+
+<!--4--------------- HOE USERS ------------------->
+
+<div id="overview" class="section">
 
 <h2>Hoe Users</h2>
 
 <p>Hoe users will notice that the sow command that comes with Hoe is
-overwritten, by Sow. Sow support Hoe projects, so there is nothing lost.
+overwritten by Sow. Sow supports Hoe projects, so there is nothing lost.
 Simply use:</p>
 
 <pre>
-  $ sow hoe [directory]
+  $ sow --hoe [directory]
 </pre>
 
-<p>Or, to use Hoe as the default edit $HOME/.etc/sow/default_type to contain
-the work Hoe. Note, the Hoe scaffolding does not support the in-project
-templating system. To get that you need to create a meta/ direcroty in your
-project, and a place to store templates, eg. temps/.</p>
+<p>Note that the Hoe scaffold does not support the Till out of the box.
+To get that you need to create a <code>.meta</code> direcroty in your project.</p>
+
+</div>
+
+
+<!--5--------------- PLUGINS ------------------->
+
+<div id="plugins" class="section">
+
+<h2>Designing Sow Plugins</h2>
+
+<p>Creating your own plugin is actually quite easy. You simply need
+to add a folder to a Ruby project's loadpath following the naming
+convention <code>&lt;name&gt;.sow/</code>. This folder can be in
+a dedicate project or part of another project. Typically your
+project's loadpath with be under <code>lib/</code>. Let's say you want to call
+you plugin <code>mohgee</code>, so you would have <code>lib/mohgee.sow</code>
+directory in your project. Aternatively you can make a separate folder for
+plugins, and add it's path to your project's loadpath (which
+is what I do). In that case you might have a folder with a pathname
+of <code>plug/moghee.sow</code>.</p>
+
+<p>Within this folder you simply put whatever files you want
+to be apart of your scaffolding, using <code>erb</code> within them
+when they need to contain dynamically generated content.</p>
+
+<p>Finally you need to add a <code>script.sow.rb</code> file to the
+folder. This script instructs Sow on how to conduct the file
+transfer and generation when the plugin is used. Essentailly, a Sow
+script is a small Ruby DSL script. There are only a few methods you
+need to know in order to create you own plugin.</p>
+
+<p>Below is the <code>script.sow.rb</code> for the Ruby plugin.
+It covers the majority of available options.</p>
+
+<pre>
+  about "Scaffold a traditional ruby project."
+
+  usage "--ruby[=&lt;package-name&gt;]"
+
+  argument(:name, 'package name of new application/library') do |val|
+    val = val || pathname
+    abort "Name is required." unless val
+    metadata.package = val
+  end
+
+  scaffold do
+    copy('**/*', '.')
+    copy('.meta/*', metadir)
+  end
+</pre>
+
+<p></p>
+
+</div>
+
+
+<!--6--------------- DEVELOPMENT ------------------->
+
+<div id="development" class="section">
 
 <h2>Development</h2>
 
-<h2>Copying</h2>
+</div>
+
+
+<!--7--------------- COPYING ------------------->
+
+<div id="copying" class="section">
+
+<h3>Copying</h3>
 
 <p>Copyright &#169; 2007, 2008 TigerOps</p>
 
@@ -193,11 +264,12 @@ with this program. If not, see
 
 </div>
 
-<!--1--------------- NEWS ------------------->
+<!--8--------------- NEWS ------------------->
 
+<!--
 <div id="news" class="section">
 
-<h1> What's New </h1>
+<h2> What's New </h2>
 
 <div style="float: right; color: gray;">2008-07-21</div>
 
@@ -210,6 +282,7 @@ almost arrived. And about time too. I was starting to get worried ;) The final r
 to be just a single project, rather three came from the edeavor: Ratch, Sow and Reap.</p>
 
 </div>
+-->
 
 <!---------------- FOOTER ------------------>
 

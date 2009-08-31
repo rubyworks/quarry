@@ -12,27 +12,42 @@ with project templating squarely in mind.
 
 == Synopsis
 
-In general usage is simply:
+General usage follws the pattern:
 
   sow [options] --<plugin>[=argument] ... [destination-path]
 
-For instance to scaffold a new basic ruby project with the
+For instance to scaffold a new, basic ruby project with the
 name 'myapp' in the directory 'myapp':
 
-  $ sow --ruby myapp
+  $ sow --ruby myapp/
 
-Once you have a project Sow can be used as a generator too.
-First the project must be "sow-ready", which is as simple as
-addig a .sow directory in the project's root folder.
+By default, Sow's +ruby+ plugin will use the destination path
+as the project name. If we wished to name the project something
+other than the destination path, we can supply that as an argument.
 
-For instance to generate a testunit file.
+  $ sow --ruby=foo myapp/
 
+Alternately we could make the the directory ourselves and, and
+scaffold it from within.
+
+  $ mkdir myapp
   $ cd myapp
+  $ sow --ruby=foo
+
+Once you have a project, Sow can be used to generate components
+as well, much like script/generate in Rails. For instance,
+to generate a test/unit test file.
+
   $ sow --testunit=mytest
 
+Dor the moment, the commandline arguments parser that Sow uses
+is extra dumb, and the use of the '=' is alwasy necessary. In
+the future, the '=' will become optional, so long as a destnation
+directoy is explicitly provided, or the last plugin take no argument.
 
-For more details please see the documentation provided under doc/manual
-or on Sow's website.
+For more details on how to use Sow, what plugins are available and how
+to build your own cusotm plugins, please see the documentation
+provided on Sow's website.
 
 
 == Installation
@@ -62,30 +77,35 @@ then install by invoking setup.rb.
   $ cd sow-1.0.0 
   $ sudo setup.rb all
 
+If you use Hoe, please see the the important message below before
+installing.
+
 
 == Hoe Users
 
-Hoe users will notice that the +sow+ command that comes with Hoe will
-be overwritten by Sow. This may seem a shity thing to do, but truth be
-told Sow is a slightly older project than Hoe (albeit orginally it was
-very different program). Since there is no command called +hoe+, I 
+*IMPORTANT NOTICE FOR HOE USERS!*
+
+Hoe users will discover that the +sow+ command that comes with Hoe will
+be overwritten by Sow. This may seem a not-so-nice thing to do, but truth
+be told Sow is a slightly older project than Hoe (albeit orginally it was
+a very different program). Since there is no command called +hoe+, I 
 recommend renaming Hoe's +sow+ command.
 
   sudo mv /usr/bin/sow /usr/bin/hoe
 
-As an alternative, Sow ships with a How plug, so there is nothing lost even
+As an alternative, Sow ships with a Hoe plugin, so there is nothing lost even
 if Hoe's +sow+ command is overwritten, simply use:
 
   $ sow --hoe <name>
 
 Note, that Hoe scaffolding does not support the in-project templating
-system. To get that you need to create a .meta/ directory to your project.
+system. To get that you need to add a .meta/ directory to your project.
 
 
 == Development
 
 Sow is being developed on <a href="http://hithub.com">GitHub</a>, as part of the
-ProUtils set of project development tools. You can browse the project here:
+ProUtils set of project development tools. You can browse the Sow project here:
 
   http://github.com/proutils/sow/tree/master
 
@@ -98,8 +118,8 @@ Sow occurs on the TigerOps Community Mailinglist.
 
   http://groups.google.com/group/tigerops-community?hl=en
 
-(For the moment you will have to sign up on Rubyforge before using the Google
-Groups site.)
+Happy hacking!
+
 
 == Copying
 
