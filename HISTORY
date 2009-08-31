@@ -1,3 +1,14 @@
-== 0.0.0 // 2008-04-24
-* Initial release.
+= RELEASE HISTORY
+
+== 1.0.0 // 2009-08-30
+
+Initial release of brand spanking new system.
+
+Changes:
+
+* 3 Major Enhancements
+
+    * Use spiffy new interface design.
+    * Promotes the use of "micro" plugins.
+    * Added new built-in plugins.
 

@@ -1,0 +1,86 @@
+= NOTES ON SOW
+
+==  Commandline Interface of Plugins
+
+=== Option 1
+
+The traditional approach is to allow a plugin to specify any commandline
+arguments and/or options it may want to generate scaffolding.
+For example, we might see something like:
+
+  sow ruby myapp --no-bin --man
+
+Which would scaffold a Ruby project named 'myapp' with a manpage
+entry but no defualt executable. Allowing this flexibility in 
+designatin plugin options, we can make our plugins quite feature
+rich.
+
+We wouldn't want to get too crazy though, as in many cases it would
+just as well to have an additional plugin. For example, we will
+want to have a cucumber plugin so we can create features, thus
+adding --cucumber option to the ruby plugin is purely a convenience.
+One could just as well do:
+
+  $ sow ruby myapp
+  $ sow cucumber myapp
+
+Instead of 
+
+  $ sow ruby --cucumber myapp
+
+(Note I am ignoring the issue of directory creation for the moment.)
+
+This has the benifit of saving the ruby plugin from having to
+support an almost endless steram of possbile options (rcov, flog,
+rake, testunit, rspec, bacon, setup.rb, and so on.), and of which
+one could reasonably argue deserves presence.
+
+=== Option 2
+
+I've noticed that every *particular* scaffolding I can conceive can
+generally be accomplished with a single argument. That being the case
+each plugin could simply be invoked as a commandline switch.
+
+  sow --ruby[=<name>] [pathname]
+
+To copy ruby scaffolding into subdirectory +name+.
+
+  sow --ruby <pathname>
+
+In which case the name of the project and the subdirectory would be
+the same.
+
+This notation allows for multiple plugins to be invoked in the same 
+command. For instance, lets use our cucumber plugin. We could build
+a ruby project with a cucumber test in one go.
+
+  sow --ruby --cucumber <pathname>
+
+The cucumber plugin defaults the name of the feature to the pathname,
+in the same fashion as the ruby project name. To make it different,
+
+  sow --ruby --cucumber=myfeature <pathname>
+
+We could even invoke the cucumber plugin multiple times in one line.
+
+So this brings about the notion of having many small plugins, rather
+then fewer more complex plugins like Option 1 encourages. For example,
+we might have a +bin+ plugin.
+
+  sow --bin=foo
+
+In some respects that is rather nice, in that the units are small and
+tight. The dwonside however, is that we loose a great deal of flexibility
+in building "feature rich" scaffolds.
+
+So the question we must to ask is whether these numerous small scaffolds
+can cover the same range of usecases that larger more complex scaffolds
+can? Can we think of a case that would simply be too severly hampered by
+limited commandline options? Or, on the other hand, is there a way to
+offer some additional flexibity in options when it required?
+
+I like this later appraoch and I am going to rewrite Sow to use it, since
+it certainly will owrk well for most cases. Later I will return to
+question of offering additional option control and see if we can't add
+that capability into the system in some fashion.
+
