@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-help "Scaffold a bin command."
+about "Scaffold a bin command."
 
-#usage "--bin[=command_name]"
+usage "--bin[=<command-name>]"
 
 argument(:name, 'name of command file') do |val|
   val = val || pathname

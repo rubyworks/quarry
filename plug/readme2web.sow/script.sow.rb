@@ -4,7 +4,7 @@
 # file. It does this by sectioning the README
 # into tabs based on <h2>'s.
 
-help "Generate a website from a README file."
+about "Generate a website from a README file."
 
 usage "readme2webpage [options]"
 
@@ -13,7 +13,7 @@ output do
   project.root.glob_first(find) || project.root + 'web'
 end
 
-manifest do
+scaffold do
   # NOTE: Might we do per template parts?
   #template('index.html.erb', web, :body=>html)
 

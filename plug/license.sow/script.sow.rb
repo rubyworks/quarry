@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-help "Add specified license to project."
+about "Add specified license to project."
 
-#usage "--license=<name>"
+usage "--license=<name>"
 
 LICENSES = %w[gpl lgpl mit]
 

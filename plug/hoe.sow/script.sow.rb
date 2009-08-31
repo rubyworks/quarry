@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-help "Scaffold a new Hoe ready project."
+about "Scaffold a new Hoe ready project."
 
 usage "hoe [options] <name>"
 

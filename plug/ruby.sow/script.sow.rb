@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-help "Scaffold a traditional ruby project."
+about "Scaffold a traditional ruby project."
 
-#usage "--ruby[=<package-name>]"
+usage "--ruby[=<package-name>]"
 
 argument(:name, 'package name of new application/library') do |val|
   val = val || pathname

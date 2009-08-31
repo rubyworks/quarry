@@ -1,5 +1,4 @@
-require 'facets/ostruct'
-
+require 'sow/core_ext'
 require 'sow/session'
 require 'sow/logger'
 require 'sow/script'
@@ -9,7 +8,7 @@ require 'sow/generators/delete'
 
 module Sow
 
-  # = Plugin Controller
+  # Plugin encapsulates infromation about a sow plugin.
   #
   class Plugin
 
