@@ -1,6 +1,6 @@
 ---
 rdoc:
-  service: RDoc
-  exclude:
-    - plug
+  service : RDoc
+  template: hanna
+  exclude : [plug]
 
