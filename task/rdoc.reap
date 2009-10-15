@@ -1,6 +1,0 @@
----
-rdoc:
-  service : RDoc
-  template: hanna
-  exclude : [plug]
-
