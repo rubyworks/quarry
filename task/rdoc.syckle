@@ -1,8 +1,8 @@
 ---
 rdoc:
-  service : RDoc
+  service : rdoc
   include : ~
-  exclude : [plug]
+  exclude : [plug/]
   extra   : ~
   active  : true
 
