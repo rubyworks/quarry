@@ -5,9 +5,9 @@ module Sow
   # This can be used to "prefill" some types of scaffolding.
   #
   class Metadata
-    instance_methods.each{ |m| private m unless m.to_s =~ /^__/ }
+    alias :__id__ :object_id
 
-    HOLE = "__FIX__"
+    instance_methods.each{ |m| private m unless m.to_s =~ /^__/ }
 
     def initialize(output)
       #@location  = location
@@ -27,14 +27,24 @@ module Sow
       end
     end
 
+    def respond_to?(s)
+      s = s.to_s
+      @cache.key?(s)
+    end
+
+    #
+    def __get__(s)
+      @cache[s.to_s]
+    end
+
     #
     def [](s)
       s = s.to_s
       if @cache.key?(s)
         @cache[s]
       else
-        @cache[s] = HOLE
-        @cache[s] = load_value(s) || HOLE
+        #@cache[s] = HOLE + " (#{s})"
+        @cache[s] = load_value(s) #|| HOLE + " (#{s})"
       end
     end
 

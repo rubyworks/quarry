@@ -4,37 +4,87 @@ module Sow
   # arguments, a copylist and the various specificities
   # needed to define a scaffold generator proccess.
   #
+  # Note: This is the old way of building a plugin.
+
   class Script
+
+    #
+    def self.registry
+      @registry ||= {}
+    end
+
+    #
+    def self.inherited(base)
+      registry[base.basename.downcase] = base
+    end
+
+    #
+    def self.setup(&block)
+      define_method(:setup,&block)
+    end
+
+    #
+    def self.manifest(&block)
+      define_method(:manifest,&block)
+    end
+
+    #
+    def self.option(name)
+      attr_accessor(name)
+    end
+
+
+    # Override and setup metadata and validate.
+    # If something does jive, then use #abort to
+    # terminate execution.
+    def setup
+    end
+
+    # Override and place copy statment in this method.
+    #
+    def manifest
+      copy '**/*', '.'
+    end
+
+    # Main argument.
+
+    attr :argument
 
     # Destiation pathname. This is used by some plugins,
     # particularly full-project scaffolds, as a default
     # package name. It is the basename of the output directory.
-    #
+
     attr :pathname
 
     # Access to Metadata. When the script is initially executed,
     # ie. toplevel and argument blocks, this is an OpenStruct.
-    # Use it to assign value to the metadata, which is used to
+    # Use it to assign values to the metadata, which is used to
     # render the file templates. When the scaffold block is
     # finally executed, this is reassigned to the destinations
     # metadata, so that it can be used in the copy calls, if
     # needed.
-    #
+
     attr :metadata
 
     #
-    def initialize(value, pathname) #, metadata)
+    attr :copylist
+
+    #
+    def initialize(session, metadata, pathname, argument, options) #, metadata)
+      @session   = session
+      @metadata  = metadata
       @pathname  = File.basename(pathname)
+      @argument  = argument
+
       #@location = Pathname.new(location)
-      @values    = value.to_s.split(',')
-
-      @arguments = []
-      #@options   = []
-
-      @copytemp  = []
-      @copylist  = []
-
       @metadata = OpenStruct.new
+
+      options.each do |k,v|
+        __send__("#{k}=",v)
+      end
+
+      #@copytemp  = []
+      @copylist  = []
     end
 
     #def values
@@ -46,26 +96,26 @@ module Sow
     #end
 
     # Describe the purpose of this generator.
-    def about(text)
-      @about = text
-    end
+    #def about(text)www.google.com/ig?hl=en
+    #  @about = text
+    #end
 
     # Give a one line usage template.
-    # Eg. 'reap [options] <name>'
+    # Eg. '--reap=<name>'
     # "Usage: sow" is automatically prefixed to this.
-    def usage(usage)
-      @usage = usage
-    end
+    #def usage(usage)
+    #  @usage = usage
+    #end
 
     # Define the commandline argument.
-    def argument(name, desc=nil, &valid)
-      @arguments << [name, desc, valid]
-      #argv[name] = @arguments[@argc+=1]
-      #valid.call(argv[name]) if valid
-      #define_method(name) do
-      #  @arguments[i]
-      #end
-    end
+    #def argument(name, desc=nil, &valid)
+    #  @arguments << [name, desc, valid]
+    #  #argv[name] = @arguments[@argc+=1]
+    #  #valid.call(argv[name]) if valid
+    #  #define_method(name) do
+    #  #  @arguments[i]
+    #  #end
+    #end
 
     #def option(name, desc=nil, &valid)
     #  @options << [name, desc, valid]
@@ -76,9 +126,9 @@ module Sow
     # generation. While #copy can be called at the toplevel,
     # this allows for delayed processing until metadata is
     # avaiable.
-    def scaffold(&block)
-      @copytemp << block
-    end
+    #def scaffold(&block)
+    #  @copytemp << block
+    #end
 
     # Designate a copying action.
     #   copy from, opts
@@ -87,7 +137,8 @@ module Sow
     def copy(*from_to_opts)
       opts = Hash===from_to_opts.last ? from_to_opts.pop : {}
       from, to = *from_to_opts
-      @copylist << [from, to || '.', opts]
+      to = to || '.'
+      @copylist << [from, to, opts]
     end
 
     #
@@ -119,6 +170,11 @@ module Sow
       end
     end
 
-  end#class Plugin::Script
+  end#class Script
+
+  #
+  module Plugins
+    Script = Sow::Script
+  end
 
 end#module Sow

@@ -2,46 +2,49 @@ require 'sow/core_ext'
 require 'sow/session'
 require 'sow/logger'
 require 'sow/script'
+require 'sow/usage'
 require 'sow/generators/create'
 require 'sow/generators/update'
 require 'sow/generators/delete'
+
+require 'facets/erb'
+require 'facets/ostruct'
+require 'facets/kernel/instance_class'
 
 module Sow
 
   # Plugin encapsulates infromation about a sow plugin.
   #
   class Plugin
-
     # Name of plugin script file.
-    SCRIPT_NAME = 'script.sow.rb'
-
-    # Filter these files out of any scaffolding operation.
-    FILTER = [ SCRIPT_NAME ] #, /USAGE\.txt/ ]
+    SCRIPT_NAME = 'SCRIPT.rb'
+    # Name of usage document.
+    USAGE_NAME = 'USAGE{,.txt}'
+    # Name of metadata file.
+    META_NAME = 'META{,.yml,.yaml}'
+    # Name of seed file. TODO: change name.
+    SEED_NAME = 'SEED{,.yml,.yaml}'
 
     # Instanance of Session.
     attr :session
-
     # Location of plugin.
     attr :location
-
-    # An alias for location.
-    alias_method :source, :location
-
-    # Plugin's script.
-    attr :script
+    # Argmuent
+    attr :argument
+    # Options
+    attr :options
+    # Desitnation pathname
+    attr :destination
 
     #
-    def initialize(session, location, value, pathname)
+    def initialize(session, location, options)
       @session  = session
-      @pathname = Pathname.new(pathname)
-      @location = Pathname.new(location)
-      @script   = Script.new(value, pathname) #(info) ?
-      read_script
-    end
+      @options  = options.to_ostruct
 
-    # Filter these files out of any scaffolding operation.
-    def filter
-      FILTER
+      @location    = Pathname.new(location)
+      @destination = Pathname.new(session.destination)
+
+      @copy = []
     end
 
     # Metadata from scaffold destination.
@@ -49,11 +52,70 @@ module Sow
       session.metadata
     end
 
-    # Read and eval plugin script.
-    def read_script
-      file = File.join(location, SCRIPT_NAME)
-      code = File.read(file)
-      script.instance_eval(code, file)
+    #
+    def argument
+      @options.argument
+    end
+
+    # Directory with template files.
+    def template_dir
+      @template_dir ||= grab('template/')
+    end
+
+    # File containing usage text.
+    def usage_file
+      @usage_file ||= grab('usage{,.txt}')
+    end
+
+    # Metadata file.
+    def meta_file
+      @meta_file ||= grab('meta{,.yml,.yaml}')
+    end
+
+    # Transfer file.
+    def seed_file
+      @seed_file ||= grab('seed{,.yml,.yaml}')
+    end
+
+    # Traditional alternative to the meta & seed file.
+    def script_file
+      @script_file ||= grab('script{,.rb}')
+    end
+
+    #
+    def usage
+      @usage ||= Usage.new(usage_file)
+    end
+
+    #
+    def meta
+      @meta ||= (
+        meta = YAML.load(File.new(meta_file))
+        meta
+      )
+    end
+
+    #
+    def seed
+      @seed ||= (
+        res = template.erb_result(File.read(seed_file))
+        YAML.load(res)
+      )
+    end
+
+  private
+
+    #
+    def grab(glob)
+      file = Dir.glob(File.join(location, glob), File::FNM_CASEFOLD).first
+      file ? Pathname.new(file) : nil
+    end
+
+    # ERB OpenTemplate
+    def template
+      @template ||= (
+        ERB::OpenTemplate.new(options, session, :options => options, :metadata=>metadata)
+      )
     end
 
 =begin
@@ -74,60 +136,268 @@ module Sow
     end
 =end
 
-    def setup #_for(type, argument, options)
-      setup_arguments #(arguments)
-      setup_metadata
-      setup_script #(session)
+  public
+
+    #
+    def setup
+      if script_file
+        require(File.expand_path(script_file))
+        scriptClass = Script.registry[location.basename.to_s]
+        @script = scriptClass.new(session, metadata, destination, argument, options)
+        @script.setup
+        @script.manifest
+        @copy = @script.copylist
+      else
+        prepare_meta
+        prepare_seed
+        prepare_data
+      end
     end
+
+      #setup_arguments #(arguments)
+      #setup_metadata
+      #setup_script #(session)
+      #init
+      #parse
 
     # And arguments defined in the script get there assigments
     # defined as singleton methods via the script[]= call.
-    def setup_arguments #(a)
-      #h = {}
-      a = script[:values]
-      script[:arguments].each_with_index do |(name, desc, valid), i|
-        if valid
-          script[name] = valid.call(a[i])
-        else
-          script[name] = a[i]
-        end
-      end
-      #@args = h #TODO: where?
-    end
+    #def setup_arguments #(a)
+    #  #h = {}
+    #  a = script[:values]
+    #  script[:arguments].each_with_index do |(name, desc, valid), i|
+    #    if valid
+    #      script[name] = valid.call(a[i])
+    #    else
+    #      script[name] = a[i]
+    #    end
+    #  end
+    #  #@args = h #TODO: where?
+    #end
 
     # Collect any metadata settings that may have been made
     # in the initial script evaluation.
-    def setup_metadata
-      script.metadata.each do |k,v|
-        metadata[k] = v
-      end
-    end
+    #def setup_metadata
+    #  script.metadata.each do |k,v|
+    #    metadata[k] = v
+    #  end
+    #end
 
     # Setup the plugin with information about current operation.
     #
     # TODO: This seems wrong. Need to figure a better way!
     #
-    def setup_script
-      script.instance_variable_set("@session", session)
-      script.instance_variable_set("@metadata", metadata)
-      #script[:values].each do |v|
-      #end
+    #def setup_script
+    #  script.instance_variable_set("@session", session)
+    #  script.instance_variable_set("@metadata", metadata)
+    #  #script[:values].each do |v|
+    #  #end
+    #end
+
+    #
+    def prepare_meta
+      meta.each do |m,c|
+        template.instance_class do
+          eval %{
+            def #{m}
+              #{c}
+            end
+          }
+        end
+      end
+      # validate
+      template.validate if meta['validate']
     end
 
-    # Expanded copylist.
+    #
+    def prepare_seed
+      seed.each do |opts|
+        from = opts.delete('from')
+        to   = opts.delete('to') || '.'
+        cond = opts.delete('if')
+        next unless template.instance_eval(cond) if cond
+        @copy << [from, to, opts]
+      end
+    end
+
+    #
+    def prepare_data
+      meta.each do |m,c|
+        metadata[m] = template.__send__(m)
+      end
+    end
+
+    # Designate a copying action.
+    #
+    #def copy(*from_to_opts)
+    #  opts = Hash===from_to_opts.last ? from_to_opts.pop : {}
+    #  from, to = *from_to_opts
+    #  to = to || '.'
+    #  @copylist << [from, to, opts]
+    #end
+
+    # Expanded copy list.
     def copylist
-      @copylist ||= (
-        copylist_sort(copylist_glob(script_copylist))
-      )  #redest(list)
+      @copylist ||= copylist_sort(copylist_glob(@copy)) #redest(list)
     end
 
     # Raw copylist as defined in the script.
-    def script_copylist
-      @script_copylist ||= (
-        script[:copytemp].each{|s| s.call}
-        script[:copylist]
-      )
+    #def script_copylist
+    #  @script_copylist ||= (
+    #    script[:copytemp].each{|s| s.call}
+    #    script[:copylist]
+    #  )
+    #end
+
+    # Does the script define a package name.
+    #def name
+    #  script[:name]
+    #end
+
+    # Expand copylist by globbing entries.
+    def copylist_glob(copylist)
+      list = []
+      dotpaths = ['.', '..']
+
+      copylist.each do |from, into, opts|
+        cdir = opts[:cd] || '.'
+        srcs = []
+        Dir.chdir(template_dir + cdir) do
+          srcs = Dir.glob(from, File::FNM_DOTMATCH)
+          srcs = srcs - Dir.glob(opts['less']) if opts['less']
+          srcs = srcs.reject{ |d| File.basename(d) =~ /^[.]{1,2}$/ }
+        end
+        # remove +less+ option, not needed any more
+        opts.delete('less')
+        #srcs = filter_paths(srcs)
+        srcs.each do |src|
+          case into
+          when /\/$/
+            dest = File.join(into, File.basename(src))
+          when '.'
+            dest = src
+          else
+            dest = into
+          end
+          source = (cdir == '.' ? src : File.join(cdir, src))
+          list << [template_dir, source, template_to_filename(dest), opts] #dest
+        end
+      end
+      list = uniq(list)
+#list.each{ |a,b,c,d|
+#  p a,b,c,d
+#  puts
+#}
+      #allfiles.reverse.uniq.reverse
+      #allfiles.map do |f, t|
+        #if File.directory?(t)
+        #  [f, File.join(t, File.basename(f))]
+        #else
+      #    [f,t]
+        #end
+      #end
+      list
     end
+
+    #
+    def uniq(list)
+      h = {}
+      list.each do |dir, src, dest, opts|
+        h[[dir,src,dest]] = opts
+      end
+      h.inject([]){ |a,x| a << x.flatten; a }
+    end
+
+=begin
+    # Filter out special paths from copylist.
+    #
+    def filter_paths(paths)
+      filter.each do |re|
+        paths = paths.reject do |pn|
+          case re
+          when Regexp
+            re =~ pn.to_s
+          else
+            re == pn.to_s
+          end
+        end
+      end
+      paths
+    end
+=end
+
+    # Convert a template pathname into a destination pathname.
+    # This allows for substitution in the pathnames themselves
+    # by using '__name__' notation.
+    #
+    def template_to_filename(path)
+      name = path.dup #chomp('.erb')
+      name = name.gsub(/__(.*?)__/) do |md|
+        metadata.__get__($1) || 'FIXME'  # TODO: raise error?
+      end
+      #if md =~ /^(.*?)[-]$/
+      #  name = metadata[md[1]] || plugin.metadata(md[1]) || name
+      #end
+      name
+    end
+
+    # Sort the list, directory before files and in alphabetical order.
+    def copylist_sort(list)
+      dirs, files = *copylist_partition(list)
+      dirs.sort{|a,b| a[2]<=>b[2]} + files.sort{|a,b| a[2]<=>b[2]}
+    end
+
+    # Partition the list between directories and files.
+    def copylist_partition(list)
+      list.partition{ |loc, src, dest, opts| (loc + src).directory? }
+    end
+
+    # Complete destination.
+    #def copylist_dest(list)
+    #  list.collect do |src, dest|
+    #    case dest
+    #    when nil
+    #      dest = src
+    #    when '/.'
+    #      dest = src
+    #    when /\/[.]$/
+    #      dest = File.join(dest.chomp('/.'), src)
+    #    when '/', '.'
+    #      dest = File.basename(src)
+    #    when /\/$/
+    #      #dest = File.join(dest, template_to_filename(File.basename(src)))
+    #      dest = File.join(dest, File.basename(src))
+    #    #else
+    #    #  dest = dest
+    #    end
+    #    dest = template_to_filename(dest)
+    #    [src, dest]
+    #  end
+    #end
+
+    ###
+    #def erb(file)
+    #  text = nil
+    #  temp = Context.new(plugin)
+    #  begin
+    #    text = temp.erb(file)
+    #  rescue => e
+    #    if trace?
+    #      raise e
+    #    else
+    #     abort "template error -- #{file}"
+    #    end
+    #  end
+    #  return text
+    #end
+
+  end
+
+end#module Sow
+
+
+
+
 
 =begin
     #
@@ -187,129 +457,3 @@ module Sow
       end
     end
 =end
-
-    # Does the script define a package name.
-    #def name
-    #  script[:name]
-    #end
-
-    # Expand copylist by globbing entries.
-    def copylist_glob(list)
-      allfiles = []
-      dotpaths = ['.', '..']
-      list.each do |match, into, opts|
-        from = opts[:cd] || '.'
-        srcs = []
-        Dir.chdir(source + from) do
-          srcs = Dir.glob(match, File::FNM_DOTMATCH)
-          srcs = srcs.reject{ |d| File.basename(d) =~ /^[.]{1,2}$/ }
-        end
-        srcs = filter_paths(srcs)
-        srcs.each do |src|
-          case into
-          when /\/$/
-            dest = File.join(into, File.basename(src))
-          when '.'
-            dest = src
-          else
-            dest = into
-          end
-          from_src = (from == '.' ? src : File.join(from, src))
-          allfiles << [location, from_src, template_to_filename(dest), opts] #dest
-        end
-      end
-      allfiles.reverse.uniq.reverse
-      #allfiles.map do |f, t|
-        #if File.directory?(t)
-        #  [f, File.join(t, File.basename(f))]
-        #else
-      #    [f,t]
-        #end
-      #end
-    end
-
-    # Filter out special paths from copylist.
-    #
-    def filter_paths(paths)
-      filter.each do |re|
-        paths = paths.reject do |pn|
-          case re
-          when Regexp
-            re =~ pn.to_s
-          else
-            re == pn.to_s
-          end
-        end
-      end
-      paths
-    end
-
-    # Convert a template pathname into a destination pathname.
-    # This allows for substitution in the pathnames themselves
-    # by using '__name__' notation.
-    #
-    def template_to_filename(template)
-      name = template.dup #chomp('.erb')
-      name = name.gsub(/__(.*?)__/) do |md|
-        metadata.__send__($1)
-      end
-      #if md =~ /^(.*?)[-]$/
-      #  name = metadata[md[1]] || plugin.metadata(md[1]) || name
-      #end
-      name
-    end
-
-    # Complete destination.
-    #def copylist_dest(list)
-    #  list.collect do |src, dest|
-    #    case dest
-    #    when nil
-    #      dest = src
-    #    when '/.'
-    #      dest = src
-    #    when /\/[.]$/
-    #      dest = File.join(dest.chomp('/.'), src)
-    #    when '/', '.'
-    #      dest = File.basename(src)
-    #    when /\/$/
-    #      #dest = File.join(dest, template_to_filename(File.basename(src)))
-    #      dest = File.join(dest, File.basename(src))
-    #    #else
-    #    #  dest = dest
-    #    end
-    #    dest = template_to_filename(dest)
-    #    [src, dest]
-    #  end
-    #end
-
-    # Sort the list, directory before files and in alphabetical order.
-    def copylist_sort(list)
-      dirs, files = *copylist_partition(list)
-      dirs.sort{|a,b| a[2]<=>b[2]} + files.sort{|a,b| a[2]<=>b[2]}
-    end
-
-    # Partition the list between directories and files.
-    def copylist_partition(list)
-      list.partition{ |loc, src, dest, opts| (loc + src).directory? }
-    end
-
-    ###
-    #def erb(file)
-    #  text = nil
-    #  temp = Context.new(plugin)
-    #  begin
-    #    text = temp.erb(file)
-    #  rescue => e
-    #    if trace?
-    #      raise e
-    #    else
-    #     abort "template error -- #{file}"
-    #    end
-    #  end
-    #  return text
-    #end
-
-  end
-
-end#module Sow
-

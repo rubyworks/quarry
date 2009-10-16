@@ -39,13 +39,13 @@ module Sow
       # Where to find plugin files.
       #alias_method :source, :location
 
-      #
+      # TODO: rename to 'destination'
       def output
         @output ||= (
           #if session.create? && plugin.name #scaffold && session.scaffold?
           #  session.output + plugin.name
           #else
-            session.output
+            session.destination
           #end
         )
       end
@@ -76,6 +76,7 @@ module Sow
           logger.report_nothing_to_generate
           return
         end
+
 source = '' # FIXME
         logger.report_startup(source, output)
         mkdir_p(output) #unless File.directory?(output)
@@ -216,9 +217,9 @@ source = '' # FIXME
       end
 
       #
-      #def skip(src, dest)
-      #  return 'skip', dest
-      #end
+      def skip(loc, src, dest, opts)
+        return 'skip', dest
+      end
 
       # Access to FileUtils
       def fu
@@ -243,6 +244,16 @@ source = '' # FIXME
           puts "mkdir_p #{d}"
         else
           fu.mkdir_p(dir)
+        end
+      end
+
+      #
+      def chmod(mode, file)
+        if trial?
+          f = relative_to_output(file)
+          puts "chmod #{f} #{mode}"
+        else
+          fu.chmod(mode, file)
         end
       end
 

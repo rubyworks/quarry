@@ -37,7 +37,7 @@ module Sow
 
     # Use this to report any "templating" that needs
     # to done by hand.
-    def report_fixes(marker='__FIX__')
+    def report_fixes(marker='FIXME:')
       glist = check_for_fixes(marker)
       unless glist.empty?
         puts "You need to fix the occurances of '#{marker}' in the following files:\n\n"

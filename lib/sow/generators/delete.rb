@@ -6,6 +6,10 @@ module Sow
 
     # = Delete Generator
     #
+    #--
+    # TODO: should force option be require to do this?
+    #       And without force it just reports what would be deleted?
+    #++
     class Delete < Base
 
       def mark; 'delete'; end
@@ -25,9 +29,13 @@ module Sow
 
       # Delete template file.
       def delete(loc, src, dest, opts)
-        if File.exist?
+        if File.exist?(dest)
           how = 'delete'
-          rm(dest)
+          begin
+            rm(dest)
+          rescue Errno::ENOTEMPTY
+            how = 'skip'
+          end
         else
           how = 'missing'
         end

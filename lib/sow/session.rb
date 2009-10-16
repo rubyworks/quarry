@@ -11,14 +11,21 @@ module Sow
   class Session
 
     def initialize(arguments, options)
-      @arguments = arguments
-      @output    = Pathname.new(Dir.pwd)
+      @arguments   = arguments
+      @destination = Pathname.new(Dir.pwd)
+
+      #@trial  = options[:trial]
+      #@debug  = options[:debug]
+      #@quiet  = options[:quiet]
+      #@force  = options[:force]
+      #@prompt = options[:prompt]
+      #@skip   = options[:skip]
 
       options.each do |k,v|
         __send__("#{k}=", v) if respond_to?("#{k}=")
       end
 
-      if file = Dir.glob(File.join(output, '.config/sow.yaml')).first
+      if file = Dir.glob(File.join(output, '{,.}config/sow.{yml,yaml}')).first
         @config = YAML.load(File.new(file))
         @sowed = true
       else
@@ -29,18 +36,21 @@ module Sow
       @empty = Dir.glob(File.join(output, '*')).empty?
     end
 
-    attr_accessor :trial
-    attr_accessor :debug
-    attr_accessor :quiet
-    attr_accessor :force
-    attr_accessor :prompt
-    attr_accessor :skip
+    attr_writer :trial
+    attr_writer :debug
+    attr_writer :quiet
+    attr_writer :force
+    attr_writer :prompt
+    attr_writer :skip
 
-    attr_accessor :create
-    attr_accessor :update
-    attr_accessor :delete
+    attr_writer :create
+    attr_writer :update
+    attr_writer :delete
 
-    attr_accessor :output
+    attr_reader :destination
+
+    # deprecate
+    alias_method :output, :destination
 
     def trial?  ; @trial  ; end
     def debug?  ; @debug  ; end
@@ -61,8 +71,8 @@ module Sow
     end
 
     #
-    def output=(path)
-      @output = Pathname.new(path || '.')
+    def destination=(path)
+      @destination = Pathname.new(path)
     end
 
     #
@@ -91,7 +101,7 @@ module Sow
 
     # Destination has metadata?
     def metadata?
-      @metadataQ ||= ! Dir.glob(File.join(output, '{.meta,meta}/')).empty?
+      @metadata_Q ||= ! Dir.glob(File.join(output, '{.meta,meta}/')).empty?
     end
 
     # What is the outputs metadirectory?

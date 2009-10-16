@@ -35,7 +35,7 @@ module Sow
         #ext = File.extname(src)
         #case ext
         #when '.erb'
-        if opts[:verbatim]
+        if opts['verbatim']
           how = (File.exist?(dest) ? 'update' : 'create')
           #file = tmp_file.chomp('.stub')
           cp(tmp, dest)
@@ -44,6 +44,9 @@ module Sow
           text = erb(tmp) 
           how = (File.exist?(dest) ? 'update' : 'create')
           write(dest, text)
+        end
+        if opts['chmod']
+          chmod(opts['chmod'], dest)
         end
         return how, dest
       end

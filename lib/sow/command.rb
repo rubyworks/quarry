@@ -7,6 +7,8 @@ module Sow
   #
   # TODO: Provide help messages for individual plugins.
   #
+  # TODO: Move the core logic of execture to either Manger or another class.
+  #
   class Command
 
     # Initialize and execute command.
@@ -53,7 +55,7 @@ module Sow
       # the current working path.
       pathname = (arguments.pop || '.').chomp('/')
 
-      options[:output] = pathname
+      options[:destination] = pathname
 
       # All options should appear after plugin/scaffold name.
       # however, it is able to look past purely flag switches.
@@ -63,10 +65,21 @@ module Sow
 
       command = session.mode
 
-      # Collect all the selected plugins.
-      plugins = cooptions.map do |(name, value)|
+      # collect options
+      options = Hash.new{ |h,k| h[k] = {} }
+      cooptions.each do |(name, value)|
+        if name.index('.')
+          name, var = *name.split('.')
+          options[name][var] = value
+        else
+          options[name]['argument'] = value
+        end
+      end
+
+      # collect plugins
+      plugins = options.map do |(name, opts)|
         # Get plugin by name
-        plugin = manager.plugin(session, name, value, pathname)
+        plugin = manager.plugin(session, name, opts)
         # Setup the plugin
         plugin.setup #(command, arguments, options)
         #
@@ -94,10 +107,10 @@ module Sow
           generator = Generators::Update.new(session, copylist)
           generator.generate
         when :delete
-          generator = Generators::Create.new(session, copylist)
+          generator = Generators::Delete.new(session, copylist)
           generator.generate
         else
-          raise "[IMPOSSIBLE] Unknow command type."
+          raise "[IMPOSSIBLE] Unknown command type."
         end
       rescue => err
         if options[:debug]

@@ -35,10 +35,10 @@ module Sow
       @plugins ||= plugin_locations.keys
     end
 
-    def plugin(session, name, value, pathname)
+    def plugin(session, name, options)
       location = plugin_locations[name]
       raise "unknown scaffolding -- #{name}" unless location
-      Plugin.new(session, location, value, pathname)
+      Plugin.new(session, location, options)
     end
 
     # Convert path into plugin.
