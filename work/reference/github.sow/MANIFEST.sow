@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+
+# Takes one option which can either be public or private.
+# The default is public.
+
+help "Create a new GitHub repository for this project."
+
+option :privately, "make the repository private"
+
+#argument :privacy, 'public or private' do
+#  privacy
+#end
+
+manifest do
+  #copy "test.rb", "test/test_#{metadata.test_name}.rb" #, 
+  #  :test_name  => name.pathize,
+  #  :class_name => name.modulize
+end
+
+delete do
+  # before delete
+  super
+  # after delete
+end
+
+create do
+  file = XDG.config_select('github.user')
+
+  about "missing .config/github.user" unless file
+
+  config = config(file)
+
+  abort "must at least have meta/package" unless metadata.package
+  abort "missing 'login' entry in .config/github.user" unless config.login
+  abort "missing 'token' entry in .config/github.user" unless config.token
+
+  super
+
+  post("http://github.com/api/v2/yaml/repos/create") do |p|
+    p.login       = github_config.login
+    p.token       = github_config.token
+    p.name        = metadata.package
+    p.description = metadata.description
+    p.homepage    = metadata.homepage
+    p.public      = privately ? 0 : 1  # O is private
+  end
+end
+
