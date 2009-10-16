@@ -1,16 +1,20 @@
-= Sow -- Tending Project Ecology
+= Sow - Tending Project Ecology
 
-* http://proutils.rubyforge.org/sow
+* http://proutils.github.com/sow
+* http://github.com/proutils/sow
 
 
-== Introduction
+== DESCRIPTION
 
 Sow is a scaffold generator. Techincally it is a simple
 pluggable templating system based on eRuby, but it is designed 
 with project templating squarely in mind.
 
+Sowing requires seeds. Sow comes with an extra large box of
+seeds to really get those projects blooming!
 
-== Synopsis
+
+== SYNOPSIS
 
 General usage follws the pattern:
 
@@ -50,7 +54,7 @@ to build your own cusotm plugins, please see the documentation
 provided on Sow's website.
 
 
-== Installation
+== INSTALLATION
 
 === RubyGems Install
 
@@ -81,7 +85,7 @@ If you use Hoe, please see the the important message below before
 installing.
 
 
-== Hoe Users
+== HOW USERS
 
 *IMPORTANT NOTICE FOR HOE USERS!*
 
@@ -102,7 +106,7 @@ Note, that Hoe scaffolding does not support the in-project templating
 system. To get that you need to add a .meta/ directory to your project.
 
 
-== Development
+== DEVELOPMENT
 
 Sow is being developed on <a href="http://hithub.com">GitHub</a>, as part of the
 ProUtils set of project development tools. You can browse the Sow project here:
@@ -121,9 +125,12 @@ Sow occurs on the TigerOps Community Mailinglist.
 Happy hacking!
 
 
-== Copying
+== COPYRIGHT & LICENSE
 
 Copyright (c) 2007, 2009 Thomas Sawyer
+
+Unless other premmited by the author, this software is distributed under
+the terms of the GPL version 3 license.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -137,4 +144,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+
+Please see COPYING file for details.
 
