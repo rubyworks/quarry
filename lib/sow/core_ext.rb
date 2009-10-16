@@ -3,6 +3,7 @@ require 'fileutils'
 
 # Facets Core
 require 'facets/kernel/ask'
+require 'facets/hash/rekey'
 require 'facets/file/rootname'
 require 'facets/file/split_root'
 require 'facets/module/basename'

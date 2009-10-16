@@ -9,30 +9,40 @@ module Sow
   class Script
 
     #
+
     def self.registry
       @registry ||= {}
     end
 
     #
+
     def self.inherited(base)
       registry[base.basename.downcase] = base
     end
 
-    #
+    # Setup procedure, used to setup metadata.
+
     def self.setup(&block)
       define_method(:setup,&block)
     end
 
-    #
+    # Manifest procedure, used to invoke #copy.
+
     def self.manifest(&block)
       define_method(:manifest,&block)
     end
 
-    #
+    # Specify a valid option.
+
     def self.option(name)
       attr_accessor(name)
     end
 
+    # Give the main argument a name.
+
+    def self.argument(name)
+      define_method(name){ argument }
+    end
 
     # Override and setup metadata and validate.
     # If something does jive, then use #abort to
@@ -46,15 +56,31 @@ module Sow
       copy '**/*', '.'
     end
 
+    #
+    attr :session
+
+    #
+    attr :options
+
+    #
+    attr :copylist
+
+    #
+    def initialize(session, options)
+      @session = session
+      @options = options
+
+      #@location = Pathname.new(location)
+      @metadata = OpenStruct.new
+
+      @copylist  = []
+    end
+
     # Main argument.
 
-    attr :argument
-
-    # Destiation pathname. This is used by some plugins,
-    # particularly full-project scaffolds, as a default
-    # package name. It is the basename of the output directory.
-
-    attr :pathname
+    def argument
+      options.argument
+    end
 
     # Access to Metadata. When the script is initially executed,
     # ie. toplevel and argument blocks, this is an OpenStruct.
@@ -64,27 +90,16 @@ module Sow
     # metadata, so that it can be used in the copy calls, if
     # needed.
 
-    attr :metadata
+    def metadata
+      session.metadata
+    end
 
-    #
-    attr :copylist
+    # Destiation pathname. This is used by some plugins,
+    # particularly full-project scaffolds, as a default
+    # package name. It is the basename of the output directory.
 
-    #
-    def initialize(session, metadata, pathname, argument, options) #, metadata)
-      @session   = session
-      @metadata  = metadata
-      @pathname  = File.basename(pathname)
-      @argument  = argument
-
-      #@location = Pathname.new(location)
-      @metadata = OpenStruct.new
-
-      options.each do |k,v|
-        __send__("#{k}=",v)
-      end
-
-      #@copytemp  = []
-      @copylist  = []
+    def destination
+      session.destination
     end
 
     #def values
@@ -138,7 +153,7 @@ module Sow
       opts = Hash===from_to_opts.last ? from_to_opts.pop : {}
       from, to = *from_to_opts
       to = to || '.'
-      @copylist << [from, to, opts]
+      @copylist << [from, to, opts.rekey(&:to_s)]
     end
 
     #
@@ -178,3 +193,4 @@ module Sow
   end
 
 end#module Sow
+

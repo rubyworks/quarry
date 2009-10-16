@@ -40,7 +40,7 @@ module Sow
     def report_fixes(marker='FIXME:')
       glist = check_for_fixes(marker)
       unless glist.empty?
-        puts "You need to fix the occurances of '#{marker}' in the following files:\n\n"
+        puts "\nYou need to fix the occurances of '#{marker}' in the following files:\n\n"
         glist.each do |file|
           puts "      #{file}"
         end

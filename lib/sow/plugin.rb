@@ -42,7 +42,6 @@ module Sow
       @options  = options.to_ostruct
 
       @location    = Pathname.new(location)
-      @destination = Pathname.new(session.destination)
 
       @copy = []
     end
@@ -53,8 +52,13 @@ module Sow
     end
 
     #
+    def destination
+      session.destination
+    end
+
+    #
     def argument
-      @options.argument
+      options.argument
     end
 
     # Directory with template files.
@@ -84,22 +88,35 @@ module Sow
 
     #
     def usage
-      @usage ||= Usage.new(usage_file)
+      @usage ||= (
+        if usage_file
+          Usage.new(usage_file)
+        else
+          "Generate #{self.class.name} scaffolding."
+        end
+      )
     end
 
     #
     def meta
       @meta ||= (
-        meta = YAML.load(File.new(meta_file))
-        meta
+        if meta_file
+          YAML.load(File.new(meta_file))
+        else
+          {}
+        end
       )
     end
 
     #
     def seed
       @seed ||= (
-        res = template.erb_result(File.read(seed_file))
-        YAML.load(res)
+        if seed_file
+          res = template.erb_result(File.read(seed_file))
+          YAML.load(res)
+        else
+          [{'from' => '**/*'}]
+        end
       )
     end
 
@@ -143,7 +160,7 @@ module Sow
       if script_file
         require(File.expand_path(script_file))
         scriptClass = Script.registry[location.basename.to_s]
-        @script = scriptClass.new(session, metadata, destination, argument, options)
+        @script = scriptClass.new(session, options)
         @script.setup
         @script.manifest
         @copy = @script.copylist
@@ -212,6 +229,7 @@ module Sow
     #
     def prepare_seed
       seed.each do |opts|
+        opts.rekey!(&:to_s)
         from = opts.delete('from')
         to   = opts.delete('to') || '.'
         cond = opts.delete('if')
@@ -255,12 +273,13 @@ module Sow
     #end
 
     # Expand copylist by globbing entries.
+
     def copylist_glob(copylist)
       list = []
       dotpaths = ['.', '..']
 
       copylist.each do |from, into, opts|
-        cdir = opts[:cd] || '.'
+        cdir = opts['cd'] || '.'
         srcs = []
         Dir.chdir(template_dir + cdir) do
           srcs = Dir.glob(from, File::FNM_DOTMATCH)
@@ -284,22 +303,13 @@ module Sow
         end
       end
       list = uniq(list)
-#list.each{ |a,b,c,d|
-#  p a,b,c,d
-#  puts
-#}
-      #allfiles.reverse.uniq.reverse
-      #allfiles.map do |f, t|
-        #if File.directory?(t)
-        #  [f, File.join(t, File.basename(f))]
-        #else
-      #    [f,t]
-        #end
-      #end
       list
     end
 
-    #
+    # Reduce copylist to uniq transfers. If transfers are the same
+    # the later transfere takes precedence. Transfire options are
+    # not considered in determining uniquness.
+
     def uniq(list)
       h = {}
       list.each do |dir, src, dest, opts|
