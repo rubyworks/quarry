@@ -1,13 +1,27 @@
-#!/usr/bin/env ruby
+# How plugin, to make up for the fact the Sow clobber's
+# Hoe's +sow+ command.
+#
+# It's silly for Hoe to have a command called +sow+ when
+# it could just as well used +hoe+ andyway.
 
-about "Scaffold a new Hoe ready project."
+module Sow::Plugins
 
-usage "hoe [options] <name>"
+  # Scaffold a new Hoe-ready project
+  #
+  class Hoe < Script
 
-argument :name do |name|
-  abort "Project name argument required." unless name
-  metadata.name = name
+    option :name
+
+    setup do
+      abort "Project name argument required." unless name
+      metadata.name = name
+    end
+
+    manifest do
+      copy "**/*", '.'
+    end
+
+  end
+
 end
-
-copy "**/*", '.'
 

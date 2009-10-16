@@ -5,9 +5,9 @@
 
 about "Generate a new test/unit skeleton."
 
-usage "testunit [options] <test>"
+usage "--testunit=<testname>"
 
-argument :name, 'test file or class name' do
+argument :name, 'test file or class name' do |name|
   abort "No test name given." unless name
   abort "Test name must ba a single word" if name =~ /\s+/
   metadata.class_name = name.modulize
@@ -15,8 +15,10 @@ argument :name, 'test file or class name' do
 end
 
 scaffold do
-  copy "test.rb", "test/test_#{metadata.test_name}.rb" #, 
-  #  :test_name  => name.pathize,
-  #  :class_name => name.modulize
+  test_dir = Dir['{test/unit,test}/'].first || 'test/'
+  form_dir = Dir['{form{,s}/'].first || 'form/'
+
+  copy "test/test_template.rb", "#{test_dir}test_#{metadata.test_name}.rb"
+  copy "form/testunit", "#{form_dir}testunit", :chmod => 0755
 end
 

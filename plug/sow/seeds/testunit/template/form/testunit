@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+
+force = ARGV.delete('-f') || ARGV.delete('--force')
+name  = ARGV.first
+file = "test/test_#{name}"
+
+content = <<-END
+require 'test_helper.rb'
+
+class TC_#{name} < Test::Unit::TestCase
+  def test_#{name}
+  end
+end
+END
+
+if File.exist?(file) && !force
+  puts "overwrite -- #{file}"
+else
+  mkdir_p("test")
+  File.open("test/test_#{name}", 'w'){ |f| f << content }
+end
+

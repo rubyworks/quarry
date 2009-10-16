@@ -1,0 +1,8 @@
+---
+
+validate:
+  abort "project name must be a single word" unless package && package =~ /\w+/
+
+package:
+  argument || metadata.package || destination.basename.to_s
+

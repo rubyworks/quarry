@@ -1,0 +1,12 @@
+---
+- from : test
+  to   : <%= test_dir %>
+
+- from : form/testunit
+  to   : <%= form_dir %>/testunit
+  chmod: 0754
+
+- from : test/test_template.rb
+  to   : <%= test_dir %>/test_<%= test_name %>.rb
+  if   : name
+

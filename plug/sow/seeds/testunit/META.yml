@@ -1,0 +1,23 @@
+# Test::Unit Template
+
+validate:
+  abort "Test name must ba a single word" if name =~ /\s+/
+
+name:
+  options['name'] || metadata.package
+
+test_dir:
+  argument  #dir if dir
+
+class_name:
+  name.modulize if name
+
+test_name:
+  name.pathize if name
+
+test_dir:
+  (Dir['{test/unit,test}/'].first || 'test').chomp('/')
+
+form_dir:
+  (Dir['{form{,s}/'].first || 'form/').chomp('/')
+

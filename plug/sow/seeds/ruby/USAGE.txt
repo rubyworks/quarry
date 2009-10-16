@@ -1,0 +1,8 @@
+Traditional Ruby project scaffolding
+
+  --ruby[=<name>]
+
+This provides the common structures for a standard
+Ruby project. If name is not given the basename
+of the destination path will be used.
+

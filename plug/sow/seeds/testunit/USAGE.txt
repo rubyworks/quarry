@@ -1,0 +1,11 @@
+Generate Test::Unit Scaffolding
+
+Usage:
+  --testunit
+  --testunit.dir=<PATH>
+  --testunit.name=<TEST>
+
+Generates scaffolding for using Test::Unit in your 
+Ruby project. If a test name is given will also
+template a test by that name.
+

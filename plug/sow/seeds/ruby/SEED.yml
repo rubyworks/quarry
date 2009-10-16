@@ -1,0 +1,14 @@
+---
+
+- from: "**/*"
+  less: "meta/*"
+
+- from: "meta/*"
+  to  : <%= metadir %>
+
+- from: "bin/*"
+  chmod: 0744
+
+- from: README.rdoc.till
+  verbatim: true
+

@@ -1,0 +1,43 @@
+= <%= title %>
+
+* <%= homepage %>
+
+
+== DESCRIPTION
+
+<%= description %>
+
+
+== RELEASE NOTES
+
+Please see HISTORY file.
+
+
+== HOW TO INSTALL
+
+To install with RubyGems simply open a console and type:
+
+  gem install <%= package %>
+
+To manually installation, download the tgz package and type:
+
+  tar -xvzf <%= package %>-x.y.z.tgz
+  cd <%= package %>-x.y.z.tgz
+  sudo ruby setup.rb config
+  sudo ruby setup.rb setup
+  sudo ruby setup.rb install
+
+
+== SYNOPSIS
+
+Describe how to use your library or application here.  __FIX__
+
+
+== LICENSE
+
+Copyright (c) 2008 <%= author %>
+
+This program is ditributed unser the terms of the <%= license %> license.
+
+Please see COPYING file.
+

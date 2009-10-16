@@ -1,17 +1,22 @@
-#!/usr/bin/env ruby
+module Sow::Plugins
 
-about "Scaffold a bin command."
+  # Scaffold a ruby bin/ file.
+  #
+  class Bin < Script
 
-usage "--bin[=<command-name>]"
+    option :name
 
-argument(:name, 'name of command file') do |val|
-  val = val || pathname
-  abort "Exectuable name is required." unless val
-  abort "Executable name must be a single word." if /\w/ !~ val
-  val
-end
+    setup do
+      @name = argument || destination
+      abort "Exectuable name is required." unless name
+      abort "Executable name must be a single word." if /\w/ !~ name
+    end
 
-scaffold do
-  copy 'bin/command.rb', "bin/#{name}", :chmod => 0755
+    manifest do
+      copy 'bin/command.rb', "bin/#{@name}", :chmod => 0754
+    end
+
+  end
+
 end
 
