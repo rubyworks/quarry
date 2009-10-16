@@ -1,3 +1,4 @@
+require '<%= package %>'
 require 'test/unit'
 
 class TC_Sample < Test::Unit::TestCase
