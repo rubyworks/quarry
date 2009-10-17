@@ -1,5 +1,11 @@
 = TODO List
 
+== Statics
+
+Allow for a static/ directory in a plugin. The files in
+this directory will be copied verbatim.
+
+
 == Partials
 
 Scaffolds themselves support partial scaffolding when sow is in
