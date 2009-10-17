@@ -307,7 +307,7 @@ module Sow
         srcs.each do |src|
           case into
           when /\/$/
-            dest = File.join(into, File.basename(src))
+            dest = File.join(into, src) #File.basename(src))
           when '.'
             dest = src
           else
