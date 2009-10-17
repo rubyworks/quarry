@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Provide debugging information?
+full_name: Sow::Session#debug?
+is_singleton: false
+name: debug?
+params: ()
+visibility: public

@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: don't use grep"
+full_name: Sow::Logger#check_for_fixes
+is_singleton: false
+name: check_for_fixes
+params: (marker)
+visibility: public

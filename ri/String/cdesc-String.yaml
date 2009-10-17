@@ -1,0 +1,20 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: []
+
+class_methods: []
+
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::VERB 
+  body: " ARE THESE NEEDED?\n"
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "require 'facets/yaml' # for to_yamlfrag require 'facets/string/snakecase' require 'facets/string/camelcase' require 'sow/openext'"
+constants: []
+
+full_name: String
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: to_list
+name: String
+superclass: Object

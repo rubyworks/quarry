@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: Sow::Logger</title>
+
+  
+    <link rel="SHORTCUT ICON" href="../images/class.png">
+  
+
+  <link type="text/css" media="screen" rel="stylesheet" href="../rdoc.css" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+  <div class="head">
+    <h1>
+      
+        <img src="../images/class.png" align="absmiddle">&nbsp;
+      
+      <a href="../index.html">Sow</a>&nbsp;
+      <a href="/">Sow::Logger</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li class="file"><a href="../lib/sow/logger_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/sow/logger.rb">lib/sow/logger.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        <ul>
+          
+          <li class="class">Object</li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Namespace Contents -->
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li class="method"><a href="#M000008">::new</a></li>
+          
+          <li class="method"><a href="#M000025">#check_for_fixes</a></li>
+          
+          <li class="method"><a href="#M000026">#report</a></li>
+          
+          <li class="method"><a href="#M000018">#report_complete</a></li>
+          
+          <li class="method"><a href="#M000019">#report_create</a></li>
+          
+          <li class="method"><a href="#M000024">#report_fixes</a></li>
+          
+          <li class="method"><a href="#M000011">#report_nothing_to_generate</a></li>
+          
+          <li class="method"><a href="#M000012">#report_startup</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="../HISTORY.html">HISTORY</a></li>
+        
+          <li class="file"><a href="../NOTES.html">NOTES</a></li>
+        
+          <li class="file"><a href="../README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <!-- classpage.html : classes -->
+        <ul class="link-list">
+        
+          <li class="module"><a href="../Sow.html">Sow</a></li>
+        
+          <li class="class"><a href="../Sow/Command.html">Sow::Command</a></li>
+        
+          <li class="class"><a href="../Sow/Context.html">Sow::Context</a></li>
+        
+          <li class="module"><a href="../Sow/Generators.html">Sow::Generators</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Base.html">Sow::Generators::Base</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Create.html">Sow::Generators::Create</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Delete.html">Sow::Generators::Delete</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Update.html">Sow::Generators::Update</a></li>
+        
+          <li class="class"><a href="../Sow/Logger.html">Sow::Logger</a></li>
+        
+          <li class="class"><a href="../Sow/Manager.html">Sow::Manager</a></li>
+        
+          <li class="class"><a href="../Sow/Metadata.html">Sow::Metadata</a></li>
+        
+          <li class="class"><a href="../Sow/Plugin.html">Sow::Plugin</a></li>
+        
+          <li class="module"><a href="../Sow/Plugins.html">Sow::Plugins</a></li>
+        
+          <li class="class"><a href="../Sow/Script.html">Sow::Script</a></li>
+        
+          <li class="class"><a href="../Sow/Session.html">Sow::Session</a></li>
+        
+          <li class="class"><a href="../String.html">String</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+
+    <div id="validator-badges">
+      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a><br/><br/>
+      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+    </div>
+  </div>
+
+  <div id="documentation">
+
+    <div id="description">
+      
+        <h1>Logger</h1>
+      
+
+      <p>
+The <a href="Logger.html">Logger</a> class routes output to the console.
+</p>
+
+    </div>
+
+    <!-- Constants -->
+    
+
+    <!-- Attributes -->
+    
+    <div id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="generator-attribute-method" class="method-detail">
+        <a name="generator"></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">generator</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- Methods -->
+    
+    <div id="public-class-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="new-method" class="method-detail ">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new</span><span
+            class="method-args">(generator)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="new-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/logger.rb, line 11</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">generator</span>)
+      <span class="ruby-ivar">@generator</span> = <span class="ruby-identifier">generator</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="public-instance-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="check-for-fixes-method" class="method-detail ">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">check_for_fixes</span><span
+            class="method-args">(marker)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+TODO: don&#8217;t use grep
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="check-for-fixes-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/logger.rb, line 52</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_for_fixes</span>(<span class="ruby-identifier">marker</span>)
+      <span class="ruby-identifier">g</span> = <span class="ruby-node">`grep -R #{marker} .`</span> <span class="ruby-comment cmt"># FIXME Use ruby code instead</span>
+      <span class="ruby-identifier">glist</span> = []
+      <span class="ruby-identifier">g</span>.<span class="ruby-identifier">each_line</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">line</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'./'</span>,<span class="ruby-value str">''</span>)
+        <span class="ruby-identifier">indx</span> = <span class="ruby-identifier">line</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">':'</span>)
+        <span class="ruby-identifier">file</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">desc</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">':'</span>)
+        <span class="ruby-identifier">glist</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">file</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">glist</span>.<span class="ruby-identifier">uniq</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="report-complete-method" class="method-detail ">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">report_complete</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Output to provide when generation is complete.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="report-complete-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/logger.rb, line 29</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report_complete</span>
+      <span class="ruby-identifier">report</span> <span class="ruby-value str">&quot;\nFinished in %.3f seconds.&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-ivar">@time</span>]
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="report-create-method" class="method-detail ">
+        <a name="M000019"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">report_create</span><span
+            class="method-args">(file, how, atime)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Output to provide as generation is progressing.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="report-create-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/logger.rb, line 34</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report_create</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">how</span>, <span class="ruby-identifier">atime</span>)
+      <span class="ruby-identifier">report</span> <span class="ruby-value str">&quot;%10s [%.4fs] %s&quot;</span> <span class="ruby-operator">%</span> [<span class="ruby-identifier">how</span>, (<span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">atime</span>), <span class="ruby-identifier">file</span>]
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="report-fixes-method" class="method-detail ">
+        <a name="M000024"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">report_fixes</span><span
+            class="method-args">(marker='FIXME:')</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Use this to report any &#8220;templating&#8221; that needs to done by hand.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="report-fixes-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/logger.rb, line 40</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report_fixes</span>(<span class="ruby-identifier">marker</span>=<span class="ruby-value str">'FIXME:'</span>)
+      <span class="ruby-identifier">glist</span> = <span class="ruby-identifier">check_for_fixes</span>(<span class="ruby-identifier">marker</span>)
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">glist</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\nYou need to fix the occurances of '#{marker}' in the following files:\n\n&quot;</span>
+        <span class="ruby-identifier">glist</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;      #{file}&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">puts</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="report-nothing-to-generate-method" class="method-detail ">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">report_nothing_to_generate</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+If there is nothing to generate this will be called to display a message to
+the effect.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="report-nothing-to-generate-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/logger.rb, line 17</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report_nothing_to_generate</span>
+      <span class="ruby-identifier">report</span> <span class="ruby-value str">&quot;Nothing to generate.&quot;</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="report-startup-method" class="method-detail ">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">report_startup</span><span
+            class="method-args">(source, output)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Output to provide on startup of generation.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="report-startup-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/logger.rb, line 22</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report_startup</span>(<span class="ruby-identifier">source</span>, <span class="ruby-identifier">output</span>) <span class="ruby-comment cmt"># FIXME: pass what info?</span>
+      <span class="ruby-ivar">@time</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+      <span class="ruby-identifier">dir</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">source</span>) <span class="ruby-comment cmt">#File.basename(File.dirname(source))</span>
+      <span class="ruby-identifier">report</span> <span class="ruby-node">&quot;Generating #{dir} in #{File.basename(output)}:\n\n&quot;</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="private-instance-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="report-method" class="method-detail ">
+        <a name="M000026"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">report</span><span
+            class="method-args">(message)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="report-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/logger.rb, line 66</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report</span>(<span class="ruby-identifier">message</span>)
+      <span class="ruby-identifier">puts</span> <span class="ruby-identifier">message</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">generator</span>.<span class="ruby-identifier">quiet?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">generator</span>.<span class="ruby-identifier">trial?</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+
+  <div id="rdoc-debugging-section-dump" class="debugging-section">
+  
+    <p>Disabled; run with --debug to generate this.</p>
+  
+  </div>
+
+</body>
+</html>

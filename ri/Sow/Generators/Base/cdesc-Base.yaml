@@ -1,0 +1,100 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: 
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  name: context
+  rw: R
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: attr :location
+  name: copylist
+  rw: R
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  name: logger
+  rw: R
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  name: session
+  rw: R
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Base Class for the generators. This provides the backbone of Sow's operations. Essentially a plugin provides a copylist to the generator, which cleans it up and uses it for it's specific task, eg. create, update or delete.
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Base Class for the generators. This provides the backbone of Sow's operations. Essentially a plugin provides a copylist to the generator, which cleans it up and uses it for it's specific task, eg. create, update or delete.
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Base Class for the generators. This provides the backbone of Sow's operations. Essentially a plugin provides a copylist to the generator, which cleans it up and uses it for it's specific task, eg. create, update or delete.
+constants: []
+
+full_name: Sow::Generators::Base
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: actionlist
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: actionlist_check
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: actionlist_mark
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: actionlist_safe
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: actionlist_sort
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: arguments
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: check_conflicts
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: check_overwrite
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: chmod
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: cp
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: debug?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: erb
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: force?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: fu
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: generate
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: inspect
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: mark
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: metadata
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: mkdir_p
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: newproject?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: output
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: prompt?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: quiet?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: relative_to_output
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: rm
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: skip
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: skip?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: trial?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: write
+name: Base
+superclass: Object

@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: Sow::Manager</title>
+
+  
+    <link rel="SHORTCUT ICON" href="../images/class.png">
+  
+
+  <link type="text/css" media="screen" rel="stylesheet" href="../rdoc.css" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+  <div class="head">
+    <h1>
+      
+        <img src="../images/class.png" align="absmiddle">&nbsp;
+      
+      <a href="../index.html">Sow</a>&nbsp;
+      <a href="/">Sow::Manager</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li class="file"><a href="../lib/sow/manager_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/sow/manager.rb">lib/sow/manager.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        <ul>
+          
+          <li class="class">Object</li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Namespace Contents -->
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li class="method"><a href="#M000082">::new</a></li>
+          
+          <li class="method"><a href="#M000085">#plugin</a></li>
+          
+          <li class="method"><a href="#M000083">#plugin_locations</a></li>
+          
+          <li class="method"><a href="#M000084">#plugins</a></li>
+          
+          <li class="method"><a href="#M000087">#plugins_from_packages</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="../HISTORY.html">HISTORY</a></li>
+        
+          <li class="file"><a href="../NOTES.html">NOTES</a></li>
+        
+          <li class="file"><a href="../README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <!-- classpage.html : classes -->
+        <ul class="link-list">
+        
+          <li class="module"><a href="../Sow.html">Sow</a></li>
+        
+          <li class="class"><a href="../Sow/Command.html">Sow::Command</a></li>
+        
+          <li class="class"><a href="../Sow/Context.html">Sow::Context</a></li>
+        
+          <li class="module"><a href="../Sow/Generators.html">Sow::Generators</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Base.html">Sow::Generators::Base</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Create.html">Sow::Generators::Create</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Delete.html">Sow::Generators::Delete</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Update.html">Sow::Generators::Update</a></li>
+        
+          <li class="class"><a href="../Sow/Logger.html">Sow::Logger</a></li>
+        
+          <li class="class"><a href="../Sow/Manager.html">Sow::Manager</a></li>
+        
+          <li class="class"><a href="../Sow/Metadata.html">Sow::Metadata</a></li>
+        
+          <li class="class"><a href="../Sow/Plugin.html">Sow::Plugin</a></li>
+        
+          <li class="module"><a href="../Sow/Plugins.html">Sow::Plugins</a></li>
+        
+          <li class="class"><a href="../Sow/Script.html">Sow::Script</a></li>
+        
+          <li class="class"><a href="../Sow/Session.html">Sow::Session</a></li>
+        
+          <li class="class"><a href="../String.html">String</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+
+    <div id="validator-badges">
+      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a><br/><br/>
+      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+    </div>
+  </div>
+
+  <div id="documentation">
+
+    <div id="description">
+      
+        <h1>Manager</h1>
+      
+
+      <p>
+The <a href="Manager.html">Manager</a> class locates sow plugins.
+</p>
+
+    </div>
+
+    <!-- Constants -->
+    
+    <div id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt><a name="PLUGIN_DIRECTORY">PLUGIN_DIRECTORY</a></dt>
+        
+        <dd class="description"></dd>
+        
+      
+      </dl>
+    </div>
+    
+
+    <!-- Attributes -->
+    
+
+    <!-- Methods -->
+    
+    <div id="public-class-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="new-method" class="method-detail ">
+        <a name="M000082"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="new-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/manager.rb, line 13</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="public-instance-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="plugin-method" class="method-detail ">
+        <a name="M000085"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">plugin</span><span
+            class="method-args">(session, name, options)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="plugin-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/manager.rb, line 38</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plugin</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span>)
+      <span class="ruby-identifier">location</span> = <span class="ruby-identifier">plugin_locations</span>[<span class="ruby-identifier">name</span>]
+      <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;unknown scaffolding -- #{name}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">location</span>
+      <span class="ruby-constant">Plugin</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">location</span>, <span class="ruby-identifier">options</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="plugin-locations-method" class="method-detail ">
+        <a name="M000083"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">plugin_locations</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+<a href="Plugins.html">Plugins</a>
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="plugin-locations-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/manager.rb, line 20</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plugin_locations</span>
+      <span class="ruby-ivar">@plugin_locations</span> <span class="ruby-operator">||=</span> (
+        <span class="ruby-identifier">pl</span> = {}
+        <span class="ruby-identifier">pa</span> = []
+        <span class="ruby-identifier">pa</span> <span class="ruby-operator">|=</span> <span class="ruby-identifier">plugins_from_packages</span>
+       <span class="ruby-comment cmt">#pa |= plugins_core)</span>
+       <span class="ruby-comment cmt">#pa |= plugins_user</span>
+        <span class="ruby-identifier">pa</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">pl</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">d</span>)] = <span class="ruby-identifier">d</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">pl</span>
+      )
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="plugins-method" class="method-detail ">
+        <a name="M000084"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">plugins</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="plugins-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/manager.rb, line 34</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plugins</span>
+      <span class="ruby-ivar">@plugins</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">plugin_locations</span>.<span class="ruby-identifier">keys</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="plugins-from-packages-method" class="method-detail ">
+        <a name="M000087"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">plugins_from_packages</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+This routine searches for seeds (sow plugins),
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="plugins-from-packages-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/manager.rb, line 52</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">plugins_from_packages</span>
+      <span class="ruby-identifier">match</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">PLUGIN_DIRECTORY</span>, <span class="ruby-value str">'*/'</span>)
+      <span class="ruby-constant">PluginManager</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">match</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">path</span>.<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'/'</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+
+  <div id="rdoc-debugging-section-dump" class="debugging-section">
+  
+    <p>Disabled; run with --debug to generate this.</p>
+  
+  </div>
+
+</body>
+</html>

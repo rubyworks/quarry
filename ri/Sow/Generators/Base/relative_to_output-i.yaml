@@ -1,0 +1,11 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: []
+
+full_name: Sow::Generators::Base#relative_to_output
+is_singleton: false
+name: relative_to_output
+params: (dest)
+visibility: private

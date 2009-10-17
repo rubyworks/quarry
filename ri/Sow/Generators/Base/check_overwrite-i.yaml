@@ -1,0 +1,14 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Check for any overwrites. If generator allows overwrites this will be skipped, otherewise an error will be raised.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: Make this a list filter with check for &quot;identical&quot; files?"
+full_name: Sow::Generators::Base#check_overwrite
+is_singleton: false
+name: check_overwrite
+params: (list)
+visibility: private

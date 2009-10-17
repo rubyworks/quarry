@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Main command called to generate files.
+full_name: Sow::Generators::Base#generate
+is_singleton: false
+name: generate
+params: ()
+visibility: public

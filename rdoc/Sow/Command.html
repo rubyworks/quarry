@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: Sow::Command</title>
+
+  
+    <link rel="SHORTCUT ICON" href="../images/class.png">
+  
+
+  <link type="text/css" media="screen" rel="stylesheet" href="../rdoc.css" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+  <div class="head">
+    <h1>
+      
+        <img src="../images/class.png" align="absmiddle">&nbsp;
+      
+      <a href="../index.html">Sow</a>&nbsp;
+      <a href="/">Sow::Command</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li class="file"><a href="../lib/sow/command_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/sow/command.rb">lib/sow/command.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        <ul>
+          
+          <li class="class">Object</li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Namespace Contents -->
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li class="method"><a href="#M000034">::execute</a></li>
+          
+          <li class="method"><a href="#M000036">::new</a></li>
+          
+          <li class="method"><a href="#M000049">#command</a></li>
+          
+          <li class="method"><a href="#M000038">#execute</a></li>
+          
+          <li class="method"><a href="#M000052">#help</a></li>
+          
+          <li class="method"><a href="#M000037">#manager</a></li>
+          
+          <li class="method"><a href="#M000047">#parse_argv</a></li>
+          
+          <li class="method"><a href="#M000051">#standard_options</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="../HISTORY.html">HISTORY</a></li>
+        
+          <li class="file"><a href="../NOTES.html">NOTES</a></li>
+        
+          <li class="file"><a href="../README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <!-- classpage.html : classes -->
+        <ul class="link-list">
+        
+          <li class="module"><a href="../Sow.html">Sow</a></li>
+        
+          <li class="class"><a href="../Sow/Command.html">Sow::Command</a></li>
+        
+          <li class="class"><a href="../Sow/Context.html">Sow::Context</a></li>
+        
+          <li class="module"><a href="../Sow/Generators.html">Sow::Generators</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Base.html">Sow::Generators::Base</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Create.html">Sow::Generators::Create</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Delete.html">Sow::Generators::Delete</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Update.html">Sow::Generators::Update</a></li>
+        
+          <li class="class"><a href="../Sow/Logger.html">Sow::Logger</a></li>
+        
+          <li class="class"><a href="../Sow/Manager.html">Sow::Manager</a></li>
+        
+          <li class="class"><a href="../Sow/Metadata.html">Sow::Metadata</a></li>
+        
+          <li class="class"><a href="../Sow/Plugin.html">Sow::Plugin</a></li>
+        
+          <li class="module"><a href="../Sow/Plugins.html">Sow::Plugins</a></li>
+        
+          <li class="class"><a href="../Sow/Script.html">Sow::Script</a></li>
+        
+          <li class="class"><a href="../Sow/Session.html">Sow::Session</a></li>
+        
+          <li class="class"><a href="../String.html">String</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+
+    <div id="validator-badges">
+      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a><br/><br/>
+      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+    </div>
+  </div>
+
+  <div id="documentation">
+
+    <div id="description">
+      
+        <h1>Command</h1>
+      
+
+      <p>
+<a href="../Sow.html">Sow</a> Commandline Utility.
+</p>
+<p>
+TODO: Provide help messages for individual plugins.
+</p>
+<p>
+TODO: Move the core logic of execture to either Manger or another class.
+</p>
+
+    </div>
+
+    <!-- Constants -->
+    
+    <div id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt><a name="STANDARD_OPTIONS">STANDARD_OPTIONS</a></dt>
+        
+        <dd class="description missing-docs">(Not documented)</dd>
+        
+      
+      </dl>
+    </div>
+    
+
+    <!-- Attributes -->
+    
+    <div id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="argv-attribute-method" class="method-detail">
+        <a name="argv"></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">argv</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Commandline arguments.
+</p>
+        
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- Methods -->
+    
+    <div id="public-class-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="execute-method" class="method-detail ">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">execute</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Initialize and execute command.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="execute-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/command.rb, line 15</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">execute</span>
+      <span class="ruby-identifier">new</span>.<span class="ruby-identifier">execute</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="new-method" class="method-detail ">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new</span><span
+            class="method-args">(argv=ARGV)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+New <a href="Command.html">Command</a>.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="new-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/command.rb, line 23</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">argv</span>=<span class="ruby-constant">ARGV</span>)
+      <span class="ruby-ivar">@argv</span> = <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">dup</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="public-instance-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="command-method" class="method-detail ">
+        <a name="M000049"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">command</span><span
+            class="method-args">(options)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Return command type based on option.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="command-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/command.rb, line 145</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">command</span>(<span class="ruby-identifier">options</span>)
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:create</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:create</span>] <span class="ruby-comment cmt">#|| options[:c]</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:update</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:update</span>] <span class="ruby-comment cmt">#|| options[:u]</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:delete</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:delete</span>] <span class="ruby-comment cmt">#|| options[:d]</span>
+      <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="execute-method" class="method-detail ">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">execute</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Run command.
+</p>
+<p>
+TODO: Should we look up the directory tree for a .config/sow.yaml file to
+determine if this has been previously sowed and maybe change directory to
+that location?
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="execute-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/command.rb, line 38</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">execute</span>
+      <span class="ruby-identifier">arguments</span>, <span class="ruby-identifier">cooptions</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">parse_argv</span>(<span class="ruby-identifier">argv</span>)
+
+      <span class="ruby-comment cmt"># Extract standard commandline options.</span>
+      <span class="ruby-identifier">options</span>, <span class="ruby-identifier">cooptions</span> = <span class="ruby-identifier">standard_options</span>(<span class="ruby-identifier">cooptions</span>)
+
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:help</span>]
+        <span class="ruby-identifier">puts</span> <span class="ruby-identifier">help</span>
+        <span class="ruby-identifier">exit</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># Ensure only one command type selected.</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-value str">%{create delete update}</span>.<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_sym</span>] }.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Conflicting commands. Choose one: create, delete or update.&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># Path to destination is the last argument, if given. Otherwise it is</span>
+      <span class="ruby-comment cmt"># the current working path.</span>
+      <span class="ruby-identifier">pathname</span> = (<span class="ruby-identifier">arguments</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'.'</span>).<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'/'</span>)
+
+      <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:destination</span>] = <span class="ruby-identifier">pathname</span>
+
+      <span class="ruby-comment cmt"># All options should appear after plugin/scaffold name.</span>
+      <span class="ruby-comment cmt"># however, it is able to look past purely flag switches.</span>
+      <span class="ruby-comment cmt">#name = arguments.find{ |e| e !~ /^\-/ }</span>
+
+      <span class="ruby-identifier">session</span> = <span class="ruby-constant">Session</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">arguments</span>, <span class="ruby-identifier">options</span>)
+
+      <span class="ruby-identifier">command</span> = <span class="ruby-identifier">session</span>.<span class="ruby-identifier">mode</span>
+
+      <span class="ruby-comment cmt"># collect options</span>
+      <span class="ruby-identifier">options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = {} }
+      <span class="ruby-identifier">cooptions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>)<span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">'.'</span>)
+          <span class="ruby-identifier">name</span>, <span class="ruby-identifier">var</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'.'</span>)
+          <span class="ruby-identifier">options</span>[<span class="ruby-identifier">name</span>][<span class="ruby-identifier">var</span>] = <span class="ruby-identifier">value</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">options</span>[<span class="ruby-identifier">name</span>][<span class="ruby-value str">'argument'</span>] = <span class="ruby-identifier">value</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># collect plugins</span>
+      <span class="ruby-identifier">plugins</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">opts</span>)<span class="ruby-operator">|</span>
+        <span class="ruby-comment cmt"># Get plugin by name</span>
+        <span class="ruby-identifier">plugin</span> = <span class="ruby-identifier">manager</span>.<span class="ruby-identifier">plugin</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">name</span>, <span class="ruby-identifier">opts</span>)
+        <span class="ruby-comment cmt"># Setup the plugin</span>
+        <span class="ruby-identifier">plugin</span>.<span class="ruby-identifier">setup</span> <span class="ruby-comment cmt">#(command, arguments, options)</span>
+        <span class="ruby-comment cmt">#</span>
+        <span class="ruby-identifier">plugin</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># Abort if no scaffold type given.</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">plugins</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;No scaffold type given.&quot;</span>
+        <span class="ruby-identifier">exit</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-comment cmt"># Get copylists from each plugin and combine them into</span>
+      <span class="ruby-comment cmt"># a single compylist.</span>
+      <span class="ruby-identifier">copylist</span> = <span class="ruby-identifier">plugins</span>.<span class="ruby-identifier">inject</span>([]) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">array</span>, <span class="ruby-identifier">plugin</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">array</span>.<span class="ruby-identifier">concat</span>(<span class="ruby-identifier">plugin</span>.<span class="ruby-identifier">copylist</span>)
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-keyword kw">begin</span>
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">command</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:create</span>
+          <span class="ruby-identifier">generator</span> = <span class="ruby-constant">Generators</span><span class="ruby-operator">::</span><span class="ruby-constant">Create</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">copylist</span>)
+          <span class="ruby-identifier">generator</span>.<span class="ruby-identifier">generate</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:update</span>
+          <span class="ruby-identifier">generator</span> = <span class="ruby-constant">Generators</span><span class="ruby-operator">::</span><span class="ruby-constant">Update</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">copylist</span>)
+          <span class="ruby-identifier">generator</span>.<span class="ruby-identifier">generate</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:delete</span>
+          <span class="ruby-identifier">generator</span> = <span class="ruby-constant">Generators</span><span class="ruby-operator">::</span><span class="ruby-constant">Delete</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">copylist</span>)
+          <span class="ruby-identifier">generator</span>.<span class="ruby-identifier">generate</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;[IMPOSSIBLE] Unknown command type.&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">err</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:debug</span>]
+          <span class="ruby-identifier">raise</span> <span class="ruby-identifier">err</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-identifier">err</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;try --help or --debug&quot;</span>
+          <span class="ruby-identifier">exit</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="help-method" class="method-detail ">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">help</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+General help message.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="help-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/command.rb, line 180</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">help</span>
+      <span class="ruby-value str">&quot;Usage: sow [options] --&lt;plugin&gt;[=&lt;value&gt;] ... [&lt;path&gt;]\n\nOptions:\n-c --create         Create scaffolding\n-u --update         Update scaffolding\n-d --delete         Delete scaffolding\n-p --prompt         Prompt on overwrites\n-s --skip           Skip overwrites\n-f --force          Force restricted operations\n-q --quiet          Supress output messages\n-t --trial          Trial run (won't write to disk)\n--debug          Provide debuging information\n-h --help           Show this message\n&quot;</span>.<span class="ruby-identifier">tabto</span>(<span class="ruby-value">0</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="manager-method" class="method-detail ">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">manager</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+<a href="Plugin.html">Plugin</a> manger.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="manager-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/command.rb, line 28</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">manager</span>
+      <span class="ruby-ivar">@manager</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Manager</span>.<span class="ruby-identifier">new</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="parse-argv-method" class="method-detail ">
+        <a name="M000047"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">parse_argv</span><span
+            class="method-args">(argv)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Very simply ARGV parser. In the future we may make this a bit smarter. We
+do it manually to preserve the order of plugin options.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="parse-argv-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/command.rb, line 129</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_argv</span>(<span class="ruby-identifier">argv</span>)
+      <span class="ruby-identifier">args</span> = []
+      <span class="ruby-identifier">opts</span> = []
+      <span class="ruby-identifier">argv</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">arg</span>, <span class="ruby-identifier">idx</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">arg</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-regexp re">/^-/</span>
+          <span class="ruby-identifier">opts</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arg</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">args</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">arg</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">o</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^\-+/</span>, <span class="ruby-value str">''</span>).<span class="ruby-identifier">split</span>(<span class="ruby-value str">'='</span>) }
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">args</span>, <span class="ruby-identifier">opts</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="standard-options-method" class="method-detail ">
+        <a name="M000051"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">standard_options</span><span
+            class="method-args">(opts)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Returns a hash of standard options and an assoc array of plugin options.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="standard-options-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/command.rb, line 167</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">standard_options</span>(<span class="ruby-identifier">opts</span>)
+      <span class="ruby-identifier">h</span>, <span class="ruby-identifier">o</span> = {}, []
+      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span>(<span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span>)<span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opt</span> = <span class="ruby-constant">STANDARD_OPTIONS</span>[<span class="ruby-identifier">k</span>]
+          <span class="ruby-identifier">h</span>[<span class="ruby-identifier">opt</span>] = <span class="ruby-keyword kw">true</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">o</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span>]
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">h</span>, <span class="ruby-identifier">o</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+
+  <div id="rdoc-debugging-section-dump" class="debugging-section">
+  
+    <p>Disabled; run with --debug to generate this.</p>
+  
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: This is to allow Plugin access to the internal state.
+full_name: Sow::Script#[]
+is_singleton: false
+name: "[]"
+params: (var)
+visibility: public

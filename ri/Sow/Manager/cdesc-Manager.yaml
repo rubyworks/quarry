@@ -1,0 +1,33 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: []
+
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: The Manager class locates sow plugins.
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: The Manager class locates sow plugins.
+constants: 
+- !ruby/object:RDoc::RI::Constant 
+  comment: []
+
+  name: PLUGIN_DIRECTORY
+  value: "\"sow/seeds\""
+full_name: Sow::Manager
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: plugin
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: plugin_locations
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: plugins
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: plugins_from_packages
+name: Manager
+superclass: Object

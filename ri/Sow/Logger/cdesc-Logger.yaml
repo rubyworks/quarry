@@ -1,0 +1,39 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: 
+- !ruby/object:RDoc::RI::Attribute 
+  comment: []
+
+  name: generator
+  rw: R
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: The Logger class routes output to the console.
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: The Logger class routes output to the console.
+constants: []
+
+full_name: Sow::Logger
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: check_for_fixes
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: report
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: report_complete
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: report_create
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: report_fixes
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: report_nothing_to_generate
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: report_startup
+name: Logger
+superclass: Object

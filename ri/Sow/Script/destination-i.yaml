@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Destiation pathname. This is used by some plugins, particularly full-project scaffolds, as a default package name. It is the basename of the output directory.
+full_name: Sow::Script#destination
+is_singleton: false
+name: destination
+params: ()
+visibility: public

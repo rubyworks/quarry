@@ -1,0 +1,71 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: 
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: Copylist contains the a list of transfire operations as compiled from the plugin.
+  name: copylist
+  rw: R
+- !ruby/object:RDoc::RI::Attribute 
+  comment: []
+
+  name: options
+  rw: R
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: Instance of Session.
+  name: session
+  rw: R
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: argument
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: inherited
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: manifest
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: option
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: registry
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: setup
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: A Sow Script provides a simple DSL for specifying arguments, a copylist and the various specificities needed to define a scaffold generator proccess.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "Note: This is the old way of building a plugin."
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: A Sow Script provides a simple DSL for specifying arguments, a copylist and the various specificities needed to define a scaffold generator proccess.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "Note: This is the old way of building a plugin."
+constants: []
+
+full_name: Sow::Script
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: "[]"
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: "[]="
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: argument
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: copy
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: destination
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: manifest
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: metadata
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: method_missing
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: setup
+name: Script
+superclass: Object

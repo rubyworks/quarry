@@ -1,0 +1,25 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: []
+
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Erb templates are all rendered within the scope a context object. This limits access to only the those things that are pertinant. All metadata can be accessded by name, as this this object delegate missing methods to a Metadata instance.
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Erb templates are all rendered within the scope a context object. This limits access to only the those things that are pertinant. All metadata can be accessded by name, as this this object delegate missing methods to a Metadata instance.
+constants: []
+
+full_name: Sow::Context
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: erb
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: method_missing
+name: Context
+superclass: Object

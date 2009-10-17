@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: If inherited, register the script by it's class basename downcased.
+full_name: Sow::Script::inherited
+is_singleton: true
+name: inherited
+params: (base)
+visibility: public

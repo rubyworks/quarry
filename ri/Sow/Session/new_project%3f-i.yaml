@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "Alias for #empty?"
+full_name: Sow::Session#new_project?
+is_singleton: false
+name: new_project?
+params: ()
+visibility: public

@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Sort the manifest files before directory. This is opposite of Construct::Create.
+full_name: Sow::Generators::Delete#actionlist_sort
+is_singleton: false
+name: actionlist_sort
+params: (list)
+visibility: public

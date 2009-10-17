@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Output to provide on startup of generation.
+full_name: Sow::Logger#report_startup
+is_singleton: false
+name: report_startup
+params: (source, output)
+visibility: public

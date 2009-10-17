@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: Can .stub be used to prevent erb?"
+full_name: Sow::Generators::Create#copy_doc
+is_singleton: false
+name: copy_doc
+params: (loc, src, dest, opts)
+visibility: public

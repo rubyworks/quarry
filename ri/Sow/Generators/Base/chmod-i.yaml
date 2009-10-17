@@ -1,0 +1,11 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: []
+
+full_name: Sow::Generators::Base#chmod
+is_singleton: false
+name: chmod
+params: (mode, file)
+visibility: private

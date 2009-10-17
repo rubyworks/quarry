@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Access to Metadata. When the script is initially executed, ie. toplevel and argument blocks, this is an OpenStruct. Use it to assign values to the metadata, which is used to render the file templates. When the scaffold block is finally executed, this is reassigned to the destinations metadata, so that it can be used in the copy calls, if needed.
+full_name: Sow::Script#metadata
+is_singleton: false
+name: metadata
+params: ()
+visibility: public

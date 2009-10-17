@@ -1,0 +1,13 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: 
+- !ruby/object:RDoc::RI::AliasName 
+  name: new_project?
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Does the destination contain any files?
+full_name: Sow::Session#empty?
+is_singleton: false
+name: empty?
+params: ()
+visibility: public

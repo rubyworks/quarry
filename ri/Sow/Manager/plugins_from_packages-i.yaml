@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: This routine searches for seeds (sow plugins),
+full_name: Sow::Manager#plugins_from_packages
+is_singleton: false
+name: plugins_from_packages
+params: ()
+visibility: public

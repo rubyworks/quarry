@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Get a metadata value. If not found in the cache, attempt to load it from the path store.
+full_name: Sow::Metadata#[]
+is_singleton: false
+name: "[]"
+params: (s)
+visibility: public

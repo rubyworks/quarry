@@ -1,0 +1,43 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: []
+
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Metadata located in destination.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: This can be used to &quot;prefill&quot; template variables in some types of scaffolding.
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Metadata located in destination.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: This can be used to &quot;prefill&quot; template variables in some types of scaffolding.
+constants: []
+
+full_name: Sow::Metadata
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: "[]"
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: "[]="
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: __get__
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: binding!
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: erb
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: exist?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: load_value
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: method_missing
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: respond_to?
+name: Metadata
+superclass: Object

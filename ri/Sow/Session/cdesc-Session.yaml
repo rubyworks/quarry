@@ -1,0 +1,60 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: 
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: Destination for generated scaffolding.
+  name: destination
+  rw: R
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Session provides a central store of commandline options and system state related to invocation the <tt>sow</tt> command. This includes the destination directory, it's metadata and any special sow configurations.
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Session provides a central store of commandline options and system state related to invocation the <tt>sow</tt> command. This includes the destination directory, it's metadata and any special sow configurations.
+constants: []
+
+full_name: Sow::Session
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: config
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: create?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: debug?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: delete?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: empty?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: force?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: metadata
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: metadata?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: metadir
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: mode
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new_project?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: prompt?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: quiet?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: skip?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: sowed?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: trial?
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: update?
+name: Session
+superclass: Object

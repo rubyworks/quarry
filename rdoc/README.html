@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>File: README [Sow]</title>
+
+  <link rel="SHORTCUT ICON" href="./images/file.png">
+
+  <link type="text/css" media="screen" rel="stylesheet" href="./rdoc.css" />
+
+  <script src="./js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/thickbox.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body class="file">
+
+  <div class="head">
+    <h1>
+      <img src="./images/file.png" align="absmiddle">&nbsp;
+      <a href="./index.html">Sow</a>&nbsp;
+      <a href="/">README</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="./COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="./HISTORY.html">HISTORY</a></li>
+        
+          <li class="file"><a href="./NOTES.html">NOTES</a></li>
+        
+          <li class="file"><a href="./README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="./images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li class="module"><a href="./Sow.html">Sow</a></li>
+        
+          <li class="class"><a href="./Sow/Command.html">Sow::Command</a></li>
+        
+          <li class="class"><a href="./Sow/Context.html">Sow::Context</a></li>
+        
+          <li class="module"><a href="./Sow/Generators.html">Sow::Generators</a></li>
+        
+          <li class="class"><a href="./Sow/Generators/Base.html">Sow::Generators::Base</a></li>
+        
+          <li class="class"><a href="./Sow/Generators/Create.html">Sow::Generators::Create</a></li>
+        
+          <li class="class"><a href="./Sow/Generators/Delete.html">Sow::Generators::Delete</a></li>
+        
+          <li class="class"><a href="./Sow/Generators/Update.html">Sow::Generators::Update</a></li>
+        
+          <li class="class"><a href="./Sow/Logger.html">Sow::Logger</a></li>
+        
+          <li class="class"><a href="./Sow/Manager.html">Sow::Manager</a></li>
+        
+          <li class="class"><a href="./Sow/Metadata.html">Sow::Metadata</a></li>
+        
+          <li class="class"><a href="./Sow/Plugin.html">Sow::Plugin</a></li>
+        
+          <li class="module"><a href="./Sow/Plugins.html">Sow::Plugins</a></li>
+        
+          <li class="class"><a href="./Sow/Script.html">Sow::Script</a></li>
+        
+          <li class="class"><a href="./Sow/Session.html">Sow::Session</a></li>
+        
+          <li class="class"><a href="./String.html">String</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+
+    <div id="validator-badges">
+      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a><br/><br/>
+      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+    </div>
+  </div>
+
+  <div id="documentation">
+    <h1><a href="Sow.html">Sow</a></h1>
+<ul>
+<li><a href="http://proutils.github.com/sow">proutils.github.com/sow</a>
+
+</li>
+<li><a href="http://github.com/proutils/sow">github.com/proutils/sow</a>
+
+</li>
+</ul>
+<h2>TENDING TO PROJECT ECOLOGY</h2>
+<p>
+<a href="Sow.html">Sow</a> is a project scaffolding system. The system is
+pluggable and utilizes eRuby templating to make it easy to extend. <a
+href="Sow.html">Sow</a> can be used for any kind of file scaffolding, but
+it is designed largely with Ruby project needs in mind.
+</p>
+<p>
+Sow&#8217;s plugins are called &#8220;seeds&#8221;. Sowing requires seeds.
+<a href="Sow.html">Sow</a> comes with an extra large box of seeds to really
+get those projects blooming!
+</p>
+<h2>SYNOPSIS</h2>
+<p>
+General usage follws the pattern:
+</p>
+<pre>
+  sow [options] --&lt;plugin&gt;[=arg] --&lt;plugin&gt;.&lt;var&gt;[=arg] ... [destination]
+</pre>
+<p>
+For instance to scaffold a new, basic ruby project with the name
+&#8216;myapp&#8217; in the directory &#8216;myapp&#8217;:
+</p>
+<pre>
+  $ sow --ruby myapp/
+</pre>
+<p>
+By default, Sow&#8217;s <tt>ruby</tt> plugin will use the destination path
+as the project name. If we wished to name the project something other than
+the destination path, we can supply that as an argument.
+</p>
+<pre>
+  $ sow --ruby=foo myapp/
+</pre>
+<p>
+Alternately we could make the the directory ourselves and, and scaffold it
+from within.
+</p>
+<pre>
+  $ mkdir myapp
+  $ cd myapp
+  $ sow --ruby=foo
+</pre>
+<p>
+Once you have a project, <a href="Sow.html">Sow</a> can be used to generate
+components as well, kind of like script/generate in Rails. For instance, to
+generate a test/unit starter file.
+</p>
+<pre>
+  $ sow --testunit.name=mytest
+</pre>
+<p>
+For more details on how to use <a href="Sow.html">Sow</a>, what plugins are
+available and how to build your own cusotm plugins, please see the
+documentation provided on Sow&#8217;s website.
+</p>
+<h2>CURRENT STATUS</h2>
+<p>
+<a href="Sow.html">Sow</a> is still a little wet behind the ears, and you
+might come across the ocassional odd behavior. Please report on the
+Protutils mailing list (<a
+href="http://googlegroups.com/group/proutils">googlegroups.com/group/proutils</a>).
+Usually the issue will be some over-looked in a given plugin &#8212;since
+plugins have a lot of flexability in their design. It will take some time
+and some widespread usage to work out all the corner cases and to bring
+each plugin to a fine polish.
+</p>
+<h2>HOE USERS</h2>
+<p>
+*IMPORTANT NOTICE FOR HOE USERS!*
+</p>
+<p>
+Hoe users will discover that the <tt>sow</tt> command that comes with Hoe
+will be overwritten by <a href="Sow.html">Sow</a>. This may seem a
+not-so-nice thing to do, but truth be told <a href="Sow.html">Sow</a> is a
+slightly older project than Hoe (albeit orginally it was a very different
+program). Since there is no command called <tt>hoe</tt>, I recommend
+renaming Hoe&#8217;s <tt>sow</tt> command.
+</p>
+<pre>
+  sudo mv /usr/bin/sow /usr/bin/hoe
+</pre>
+<p>
+As an alternative, <a href="Sow.html">Sow</a> ships with a Hoe plugin, so
+there is nothing lost even if Hoe&#8217;s <tt>sow</tt> command is
+overwritten, simply use:
+</p>
+<pre>
+  $ sow --hoe &lt;name&gt;
+</pre>
+<p>
+Note, that Hoe scaffolding does not support the in-project templating
+system. To get that you need to add a .meta/ directory to your project.
+</p>
+<h2>INSTALLATION</h2>
+<h3>RubyGems Install</h3>
+<p>
+Install using RubyGems as you would expect:
+</p>
+<pre>
+  $ gem install sow
+</pre>
+<p>
+This will install <a href="Sow.html">Sow</a>, it&#8217;s Facets dependency
+if not alreay installed, and a number of built-in plugins. Keep in mind
+that some plugins come from the packages with which they are associated.
+For example, the Reap plugin is distributed with the Reap package.
+</p>
+<h3>Old School Site Install</h3>
+<p>
+Old-fashion site installs require Ruby Setup (see <a
+href="http://proutils.rubyforge.org/setup">proutils.rubyforge.org/setup</a>).
+If you don&#8217;t have Ruby Setup you can install it via Rubygems:
+</p>
+<pre>
+  $ gem install setup
+</pre>
+<p>
+With Setup in place, download the <a href="Sow.html">Sow</a> tarball
+(.tar.gz) and unpack it, then install by invoking setup.rb.
+</p>
+<pre>
+  $ tar -xvvzf sow-1.0.0.tar.gz
+  $ cd sow-1.0.0
+  $ sudo setup.rb all
+</pre>
+<p>
+If you use Hoe, please see the the important message below before
+installing.
+</p>
+<h2>DEVELOPMENT</h2>
+<p>
+<a href="Sow.html">Sow</a> is being developed on <a href=&#8220;<a
+href="http://hithub.com">GitHub</a">hithub.com">GitHub</a</a>>, as part of
+the ProUtils set of project development tools. You can browse the <a
+href="Sow.html">Sow</a> project here:
+</p>
+<pre>
+  http://github.com/proutils/sow/tree/master
+</pre>
+<p>
+Sow&#8217;s public repository can be pulled via:
+</p>
+<pre>
+  git://github.com/proutils/sow.git
+</pre>
+<p>
+Please feel free to fork the project and submit pull requests. Discussion
+of <a href="Sow.html">Sow</a> occurs on the TigerOps Community Mailinglist.
+</p>
+<pre>
+  http://groups.google.com/group/tigerops-community?hl=en
+</pre>
+<p>
+Happy hacking!
+</p>
+<h2>COPYRIGHT &amp; LICENSE</h2>
+<p>
+Copyright &#169; 2007, 2009 Thomas Sawyer
+</p>
+<p>
+Unless other premmited by the author, this software is distributed under
+the terms of the GPL version 3 license.
+</p>
+<p>
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+</p>
+<p>
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+</p>
+<p>
+You should have received a copy of the GNU General Public License along
+with this program. If not, see &amp;lt;<a
+href="http://www.gnu.org/licenses/&gt">www.gnu.org/licenses/&gt</a>;.
+</p>
+<p>
+Please see <a href="COPYING.html">COPYING</a> file for details.
+</p>
+
+  </div>
+
+</body>
+
+
+</html>

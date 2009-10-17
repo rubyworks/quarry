@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "Manifest procedure, used to invoke #copy."
+full_name: Sow::Script::manifest
+is_singleton: true
+name: manifest
+params: (&block)
+visibility: public

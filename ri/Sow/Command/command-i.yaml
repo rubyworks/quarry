@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Return command type based on option.
+full_name: Sow::Command#command
+is_singleton: false
+name: command
+params: (options)
+visibility: public

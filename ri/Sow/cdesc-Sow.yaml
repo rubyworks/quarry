@@ -1,0 +1,30 @@
+--- !ruby/object:RDoc::RI::ModuleDescription 
+attributes: []
+
+class_methods: []
+
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 1
+- !ruby/struct:RDoc::Markup::Flow::H 
+  level: 1
+  text: Sow
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Sow namespace in which all Sow comppnents are defined.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Sow does use a number of core extensions, but these are all managed by Ruby Facets to help promote standardized in the area and reduce potential name conflicts.
+constants: 
+- !ruby/object:RDoc::RI::Constant 
+  comment: 
+  name: FIX
+  value: "\"FIXME\""
+- !ruby/object:RDoc::RI::Constant 
+  comment: 
+  name: VERSION
+  value: "'1.0.0'"
+full_name: Sow
+includes: []
+
+instance_methods: []
+
+name: Sow

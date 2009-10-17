@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: What is the destinations meta directory (<tt>meta</tt> or <tt>.meta</tt>)? If none then defaults to <tt>.meta</tt>.
+full_name: Sow::Session#metadir
+is_singleton: false
+name: metadir
+params: ()
+visibility: public

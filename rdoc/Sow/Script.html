@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: Sow::Script</title>
+
+  
+    <link rel="SHORTCUT ICON" href="../images/class.png">
+  
+
+  <link type="text/css" media="screen" rel="stylesheet" href="../rdoc.css" />
+
+  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+  <div class="head">
+    <h1>
+      
+        <img src="../images/class.png" align="absmiddle">&nbsp;
+      
+      <a href="../index.html">Sow</a>&nbsp;
+      <a href="/">Sow::Script</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li class="file"><a href="../lib/sow/script_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/sow/script.rb">lib/sow/script.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        <ul>
+          
+          <li class="class">Object</li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Namespace Contents -->
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li class="method"><a href="#M000115">::argument</a></li>
+          
+          <li class="method"><a href="#M000111">::inherited</a></li>
+          
+          <li class="method"><a href="#M000113">::manifest</a></li>
+          
+          <li class="method"><a href="#M000118">::new</a></li>
+          
+          <li class="method"><a href="#M000114">::option</a></li>
+          
+          <li class="method"><a href="#M000109">::registry</a></li>
+          
+          <li class="method"><a href="#M000112">::setup</a></li>
+          
+          <li class="method"><a href="#M000126">#[]</a></li>
+          
+          <li class="method"><a href="#M000128">#[]=</a></li>
+          
+          <li class="method"><a href="#M000119">#argument</a></li>
+          
+          <li class="method"><a href="#M000125">#copy</a></li>
+          
+          <li class="method"><a href="#M000122">#destination</a></li>
+          
+          <li class="method"><a href="#M000117">#manifest</a></li>
+          
+          <li class="method"><a href="#M000121">#metadata</a></li>
+          
+          <li class="method"><a href="#M000129">#method_missing</a></li>
+          
+          <li class="method"><a href="#M000116">#setup</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="../HISTORY.html">HISTORY</a></li>
+        
+          <li class="file"><a href="../NOTES.html">NOTES</a></li>
+        
+          <li class="file"><a href="../README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <!-- classpage.html : classes -->
+        <ul class="link-list">
+        
+          <li class="module"><a href="../Sow.html">Sow</a></li>
+        
+          <li class="class"><a href="../Sow/Command.html">Sow::Command</a></li>
+        
+          <li class="class"><a href="../Sow/Context.html">Sow::Context</a></li>
+        
+          <li class="module"><a href="../Sow/Generators.html">Sow::Generators</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Base.html">Sow::Generators::Base</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Create.html">Sow::Generators::Create</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Delete.html">Sow::Generators::Delete</a></li>
+        
+          <li class="class"><a href="../Sow/Generators/Update.html">Sow::Generators::Update</a></li>
+        
+          <li class="class"><a href="../Sow/Logger.html">Sow::Logger</a></li>
+        
+          <li class="class"><a href="../Sow/Manager.html">Sow::Manager</a></li>
+        
+          <li class="class"><a href="../Sow/Metadata.html">Sow::Metadata</a></li>
+        
+          <li class="class"><a href="../Sow/Plugin.html">Sow::Plugin</a></li>
+        
+          <li class="module"><a href="../Sow/Plugins.html">Sow::Plugins</a></li>
+        
+          <li class="class"><a href="../Sow/Script.html">Sow::Script</a></li>
+        
+          <li class="class"><a href="../Sow/Session.html">Sow::Session</a></li>
+        
+          <li class="class"><a href="../String.html">String</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+
+    <div id="validator-badges">
+      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a><br/><br/>
+      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+    </div>
+  </div>
+
+  <div id="documentation">
+
+    <div id="description">
+      
+        <h1>Script</h1>
+      
+
+      <p>
+A <a href="../Sow.html">Sow</a> <a href="Script.html">Script</a> provides a
+simple DSL for specifying arguments, a copylist and the various
+specificities needed to define a scaffold generator proccess.
+</p>
+<p>
+Note: This is the old way of building a plugin.
+</p>
+
+    </div>
+
+    <!-- Constants -->
+    
+
+    <!-- Attributes -->
+    
+    <div id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="session-attribute-method" class="method-detail">
+        <a name="session"></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">session</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Instance of <a href="Session.html">Session</a>.
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="options-attribute-method" class="method-detail">
+        <a name="options"></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">options</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="copylist-attribute-method" class="method-detail">
+        <a name="copylist"></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">copylist</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+Copylist contains the a list of transfire operations as compiled from the
+plugin.
+</p>
+        
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- Methods -->
+    
+    <div id="public-class-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="argument-method" class="method-detail ">
+        <a name="M000115"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">argument</span><span
+            class="method-args">(name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Give the main argument a name.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="argument-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 43</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">argument</span>(<span class="ruby-identifier">name</span>)
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">name</span>){ <span class="ruby-identifier">argument</span> }
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="inherited-method" class="method-detail ">
+        <a name="M000111"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">inherited</span><span
+            class="method-args">(base)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+If inherited, register the script by it&#8217;s class basename downcased.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="inherited-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 19</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">inherited</span>(<span class="ruby-identifier">base</span>)
+      <span class="ruby-identifier">registry</span>[<span class="ruby-identifier">base</span>.<span class="ruby-identifier">basename</span>.<span class="ruby-identifier">downcase</span>] = <span class="ruby-identifier">base</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="manifest-method" class="method-detail ">
+        <a name="M000113"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">manifest</span><span
+            class="method-args">(&block)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Manifest procedure, used to invoke <a href="Script.html#M000125">copy</a>.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="manifest-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 31</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">manifest</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">:manifest</span>,<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="new-method" class="method-detail ">
+        <a name="M000118"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new</span><span
+            class="method-args">(session, options)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="new-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 73</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">options</span>)
+      <span class="ruby-ivar">@session</span> = <span class="ruby-identifier">session</span>
+      <span class="ruby-ivar">@options</span> = <span class="ruby-identifier">options</span>
+
+      <span class="ruby-comment cmt">#@location = Pathname.new(location)</span>
+      <span class="ruby-ivar">@metadata</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>
+
+      <span class="ruby-ivar">@copylist</span>  = []
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="option-method" class="method-detail ">
+        <a name="M000114"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">option</span><span
+            class="method-args">(name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Specify a valid option.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="option-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 37</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">option</span>(<span class="ruby-identifier">name</span>)
+      <span class="ruby-identifier">attr_accessor</span>(<span class="ruby-identifier">name</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="registry-method" class="method-detail ">
+        <a name="M000109"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">registry</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+<a href="Script.html">Script</a> registery/
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="registry-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 13</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">registry</span>
+      <span class="ruby-ivar">@registry</span> <span class="ruby-operator">||=</span> {}
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="setup-method" class="method-detail ">
+        <a name="M000112"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">setup</span><span
+            class="method-args">(&block)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Setup procedure, used to setup metadata.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="setup-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 25</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">setup</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">:setup</span>,<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="public-instance-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="--method" class="method-detail ">
+        <a name="M000126"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">[]</span><span
+            class="method-args">(var)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+This is to allow <a href="Plugin.html">Plugin</a> access to the internal
+state.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 169</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">var</span>)
+      <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-node">&quot;@#{var}&quot;</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="--method" class="method-detail ">
+        <a name="M000128"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">[]=</span><span
+            class="method-args">(var, val)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Set &#8230; using a singleton method.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 174</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">var</span>, <span class="ruby-identifier">val</span>)
+      <span class="ruby-identifier">quaclass</span> = (<span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">end</span>)
+      <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid argument name -- #{var}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">quaclass</span>.<span class="ruby-identifier">method_defined?</span>(<span class="ruby-identifier">var</span>)
+      <span class="ruby-identifier">quaclass</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+        <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">var</span>){ <span class="ruby-identifier">val</span> }
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-comment cmt">#@session[var.to_sym] = val</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="argument-method" class="method-detail ">
+        <a name="M000119"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">argument</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Main argument.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="argument-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 85</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">argument</span>
+      <span class="ruby-identifier">options</span>.<span class="ruby-identifier">argument</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="copy-method" class="method-detail ">
+        <a name="M000125"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">copy</span><span
+            class="method-args">(*from_to_opts)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Designate a copying action.
+</p>
+<pre>
+  copy from, opts
+  copy from, to, opts
+</pre>
+          
+
+          
+          <div class="method-source-code"
+            id="copy-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 156</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">from_to_opts</span>)
+      <span class="ruby-identifier">opts</span> = <span class="ruby-constant">Hash</span><span class="ruby-operator">===</span><span class="ruby-identifier">from_to_opts</span>.<span class="ruby-identifier">last</span> <span class="ruby-value">? </span><span class="ruby-identifier">from_to_opts</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">:</span> {}
+      <span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">from_to_opts</span>
+      <span class="ruby-identifier">to</span> = <span class="ruby-identifier">to</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'.'</span>
+      <span class="ruby-ivar">@copylist</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span>, <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">rekey</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:to_s</span>)]
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="destination-method" class="method-detail ">
+        <a name="M000122"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">destination</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Destiation pathname. This is used by some plugins, particularly
+full-project scaffolds, as a default package name. It is the basename of
+the output directory.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="destination-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 105</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destination</span>
+      <span class="ruby-identifier">session</span>.<span class="ruby-identifier">destination</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="manifest-method" class="method-detail ">
+        <a name="M000117"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">manifest</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Override and place copy statment in this method.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="manifest-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 55</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">manifest</span>
+      <span class="ruby-identifier">copy</span> <span class="ruby-value str">'**/*'</span>, <span class="ruby-value str">'.'</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="metadata-method" class="method-detail ">
+        <a name="M000121"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">metadata</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Access to <a href="Metadata.html">Metadata</a>. When the script is
+initially executed, ie. toplevel and argument blocks, this is an
+OpenStruct. Use it to assign values to the metadata, which is used to
+render the file templates. When the scaffold block is finally executed,
+this is reassigned to the destinations metadata, so that it can be used in
+the copy calls, if needed.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="metadata-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 97</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
+      <span class="ruby-identifier">session</span>.<span class="ruby-identifier">metadata</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="method-missing-method" class="method-detail ">
+        <a name="M000129"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">method_missing</span><span
+            class="method-args">(var,*a)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+If method missing, routes the call to <tt>session</tt>.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="method-missing-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 184</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">var</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">a</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span> = <span class="ruby-ivar">@session</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">var</span>)
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">val</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">super</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="setup-method" class="method-detail ">
+        <a name="M000116"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">setup</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Override and setup metadata and validate. If something does jive, then use
+abort to terminate execution.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="setup-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 50</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+
+  <div id="rdoc-debugging-section-dump" class="debugging-section">
+  
+    <p>Disabled; run with --debug to generate this.</p>
+  
+  </div>
+
+</body>
+</html>

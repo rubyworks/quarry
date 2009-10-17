@@ -1,0 +1,11 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: []
+
+full_name: Sow::Generators::Base#cp
+is_singleton: false
+name: cp
+params: (src, dest)
+visibility: private

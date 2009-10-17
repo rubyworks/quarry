@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Specify a valid option.
+full_name: Sow::Script::option
+is_singleton: true
+name: option
+params: (name)
+visibility: public

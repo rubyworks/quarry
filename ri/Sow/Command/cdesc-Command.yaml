@@ -1,0 +1,51 @@
+--- !ruby/object:RDoc::RI::ClassDescription 
+attributes: 
+- !ruby/object:RDoc::RI::Attribute 
+  comment: 
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: Commandline arguments.
+  name: argv
+  rw: R
+class_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: execute
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: new
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Sow Commandline Utility.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: Provide help messages for individual plugins."
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: Move the core logic of execture to either Manger or another class."
+- !ruby/struct:RDoc::Markup::Flow::RULE 
+  width: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: Sow Commandline Utility.
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: Provide help messages for individual plugins."
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: "TODO: Move the core logic of execture to either Manger or another class."
+constants: 
+- !ruby/object:RDoc::RI::Constant 
+  comment: 
+  name: STANDARD_OPTIONS
+  value: "{       'create' => :create, 'c' => :create,       'update' => :update, 'u' => :update,       'delete' => :delete, 'd' => :delete,       'quiet'  => :quiet , 'q' => :quiet ,       'prompt' => :prompt, 'p' => :prompt,       'skip'   => :skip  , 's' => :skip  ,       'force'  => :force , 'f' => :force ,       'trial'  => :trial , 't' => :trial ,       'help'   => :help  , 'h' => :help  ,       'debug'  => :debug ,     }"
+full_name: Sow::Command
+includes: []
+
+instance_methods: 
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: command
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: execute
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: help
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: manager
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: parse_argv
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: standard_options
+name: Command
+superclass: Object

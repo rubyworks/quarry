@@ -1,0 +1,12 @@
+--- !ruby/object:RDoc::RI::MethodDescription 
+aliases: []
+
+block_params: 
+comment: 
+- !ruby/struct:RDoc::Markup::Flow::P 
+  body: If in prompt mode, returns a list filtered of overwrites as selected by the user. If in skip mode, mark duplicates to skipped. If not in prompt or skip mode, simply return the current list.
+full_name: Sow::Generators::Base#actionlist_safe
+is_singleton: false
+name: actionlist_safe
+params: (list)
+visibility: private

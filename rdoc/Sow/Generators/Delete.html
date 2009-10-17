@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: Sow::Generators::Delete</title>
+
+  
+    <link rel="SHORTCUT ICON" href="../../images/class.png">
+  
+
+  <link type="text/css" media="screen" rel="stylesheet" href="../../rdoc.css" />
+
+  <script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+  <div class="head">
+    <h1>
+      
+        <img src="../../images/class.png" align="absmiddle">&nbsp;
+      
+      <a href="../../index.html">Sow</a>&nbsp;
+      <a href="/">Sow::Generators::Delete</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li class="file"><a href="../../lib/sow/generators/delete_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/sow/generators/delete.rb">lib/sow/generators/delete.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        <ul>
+          
+          <li class="class">Base</li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Namespace Contents -->
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li class="method"><a href="#M000004">#actionlist_check</a></li>
+          
+          <li class="method"><a href="#M000005">#actionlist_sort</a></li>
+          
+          <li class="method"><a href="#M000006">#delete</a></li>
+          
+          <li class="method"><a href="#M000003">#mark</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../../COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="../../HISTORY.html">HISTORY</a></li>
+        
+          <li class="file"><a href="../../NOTES.html">NOTES</a></li>
+        
+          <li class="file"><a href="../../README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <!-- classpage.html : classes -->
+        <ul class="link-list">
+        
+          <li class="module"><a href="../../Sow.html">Sow</a></li>
+        
+          <li class="class"><a href="../../Sow/Command.html">Sow::Command</a></li>
+        
+          <li class="class"><a href="../../Sow/Context.html">Sow::Context</a></li>
+        
+          <li class="module"><a href="../../Sow/Generators.html">Sow::Generators</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Base.html">Sow::Generators::Base</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Create.html">Sow::Generators::Create</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Delete.html">Sow::Generators::Delete</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Update.html">Sow::Generators::Update</a></li>
+        
+          <li class="class"><a href="../../Sow/Logger.html">Sow::Logger</a></li>
+        
+          <li class="class"><a href="../../Sow/Manager.html">Sow::Manager</a></li>
+        
+          <li class="class"><a href="../../Sow/Metadata.html">Sow::Metadata</a></li>
+        
+          <li class="class"><a href="../../Sow/Plugin.html">Sow::Plugin</a></li>
+        
+          <li class="module"><a href="../../Sow/Plugins.html">Sow::Plugins</a></li>
+        
+          <li class="class"><a href="../../Sow/Script.html">Sow::Script</a></li>
+        
+          <li class="class"><a href="../../Sow/Session.html">Sow::Session</a></li>
+        
+          <li class="class"><a href="../../String.html">String</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+
+    <div id="validator-badges">
+      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a><br/><br/>
+      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+    </div>
+  </div>
+
+  <div id="documentation">
+
+    <div id="description">
+      
+
+      <h1><a href="Delete.html">Delete</a> Generator</h1>
+
+    </div>
+
+    <!-- Constants -->
+    
+
+    <!-- Attributes -->
+    
+
+    <!-- Methods -->
+    
+    <div id="public-instance-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="actionlist-check-method" class="method-detail ">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">actionlist_check</span><span
+            class="method-args">(list)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="actionlist-check-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/delete.rb, line 18</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist_check</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">list</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="actionlist-sort-method" class="method-detail ">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">actionlist_sort</span><span
+            class="method-args">(list)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Sort the manifest files before directory. This is opposite of
+Construct::Create.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="actionlist-sort-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/delete.rb, line 24</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist_sort</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">list</span>.<span class="ruby-identifier">reverse</span>
+        <span class="ruby-comment cmt">#dirs, files = *list.partition{ |src, dest, opts| (source + src).directory? }</span>
+        <span class="ruby-comment cmt">#files.sort{|a,b| a[1]&lt;=&gt;b[1]} + dirs.sort{|a,b| a[1]&lt;=&gt;b[1]}</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="delete-method" class="method-detail ">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">delete</span><span
+            class="method-args">(loc, src, dest, opts)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+<a href="Delete.html">Delete</a> template file.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="delete-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/delete.rb, line 31</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dest</span>)
+          <span class="ruby-identifier">how</span> = <span class="ruby-value str">'delete'</span>
+          <span class="ruby-keyword kw">begin</span>
+            <span class="ruby-identifier">rm</span>(<span class="ruby-identifier">dest</span>)
+          <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Errno</span><span class="ruby-operator">::</span><span class="ruby-constant">ENOTEMPTY</span>
+            <span class="ruby-identifier">how</span> = <span class="ruby-value str">'skip'</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">how</span> = <span class="ruby-value str">'missing'</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">how</span>, <span class="ruby-identifier">dest</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="mark-method" class="method-detail ">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">mark</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="mark-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/delete.rb, line 15</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark</span>; <span class="ruby-value str">'delete'</span>; <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+
+  <div id="rdoc-debugging-section-dump" class="debugging-section">
+  
+    <p>Disabled; run with --debug to generate this.</p>
+  
+  </div>
+
+</body>
+</html>

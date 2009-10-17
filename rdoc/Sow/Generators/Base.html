@@ -1,0 +1,1462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+  <title>Class: Sow::Generators::Base</title>
+
+  
+    <link rel="SHORTCUT ICON" href="../../images/class.png">
+  
+
+  <link type="text/css" media="screen" rel="stylesheet" href="../../rdoc.css" />
+
+  <script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
+</head>
+<body class="class">
+
+  <div class="head">
+    <h1>
+      
+        <img src="../../images/class.png" align="absmiddle">&nbsp;
+      
+      <a href="../../index.html">Sow</a>&nbsp;
+      <a href="/">Sow::Generators::Base</a>
+    </h1>
+  </div>
+
+  <div id="metadata">
+    <div id="project-metadata">
+
+      <div id="file-list-section" class="section">
+        <h3 class="section-header">In Files</h3>
+        <div class="section-body">
+          <ul>
+          
+            <li class="file"><a href="../../lib/sow/generators/base_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+              class="thickbox" title="lib/sow/generators/base.rb">lib/sow/generators/base.rb</a></li>
+          
+          </ul>
+        </div>
+      </div>
+
+      <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+
+      
+    </div>
+
+    <div id="class-metadata">
+
+      <!-- Parent Class -->
+      
+      <div id="parent-class-section" class="section">
+        <h3 class="section-header">Parent</h3>
+        <ul>
+          
+          <li class="class">Object</li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Namespace Contents -->
+      
+
+      <!-- Method Quickref -->
+      
+      <div id="method-list-section" class="section">
+        <h3 class="section-header">Methods</h3>
+        <ul class="link-list">
+          
+          <li class="method"><a href="#M000007">::new</a></li>
+          
+          <li class="method"><a href="#M000029">#actionlist</a></li>
+          
+          <li class="method"><a href="#M000033">#actionlist_check</a></li>
+          
+          <li class="method"><a href="#M000031">#actionlist_mark</a></li>
+          
+          <li class="method"><a href="#M000032">#actionlist_safe</a></li>
+          
+          <li class="method"><a href="#M000030">#actionlist_sort</a></li>
+          
+          <li class="method"><a href="#M000013">#arguments</a></li>
+          
+          <li class="method"><a href="#M000039">#check_conflicts</a></li>
+          
+          <li class="method"><a href="#M000035">#check_overwrite</a></li>
+          
+          <li class="method"><a href="#M000044">#chmod</a></li>
+          
+          <li class="method"><a href="#M000042">#cp</a></li>
+          
+          <li class="method"><a href="#M000015">#debug?</a></li>
+          
+          <li class="method"><a href="#M000027">#erb</a></li>
+          
+          <li class="method"><a href="#M000017">#force?</a></li>
+          
+          <li class="method"><a href="#M000041">#fu</a></li>
+          
+          <li class="method"><a href="#M000023">#generate</a></li>
+          
+          <li class="method"><a href="#M000050">#inspect</a></li>
+          
+          <li class="method"><a href="#M000028">#mark</a></li>
+          
+          <li class="method"><a href="#M000009">#metadata</a></li>
+          
+          <li class="method"><a href="#M000043">#mkdir_p</a></li>
+          
+          <li class="method"><a href="#M000022">#newproject?</a></li>
+          
+          <li class="method"><a href="#M000010">#output</a></li>
+          
+          <li class="method"><a href="#M000020">#prompt?</a></li>
+          
+          <li class="method"><a href="#M000016">#quiet?</a></li>
+          
+          <li class="method"><a href="#M000048">#relative_to_output</a></li>
+          
+          <li class="method"><a href="#M000046">#rm</a></li>
+          
+          <li class="method"><a href="#M000040">#skip</a></li>
+          
+          <li class="method"><a href="#M000021">#skip?</a></li>
+          
+          <li class="method"><a href="#M000014">#trial?</a></li>
+          
+          <li class="method"><a href="#M000045">#write</a></li>
+          
+        </ul>
+      </div>
+      
+
+      <!-- Included Modules -->
+      
+    </div>
+
+    <div id="project-metadata">
+      
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Files</h3>
+        <ul>
+        
+          <li class="file"><a href="../../COPYING.html">COPYING</a></li>
+        
+          <li class="file"><a href="../../HISTORY.html">HISTORY</a></li>
+        
+          <li class="file"><a href="../../NOTES.html">NOTES</a></li>
+        
+          <li class="file"><a href="../../README.html">README</a></li>
+        
+        </ul>
+      </div>
+      
+
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../../images/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <!-- classpage.html : classes -->
+        <ul class="link-list">
+        
+          <li class="module"><a href="../../Sow.html">Sow</a></li>
+        
+          <li class="class"><a href="../../Sow/Command.html">Sow::Command</a></li>
+        
+          <li class="class"><a href="../../Sow/Context.html">Sow::Context</a></li>
+        
+          <li class="module"><a href="../../Sow/Generators.html">Sow::Generators</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Base.html">Sow::Generators::Base</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Create.html">Sow::Generators::Create</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Delete.html">Sow::Generators::Delete</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Update.html">Sow::Generators::Update</a></li>
+        
+          <li class="class"><a href="../../Sow/Logger.html">Sow::Logger</a></li>
+        
+          <li class="class"><a href="../../Sow/Manager.html">Sow::Manager</a></li>
+        
+          <li class="class"><a href="../../Sow/Metadata.html">Sow::Metadata</a></li>
+        
+          <li class="class"><a href="../../Sow/Plugin.html">Sow::Plugin</a></li>
+        
+          <li class="module"><a href="../../Sow/Plugins.html">Sow::Plugins</a></li>
+        
+          <li class="class"><a href="../../Sow/Script.html">Sow::Script</a></li>
+        
+          <li class="class"><a href="../../Sow/Session.html">Sow::Session</a></li>
+        
+          <li class="class"><a href="../../String.html">String</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      
+    </div>
+
+    <div id="validator-badges">
+      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a><br/><br/>
+      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+    </div>
+  </div>
+
+  <div id="documentation">
+
+    <div id="description">
+      
+        <h1>Base</h1>
+      
+
+      <p>
+<a href="Base.html">Base</a> Class for the generators. This provides the
+backbone of Sow&#8217;s operations. Essentially a plugin provides a
+copylist to the generator, which cleans it up and uses it for it&#8217;s
+specific task, eg. create, update or delete.
+</p>
+
+    </div>
+
+    <!-- Constants -->
+    
+
+    <!-- Attributes -->
+    
+    <div id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="session-attribute-method" class="method-detail">
+        <a name="session"></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">session</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p class="missing-docs">(Not documented)</p>
+        
+        </div>
+      </div>
+      
+      <div id="copylist-attribute-method" class="method-detail">
+        <a name="copylist"></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">copylist</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p>
+attr :location
+</p>
+        
+        </div>
+      </div>
+      
+      <div id="context-attribute-method" class="method-detail">
+        <a name="context"></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">context</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p class="missing-docs">(Not documented)</p>
+        
+        </div>
+      </div>
+      
+      <div id="logger-attribute-method" class="method-detail">
+        <a name="logger"></a>
+        
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">logger</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <p class="missing-docs">(Not documented)</p>
+        
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- Methods -->
+    
+    <div id="public-class-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="new-method" class="method-detail ">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">new</span><span
+            class="method-args">(session, copylist)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="new-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 25</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">copylist</span>)
+        <span class="ruby-ivar">@session</span>   = <span class="ruby-identifier">session</span>
+        <span class="ruby-comment cmt">#@location  = location</span>
+        <span class="ruby-ivar">@copylist</span>  = <span class="ruby-identifier">copylist</span>
+
+        <span class="ruby-ivar">@logger</span>    = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+        <span class="ruby-ivar">@context</span>   = <span class="ruby-constant">Context</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">metadata</span>)
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="public-instance-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="arguments-method" class="method-detail ">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">arguments</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="arguments-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 54</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">arguments</span>
+        <span class="ruby-identifier">session</span>.<span class="ruby-identifier">arguments</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="debug--method" class="method-detail ">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">debug?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="debug--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 59</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug?</span>  ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">debug?</span>  ; <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="force--method" class="method-detail ">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">force?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="force--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 61</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">force?</span>  ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">force?</span>  ; <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="generate-method" class="method-detail ">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">generate</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Main command called to generate files.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="generate-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 72</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generate</span> <span class="ruby-comment cmt">#(args, opts)</span>
+        <span class="ruby-identifier">actionlist</span> = <span class="ruby-identifier">actionlist</span>(<span class="ruby-identifier">copylist</span>)
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">actionlist</span>.<span class="ruby-identifier">empty?</span>
+          <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">report_nothing_to_generate</span>
+          <span class="ruby-keyword kw">return</span>
+        <span class="ruby-keyword kw">end</span>
+
+<span class="ruby-identifier">source</span> = <span class="ruby-value str">''</span> <span class="ruby-comment cmt"># FIXME</span>
+        <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">report_startup</span>(<span class="ruby-identifier">source</span>, <span class="ruby-identifier">output</span>)
+        <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">output</span>) <span class="ruby-comment cmt">#unless File.directory?(output)</span>
+        <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">output</span>) <span class="ruby-keyword kw">do</span>
+          <span class="ruby-identifier">actionlist</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">atime</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+            <span class="ruby-identifier">result</span>, <span class="ruby-identifier">fulldest</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
+            <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">report_create</span>(<span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>), <span class="ruby-identifier">result</span>, <span class="ruby-identifier">atime</span>)
+            <span class="ruby-comment cmt">#logger.report_create(dest, result, atime)</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">report_complete</span>
+        <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">report_fixes</span> <span class="ruby-comment cmt">#if session.newproject?</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="metadata-method" class="method-detail ">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">metadata</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="metadata-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 35</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
+        <span class="ruby-identifier">session</span>.<span class="ruby-identifier">metadata</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="newproject--method" class="method-detail ">
+        <a name="M000022"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">newproject?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+New project?
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="newproject--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 66</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">newproject?</span>
+        <span class="ruby-identifier">session</span>.<span class="ruby-identifier">newproject?</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="output-method" class="method-detail ">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">output</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+TODO: rename to &#8216;destination&#8217;
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="output-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 43</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">output</span>
+        <span class="ruby-ivar">@output</span> <span class="ruby-operator">||=</span> (
+          <span class="ruby-comment cmt">#if session.create? &amp;&amp; plugin.name #scaffold &amp;&amp; session.scaffold?</span>
+          <span class="ruby-comment cmt">#  session.output + plugin.name</span>
+          <span class="ruby-comment cmt">#else</span>
+            <span class="ruby-identifier">session</span>.<span class="ruby-identifier">destination</span>
+          <span class="ruby-comment cmt">#end</span>
+        )
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="prompt--method" class="method-detail ">
+        <a name="M000020"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">prompt?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="prompt--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 62</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prompt?</span> ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">prompt?</span> ; <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="quiet--method" class="method-detail ">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">quiet?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="quiet--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 60</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">quiet?</span>  ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">quiet?</span>  ; <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="skip--method" class="method-detail ">
+        <a name="M000021"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">skip?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="skip--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 63</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">skip?</span>   ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">skip?</span>   ; <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="trial--method" class="method-detail ">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">trial?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="trial--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 58</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trial?</span>  ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">trial?</span>  ; <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+    <div id="private-instance-method-details" class="method-section section">
+      <h3 class="section-header">Private Instance Methods</h3>
+
+    
+      <div id="actionlist-method" class="method-detail ">
+        <a name="M000029"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">actionlist</span><span
+            class="method-args">(list)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="actionlist-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 106</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">list</span> = <span class="ruby-identifier">actionlist_sort</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">list</span> = <span class="ruby-identifier">actionlist_mark</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">list</span> = <span class="ruby-identifier">actionlist_safe</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">list</span> = <span class="ruby-identifier">actionlist_check</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">list</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="actionlist-check-method" class="method-detail ">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">actionlist_check</span><span
+            class="method-args">(list)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="actionlist-check-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 160</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist_check</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">check_conflicts</span>(<span class="ruby-identifier">list</span>)  <span class="ruby-comment cmt"># TODO: should this come before or after prompt?</span>
+        <span class="ruby-identifier">check_overwrite</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">list</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="actionlist-mark-method" class="method-detail ">
+        <a name="M000031"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">actionlist_mark</span><span
+            class="method-args">(list)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Add copy action.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="actionlist-mark-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 119</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist_mark</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">list</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span>
+          [<span class="ruby-identifier">mark</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>]
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="actionlist-safe-method" class="method-detail ">
+        <a name="M000032"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">actionlist_safe</span><span
+            class="method-args">(list)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+If in prompt mode, returns a list filtered of overwrites as selected by the
+user. If in skip mode, mark duplicates to skipped. If not in prompt or skip
+mode, simply return the current list.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="actionlist-safe-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 130</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist_safe</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">list</span> <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">prompt?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">skip?</span>)
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">list</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-identifier">safe</span> = []
+        <span class="ruby-identifier">dups</span> = []
+        <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">dups</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span>, (<span class="ruby-identifier">output</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">fname</span>).<span class="ruby-identifier">file?</span>]
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Select (y/n) which files to overwrite:\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prompt?</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">quiet?</span>
+        <span class="ruby-identifier">dups</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span>, <span class="ruby-identifier">check</span><span class="ruby-operator">|</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">check</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">skip?</span>
+              <span class="ruby-identifier">safe</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">:skip</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span>]
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-identifier">f</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">fname</span>)
+              <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">ans</span> = <span class="ruby-identifier">ask</span>(<span class="ruby-node">&quot;      #{f}? &quot;</span>).<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">strip</span>
+              <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'y'</span>, <span class="ruby-value str">'yes'</span>
+                <span class="ruby-identifier">safe</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span>]
+              <span class="ruby-keyword kw">else</span>
+                <span class="ruby-identifier">safe</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">:skip</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span>]
+              <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">safe</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span>]
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">puts</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">safe</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="actionlist-sort-method" class="method-detail ">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">actionlist_sort</span><span
+            class="method-args">(list)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p class="missing-docs">(Not documented)</p>
+          
+
+          
+          <div class="method-source-code"
+            id="actionlist-sort-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 114</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist_sort</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-identifier">list</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="check-conflicts-method" class="method-detail ">
+        <a name="M000039"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">check_conflicts</span><span
+            class="method-args">(list)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Check for any clashing generations, ie. a directory that will overwrite a
+file or a file that will overwrite a directory. This will raise an error if
+any of these conditions are found, unless force? is set to true.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="check-conflicts-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 200</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_conflicts</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-comment cmt">#return if force?</span>
+        <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">tpath</span> = <span class="ruby-identifier">loc</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">tname</span>
+          <span class="ruby-identifier">fpath</span> = <span class="ruby-identifier">output</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">fname</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">fpath</span>)
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tpath</span>.<span class="ruby-identifier">directory?</span>
+              <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">directory?</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Directory to be created clashes with a pre-existent file -- #{fname}&quot;</span>
+              <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">directory?</span>
+                <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File to be created clashes with a pre-existent directory -- #{fname}&quot;</span>
+              <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="check-overwrite-method" class="method-detail ">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">check_overwrite</span><span
+            class="method-args">(list)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Check for any overwrites. If generator allows overwrites this will be
+skipped, otherewise an error will be raised.
+</p>
+<p>
+TODO: Make this a list filter with check for &#8220;identical&#8221; files?
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="check-overwrite-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 170</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_overwrite</span>(<span class="ruby-identifier">list</span>)
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force?</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prompt?</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">skip?</span>
+        <span class="ruby-comment cmt">#return if session.overwrite?  # TODO: not so sure overwirte? option is a good idea.</span>
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">newproject?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">output</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'**/*'</span>).<span class="ruby-identifier">empty?</span> <span class="ruby-comment cmt"># FIXME?</span>
+          <span class="ruby-identifier">abort</span> <span class="ruby-value str">&quot;New project isn't empty. Use --force, --skip or --prompt.&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-identifier">clobbers</span> = []
+        <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">tpath</span> = <span class="ruby-identifier">loc</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">tname</span>
+          <span class="ruby-identifier">fpath</span> = <span class="ruby-identifier">output</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">fname</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">file?</span> <span class="ruby-comment cmt">#fpath.exist?</span>
+            <span class="ruby-identifier">clobbers</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">fname</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+
+        <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">clobbers</span>.<span class="ruby-identifier">empty?</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;    &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">clobbers</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n    &quot;</span>)
+          <span class="ruby-identifier">abort</span> <span class="ruby-value str">&quot;These files would be overwritten. Use --force, --skip or --prompt.&quot;</span>  <span class="ruby-comment cmt"># TODO: implement --skip</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="chmod-method" class="method-detail ">
+        <a name="M000044"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">chmod</span><span
+            class="method-args">(mode, file)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="chmod-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 251</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">mode</span>, <span class="ruby-identifier">file</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+          <span class="ruby-identifier">f</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">file</span>)
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;chmod #{f} #{mode}&quot;</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">mode</span>, <span class="ruby-identifier">file</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="cp-method" class="method-detail ">
+        <a name="M000042"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">cp</span><span
+            class="method-args">(src, dest)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="cp-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 230</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cp</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+          <span class="ruby-identifier">s</span> = <span class="ruby-identifier">src</span> <span class="ruby-comment cmt">#relative_to_source(src)</span>
+          <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;cp #{s} #{d}&quot;</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">cp</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="erb-method" class="method-detail ">
+        <a name="M000027"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">erb</span><span
+            class="method-args">(file)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Processes with erb.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="erb-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 98</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">erb</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-identifier">context</span>.<span class="ruby-identifier">erb</span>(<span class="ruby-identifier">file</span>)
+        <span class="ruby-comment cmt">#metadata.erb(file)</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="fu-method" class="method-detail ">
+        <a name="M000041"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">fu</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Access to FileUtils
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="fu-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 225</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fu</span>
+        <span class="ruby-identifier">trial?</span> <span class="ruby-value">? </span><span class="ruby-constant">FileUtils</span><span class="ruby-operator">::</span><span class="ruby-constant">DryRun</span> <span class="ruby-operator">:</span> <span class="ruby-constant">FileUtils</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="inspect-method" class="method-detail ">
+        <a name="M000050"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">inspect</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="inspect-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 305</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+        <span class="ruby-node">&quot;#&lt;#{self.class} @session=#{@session.inspect}&gt;&quot;</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="mark-method" class="method-detail ">
+        <a name="M000028"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">mark</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="mark-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 104</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark</span>; <span class="ruby-value str">'copy'</span>; <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="mkdir-p-method" class="method-detail ">
+        <a name="M000043"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">mkdir_p</span><span
+            class="method-args">(dir)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="mkdir-p-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 241</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+          <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dir</span>)
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;mkdir_p #{d}&quot;</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="relative-to-output-method" class="method-detail ">
+        <a name="M000048"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">relative_to_output</span><span
+            class="method-args">(dest)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="relative-to-output-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 296</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dest</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\//</span>
+          <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dest</span>).<span class="ruby-identifier">relative_path_from</span>(<span class="ruby-identifier">output</span>)
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">dest</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="rm-method" class="method-detail ">
+        <a name="M000046"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">rm</span><span
+            class="method-args">(dest)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="rm-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 272</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rm</span>(<span class="ruby-identifier">dest</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dest</span>)
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+            <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
+            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;rmdir #{d}&quot;</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">rmdir</span>(<span class="ruby-identifier">dest</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+            <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
+            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;rm #{d}&quot;</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">rm</span>(<span class="ruby-identifier">dest</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="skip-method" class="method-detail ">
+        <a name="M000040"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">skip</span><span
+            class="method-args">(loc, src, dest, opts)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="skip-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 220</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">skip</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
+        <span class="ruby-keyword kw">return</span> <span class="ruby-value str">'skip'</span>, <span class="ruby-identifier">dest</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="write-method" class="method-detail ">
+        <a name="M000045"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">write</span><span
+            class="method-args">(file, text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Write file.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="write-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 261</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">text</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+          <span class="ruby-identifier">f</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">file</span>)
+          <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;write #{f}&quot;</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">file</span>))
+          <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">'w'</span>){ <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text</span> }
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+    </div>
+  
+
+  </div>
+
+
+  <div id="rdoc-debugging-section-dump" class="debugging-section">
+  
+    <p>Disabled; run with --debug to generate this.</p>
+  
+  </div>
+
+</body>
+</html>
