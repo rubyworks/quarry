@@ -14,25 +14,22 @@ module Sow
 
     def initialize(arguments, options)
       @arguments = arguments
+      @options   = options
 
-      @destination = Pathname.new(options['destination'] || Dir.pwd)
+      @trial  = options.trial?
+      @debug  = options.debug?
+      @quiet  = options.quiet?
+      @force  = options.force?
+      @prompt = options.prompt?
+      @skip   = options.skip?
 
-      @trial  = options['trial']
-      @debug  = options['debug']
-      @quiet  = options['quiet']
-      @force  = options['force']
-      @prompt = options['prompt']
-      @skip   = options['skip']
+      @create = options.create?
+      @update = options.update?
+      @delete = options.delete?
 
-      @create = options['create']
-      @update = options['update']
-      @delete = options['delete']
+      @destination = Pathname.new(options.destination || Dir.pwd)
 
-      #options.each do |k,v|
-      #  __send__("#{k}=", v) if respond_to?("#{k}=")
-      #end
-
-      if file = Dir.glob(File.join(output, '{,.}config/sow.{yml,yaml}')).first
+      if file = Dir.glob(File.join(destination, '{,.}config/sow.{yml,yaml}')).first
         @config = YAML.load(File.new(file))
         @sowed = true
       else
@@ -41,16 +38,7 @@ module Sow
       end
     end
 
-    #attr_writer :trial
-    #attr_writer :debug
-    #attr_writer :quiet
-    #attr_writer :force
-    #attr_writer :prompt
-    #attr_writer :skip
-
-    #attr_writer :create
-    #attr_writer :update
-    #attr_writer :delete
+  public
 
     # Destination for generated scaffolding.
 
@@ -91,23 +79,23 @@ module Sow
     #++
 
     def mode
-      return :create if @create
-      return :update if @update
-      return :delete if @delete
-      return :create #sowed? ? :update : :create
+      return 'create' if @create
+      return 'update' if @update
+      return 'delete' if @delete
+      return 'create' #sowed? ? :update : :create
     end
 
     # Creation mode?
 
-    def create? ; mode == :create ; end
+    def create? ; @create ; end
 
     # Update mode?
 
-    def update? ; mode == :update ; end
+    def update? ; @update ; end
 
     # Delete mode?
 
-    def delete? ; mode == :delete ; end
+    def delete? ; @delete ; end
 
     #
     #def scaffold?
@@ -125,12 +113,12 @@ module Sow
     # Does the destination contain any files?
 
     def empty?
-      @empty ||= (Dir.entries(destination) - ['.', '..']).empty?
+      @empty ||= Dir[destination + '*'].empty?
     end
 
     # Alias for #empty?
 
-    alias_method :new_project?, :empty?
+    alias_method :new?, :empty?
 
     # Metadata for destination, if any.
     #--
@@ -155,8 +143,7 @@ module Sow
     end
 
     # Alias for meta_directory
-
-    alias_method :metadir, :meta_directory
+    #alias_method :metadir, :meta_directory
 
   end
 

@@ -64,7 +64,7 @@ module Sow
 
     attr :options
 
-    # Copylist contains the a list of transfire operations as 
+    # Copylist contains the a list of transfer operations as 
     # compiled from the plugin.
 
     attr :copylist
@@ -73,9 +73,6 @@ module Sow
     def initialize(session, options)
       @session = session
       @options = options
-
-      #@location = Pathname.new(location)
-      @metadata = OpenStruct.new
 
       @copylist  = []
     end
@@ -115,9 +112,9 @@ module Sow
     #end
 
     # Describe the purpose of this generator.
-    #def about(text)www.google.com/ig?hl=en
-    #  @about = text
-    #end
+    def about(text)
+      @about = text
+    end
 
     # Give a one line usage template.
     # Eg. '--reap=<name>'
@@ -140,18 +137,11 @@ module Sow
     #  @options << [name, desc, valid]
     #end
 
-    # This called with a +block+ in ones plugin script
-    # containing #copy calls for specifying the scaffold
-    # generation. While #copy can be called at the toplevel,
-    # this allows for delayed processing until metadata is
-    # avaiable.
-    #def scaffold(&block)
-    #  @copytemp << block
-    #end
-
     # Designate a copying action.
-    #   copy from, opts
-    #   copy from, to, opts
+    #
+    # call-seq:
+    #   copy(from, opts)
+    #   copy(from, to, opts)
     #
     def copy(*from_to_opts)
       opts = Hash===from_to_opts.last ? from_to_opts.pop : {}
@@ -159,11 +149,6 @@ module Sow
       to = to || '.'
       @copylist << [from, to, opts.rekey(&:to_s)]
     end
-
-    #
-    #def metafolder
-    #  @metafolder
-    #end
 
     # This is to allow Plugin access to the internal state.
     def [](var)

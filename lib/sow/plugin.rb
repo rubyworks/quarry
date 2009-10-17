@@ -2,7 +2,6 @@ require 'sow/core_ext'
 require 'sow/session'
 require 'sow/logger'
 require 'sow/script'
-require 'sow/usage'
 require 'sow/generators/create'
 require 'sow/generators/update'
 require 'sow/generators/delete'
@@ -41,7 +40,7 @@ module Sow
       @session  = session
       @options  = options.to_ostruct
 
-      @location    = Pathname.new(location)
+      @location = Pathname.new(location)
 
       @copy = []
     end
@@ -188,7 +187,7 @@ module Sow
       #init
       #parse
 
-    # And arguments defined in the script get there assigments
+    # Any arguments defined in the script get there assigments
     # defined as singleton methods via the script[]= call.
     #def setup_arguments #(a)
     #  #h = {}
@@ -292,11 +291,14 @@ module Sow
       copylist.each do |from, into, opts|
         cdir = opts['cd'] || '.'
         srcs = []
+
         Dir.chdir(template_dir + cdir) do
+          less = opts['less'] ? Dir.multiglob_r(opts['less']) : []
           srcs = Dir.glob(from, File::FNM_DOTMATCH)
-          srcs = srcs - Dir.glob(opts['less']) if opts['less']
+          srcs = srcs - less
           srcs = srcs.reject{ |d| File.basename(d) =~ /^[.]{1,2}$/ }
         end
+
         # remove +less+ option, not needed any more
         opts.delete('less')
         #srcs = filter_paths(srcs)

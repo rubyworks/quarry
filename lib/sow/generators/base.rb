@@ -23,6 +23,13 @@ module Sow
       attr :logger
 
       def initialize(session, copylist)
+        if session.debug?
+          puts "\n[copylist]"
+          copylist.each do |loc, tname, fname, opts|
+            puts "#{loc} #{tname} #{fname} #{opts.inspect}"
+          end
+        end
+
         @session   = session
         #@location  = location
         @copylist  = copylist
@@ -62,9 +69,9 @@ module Sow
       def prompt? ; session.prompt? ; end
       def skip?   ; session.skip?   ; end
 
-      # New project?
+      # Newuse of sow? In other words, is the destination empty?
       def newproject?
-        session.newproject?
+        session.new?
       end
 
       # Main command called to generate files.
@@ -77,7 +84,7 @@ module Sow
           return
         end
 
-source = '' # FIXME
+        source = '' # FIXME
         logger.report_startup(source, output)
         mkdir_p(output) #unless File.directory?(output)
         Dir.chdir(output) do

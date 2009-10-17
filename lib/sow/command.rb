@@ -41,13 +41,13 @@ module Sow
       # Extract standard commandline options.
       options, cooptions = standard_options(cooptions)
 
-      if options[:help]
+      if options.help?
         puts help
         exit
       end
 
       # Ensure only one command type selected.
-      if %{create delete update}.map{ |e| options[e.to_sym] }.compact.size > 1
+      if [options.create?, options.delete?, options.update?].compact.size > 1
         raise "Conflicting commands. Choose one: create, delete or update."
       end
 
@@ -55,7 +55,7 @@ module Sow
       # the current working path.
       pathname = (arguments.pop || '.').chomp('/')
 
-      options[:destination] = pathname
+      options.destination = pathname
 
       # All options should appear after plugin/scaffold name.
       # however, it is able to look past purely flag switches.
@@ -63,9 +63,9 @@ module Sow
 
       session = Session.new(arguments, options)
 
-      command = session.mode
+      #command = session.mode
 
-      # collect options
+      # collect plugin options
       options = Hash.new{ |h,k| h[k] = {} }
       cooptions.each do |(name, value)|
         if name.index('.')
@@ -99,21 +99,21 @@ module Sow
       end
 
       begin
-        case command
-        when :create
+        case session.mode
+        when 'create'
           generator = Generators::Create.new(session, copylist)
           generator.generate
-        when :update
+        when 'update'
           generator = Generators::Update.new(session, copylist)
           generator.generate
-        when :delete
+        when 'delete'
           generator = Generators::Delete.new(session, copylist)
           generator.generate
         else
           raise "[IMPOSSIBLE] Unknown command type."
         end
       rescue => err
-        if options[:debug]
+        if options['debug']
           raise err
         else
           puts err
@@ -142,33 +142,33 @@ module Sow
     end
 
     # Return command type based on option.
-    def command(options)
-      return :create if options[:create] #|| options[:c]
-      return :update if options[:update] #|| options[:u]
-      return :delete if options[:delete] #|| options[:d]
-      nil
-    end
+    #def command(options)
+    #  return 'create' if options['create'] #|| options[:c]
+    #  return 'update' if options['update'] #|| options[:u]
+    #  return 'delete' if options['delete'] #|| options[:d]
+    #  nil
+    #end
 
     STANDARD_OPTIONS = {
-      'create' => :create, 'c' => :create,
-      'update' => :update, 'u' => :update,
-      'delete' => :delete, 'd' => :delete,
-      'quiet'  => :quiet , 'q' => :quiet ,
-      'prompt' => :prompt, 'p' => :prompt,
-      'skip'   => :skip  , 's' => :skip  ,
-      'force'  => :force , 'f' => :force ,
-      'trial'  => :trial , 't' => :trial ,
-      'help'   => :help  , 'h' => :help  ,
-      'debug'  => :debug ,
+      'create' => 'create', 'c' => 'create',
+      'update' => 'update', 'u' => 'update',
+      'delete' => 'delete', 'd' => 'delete',
+      'quiet'  => 'quiet' , 'q' => 'quiet' ,
+      'prompt' => 'prompt', 'p' => 'prompt',
+      'skip'   => 'skip'  , 's' => 'skip'  ,
+      'force'  => 'force' , 'f' => 'force' ,
+      'trial'  => 'trial' , 't' => 'trial' ,
+      'help'   => 'help'  , 'h' => 'help'  ,
+      'debug'  => 'debug' ,
     }
 
     # Returns a hash of standard options and an assoc array
     # of plugin options.
     def standard_options(opts)
-      h, o = {}, []
+      h, o = OpenStruct.new, []
       opts.each do |(k,v)|
         if opt = STANDARD_OPTIONS[k]
-          h[opt] = true
+          h[opt+'?'] = true
         else
           o << [k,v]
         end
