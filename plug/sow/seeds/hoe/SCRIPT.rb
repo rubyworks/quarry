@@ -13,6 +13,7 @@ module Sow::Plugins
     option :name
 
     setup do
+      name = name() || argument
       abort "Project name argument required." unless name
       metadata.name = name
     end

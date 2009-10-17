@@ -1,10 +1,10 @@
 ---
 
 - from: "**/*"
-  less: "meta/*"
+  less: "meta"
 
 - from: "meta/*"
-  to  : <%= metadir %>
+  to  : <%= metadir %>/
 
 - from: "bin/*"
   chmod: 0744
