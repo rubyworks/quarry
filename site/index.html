@@ -19,7 +19,7 @@
     <div id="subtitle">tending project ecology</div>
   </div>
   <div id="formats">
-    README <br/> bin <br/> lib <br/> test <br/> . . .
+    README <br/> bin <br/> doc <br/> lib <br/> meta <br/> test <br/> ...
   </div>
   <div id="menu">
     <a href="index.html">Overview</a> <br/>
@@ -277,29 +277,29 @@ contents of the <code>lgpl</code> subdirectory into our project directory.</p>
 
 <p>The other approach, of using the DATA.yml and COPY.yml files instead of a SCRIPT.rb,
 allows us to specify the scaffolding instructions via YAML in a <i>declarative</i> style.
-For comparison, in the above case the DATA.yml file would look like:</p>
+By comparison, for the above License case the DATA.yml file would look like:</p>
 
 <pre>
   ---
-  about   : Add LICENSE/COPYING file to project
-  usage   : "--license[=&lt;NAME&gt;]"
-  license : argument.upcase
-  validate:
+  about    : Add LICENSE/COPYING file to project
+  usage    : "--license[=&lt;NAME&gt;]"
+  license  : argument.upcase
+  licenses : [gpl, lgpl, mit]
+  validate :
     name = license.downcase;
     abort "License name required" unless licenses.include?(name)
-  licenses: [gpl, lgpl, mit]
 </pre>
 
 <p>And the COPY.yml file like:</p>
 
 <pre>
   ---
-  - from: "*"
-    to  : '.'
-    cd  : &lt;%= license.downcase %&gt;
+  - from : "*"
+    to   : '.'
+    cd   : &lt;%= license.downcase %&gt;
 </pre>
 
-<p>I am sure you already see the similarities between the two. They effectively do the
+<p>I am sure you can see the similarities between the two. They effectively do the
 exact same thing. The later just happens to be a little bit easier to digest, but
 not quite as readily programmable.</p>
 
