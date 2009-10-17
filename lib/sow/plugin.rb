@@ -64,7 +64,7 @@ module Sow
 
     # Directory with template files.
     def template_dir
-      @template_dir ||= grab(TEMPLATE_NAME).chomp('/')
+      @template_dir ||= grab(TEMPLATE_NAME)
     end
 
     # File containing usage text.
