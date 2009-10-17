@@ -1,42 +1,380 @@
-<HTML>
-<HEAD>
-  <TITLE>Sow</TITLE>
-  <link REL="SHORTCUT ICON" HREF="assets/images/icon.jpg"/>
-  <style>
-    * { margin: 0; padding: 0 }
-    body {
-      padding: 0; 
-      margin: 0;
-      color: black;
-      font: 1em sans-serif;
-      text-align: center;
-      background: url(../img/fade_yellow_up.jpg) bottom repeat-y;
-    }
-    a  { text-decoration: none; font-size: 10pt; }
-    h1 { font-size: 72pt; margin: 20px; color: #cccc00; }
-    h2 { margin: 20px; color: #5566FF; }
-    ul { margin: 0 auto; list-style-type: none; width: 300px; }
-    li { float: left; padding: 10px; text-align: center; }
-    .doc { padding: 100px; text-align: center; }
-  </style>
-</HEAD>
-<BODY>
+<html>
 
-<div class="doc">
+<head>
 
-  <img src="assets/images/logo.jpg" style="height: 300px;"/><br/>
+<title>Sowing the Seeds of Software</title>
 
-  <h1>SOW</h1>
+<link REL="SHORTCUT ICON" HREF="assets/images/flower2.jpg"/>
+<link rel="stylesheet" href="assets/styles/index.css" type="text/css" media="screen, projection, print"/>
 
-  <h2>Tending Project Ecology</h2>
+</head>
 
-  <a href="lowdown.html">Overview</a> &nbsp;
-  <a href="rdoc/index.html">RDocs</a> &nbsp;
-  <!-- <a href="qedoc/index.html">QEDocs</a> &nbsp; -->
-  <a href="http://rubyforge.org/projects/proutils">Rubyforge</a> &nbsp;
-  <a href="http://github.com/transfire/proutils">GitHub</a>
+<body><div id="canvas">
+
+<!--0-------------- HEADER ------------------->
+
+<div id="head">
+  <div>
+    <div id="title">SOW</div>
+    <div id="subtitle">tending project ecology</div>
+  </div>
+  <div id="formats">
+    README <br/> bin <br/> lib <br/> test <br/> . . .
+  </div>
+  <div id="menu">
+    <a href="index.html">Overview</a> <br/>
+    <a href="plugins.html">Gallery</a> <br/>
+    <a href="rdoc/index.html">API</a> <br/>
+    <!-- <a href="qedoc/index.html">QEDocs</a> <br/> -->
+    <!-- <a href="http://rubyforge.org/projects/proutils">Rubyforge</a> <br/> -->
+    <a href="http://github.com/proutils/sow">Development</a> <br/>
+    <a href="http://googlegroups/group/proutils/">Mailing List</a>
+  </div>
+</div>
+
+<div id="main">
+
+<br/><br/>
+
+<!--1--------------- OVERVIEW ------------------->
+
+<div id="overview" class="section">
+
+<h2>Introduction</h2>
+
+<p>Sow is a smart, easy to use, project scaffolding system.
+It can generate a large variety of layouts from
+a traditional Ruby project to common website starter
+setups.</p>
+
+<p>Sow is plug-able. New "<i>seeds</i>" are easy to create
+with templates based on eRuby, and easily distributable
+if you want to share.</p>
 
 </div>
-</BODY>
-</HTML>
+
+
+<!--2--------------- INSTALL ------------------->
+
+<div id="install" class="section">
+
+<h2>Installation</h2>
+
+<p>Install using RubyGems as you would expect:</p>
+
+<pre>
+  $ gem install sow
+</pre>
+
+<p>Manual site installation can be achieved via Ruby Setup. Please see the
+<a href="http://rdoc/README.html">README</a> included in the
+<a href="http://">tarball</a> for more information.</p>
+
+</div>
+
+
+<!--3--------------- USAGE ------------------->
+
+<div id="usage" class="section">
+
+<h2>Usage</h2>
+
+<p>Sow can be used to generate a variety of scaffolding. General usage is as follows:</p>
+
+<pre>
+  $ sow --&lt;seed&gt;[=&lt;arg&gt;] [--&lt;seed&gt;.&lt;prop&gt;[=&lt;val&gt;] ...] &lt;destination&gt;
+</pre>
+
+<p>For example, to setup a project to use Test::Unit, storing tests in the <code>test/unit</code> directory
+and creating an initial empty <code>sample</code> test file, we could type:</p>
+
+<pre>
+  $ sow --testunit=test/unit --testunit.name=sample myapp/
+</pre>
+
+<p>To demonstrate the output of the <code>sow</code>, lets create a new Ruby project.</p>
+
+<pre>
+  $ sow --ruby myapp/
+</pre>
+
+<p>You will see output resembling:</p>
+
+<pre>
+  Transferring ruby files to myapp/:
+
+      create  bin
+      create  data
+      create  doc
+      create  doc
+      create  lib
+      create  lib/myapp
+      create  meta
+      create  test
+      create  HISTORY.rdoc
+      create  COPYING.rdoc
+      create  README.rdoc
+      create  meta/authors
+      create  meta/created
+      create  meta/description
+      create  meta/email
+      create  meta/homepage
+      create  meta/license
+      create  meta/package
+      create  meta/repository
+      create  meta/title
+      create  meta/version
+
+  You need to fix the occurrences of &#8216;__FIX__&#8217; in the following files:
+
+      README
+      meta/description
+</pre>
+
+<p>When you generate project scaffolding, be sure to go over the contents and fine-tune.
+In particular, edit all the files that contain &#8216;__FIX__&#8217; entries, but
+be sure to familiarize yourself with all the files produced by a given scaffold.</p>
+
+<p>Because seeds are specified using command-line options, you can string together any number
+of seeds and they will be combined in a single operation. For example we may scaffold a new
+ruby project with cucumber for testing:<p/>
+
+<pre>
+  $ sow --ruby --cucumber new_project/
+</pre>
+
+<p>Any number of seeds can be strung together. The only limitation being that a given type of
+seed can only be used once per invocation of the <code>sow</code> command.</p>
+
+</div>
+
+
+<!--4--------------- HOE USERS ------------------->
+
+<div id="overview" class="section">
+
+<h2>Hoe Users</h2>
+
+<p>Hoe users will notice that Sow overwrites the <code>sow</code> command that comes
+with Hoe. Sow supports Hoe style projects, so there is nothing lost. You
+can simply use:</p>
+
+<pre>
+  $ sow --hoe [directory]
+</pre>
+
+<p>It is unfortunate that Hoe choose to create an executable outside it's
+chosen namespace. <code>hoe</code> would make a perfectly fine executable name.
+I toyed with the idea of calling Sow's command +hoe+, but really that
+seemed rather silly in the end.</p>
+
+</div>
+
+
+<!--5--------------- PLUGINS ------------------->
+
+<div id="plugins" class="section">
+
+<h2>Designing Sow Plugins</h2>
+
+<p>Creating your own plugin is actually quite easy. You simply need to add
+a folder to a Ruby project's loadpath following the naming convention
+<code>sow/seeds/&lt;name&gt;/</code>. This folder can be in a dedicated project
+or part of another project. Typically your project's loadpath with be under
+<code>lib/</code>. Let's say you want to call your plugin <code>mohgee</code>,
+so you would have a <code>lib/sow/seeds/mohgee/</code> directory. Alternatively
+you can make a separate folder for plugins, and add it's path to your project's
+loadpath (which is what I do). In that case, you might have a folder like
+of <code>plug/sow/seeds/moghee/</code> and would add <code>plug/</code> to the loadpath.</p>
+The plugin folder houses files to instruct sow how to generate a scaffold and a directory
+to hold the template files you want to use for your scaffolding.</p>
+
+<p>A typical plugin layout will look like this:</p>
+
+<pre>
+  my_seed/
+    SCRIPT.rb
+    template/
+      ...
+</pre>
+
+<p>Or, alternately it can look like this:</p>
+
+<pre>
+  my_seed/
+    DATA.yaml
+    COPY.yaml
+    template/
+      ...
+</pre>
+
+<p>Which of the two you use depends mostly on your preference.</p>
+
+<p><code>SCRIPT.rb</code> is the the traditional approach, and is probably best suited to complex
+scaffolding. The script instructs Sow on how to conduct the scaffold generation in plain Ruby code.
+Essentially, a Sow script is a small Ruby DSL script containing a subclass of Sow::Script within the
+Sow::Plugins namespace. There are only a few methods you need to know in order to
+create you own plugin.</p>
+
+<p>To get up to speed quickly on how a <code>SCRIPT.rb</code> is constructed, below
+is the <code>SCRIPT.rb</code> for the built-in License plugin.</p>
+
+<pre>
+  module Sow::Plugins
+
+    # Add specified license to your project.
+
+    class License &lt; Script
+
+      LICENSES = %w[gpl lgpl mit]
+
+      about "Add LICENSE/COPYING file to project"
+
+      usage "--license[=&lt;NAME&gt;]"
+
+      argument :license
+
+      setup do
+        name = license.downcase
+        abort "License name required" unless LICENSES.include?(name)
+        metadata.license = name.upcase
+      end
+
+      manifest do
+        copy "*", '.', :cd => license.downcase
+      end
+
+    end
+
+  end
+</pre>
+
+<p>Notice we have specified the main argument via the <code>argument</code> meta-method.
+This means the command-line <code>--license</code> option will take an argument.
+In the <code>setup</code> method we set <code>metadata.license</code> to this argument
+so that it can be used in by the eRuby templates. The <code>manifest</code> method specifies
+the transfer instructions of copying the appropriate contents from the <code>template</code>
+directory to our destination directory. The <code>:cd</code> option is a convenience option
+that tells the copy command to drop down into a template sub-directory before performing the
+copy operation.</p>
+
+<p>The layout of the license plugin looks basically like this:</p>
+
+<pre>
+  SCRIPT.rb
+  template/
+    gpl/
+      COPYING
+    lgpl/
+      COPYING
+      LICENSE
+    mit/
+      LICENSE
+</pre>
+
+<p>So for example, upon invoking <code>sow --license=lgpl</code>, sow will copy the
+contents of the <code>lgpl</code> subdirectory into our project directory.</p>
+
+<p>The other approach, of using the DATA.yml and COPY.yml files instead of a SCRIPT.rb,
+allows us to specify the scaffolding instructions via YAML in a <i>declarative</i> style.
+For comparison, in the above case the DATA.yml file would look like:</p>
+
+<pre>
+  ---
+  about   : Add LICENSE/COPYING file to project
+  usage   : "--license[=&lt;NAME&gt;]"
+  license : argument.upcase
+  validate:
+    name = license.downcase;
+    abort "License name required" unless licenses.include?(name)
+  licenses: [gpl, lgpl, mit]
+</pre>
+
+<p>And the COPY.yml file like:</p>
+
+<pre>
+  ---
+  - from: "*"
+    to  : '.'
+    cd  : &lt;%= license.downcase %&gt;
+</pre>
+
+<p>I am sure you already see the similarities between the two. They effectively do the
+exact same thing. The later just happens to be a little bit easier to digest, but
+not quite as readily programmable.</p>
+
+<p>The contents of <code>template/</code> do not need any special extension to be
+processed by eRuby. All files in the template directory are considered eRuby
+files. To avoid eRuby processing, use the <code>:verbatim => true</code> option with
+the <code>copy</code> command.
+
+</div>
+
+
+<!--6--------------- DEVELOPMENT ------------------->
+
+<div id="development" class="section">
+
+<h2>Development</h2>
+
+<p>Sow is hosted on GitHub and is part of the ProUtils set of projects.</p>
+
+<p><a href="http://github.com/proutils/sow">http://github.com/proutils/sow</a></p>
+
+</div>
+
+
+<!--7--------------- COPYING ------------------->
+
+<div id="copying" class="section">
+
+<h2>Copying</h2>
+
+<p>Copyright &#169; 2009 Thomas Sawyer</p>
+
+<p>This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.</p>
+
+<p>This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.</p>
+
+<p>You should have received a copy of the GNU General Public License along
+with this program. If not, see
+<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+
+</div>
+
+<!--8--------------- NEWS ------------------->
+
+<!--
+<div id="news" class="section">
+
+<h2> What's New </h2>
+
+<div style="float: right; color: gray;">2008-07-21</div>
+
+<h3>Two Years?</h3>
+<p>Can you believe it's been two years? Over two years since I began this
+crazy eyed journey to create the ultimate Ruby build tool. If I had any idea what I was
+getting myself into I would likely have ran away screaming, thankful for having saved myself
+an extrodinarily amount of <i>time</i>. Thankfully I can finally say that day has
+almost arrived. And about time too. I was starting to get worried ;) The final result turned out
+to be just a single project, rather three came from the edeavor: Ratch, Sow and Reap.</p>
+
+</div>
+-->
+
+<!---------------- FOOTER ------------------>
+
+<div id="copy">
+  <a href="http://proutils.github.com/sow">Sow</a>
+  Copyright (c) 2009 Thomas Sawyer (trans), all rights reserved.
+</div>
+
+</div></body>
+</html>
 
