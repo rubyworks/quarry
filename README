@@ -1,24 +1,26 @@
-= Sow - Tending Project Ecology
+= Sow 
 
 * http://proutils.github.com/sow
 * http://github.com/proutils/sow
 
 
-== DESCRIPTION
+== TENDING TO PROJECT ECOLOGY
 
-Sow is a scaffold generator. Techincally it is a simple
-pluggable templating system based on eRuby, but it is designed 
-with project templating squarely in mind.
+Sow is a project scaffolding system. The system is pluggable
+and utilizes eRuby templating to make it easy to extend. Sow
+can be used for any kind of file scaffolding, but it is
+designed largely with Ruby project needs in mind.
 
-Sowing requires seeds. Sow comes with an extra large box of
-seeds to really get those projects blooming!
+Sow's plugins are called "seeds". Sowing requires seeds.
+Sow comes with an extra large box of seeds to really get
+those projects blooming!
 
 
 == SYNOPSIS
 
 General usage follws the pattern:
 
-  sow [options] --<plugin>[=argument] ... [destination-path]
+  sow [options] --<plugin>[=arg] --<plugin>.<var>[=arg] ... [destination]
 
 For instance to scaffold a new, basic ruby project with the
 name 'myapp' in the directory 'myapp':
@@ -39,53 +41,28 @@ scaffold it from within.
   $ sow --ruby=foo
 
 Once you have a project, Sow can be used to generate components
-as well, much like script/generate in Rails. For instance,
-to generate a test/unit test file.
+as well, kind of like script/generate in Rails. For instance,
+to generate a test/unit starter file.
 
-  $ sow --testunit=mytest
-
-Dor the moment, the commandline arguments parser that Sow uses
-is extra dumb, and the use of the '=' is alwasy necessary. In
-the future, the '=' will become optional, so long as a destnation
-directoy is explicitly provided, or the last plugin take no argument.
+  $ sow --testunit.name=mytest
 
 For more details on how to use Sow, what plugins are available and how
 to build your own cusotm plugins, please see the documentation
 provided on Sow's website.
 
 
-== INSTALLATION
+== CURRENT STATUS
 
-=== RubyGems Install
-
-Install using RubyGems as you would expect:
-
-  $ gem install sow
-
-This will install Sow, it's Facets dependency if not alreay installed,
-and a number of built-in plugins. Keep in mind that some plugins
-come from the packages with which they are associated. For example,
-the Reap plugin is distributed with the Reap package.
-
-=== Site Install
-
-Old-fashion site installs require Ruby Setup (see http://proutils.rubyforge.org/setup).
-If you don't have Ruby Setup you can install it via Rubygems:
-
-  $ gem install setup
-
-With Setup in place, download the Sow tarball (.tar.gz) and unpack it,
-then install by invoking setup.rb.
-
-  $ tar -xvvzf sow-1.0.0.tar.gz
-  $ cd sow-1.0.0 
-  $ sudo setup.rb all
-
-If you use Hoe, please see the the important message below before
-installing.
+Sow is still a little wet behind the ears, and you might come across
+the ocassional odd behavior. Please report on the Protutils
+mailing list (http://googlegroups.com/group/proutils). Usually the
+issue will be some over-looked in a given plugin --since plugins
+have a lot of flexability in their design. It will take some time
+and some widespread usage to work out all the corner cases and
+to bring each plugin to a fine polish.
 
 
-== HOW USERS
+== HOE USERS
 
 *IMPORTANT NOTICE FOR HOE USERS!*
 
@@ -106,6 +83,37 @@ Note, that Hoe scaffolding does not support the in-project templating
 system. To get that you need to add a .meta/ directory to your project.
 
 
+== INSTALLATION
+
+=== RubyGems Install
+
+Install using RubyGems as you would expect:
+
+  $ gem install sow
+
+This will install Sow, it's Facets dependency if not alreay installed,
+and a number of built-in plugins. Keep in mind that some plugins
+come from the packages with which they are associated. For example,
+the Reap plugin is distributed with the Reap package.
+
+=== Old School Site Install
+
+Old-fashion site installs require Ruby Setup (see http://proutils.rubyforge.org/setup).
+If you don't have Ruby Setup you can install it via Rubygems:
+
+  $ gem install setup
+
+With Setup in place, download the Sow tarball (.tar.gz) and unpack it,
+then install by invoking setup.rb.
+
+  $ tar -xvvzf sow-1.0.0.tar.gz
+  $ cd sow-1.0.0 
+  $ sudo setup.rb all
+
+If you use Hoe, please see the the important message below before
+installing.
+
+
 == DEVELOPMENT
 
 Sow is being developed on <a href="http://hithub.com">GitHub</a>, as part of the
@@ -115,7 +123,7 @@ ProUtils set of project development tools. You can browse the Sow project here:
 
 Sow's public repository can be pulled via:
 
- 	 git://github.com/proutils/sow.git 
+  git://github.com/proutils/sow.git 
 
 Please feel free to fork the project and submit pull requests. Discussion of
 Sow occurs on the TigerOps Community Mailinglist.
