@@ -12,17 +12,19 @@ require 'facets/kernel/instance_class'
 
 module Sow
 
-  # Plugin encapsulates infromation about a sow plugin.
+  # Plugin encapsulates information about a sow plugin.
   #
   class Plugin
+    # Name of template directory.
+    TEMPLATE_NAME = 'template/'
     # Name of plugin script file.
-    SCRIPT_NAME = 'SCRIPT.rb'
+    SCRIPT_NAME = 'SCRIPT{,.rb}'
     # Name of usage document.
     USAGE_NAME = 'USAGE{,.txt}'
     # Name of metadata file.
-    META_NAME = 'META{,.yml,.yaml}'
-    # Name of seed file. TODO: change name.
-    SEED_NAME = 'SEED{,.yml,.yaml}'
+    DATA_NAME = 'DATA{,.yml,.yaml}'
+    # Name of copy file.
+    COPY_NAME = 'COPY{,.yml,.yaml}'
 
     # Instanance of Session.
     attr :session
@@ -62,27 +64,27 @@ module Sow
 
     # Directory with template files.
     def template_dir
-      @template_dir ||= grab('template/')
+      @template_dir ||= grab(TEMPLATE_NAME).chomp('/')
     end
 
     # File containing usage text.
     def usage_file
-      @usage_file ||= grab('usage{,.txt}')
+      @usage_file ||= grab(USAGE_NAME)
     end
 
     # Metadata file.
     def meta_file
-      @meta_file ||= grab('meta{,.yml,.yaml}')
+      @meta_file ||= grab(DATA_NAME)
     end
 
     # Transfer file.
     def seed_file
-      @seed_file ||= grab('seed{,.yml,.yaml}')
+      @seed_file ||= grab(COPY_NAME)
     end
 
     # Traditional alternative to the meta & seed file.
     def script_file
-      @script_file ||= grab('script{,.rb}')
+      @script_file ||= grab(SCRIPT_NAME)
     end
 
     # Usage text.
