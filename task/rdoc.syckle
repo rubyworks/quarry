@@ -1,6 +1,7 @@
 ---
 rdoc:
   service : rdoc
+  template: redfish
   include : ~
   exclude : [plug/]
   extra   : ~

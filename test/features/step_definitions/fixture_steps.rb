@@ -48,13 +48,25 @@ end
 Then /^a standard ruby project will be generated$/ do
   in_temporary_directory do
     File.assert.exist?(@path)
-    entries = Dir.entries(@path).sort - ['.', '..']
-    entries.assert == %w{.autotest History.txt Manifest.txt README.txt Rakefile bin lib test}
+     
+    entries =[]
+    Dir.chdir(@path) do
+      entries = Dir.glob("**/*", File::FNM_DOTMATCH)
+    end
+    entries = entries.reject{ |d| File.basename(d) == '.' or File.basename(d) == '..' }  # this sucks!
+    entries = entries.sort
+
+    files = plugin_scaffolding('ruby')
+    files = files.map{ |d| d.sub('meta', '.meta') }
+    files = files.map{ |d| d.sub('__package__', @name) }
+    files = files.sort
+    entries.assert == files
   end
 end
 
 And /^with the proper project name$/ do
   in_project_directory(@path) do
-    File.read('README.txt').assert.index(@name)
+    File.read('README.rdoc').assert.index(@name)
   end
 end
+
