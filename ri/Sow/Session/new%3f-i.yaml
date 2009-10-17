@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: Return command type based on option.
-full_name: Sow::Command#command
+  body: "Alias for #empty?"
+full_name: Sow::Session#new?
 is_singleton: false
-name: command
-params: (options)
+name: new?
+params: ()
 visibility: public

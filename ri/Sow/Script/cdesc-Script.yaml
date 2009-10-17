@@ -3,7 +3,7 @@ attributes:
 - !ruby/object:RDoc::RI::Attribute 
   comment: 
   - !ruby/struct:RDoc::Markup::Flow::P 
-    body: Copylist contains the a list of transfire operations as compiled from the plugin.
+    body: Copylist contains the a list of transfer operations as compiled from the plugin.
   name: copylist
   rw: R
 - !ruby/object:RDoc::RI::Attribute 
@@ -53,6 +53,8 @@ instance_methods:
   name: "[]"
 - !ruby/object:RDoc::RI::MethodSummary 
   name: "[]="
+- !ruby/object:RDoc::RI::MethodSummary 
+  name: about
 - !ruby/object:RDoc::RI::MethodSummary 
   name: argument
 - !ruby/object:RDoc::RI::MethodSummary 

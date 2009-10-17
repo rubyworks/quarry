@@ -4,9 +4,9 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: "Alias for #empty?"
-full_name: Sow::Session#new_project?
+  body: Describe the purpose of this generator.
+full_name: Sow::Script#about
 is_singleton: false
-name: new_project?
-params: ()
+name: about
+params: (text)
 visibility: public

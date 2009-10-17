@@ -75,21 +75,19 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li class="method"><a href="#M000035">::execute</a></li>
+          <li class="method"><a href="#M000033">::execute</a></li>
           
-          <li class="method"><a href="#M000036">::new</a></li>
+          <li class="method"><a href="#M000034">::new</a></li>
           
-          <li class="method"><a href="#M000050">#command</a></li>
+          <li class="method"><a href="#M000036">#execute</a></li>
           
-          <li class="method"><a href="#M000038">#execute</a></li>
+          <li class="method"><a href="#M000050">#help</a></li>
           
-          <li class="method"><a href="#M000052">#help</a></li>
+          <li class="method"><a href="#M000035">#manager</a></li>
           
-          <li class="method"><a href="#M000037">#manager</a></li>
+          <li class="method"><a href="#M000043">#parse_argv</a></li>
           
-          <li class="method"><a href="#M000048">#parse_argv</a></li>
-          
-          <li class="method"><a href="#M000051">#standard_options</a></li>
+          <li class="method"><a href="#M000048">#standard_options</a></li>
           
         </ul>
       </div>
@@ -206,7 +204,21 @@ TODO: Move the core logic of execture to either Manger or another class.
       
         <dt><a name="STANDARD_OPTIONS">STANDARD_OPTIONS</a></dt>
         
-        <dd class="description missing-docs">(Not documented)</dd>
+        <dd class="description"><pre>
+ Return command type based on option.
+</pre>
+<p>
+def command(options)
+</p>
+<pre>
+  return 'create' if options['create'] #|| options[:c]
+  return 'update' if options['update'] #|| options[:u]
+  return 'delete' if options['delete'] #|| options[:d]
+  nil
+</pre>
+<p>
+end
+</p></dd>
         
       
       </dl>
@@ -246,7 +258,7 @@ Commandline arguments.
 
     
       <div id="execute-method" class="method-detail ">
-        <a name="M000035"></a>
+        <a name="M000033"></a>
 
         <div class="method-heading">
         
@@ -280,7 +292,7 @@ Initialize and execute command.
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000036"></a>
+        <a name="M000034"></a>
 
         <div class="method-heading">
         
@@ -319,45 +331,8 @@ New <a href="Command.html">Command</a>.
       <h3 class="section-header">Public Instance Methods</h3>
 
     
-      <div id="command-method" class="method-detail ">
-        <a name="M000050"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">command</span><span
-            class="method-args">(options)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p>
-Return command type based on option.
-</p>
-          
-
-          
-          <div class="method-source-code"
-            id="command-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/sow/command.rb, line 145</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">command</span>(<span class="ruby-identifier">options</span>)
-      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:create</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:create</span>] <span class="ruby-comment cmt">#|| options[:c]</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:update</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:update</span>] <span class="ruby-comment cmt">#|| options[:u]</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:delete</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:delete</span>] <span class="ruby-comment cmt">#|| options[:d]</span>
-      <span class="ruby-keyword kw">nil</span>
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
       <div id="execute-method" class="method-detail ">
-        <a name="M000038"></a>
+        <a name="M000036"></a>
 
         <div class="method-heading">
         
@@ -390,13 +365,13 @@ that location?
       <span class="ruby-comment cmt"># Extract standard commandline options.</span>
       <span class="ruby-identifier">options</span>, <span class="ruby-identifier">cooptions</span> = <span class="ruby-identifier">standard_options</span>(<span class="ruby-identifier">cooptions</span>)
 
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:help</span>]
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">help?</span>
         <span class="ruby-identifier">puts</span> <span class="ruby-identifier">help</span>
         <span class="ruby-identifier">exit</span>
       <span class="ruby-keyword kw">end</span>
 
       <span class="ruby-comment cmt"># Ensure only one command type selected.</span>
-      <span class="ruby-keyword kw">if</span> <span class="ruby-value str">%{create delete update}</span>.<span class="ruby-identifier">map</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_sym</span>] }.<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+      <span class="ruby-keyword kw">if</span> [<span class="ruby-identifier">options</span>.<span class="ruby-identifier">create?</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete?</span>, <span class="ruby-identifier">options</span>.<span class="ruby-identifier">update?</span>].<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
         <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Conflicting commands. Choose one: create, delete or update.&quot;</span>
       <span class="ruby-keyword kw">end</span>
 
@@ -404,7 +379,7 @@ that location?
       <span class="ruby-comment cmt"># the current working path.</span>
       <span class="ruby-identifier">pathname</span> = (<span class="ruby-identifier">arguments</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'.'</span>).<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'/'</span>)
 
-      <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:destination</span>] = <span class="ruby-identifier">pathname</span>
+      <span class="ruby-identifier">options</span>.<span class="ruby-identifier">destination</span> = <span class="ruby-identifier">pathname</span>
 
       <span class="ruby-comment cmt"># All options should appear after plugin/scaffold name.</span>
       <span class="ruby-comment cmt"># however, it is able to look past purely flag switches.</span>
@@ -412,9 +387,9 @@ that location?
 
       <span class="ruby-identifier">session</span> = <span class="ruby-constant">Session</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">arguments</span>, <span class="ruby-identifier">options</span>)
 
-      <span class="ruby-identifier">command</span> = <span class="ruby-identifier">session</span>.<span class="ruby-identifier">mode</span>
+      <span class="ruby-comment cmt">#command = session.mode</span>
 
-      <span class="ruby-comment cmt"># collect options</span>
+      <span class="ruby-comment cmt"># collect plugin options</span>
       <span class="ruby-identifier">options</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>] = {} }
       <span class="ruby-identifier">cooptions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">value</span>)<span class="ruby-operator">|</span>
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">'.'</span>)
@@ -448,21 +423,21 @@ that location?
       <span class="ruby-keyword kw">end</span>
 
       <span class="ruby-keyword kw">begin</span>
-        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">command</span>
-        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:create</span>
+        <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">session</span>.<span class="ruby-identifier">mode</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'create'</span>
           <span class="ruby-identifier">generator</span> = <span class="ruby-constant">Generators</span><span class="ruby-operator">::</span><span class="ruby-constant">Create</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">copylist</span>)
           <span class="ruby-identifier">generator</span>.<span class="ruby-identifier">generate</span>
-        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:update</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'update'</span>
           <span class="ruby-identifier">generator</span> = <span class="ruby-constant">Generators</span><span class="ruby-operator">::</span><span class="ruby-constant">Update</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">copylist</span>)
           <span class="ruby-identifier">generator</span>.<span class="ruby-identifier">generate</span>
-        <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:delete</span>
+        <span class="ruby-keyword kw">when</span> <span class="ruby-value str">'delete'</span>
           <span class="ruby-identifier">generator</span> = <span class="ruby-constant">Generators</span><span class="ruby-operator">::</span><span class="ruby-constant">Delete</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">copylist</span>)
           <span class="ruby-identifier">generator</span>.<span class="ruby-identifier">generate</span>
         <span class="ruby-keyword kw">else</span>
           <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;[IMPOSSIBLE] Unknown command type.&quot;</span>
         <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">rescue</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">err</span>
-        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:debug</span>]
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-value str">'debug'</span>]
           <span class="ruby-identifier">raise</span> <span class="ruby-identifier">err</span>
         <span class="ruby-keyword kw">else</span>
           <span class="ruby-identifier">puts</span> <span class="ruby-identifier">err</span>
@@ -480,7 +455,7 @@ that location?
 
     
       <div id="help-method" class="method-detail ">
-        <a name="M000052"></a>
+        <a name="M000050"></a>
 
         <div class="method-heading">
         
@@ -514,7 +489,7 @@ General help message.
 
     
       <div id="manager-method" class="method-detail ">
-        <a name="M000037"></a>
+        <a name="M000035"></a>
 
         <div class="method-heading">
         
@@ -548,7 +523,7 @@ General help message.
 
     
       <div id="parse-argv-method" class="method-detail ">
-        <a name="M000048"></a>
+        <a name="M000043"></a>
 
         <div class="method-heading">
         
@@ -594,7 +569,7 @@ do it manually to preserve the order of plugin options.
 
     
       <div id="standard-options-method" class="method-detail ">
-        <a name="M000051"></a>
+        <a name="M000048"></a>
 
         <div class="method-heading">
         
@@ -617,10 +592,10 @@ Returns a hash of standard options and an assoc array of plugin options.
 <pre>
 <span class="ruby-comment cmt"># File lib/sow/command.rb, line 167</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">standard_options</span>(<span class="ruby-identifier">opts</span>)
-      <span class="ruby-identifier">h</span>, <span class="ruby-identifier">o</span> = {}, []
+      <span class="ruby-identifier">h</span>, <span class="ruby-identifier">o</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>, []
       <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span>(<span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span>)<span class="ruby-operator">|</span>
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opt</span> = <span class="ruby-constant">STANDARD_OPTIONS</span>[<span class="ruby-identifier">k</span>]
-          <span class="ruby-identifier">h</span>[<span class="ruby-identifier">opt</span>] = <span class="ruby-keyword kw">true</span>
+          <span class="ruby-identifier">h</span>[<span class="ruby-identifier">opt</span><span class="ruby-operator">+</span><span class="ruby-value str">'?'</span>] = <span class="ruby-keyword kw">true</span>
         <span class="ruby-keyword kw">else</span>
           <span class="ruby-identifier">o</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span>]
         <span class="ruby-keyword kw">end</span>

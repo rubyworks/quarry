@@ -75,11 +75,11 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li class="method"><a href="#M000007">::new</a></li>
+          <li class="method"><a href="#M000011">::new</a></li>
           
-          <li class="method"><a href="#M000028">#actionlist</a></li>
+          <li class="method"><a href="#M000029">#actionlist</a></li>
           
-          <li class="method"><a href="#M000033">#actionlist_check</a></li>
+          <li class="method"><a href="#M000037">#actionlist_check</a></li>
           
           <li class="method"><a href="#M000031">#actionlist_mark</a></li>
           
@@ -87,53 +87,53 @@
           
           <li class="method"><a href="#M000030">#actionlist_sort</a></li>
           
-          <li class="method"><a href="#M000011">#arguments</a></li>
+          <li class="method"><a href="#M000017">#arguments</a></li>
           
           <li class="method"><a href="#M000039">#check_conflicts</a></li>
           
-          <li class="method"><a href="#M000034">#check_overwrite</a></li>
+          <li class="method"><a href="#M000038">#check_overwrite</a></li>
           
-          <li class="method"><a href="#M000044">#chmod</a></li>
+          <li class="method"><a href="#M000045">#chmod</a></li>
           
           <li class="method"><a href="#M000042">#cp</a></li>
           
-          <li class="method"><a href="#M000013">#debug?</a></li>
+          <li class="method"><a href="#M000019">#debug?</a></li>
           
-          <li class="method"><a href="#M000026">#erb</a></li>
+          <li class="method"><a href="#M000027">#erb</a></li>
           
-          <li class="method"><a href="#M000015">#force?</a></li>
+          <li class="method"><a href="#M000021">#force?</a></li>
           
           <li class="method"><a href="#M000041">#fu</a></li>
           
-          <li class="method"><a href="#M000022">#generate</a></li>
+          <li class="method"><a href="#M000026">#generate</a></li>
           
-          <li class="method"><a href="#M000049">#inspect</a></li>
+          <li class="method"><a href="#M000051">#inspect</a></li>
           
-          <li class="method"><a href="#M000027">#mark</a></li>
+          <li class="method"><a href="#M000028">#mark</a></li>
           
-          <li class="method"><a href="#M000008">#metadata</a></li>
+          <li class="method"><a href="#M000014">#metadata</a></li>
           
-          <li class="method"><a href="#M000043">#mkdir_p</a></li>
+          <li class="method"><a href="#M000044">#mkdir_p</a></li>
           
-          <li class="method"><a href="#M000021">#newproject?</a></li>
+          <li class="method"><a href="#M000025">#newproject?</a></li>
           
-          <li class="method"><a href="#M000009">#output</a></li>
+          <li class="method"><a href="#M000015">#output</a></li>
           
-          <li class="method"><a href="#M000019">#prompt?</a></li>
+          <li class="method"><a href="#M000022">#prompt?</a></li>
           
-          <li class="method"><a href="#M000014">#quiet?</a></li>
+          <li class="method"><a href="#M000020">#quiet?</a></li>
           
-          <li class="method"><a href="#M000047">#relative_to_output</a></li>
+          <li class="method"><a href="#M000049">#relative_to_output</a></li>
           
-          <li class="method"><a href="#M000046">#rm</a></li>
+          <li class="method"><a href="#M000047">#rm</a></li>
           
           <li class="method"><a href="#M000040">#skip</a></li>
           
-          <li class="method"><a href="#M000020">#skip?</a></li>
+          <li class="method"><a href="#M000023">#skip?</a></li>
           
-          <li class="method"><a href="#M000012">#trial?</a></li>
+          <li class="method"><a href="#M000018">#trial?</a></li>
           
-          <li class="method"><a href="#M000045">#write</a></li>
+          <li class="method"><a href="#M000046">#write</a></li>
           
         </ul>
       </div>
@@ -320,7 +320,7 @@ attr :location
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000007"></a>
+        <a name="M000011"></a>
 
         <div class="method-heading">
         
@@ -341,6 +341,13 @@ attr :location
 <pre>
 <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 25</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">copylist</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>.<span class="ruby-identifier">debug?</span>
+          <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;\n[copylist]&quot;</span>
+          <span class="ruby-identifier">copylist</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
+            <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;#{loc} #{tname} #{fname} #{opts.inspect}&quot;</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+
         <span class="ruby-ivar">@session</span>   = <span class="ruby-identifier">session</span>
         <span class="ruby-comment cmt">#@location  = location</span>
         <span class="ruby-ivar">@copylist</span>  = <span class="ruby-identifier">copylist</span>
@@ -363,7 +370,7 @@ attr :location
 
     
       <div id="arguments-method" class="method-detail ">
-        <a name="M000011"></a>
+        <a name="M000017"></a>
 
         <div class="method-heading">
         
@@ -382,7 +389,7 @@ attr :location
           <div class="method-source-code"
             id="arguments-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 54</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 61</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">arguments</span>
         <span class="ruby-identifier">session</span>.<span class="ruby-identifier">arguments</span>
       <span class="ruby-keyword kw">end</span></pre>
@@ -395,7 +402,7 @@ attr :location
 
     
       <div id="debug--method" class="method-detail ">
-        <a name="M000013"></a>
+        <a name="M000019"></a>
 
         <div class="method-heading">
         
@@ -414,7 +421,7 @@ attr :location
           <div class="method-source-code"
             id="debug--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 59</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 66</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug?</span>  ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">debug?</span>  ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -425,7 +432,7 @@ attr :location
 
     
       <div id="force--method" class="method-detail ">
-        <a name="M000015"></a>
+        <a name="M000021"></a>
 
         <div class="method-heading">
         
@@ -444,7 +451,7 @@ attr :location
           <div class="method-source-code"
             id="force--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 61</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 68</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">force?</span>  ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">force?</span>  ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -455,7 +462,7 @@ attr :location
 
     
       <div id="generate-method" class="method-detail ">
-        <a name="M000022"></a>
+        <a name="M000026"></a>
 
         <div class="method-heading">
         
@@ -476,7 +483,7 @@ Main command called to generate files.
           <div class="method-source-code"
             id="generate-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 72</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 79</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generate</span> <span class="ruby-comment cmt">#(args, opts)</span>
         <span class="ruby-identifier">actionlist</span> = <span class="ruby-identifier">actionlist</span>(<span class="ruby-identifier">copylist</span>)
 
@@ -485,7 +492,7 @@ Main command called to generate files.
           <span class="ruby-keyword kw">return</span>
         <span class="ruby-keyword kw">end</span>
 
-<span class="ruby-identifier">source</span> = <span class="ruby-value str">''</span> <span class="ruby-comment cmt"># FIXME</span>
+        <span class="ruby-identifier">source</span> = <span class="ruby-value str">''</span> <span class="ruby-comment cmt"># FIXME</span>
         <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">report_startup</span>(<span class="ruby-identifier">source</span>, <span class="ruby-identifier">output</span>)
         <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">output</span>) <span class="ruby-comment cmt">#unless File.directory?(output)</span>
         <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">output</span>) <span class="ruby-keyword kw">do</span>
@@ -508,7 +515,7 @@ Main command called to generate files.
 
     
       <div id="metadata-method" class="method-detail ">
-        <a name="M000008"></a>
+        <a name="M000014"></a>
 
         <div class="method-heading">
         
@@ -527,7 +534,7 @@ Main command called to generate files.
           <div class="method-source-code"
             id="metadata-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 35</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 42</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
         <span class="ruby-identifier">session</span>.<span class="ruby-identifier">metadata</span>
       <span class="ruby-keyword kw">end</span></pre>
@@ -540,7 +547,7 @@ Main command called to generate files.
 
     
       <div id="newproject--method" class="method-detail ">
-        <a name="M000021"></a>
+        <a name="M000025"></a>
 
         <div class="method-heading">
         
@@ -553,7 +560,7 @@ Main command called to generate files.
         <div class="method-description">
           
           <p>
-New project?
+Newuse of sow? In other words, is the destination empty?
 </p>
           
 
@@ -561,9 +568,9 @@ New project?
           <div class="method-source-code"
             id="newproject--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 66</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 73</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">newproject?</span>
-        <span class="ruby-identifier">session</span>.<span class="ruby-identifier">newproject?</span>
+        <span class="ruby-identifier">session</span>.<span class="ruby-identifier">new?</span>
       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -574,7 +581,7 @@ New project?
 
     
       <div id="output-method" class="method-detail ">
-        <a name="M000009"></a>
+        <a name="M000015"></a>
 
         <div class="method-heading">
         
@@ -595,7 +602,7 @@ TODO: rename to &#8216;destination&#8217;
           <div class="method-source-code"
             id="output-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 43</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 50</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">output</span>
         <span class="ruby-ivar">@output</span> <span class="ruby-operator">||=</span> (
           <span class="ruby-comment cmt">#if session.create? &amp;&amp; plugin.name #scaffold &amp;&amp; session.scaffold?</span>
@@ -614,7 +621,7 @@ TODO: rename to &#8216;destination&#8217;
 
     
       <div id="prompt--method" class="method-detail ">
-        <a name="M000019"></a>
+        <a name="M000022"></a>
 
         <div class="method-heading">
         
@@ -633,7 +640,7 @@ TODO: rename to &#8216;destination&#8217;
           <div class="method-source-code"
             id="prompt--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 62</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 69</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prompt?</span> ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">prompt?</span> ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -644,7 +651,7 @@ TODO: rename to &#8216;destination&#8217;
 
     
       <div id="quiet--method" class="method-detail ">
-        <a name="M000014"></a>
+        <a name="M000020"></a>
 
         <div class="method-heading">
         
@@ -663,7 +670,7 @@ TODO: rename to &#8216;destination&#8217;
           <div class="method-source-code"
             id="quiet--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 60</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 67</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">quiet?</span>  ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">quiet?</span>  ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -674,7 +681,7 @@ TODO: rename to &#8216;destination&#8217;
 
     
       <div id="skip--method" class="method-detail ">
-        <a name="M000020"></a>
+        <a name="M000023"></a>
 
         <div class="method-heading">
         
@@ -693,7 +700,7 @@ TODO: rename to &#8216;destination&#8217;
           <div class="method-source-code"
             id="skip--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 63</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 70</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">skip?</span>   ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">skip?</span>   ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -704,7 +711,7 @@ TODO: rename to &#8216;destination&#8217;
 
     
       <div id="trial--method" class="method-detail ">
-        <a name="M000012"></a>
+        <a name="M000018"></a>
 
         <div class="method-heading">
         
@@ -723,7 +730,7 @@ TODO: rename to &#8216;destination&#8217;
           <div class="method-source-code"
             id="trial--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 58</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 65</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trial?</span>  ; <span class="ruby-identifier">session</span>.<span class="ruby-identifier">trial?</span>  ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -740,7 +747,7 @@ TODO: rename to &#8216;destination&#8217;
 
     
       <div id="actionlist-method" class="method-detail ">
-        <a name="M000028"></a>
+        <a name="M000029"></a>
 
         <div class="method-heading">
         
@@ -759,7 +766,7 @@ TODO: rename to &#8216;destination&#8217;
           <div class="method-source-code"
             id="actionlist-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 106</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 113</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist</span>(<span class="ruby-identifier">list</span>)
         <span class="ruby-identifier">list</span> = <span class="ruby-identifier">actionlist_sort</span>(<span class="ruby-identifier">list</span>)
         <span class="ruby-identifier">list</span> = <span class="ruby-identifier">actionlist_mark</span>(<span class="ruby-identifier">list</span>)
@@ -776,7 +783,7 @@ TODO: rename to &#8216;destination&#8217;
 
     
       <div id="actionlist-check-method" class="method-detail ">
-        <a name="M000033"></a>
+        <a name="M000037"></a>
 
         <div class="method-heading">
         
@@ -795,7 +802,7 @@ TODO: rename to &#8216;destination&#8217;
           <div class="method-source-code"
             id="actionlist-check-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 160</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 167</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist_check</span>(<span class="ruby-identifier">list</span>)
         <span class="ruby-identifier">check_conflicts</span>(<span class="ruby-identifier">list</span>)  <span class="ruby-comment cmt"># TODO: should this come before or after prompt?</span>
         <span class="ruby-identifier">check_overwrite</span>(<span class="ruby-identifier">list</span>)
@@ -831,7 +838,7 @@ Add copy action.
           <div class="method-source-code"
             id="actionlist-mark-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 119</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 126</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist_mark</span>(<span class="ruby-identifier">list</span>)
         <span class="ruby-identifier">list</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">args</span><span class="ruby-operator">|</span>
           [<span class="ruby-identifier">mark</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>]
@@ -869,7 +876,7 @@ mode, simply return the current list.
           <div class="method-source-code"
             id="actionlist-safe-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 130</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 137</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist_safe</span>(<span class="ruby-identifier">list</span>)
         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">list</span> <span class="ruby-keyword kw">unless</span> (<span class="ruby-identifier">prompt?</span> <span class="ruby-keyword kw">or</span> <span class="ruby-identifier">skip?</span>)
         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">list</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">list</span>.<span class="ruby-identifier">empty?</span>
@@ -927,7 +934,7 @@ mode, simply return the current list.
           <div class="method-source-code"
             id="actionlist-sort-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 114</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 121</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">actionlist_sort</span>(<span class="ruby-identifier">list</span>)
         <span class="ruby-identifier">list</span>
       <span class="ruby-keyword kw">end</span></pre>
@@ -963,7 +970,7 @@ any of these conditions are found, unless force? is set to true.
           <div class="method-source-code"
             id="check-conflicts-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 200</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 207</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_conflicts</span>(<span class="ruby-identifier">list</span>)
         <span class="ruby-comment cmt">#return if force?</span>
         <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
@@ -991,7 +998,7 @@ any of these conditions are found, unless force? is set to true.
 
     
       <div id="check-overwrite-method" class="method-detail ">
-        <a name="M000034"></a>
+        <a name="M000038"></a>
 
         <div class="method-heading">
         
@@ -1016,7 +1023,7 @@ TODO: Make this a list filter with check for &#8220;identical&#8221; files?
           <div class="method-source-code"
             id="check-overwrite-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 170</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 177</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_overwrite</span>(<span class="ruby-identifier">list</span>)
         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force?</span>
         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prompt?</span>
@@ -1050,7 +1057,7 @@ TODO: Make this a list filter with check for &#8220;identical&#8221; files?
 
     
       <div id="chmod-method" class="method-detail ">
-        <a name="M000044"></a>
+        <a name="M000045"></a>
 
         <div class="method-heading">
         
@@ -1069,7 +1076,7 @@ TODO: Make this a list filter with check for &#8220;identical&#8221; files?
           <div class="method-source-code"
             id="chmod-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 251</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 258</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">mode</span>, <span class="ruby-identifier">file</span>)
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
           <span class="ruby-identifier">f</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">file</span>)
@@ -1106,7 +1113,7 @@ TODO: Make this a list filter with check for &#8220;identical&#8221; files?
           <div class="method-source-code"
             id="cp-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 230</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 237</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cp</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>)
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
           <span class="ruby-identifier">s</span> = <span class="ruby-identifier">src</span> <span class="ruby-comment cmt">#relative_to_source(src)</span>
@@ -1125,7 +1132,7 @@ TODO: Make this a list filter with check for &#8220;identical&#8221; files?
 
     
       <div id="erb-method" class="method-detail ">
-        <a name="M000026"></a>
+        <a name="M000027"></a>
 
         <div class="method-heading">
         
@@ -1146,7 +1153,7 @@ Processes with erb.
           <div class="method-source-code"
             id="erb-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 98</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 105</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">erb</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-identifier">context</span>.<span class="ruby-identifier">erb</span>(<span class="ruby-identifier">file</span>)
         <span class="ruby-comment cmt">#metadata.erb(file)</span>
@@ -1181,7 +1188,7 @@ Access to FileUtils
           <div class="method-source-code"
             id="fu-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 225</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 232</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fu</span>
         <span class="ruby-identifier">trial?</span> <span class="ruby-value">? </span><span class="ruby-constant">FileUtils</span><span class="ruby-operator">::</span><span class="ruby-constant">DryRun</span> <span class="ruby-operator">:</span> <span class="ruby-constant">FileUtils</span>
       <span class="ruby-keyword kw">end</span></pre>
@@ -1194,7 +1201,7 @@ Access to FileUtils
 
     
       <div id="inspect-method" class="method-detail ">
-        <a name="M000049"></a>
+        <a name="M000051"></a>
 
         <div class="method-heading">
         
@@ -1213,7 +1220,7 @@ Access to FileUtils
           <div class="method-source-code"
             id="inspect-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 305</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 312</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
         <span class="ruby-node">&quot;#&lt;#{self.class} @session=#{@session.inspect}&gt;&quot;</span>
       <span class="ruby-keyword kw">end</span></pre>
@@ -1226,7 +1233,7 @@ Access to FileUtils
 
     
       <div id="mark-method" class="method-detail ">
-        <a name="M000027"></a>
+        <a name="M000028"></a>
 
         <div class="method-heading">
         
@@ -1245,7 +1252,7 @@ Access to FileUtils
           <div class="method-source-code"
             id="mark-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 104</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 111</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark</span>; <span class="ruby-value str">'copy'</span>; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -1256,7 +1263,7 @@ Access to FileUtils
 
     
       <div id="mkdir-p-method" class="method-detail ">
-        <a name="M000043"></a>
+        <a name="M000044"></a>
 
         <div class="method-heading">
         
@@ -1275,7 +1282,7 @@ Access to FileUtils
           <div class="method-source-code"
             id="mkdir-p-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 241</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 248</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>)
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
           <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dir</span>)
@@ -1293,7 +1300,7 @@ Access to FileUtils
 
     
       <div id="relative-to-output-method" class="method-detail ">
-        <a name="M000047"></a>
+        <a name="M000049"></a>
 
         <div class="method-heading">
         
@@ -1312,7 +1319,7 @@ Access to FileUtils
           <div class="method-source-code"
             id="relative-to-output-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 296</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 303</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dest</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\//</span>
           <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dest</span>).<span class="ruby-identifier">relative_path_from</span>(<span class="ruby-identifier">output</span>)
@@ -1329,7 +1336,7 @@ Access to FileUtils
 
     
       <div id="rm-method" class="method-detail ">
-        <a name="M000046"></a>
+        <a name="M000047"></a>
 
         <div class="method-heading">
         
@@ -1348,7 +1355,7 @@ Access to FileUtils
           <div class="method-source-code"
             id="rm-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 272</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 279</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rm</span>(<span class="ruby-identifier">dest</span>)
         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dest</span>)
           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
@@ -1394,7 +1401,7 @@ Access to FileUtils
           <div class="method-source-code"
             id="skip-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 220</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 227</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">skip</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
         <span class="ruby-keyword kw">return</span> <span class="ruby-value str">'skip'</span>, <span class="ruby-identifier">dest</span>
       <span class="ruby-keyword kw">end</span></pre>
@@ -1407,7 +1414,7 @@ Access to FileUtils
 
     
       <div id="write-method" class="method-detail ">
-        <a name="M000045"></a>
+        <a name="M000046"></a>
 
         <div class="method-heading">
         
@@ -1428,7 +1435,7 @@ Write file.
           <div class="method-source-code"
             id="write-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 261</span>
+<span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 268</span>
       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">text</span>)
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
           <span class="ruby-identifier">f</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">file</span>)

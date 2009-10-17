@@ -43,7 +43,7 @@ instance_methods:
 - !ruby/object:RDoc::RI::MethodSummary 
   name: mode
 - !ruby/object:RDoc::RI::MethodSummary 
-  name: new_project?
+  name: new?
 - !ruby/object:RDoc::RI::MethodSummary 
   name: prompt?
 - !ruby/object:RDoc::RI::MethodSummary 

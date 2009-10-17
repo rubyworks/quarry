@@ -29,14 +29,20 @@ comment:
 constants: 
 - !ruby/object:RDoc::RI::Constant 
   comment: 
+  - !ruby/struct:RDoc::Markup::Flow::VERB 
+    body: " Return command type based on option.\n"
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: def command(options)
+  - !ruby/struct:RDoc::Markup::Flow::VERB 
+    body: "  return 'create' if options['create'] #|| options[:c]\n  return 'update' if options['update'] #|| options[:u]\n  return 'delete' if options['delete'] #|| options[:d]\n  nil\n"
+  - !ruby/struct:RDoc::Markup::Flow::P 
+    body: end
   name: STANDARD_OPTIONS
-  value: "{       'create' => :create, 'c' => :create,       'update' => :update, 'u' => :update,       'delete' => :delete, 'd' => :delete,       'quiet'  => :quiet , 'q' => :quiet ,       'prompt' => :prompt, 'p' => :prompt,       'skip'   => :skip  , 's' => :skip  ,       'force'  => :force , 'f' => :force ,       'trial'  => :trial , 't' => :trial ,       'help'   => :help  , 'h' => :help  ,       'debug'  => :debug ,     }"
+  value: "{       'create' => 'create', 'c' => 'create',       'update' => 'update', 'u' => 'update',       'delete' => 'delete', 'd' => 'delete',       'quiet'  => 'quiet' , 'q' => 'quiet' ,       'prompt' => 'prompt', 'p' => 'prompt',       'skip'   => 'skip'  , 's' => 'skip'  ,       'force'  => 'force' , 'f' => 'force' ,       'trial'  => 'trial' , 't' => 'trial' ,       'help'   => 'help'  , 'h' => 'help'  ,       'debug'  => 'debug' ,     }"
 full_name: Sow::Command
 includes: []
 
 instance_methods: 
-- !ruby/object:RDoc::RI::MethodSummary 
-  name: command
 - !ruby/object:RDoc::RI::MethodSummary 
   name: execute
 - !ruby/object:RDoc::RI::MethodSummary 

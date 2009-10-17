@@ -1,7 +1,7 @@
 --- !ruby/object:RDoc::RI::MethodDescription 
 aliases: 
 - !ruby/object:RDoc::RI::AliasName 
-  name: new_project?
+  name: new?
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 

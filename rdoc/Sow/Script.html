@@ -75,37 +75,39 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li class="method"><a href="#M000113">::argument</a></li>
+          <li class="method"><a href="#M000115">::argument</a></li>
           
-          <li class="method"><a href="#M000108">::inherited</a></li>
+          <li class="method"><a href="#M000110">::inherited</a></li>
           
-          <li class="method"><a href="#M000110">::manifest</a></li>
+          <li class="method"><a href="#M000112">::manifest</a></li>
           
-          <li class="method"><a href="#M000117">::new</a></li>
+          <li class="method"><a href="#M000119">::new</a></li>
           
-          <li class="method"><a href="#M000112">::option</a></li>
+          <li class="method"><a href="#M000114">::option</a></li>
           
-          <li class="method"><a href="#M000106">::registry</a></li>
+          <li class="method"><a href="#M000109">::registry</a></li>
           
-          <li class="method"><a href="#M000109">::setup</a></li>
+          <li class="method"><a href="#M000111">::setup</a></li>
           
-          <li class="method"><a href="#M000124">#[]</a></li>
+          <li class="method"><a href="#M000127">#[]</a></li>
           
-          <li class="method"><a href="#M000125">#[]=</a></li>
+          <li class="method"><a href="#M000128">#[]=</a></li>
           
-          <li class="method"><a href="#M000119">#argument</a></li>
+          <li class="method"><a href="#M000125">#about</a></li>
           
-          <li class="method"><a href="#M000122">#copy</a></li>
+          <li class="method"><a href="#M000120">#argument</a></li>
           
-          <li class="method"><a href="#M000121">#destination</a></li>
+          <li class="method"><a href="#M000126">#copy</a></li>
           
-          <li class="method"><a href="#M000116">#manifest</a></li>
+          <li class="method"><a href="#M000124">#destination</a></li>
           
-          <li class="method"><a href="#M000120">#metadata</a></li>
+          <li class="method"><a href="#M000118">#manifest</a></li>
           
-          <li class="method"><a href="#M000127">#method_missing</a></li>
+          <li class="method"><a href="#M000123">#metadata</a></li>
           
-          <li class="method"><a href="#M000114">#setup</a></li>
+          <li class="method"><a href="#M000129">#method_missing</a></li>
+          
+          <li class="method"><a href="#M000117">#setup</a></li>
           
         </ul>
       </div>
@@ -265,7 +267,7 @@ Instance of <a href="Session.html">Session</a>.
         <div class="method-description">
         
         <p>
-Copylist contains the a list of transfire operations as compiled from the
+Copylist contains the a list of transfer operations as compiled from the
 plugin.
 </p>
         
@@ -282,7 +284,7 @@ plugin.
 
     
       <div id="argument-method" class="method-detail ">
-        <a name="M000113"></a>
+        <a name="M000115"></a>
 
         <div class="method-heading">
         
@@ -316,7 +318,7 @@ Give the main argument a name.
 
     
       <div id="inherited-method" class="method-detail ">
-        <a name="M000108"></a>
+        <a name="M000110"></a>
 
         <div class="method-heading">
         
@@ -350,7 +352,7 @@ If inherited, register the script by it&#8217;s class basename downcased.
 
     
       <div id="manifest-method" class="method-detail ">
-        <a name="M000110"></a>
+        <a name="M000112"></a>
 
         <div class="method-heading">
         
@@ -363,7 +365,7 @@ If inherited, register the script by it&#8217;s class basename downcased.
         <div class="method-description">
           
           <p>
-Manifest procedure, used to invoke <a href="Script.html#M000122">copy</a>.
+Manifest procedure, used to invoke <a href="Script.html#M000126">copy</a>.
 </p>
           
 
@@ -384,7 +386,7 @@ Manifest procedure, used to invoke <a href="Script.html#M000122">copy</a>.
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000117"></a>
+        <a name="M000119"></a>
 
         <div class="method-heading">
         
@@ -408,9 +410,6 @@ Manifest procedure, used to invoke <a href="Script.html#M000122">copy</a>.
       <span class="ruby-ivar">@session</span> = <span class="ruby-identifier">session</span>
       <span class="ruby-ivar">@options</span> = <span class="ruby-identifier">options</span>
 
-      <span class="ruby-comment cmt">#@location = Pathname.new(location)</span>
-      <span class="ruby-ivar">@metadata</span> = <span class="ruby-constant">OpenStruct</span>.<span class="ruby-identifier">new</span>
-
       <span class="ruby-ivar">@copylist</span>  = []
     <span class="ruby-keyword kw">end</span></pre>
           </div>
@@ -422,7 +421,7 @@ Manifest procedure, used to invoke <a href="Script.html#M000122">copy</a>.
 
     
       <div id="option-method" class="method-detail ">
-        <a name="M000112"></a>
+        <a name="M000114"></a>
 
         <div class="method-heading">
         
@@ -456,7 +455,7 @@ Specify a valid option.
 
     
       <div id="registry-method" class="method-detail ">
-        <a name="M000106"></a>
+        <a name="M000109"></a>
 
         <div class="method-heading">
         
@@ -490,7 +489,7 @@ Specify a valid option.
 
     
       <div id="setup-method" class="method-detail ">
-        <a name="M000109"></a>
+        <a name="M000111"></a>
 
         <div class="method-heading">
         
@@ -530,7 +529,7 @@ Setup procedure, used to setup metadata.
 
     
       <div id="--method" class="method-detail ">
-        <a name="M000124"></a>
+        <a name="M000127"></a>
 
         <div class="method-heading">
         
@@ -552,7 +551,7 @@ state.
           <div class="method-source-code"
             id="--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 169</span>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 154</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">var</span>)
       <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-node">&quot;@#{var}&quot;</span>)
     <span class="ruby-keyword kw">end</span></pre>
@@ -565,7 +564,7 @@ state.
 
     
       <div id="--method" class="method-detail ">
-        <a name="M000125"></a>
+        <a name="M000128"></a>
 
         <div class="method-heading">
         
@@ -586,7 +585,7 @@ Set &#8230; using a singleton method.
           <div class="method-source-code"
             id="--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 174</span>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 159</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">var</span>, <span class="ruby-identifier">val</span>)
       <span class="ruby-identifier">quaclass</span> = (<span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">end</span>)
       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid argument name -- #{var}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">quaclass</span>.<span class="ruby-identifier">method_defined?</span>(<span class="ruby-identifier">var</span>)
@@ -603,8 +602,42 @@ Set &#8230; using a singleton method.
       </div>
 
     
+      <div id="about-method" class="method-detail ">
+        <a name="M000125"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">about</span><span
+            class="method-args">(text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Describe the purpose of this generator.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="about-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 115</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">about</span>(<span class="ruby-identifier">text</span>)
+      <span class="ruby-ivar">@about</span> = <span class="ruby-identifier">text</span>
+    <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
       <div id="argument-method" class="method-detail ">
-        <a name="M000119"></a>
+        <a name="M000120"></a>
 
         <div class="method-heading">
         
@@ -625,7 +658,7 @@ Main argument.
           <div class="method-source-code"
             id="argument-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 85</span>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 82</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">argument</span>
       <span class="ruby-identifier">options</span>.<span class="ruby-identifier">argument</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -638,12 +671,12 @@ Main argument.
 
     
       <div id="copy-method" class="method-detail ">
-        <a name="M000122"></a>
+        <a name="M000126"></a>
 
         <div class="method-heading">
         
-          <span class="method-name">copy</span><span
-            class="method-args">(*from_to_opts)</span>
+          <span class="method-callseq">copy(from, opts)
+copy(from, to, opts)</span>
           <span class="method-click-advice">click to toggle source</span>
         
         </div>
@@ -653,17 +686,13 @@ Main argument.
           <p>
 Designate a copying action.
 </p>
-<pre>
-  copy from, opts
-  copy from, to, opts
-</pre>
           
 
           
           <div class="method-source-code"
             id="copy-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 156</span>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 146</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">from_to_opts</span>)
       <span class="ruby-identifier">opts</span> = <span class="ruby-constant">Hash</span><span class="ruby-operator">===</span><span class="ruby-identifier">from_to_opts</span>.<span class="ruby-identifier">last</span> <span class="ruby-value">? </span><span class="ruby-identifier">from_to_opts</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">:</span> {}
       <span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">from_to_opts</span>
@@ -679,7 +708,7 @@ Designate a copying action.
 
     
       <div id="destination-method" class="method-detail ">
-        <a name="M000121"></a>
+        <a name="M000124"></a>
 
         <div class="method-heading">
         
@@ -702,7 +731,7 @@ the output directory.
           <div class="method-source-code"
             id="destination-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 105</span>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 102</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destination</span>
       <span class="ruby-identifier">session</span>.<span class="ruby-identifier">destination</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -715,7 +744,7 @@ the output directory.
 
     
       <div id="manifest-method" class="method-detail ">
-        <a name="M000116"></a>
+        <a name="M000118"></a>
 
         <div class="method-heading">
         
@@ -749,7 +778,7 @@ Override and place copy statment in this method.
 
     
       <div id="metadata-method" class="method-detail ">
-        <a name="M000120"></a>
+        <a name="M000123"></a>
 
         <div class="method-heading">
         
@@ -775,7 +804,7 @@ the copy calls, if needed.
           <div class="method-source-code"
             id="metadata-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 97</span>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 94</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
       <span class="ruby-identifier">session</span>.<span class="ruby-identifier">metadata</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -788,7 +817,7 @@ the copy calls, if needed.
 
     
       <div id="method-missing-method" class="method-detail ">
-        <a name="M000127"></a>
+        <a name="M000129"></a>
 
         <div class="method-heading">
         
@@ -809,7 +838,7 @@ If method missing, routes the call to <tt>session</tt>.
           <div class="method-source-code"
             id="method-missing-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 184</span>
+<span class="ruby-comment cmt"># File lib/sow/script.rb, line 169</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">var</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">a</span>)
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span> = <span class="ruby-ivar">@session</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">var</span>)
         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">val</span>
@@ -826,7 +855,7 @@ If method missing, routes the call to <tt>session</tt>.
 
     
       <div id="setup-method" class="method-detail ">
-        <a name="M000114"></a>
+        <a name="M000117"></a>
 
         <div class="method-heading">
         

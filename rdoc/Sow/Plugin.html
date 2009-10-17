@@ -75,53 +75,53 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li class="method"><a href="#M000087">::new</a></li>
+          <li class="method"><a href="#M000081">::new</a></li>
           
-          <li class="method"><a href="#M000090">#argument</a></li>
+          <li class="method"><a href="#M000085">#argument</a></li>
           
-          <li class="method"><a href="#M000115">#copylist</a></li>
+          <li class="method"><a href="#M000107">#copylist</a></li>
           
-          <li class="method"><a href="#M000118">#copylist_glob</a></li>
+          <li class="method"><a href="#M000108">#copylist_glob</a></li>
           
-          <li class="method"><a href="#M000129">#copylist_partition</a></li>
+          <li class="method"><a href="#M000122">#copylist_partition</a></li>
           
-          <li class="method"><a href="#M000128">#copylist_sort</a></li>
+          <li class="method"><a href="#M000121">#copylist_sort</a></li>
           
-          <li class="method"><a href="#M000089">#destination</a></li>
+          <li class="method"><a href="#M000084">#destination</a></li>
           
-          <li class="method"><a href="#M000102">#grab</a></li>
+          <li class="method"><a href="#M000098">#grab</a></li>
           
-          <li class="method"><a href="#M000100">#meta</a></li>
+          <li class="method"><a href="#M000096">#meta</a></li>
           
-          <li class="method"><a href="#M000093">#meta_file</a></li>
+          <li class="method"><a href="#M000089">#meta_file</a></li>
           
-          <li class="method"><a href="#M000088">#metadata</a></li>
+          <li class="method"><a href="#M000083">#metadata</a></li>
           
-          <li class="method"><a href="#M000111">#prepare_data</a></li>
+          <li class="method"><a href="#M000106">#prepare_data</a></li>
           
-          <li class="method"><a href="#M000105">#prepare_meta</a></li>
+          <li class="method"><a href="#M000101">#prepare_meta</a></li>
           
-          <li class="method"><a href="#M000107">#prepare_seed</a></li>
+          <li class="method"><a href="#M000105">#prepare_seed</a></li>
           
-          <li class="method"><a href="#M000095">#script_file</a></li>
+          <li class="method"><a href="#M000093">#script_file</a></li>
           
-          <li class="method"><a href="#M000101">#seed</a></li>
+          <li class="method"><a href="#M000097">#seed</a></li>
           
-          <li class="method"><a href="#M000094">#seed_file</a></li>
+          <li class="method"><a href="#M000090">#seed_file</a></li>
           
-          <li class="method"><a href="#M000104">#setup</a></li>
+          <li class="method"><a href="#M000100">#setup</a></li>
           
-          <li class="method"><a href="#M000103">#template</a></li>
+          <li class="method"><a href="#M000099">#template</a></li>
           
-          <li class="method"><a href="#M000091">#template_dir</a></li>
+          <li class="method"><a href="#M000086">#template_dir</a></li>
           
-          <li class="method"><a href="#M000126">#template_to_filename</a></li>
+          <li class="method"><a href="#M000116">#template_to_filename</a></li>
           
-          <li class="method"><a href="#M000123">#uniq</a></li>
+          <li class="method"><a href="#M000113">#uniq</a></li>
           
-          <li class="method"><a href="#M000096">#usage</a></li>
+          <li class="method"><a href="#M000094">#usage</a></li>
           
-          <li class="method"><a href="#M000092">#usage_file</a></li>
+          <li class="method"><a href="#M000088">#usage_file</a></li>
           
         </ul>
       </div>
@@ -219,7 +219,7 @@
       
 
       <p>
-<a href="Plugin.html">Plugin</a> encapsulates infromation about a sow
+<a href="Plugin.html">Plugin</a> encapsulates information about a sow
 plugin.
 </p>
 
@@ -230,6 +230,13 @@ plugin.
     <div id="constants-list" class="section">
       <h3 class="section-header">Constants</h3>
       <dl>
+      
+        <dt><a name="TEMPLATE_NAME">TEMPLATE_NAME</a></dt>
+        
+        <dd class="description"><p>
+Name of template directory.
+</p></dd>
+        
       
         <dt><a name="SCRIPT_NAME">SCRIPT_NAME</a></dt>
         
@@ -245,17 +252,17 @@ Name of usage document.
 </p></dd>
         
       
-        <dt><a name="META_NAME">META_NAME</a></dt>
+        <dt><a name="DATA_NAME">DATA_NAME</a></dt>
         
         <dd class="description"><p>
 Name of metadata file.
 </p></dd>
         
       
-        <dt><a name="SEED_NAME">SEED_NAME</a></dt>
+        <dt><a name="COPY_NAME">COPY_NAME</a></dt>
         
         <dd class="description"><p>
-Name of seed file. TODO: change name.
+Name of copy file.
 </p></dd>
         
       
@@ -364,7 +371,7 @@ Desitnation pathname
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000087"></a>
+        <a name="M000081"></a>
 
         <div class="method-heading">
         
@@ -383,12 +390,12 @@ Desitnation pathname
           <div class="method-source-code"
             id="new-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 40</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 41</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">location</span>, <span class="ruby-identifier">options</span>)
       <span class="ruby-ivar">@session</span>  = <span class="ruby-identifier">session</span>
       <span class="ruby-ivar">@options</span>  = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">to_ostruct</span>
 
-      <span class="ruby-ivar">@location</span>    = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">location</span>)
+      <span class="ruby-ivar">@location</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">location</span>)
 
       <span class="ruby-ivar">@copy</span> = []
     <span class="ruby-keyword kw">end</span></pre>
@@ -407,7 +414,7 @@ Desitnation pathname
 
     
       <div id="argument-method" class="method-detail ">
-        <a name="M000090"></a>
+        <a name="M000085"></a>
 
         <div class="method-heading">
         
@@ -428,7 +435,7 @@ Argument for main command option.
           <div class="method-source-code"
             id="argument-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 60</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 61</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">argument</span>
       <span class="ruby-identifier">options</span>.<span class="ruby-identifier">argument</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -441,7 +448,7 @@ Argument for main command option.
 
     
       <div id="copylist-method" class="method-detail ">
-        <a name="M000115"></a>
+        <a name="M000107"></a>
 
         <div class="method-heading">
         
@@ -462,7 +469,7 @@ Expanded copy list.
           <div class="method-source-code"
             id="copylist-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 269</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 270</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copylist</span>
       <span class="ruby-ivar">@copylist</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">copylist_sort</span>(<span class="ruby-identifier">copylist_glob</span>(<span class="ruby-ivar">@copy</span>)) <span class="ruby-comment cmt">#redest(list)</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -475,7 +482,7 @@ Expanded copy list.
 
     
       <div id="copylist-glob-method" class="method-detail ">
-        <a name="M000118"></a>
+        <a name="M000108"></a>
 
         <div class="method-heading">
         
@@ -496,7 +503,7 @@ Expand copylist by globbing entries.
           <div class="method-source-code"
             id="copylist-glob-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 288</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 289</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copylist_glob</span>(<span class="ruby-identifier">copylist</span>)
       <span class="ruby-identifier">list</span> = []
       <span class="ruby-identifier">dotpaths</span> = [<span class="ruby-value str">'.'</span>, <span class="ruby-value str">'..'</span>]
@@ -504,11 +511,14 @@ Expand copylist by globbing entries.
       <span class="ruby-identifier">copylist</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">from</span>, <span class="ruby-identifier">into</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">cdir</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'cd'</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'.'</span>
         <span class="ruby-identifier">srcs</span> = []
+
         <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">template_dir</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cdir</span>) <span class="ruby-keyword kw">do</span>
+          <span class="ruby-identifier">less</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'less'</span>] <span class="ruby-operator">?</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">multiglob_r</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-value str">'less'</span>]) <span class="ruby-operator">:</span> []
           <span class="ruby-identifier">srcs</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-identifier">from</span>, <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_DOTMATCH</span>)
-          <span class="ruby-identifier">srcs</span> = <span class="ruby-identifier">srcs</span> <span class="ruby-operator">-</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-value str">'less'</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'less'</span>]
+          <span class="ruby-identifier">srcs</span> = <span class="ruby-identifier">srcs</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">less</span>
           <span class="ruby-identifier">srcs</span> = <span class="ruby-identifier">srcs</span>.<span class="ruby-identifier">reject</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">d</span>) <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^[.]{1,2}$/</span> }
         <span class="ruby-keyword kw">end</span>
+
         <span class="ruby-comment cmt"># remove +less+ option, not needed any more</span>
         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-value str">'less'</span>)
         <span class="ruby-comment cmt">#srcs = filter_paths(srcs)</span>
@@ -537,7 +547,7 @@ Expand copylist by globbing entries.
 
     
       <div id="copylist-partition-method" class="method-detail ">
-        <a name="M000129"></a>
+        <a name="M000122"></a>
 
         <div class="method-heading">
         
@@ -558,7 +568,7 @@ Partition the list between directories and files.
           <div class="method-source-code"
             id="copylist-partition-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 372</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 376</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copylist_partition</span>(<span class="ruby-identifier">list</span>)
       <span class="ruby-identifier">list</span>.<span class="ruby-identifier">partition</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">loc</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">src</span>).<span class="ruby-identifier">directory?</span> }
     <span class="ruby-keyword kw">end</span></pre>
@@ -571,7 +581,7 @@ Partition the list between directories and files.
 
     
       <div id="copylist-sort-method" class="method-detail ">
-        <a name="M000128"></a>
+        <a name="M000121"></a>
 
         <div class="method-heading">
         
@@ -592,7 +602,7 @@ Sort the list, directory before files and in alphabetical order.
           <div class="method-source-code"
             id="copylist-sort-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 366</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 370</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copylist_sort</span>(<span class="ruby-identifier">list</span>)
       <span class="ruby-identifier">dirs</span>, <span class="ruby-identifier">files</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">copylist_partition</span>(<span class="ruby-identifier">list</span>)
       <span class="ruby-identifier">dirs</span>.<span class="ruby-identifier">sort</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">a</span>,<span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>[<span class="ruby-value">2</span>]<span class="ruby-operator">&lt;=&gt;</span><span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>]} <span class="ruby-operator">+</span> <span class="ruby-identifier">files</span>.<span class="ruby-identifier">sort</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">a</span>,<span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>[<span class="ruby-value">2</span>]<span class="ruby-operator">&lt;=&gt;</span><span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>]}
@@ -606,7 +616,7 @@ Sort the list, directory before files and in alphabetical order.
 
     
       <div id="destination-method" class="method-detail ">
-        <a name="M000089"></a>
+        <a name="M000084"></a>
 
         <div class="method-heading">
         
@@ -627,7 +637,7 @@ Destination for scaffolding.
           <div class="method-source-code"
             id="destination-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 55</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 56</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destination</span>
       <span class="ruby-identifier">session</span>.<span class="ruby-identifier">destination</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -640,7 +650,7 @@ Destination for scaffolding.
 
     
       <div id="meta-method" class="method-detail ">
-        <a name="M000100"></a>
+        <a name="M000096"></a>
 
         <div class="method-heading">
         
@@ -662,7 +672,7 @@ rendering of the transfer list.
           <div class="method-source-code"
             id="meta-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 103</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 104</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">meta</span>
       <span class="ruby-ivar">@meta</span> <span class="ruby-operator">||=</span> (
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">meta_file</span>
@@ -681,7 +691,7 @@ rendering of the transfer list.
 
     
       <div id="meta-file-method" class="method-detail ">
-        <a name="M000093"></a>
+        <a name="M000089"></a>
 
         <div class="method-heading">
         
@@ -702,9 +712,9 @@ rendering of the transfer list.
           <div class="method-source-code"
             id="meta-file-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 75</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 76</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">meta_file</span>
-      <span class="ruby-ivar">@meta_file</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">grab</span>(<span class="ruby-value str">'meta{,.yml,.yaml}'</span>)
+      <span class="ruby-ivar">@meta_file</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">grab</span>(<span class="ruby-constant">DATA_NAME</span>)
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -715,7 +725,7 @@ rendering of the transfer list.
 
     
       <div id="metadata-method" class="method-detail ">
-        <a name="M000088"></a>
+        <a name="M000083"></a>
 
         <div class="method-heading">
         
@@ -736,7 +746,7 @@ rendering of the transfer list.
           <div class="method-source-code"
             id="metadata-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 50</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 51</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
       <span class="ruby-identifier">session</span>.<span class="ruby-identifier">metadata</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -749,7 +759,7 @@ rendering of the transfer list.
 
     
       <div id="prepare-data-method" class="method-detail ">
-        <a name="M000111"></a>
+        <a name="M000106"></a>
 
         <div class="method-heading">
         
@@ -768,7 +778,7 @@ rendering of the transfer list.
           <div class="method-source-code"
             id="prepare-data-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 253</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 254</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prepare_data</span>
       <span class="ruby-identifier">meta</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span>,<span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">metadata</span>[<span class="ruby-identifier">m</span>] = <span class="ruby-identifier">template</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">m</span>)
@@ -783,7 +793,7 @@ rendering of the transfer list.
 
     
       <div id="prepare-meta-method" class="method-detail ">
-        <a name="M000105"></a>
+        <a name="M000101"></a>
 
         <div class="method-heading">
         
@@ -804,7 +814,7 @@ Define metadata entries as singleton methods of the Erb template.
           <div class="method-source-code"
             id="prepare-meta-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 226</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 227</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prepare_meta</span>
       <span class="ruby-identifier">meta</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">m</span>,<span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">template</span>.<span class="ruby-identifier">instance_class</span> <span class="ruby-keyword kw">do</span>
@@ -827,7 +837,7 @@ Define metadata entries as singleton methods of the Erb template.
 
     
       <div id="prepare-seed-method" class="method-detail ">
-        <a name="M000107"></a>
+        <a name="M000105"></a>
 
         <div class="method-heading">
         
@@ -846,7 +856,7 @@ Define metadata entries as singleton methods of the Erb template.
           <div class="method-source-code"
             id="prepare-seed-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 241</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 242</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prepare_seed</span>
       <span class="ruby-identifier">seed</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">rekey!</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:to_s</span>)
@@ -866,7 +876,7 @@ Define metadata entries as singleton methods of the Erb template.
 
     
       <div id="script-file-method" class="method-detail ">
-        <a name="M000095"></a>
+        <a name="M000093"></a>
 
         <div class="method-heading">
         
@@ -887,9 +897,9 @@ Traditional alternative to the meta &amp; seed file.
           <div class="method-source-code"
             id="script-file-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 85</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 86</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">script_file</span>
-      <span class="ruby-ivar">@script_file</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">grab</span>(<span class="ruby-value str">'script{,.rb}'</span>)
+      <span class="ruby-ivar">@script_file</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">grab</span>(<span class="ruby-constant">SCRIPT_NAME</span>)
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -900,7 +910,7 @@ Traditional alternative to the meta &amp; seed file.
 
     
       <div id="seed-method" class="method-detail ">
-        <a name="M000101"></a>
+        <a name="M000097"></a>
 
         <div class="method-heading">
         
@@ -921,7 +931,7 @@ Plugin&#8217;s transfer list.
           <div class="method-source-code"
             id="seed-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 114</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 115</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">seed</span>
       <span class="ruby-ivar">@seed</span> <span class="ruby-operator">||=</span> (
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">seed_file</span>
@@ -941,7 +951,7 @@ Plugin&#8217;s transfer list.
 
     
       <div id="seed-file-method" class="method-detail ">
-        <a name="M000094"></a>
+        <a name="M000090"></a>
 
         <div class="method-heading">
         
@@ -962,9 +972,9 @@ Transfer file.
           <div class="method-source-code"
             id="seed-file-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 80</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 81</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">seed_file</span>
-      <span class="ruby-ivar">@seed_file</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">grab</span>(<span class="ruby-value str">'seed{,.yml,.yaml}'</span>)
+      <span class="ruby-ivar">@seed_file</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">grab</span>(<span class="ruby-constant">COPY_NAME</span>)
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -975,7 +985,7 @@ Transfer file.
 
     
       <div id="setup-method" class="method-detail ">
-        <a name="M000104"></a>
+        <a name="M000100"></a>
 
         <div class="method-heading">
         
@@ -1005,7 +1015,7 @@ this reads and prepares those instead.
           <div class="method-source-code"
             id="setup-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 170</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 171</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">script_file</span>
         <span class="ruby-identifier">require</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">script_file</span>))
@@ -1029,7 +1039,7 @@ this reads and prepares those instead.
 
     
       <div id="template-dir-method" class="method-detail ">
-        <a name="M000091"></a>
+        <a name="M000086"></a>
 
         <div class="method-heading">
         
@@ -1050,9 +1060,9 @@ Directory with template files.
           <div class="method-source-code"
             id="template-dir-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 65</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 66</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_dir</span>
-      <span class="ruby-ivar">@template_dir</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">grab</span>(<span class="ruby-value str">'template/'</span>)
+      <span class="ruby-ivar">@template_dir</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">grab</span>(<span class="ruby-constant">TEMPLATE_NAME</span>).<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'/'</span>)
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -1063,7 +1073,7 @@ Directory with template files.
 
     
       <div id="template-to-filename-method" class="method-detail ">
-        <a name="M000126"></a>
+        <a name="M000116"></a>
 
         <div class="method-heading">
         
@@ -1086,7 +1096,7 @@ substitution in the pathnames themselves by using
           <div class="method-source-code"
             id="template-to-filename-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 354</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 358</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_to_filename</span>(<span class="ruby-identifier">path</span>)
       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">dup</span> <span class="ruby-comment cmt">#chomp('.erb')</span>
       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/__(.*?)__/</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">md</span><span class="ruby-operator">|</span>
@@ -1106,7 +1116,7 @@ substitution in the pathnames themselves by using
 
     
       <div id="uniq-method" class="method-detail ">
-        <a name="M000123"></a>
+        <a name="M000113"></a>
 
         <div class="method-heading">
         
@@ -1129,7 +1139,7 @@ determining uniquness.
           <div class="method-source-code"
             id="uniq-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 324</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 328</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">uniq</span>(<span class="ruby-identifier">list</span>)
       <span class="ruby-identifier">h</span> = {}
       <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
@@ -1146,7 +1156,7 @@ determining uniquness.
 
     
       <div id="usage-method" class="method-detail ">
-        <a name="M000096"></a>
+        <a name="M000094"></a>
 
         <div class="method-heading">
         
@@ -1167,7 +1177,7 @@ Usage text.
           <div class="method-source-code"
             id="usage-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 90</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 91</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">usage</span>
       <span class="ruby-ivar">@usage</span> <span class="ruby-operator">||=</span> (
         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">usage_file</span>
@@ -1186,7 +1196,7 @@ Usage text.
 
     
       <div id="usage-file-method" class="method-detail ">
-        <a name="M000092"></a>
+        <a name="M000088"></a>
 
         <div class="method-heading">
         
@@ -1207,9 +1217,9 @@ File containing usage text.
           <div class="method-source-code"
             id="usage-file-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 70</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 71</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">usage_file</span>
-      <span class="ruby-ivar">@usage_file</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">grab</span>(<span class="ruby-value str">'usage{,.txt}'</span>)
+      <span class="ruby-ivar">@usage_file</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">grab</span>(<span class="ruby-constant">USAGE_NAME</span>)
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -1226,7 +1236,7 @@ File containing usage text.
 
     
       <div id="grab-method" class="method-detail ">
-        <a name="M000102"></a>
+        <a name="M000098"></a>
 
         <div class="method-heading">
         
@@ -1247,7 +1257,7 @@ Grab the first instance of a mathcing glob as a Pathname object.
           <div class="method-source-code"
             id="grab-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 128</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 129</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">grab</span>(<span class="ruby-identifier">glob</span>)
       <span class="ruby-identifier">file</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">location</span>, <span class="ruby-identifier">glob</span>), <span class="ruby-constant">File</span><span class="ruby-operator">::</span><span class="ruby-constant">FNM_CASEFOLD</span>).<span class="ruby-identifier">first</span>
       <span class="ruby-identifier">file</span> <span class="ruby-value">? </span><span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">file</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
@@ -1261,7 +1271,7 @@ Grab the first instance of a mathcing glob as a Pathname object.
 
     
       <div id="template-method" class="method-detail ">
-        <a name="M000103"></a>
+        <a name="M000099"></a>
 
         <div class="method-heading">
         
@@ -1282,7 +1292,7 @@ Erb OpenTemplate
           <div class="method-source-code"
             id="template-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 134</span>
+<span class="ruby-comment cmt"># File lib/sow/plugin.rb, line 135</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template</span>
       <span class="ruby-ivar">@template</span> <span class="ruby-operator">||=</span> (
         <span class="ruby-constant">ERB</span><span class="ruby-operator">::</span><span class="ruby-constant">OpenTemplate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>, <span class="ruby-identifier">session</span>, <span class="ruby-identifier">:options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>, <span class="ruby-identifier">:metadata=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">metadata</span>)

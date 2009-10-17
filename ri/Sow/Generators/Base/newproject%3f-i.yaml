@@ -4,7 +4,7 @@ aliases: []
 block_params: 
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
-  body: New project?
+  body: Newuse of sow? In other words, is the destination empty?
 full_name: Sow::Generators::Base#newproject?
 is_singleton: false
 name: newproject?

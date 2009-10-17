@@ -5,10 +5,11 @@ block_params:
 comment: 
 - !ruby/struct:RDoc::Markup::Flow::P 
   body: Designate a copying action.
-- !ruby/struct:RDoc::Markup::Flow::VERB 
-  body: "  copy from, opts\n  copy from, to, opts\n"
 full_name: Sow::Script#copy
 is_singleton: false
 name: copy
-params: (*from_to_opts)
+params: |
+  copy(from, opts)
+  copy(from, to, opts)
+
 visibility: public

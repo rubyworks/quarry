@@ -75,41 +75,41 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li class="method"><a href="#M000054">::new</a></li>
+          <li class="method"><a href="#M000052">::new</a></li>
           
-          <li class="method"><a href="#M000073">#config</a></li>
+          <li class="method"><a href="#M000064">#config</a></li>
           
-          <li class="method"><a href="#M000069">#create?</a></li>
+          <li class="method"><a href="#M000061">#create?</a></li>
           
-          <li class="method"><a href="#M000059">#debug?</a></li>
+          <li class="method"><a href="#M000055">#debug?</a></li>
           
-          <li class="method"><a href="#M000071">#delete?</a></li>
+          <li class="method"><a href="#M000063">#delete?</a></li>
           
-          <li class="method"><a href="#M000075">#empty?</a></li>
+          <li class="method"><a href="#M000066">#empty?</a></li>
           
-          <li class="method"><a href="#M000061">#force?</a></li>
+          <li class="method"><a href="#M000057">#force?</a></li>
           
-          <li class="method"><a href="#M000077">#metadata</a></li>
+          <li class="method"><a href="#M000070">#metadata</a></li>
           
-          <li class="method"><a href="#M000080">#metadata?</a></li>
+          <li class="method"><a href="#M000071">#metadata?</a></li>
           
-          <li class="method"><a href="#M000081">#metadir</a></li>
+          <li class="method"><a href="#M000073">#metadir</a></li>
           
-          <li class="method"><a href="#M000067">#mode</a></li>
+          <li class="method"><a href="#M000060">#mode</a></li>
           
-          <li class="method"><a href="#M000076">#new_project?</a></li>
+          <li class="method"><a href="#M000069">#new?</a></li>
           
-          <li class="method"><a href="#M000065">#prompt?</a></li>
+          <li class="method"><a href="#M000058">#prompt?</a></li>
           
-          <li class="method"><a href="#M000060">#quiet?</a></li>
+          <li class="method"><a href="#M000056">#quiet?</a></li>
           
-          <li class="method"><a href="#M000066">#skip?</a></li>
+          <li class="method"><a href="#M000059">#skip?</a></li>
           
-          <li class="method"><a href="#M000074">#sowed?</a></li>
+          <li class="method"><a href="#M000065">#sowed?</a></li>
           
-          <li class="method"><a href="#M000058">#trial?</a></li>
+          <li class="method"><a href="#M000054">#trial?</a></li>
           
-          <li class="method"><a href="#M000070">#update?</a></li>
+          <li class="method"><a href="#M000062">#update?</a></li>
           
         </ul>
       </div>
@@ -251,7 +251,7 @@ Destination for generated scaffolding.
 
     
       <div id="new-method" class="method-detail ">
-        <a name="M000054"></a>
+        <a name="M000052"></a>
 
         <div class="method-heading">
         
@@ -275,25 +275,22 @@ Create a new session instance.
 <span class="ruby-comment cmt"># File lib/sow/session.rb, line 15</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">arguments</span>, <span class="ruby-identifier">options</span>)
       <span class="ruby-ivar">@arguments</span> = <span class="ruby-identifier">arguments</span>
+      <span class="ruby-ivar">@options</span>   = <span class="ruby-identifier">options</span>
 
-      <span class="ruby-ivar">@destination</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>[<span class="ruby-value str">'destination'</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
+      <span class="ruby-ivar">@trial</span>  = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">trial?</span>
+      <span class="ruby-ivar">@debug</span>  = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">debug?</span>
+      <span class="ruby-ivar">@quiet</span>  = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">quiet?</span>
+      <span class="ruby-ivar">@force</span>  = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">force?</span>
+      <span class="ruby-ivar">@prompt</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">prompt?</span>
+      <span class="ruby-ivar">@skip</span>   = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">skip?</span>
 
-      <span class="ruby-ivar">@trial</span>  = <span class="ruby-identifier">options</span>[<span class="ruby-value str">'trial'</span>]
-      <span class="ruby-ivar">@debug</span>  = <span class="ruby-identifier">options</span>[<span class="ruby-value str">'debug'</span>]
-      <span class="ruby-ivar">@quiet</span>  = <span class="ruby-identifier">options</span>[<span class="ruby-value str">'quiet'</span>]
-      <span class="ruby-ivar">@force</span>  = <span class="ruby-identifier">options</span>[<span class="ruby-value str">'force'</span>]
-      <span class="ruby-ivar">@prompt</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value str">'prompt'</span>]
-      <span class="ruby-ivar">@skip</span>   = <span class="ruby-identifier">options</span>[<span class="ruby-value str">'skip'</span>]
+      <span class="ruby-ivar">@create</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">create?</span>
+      <span class="ruby-ivar">@update</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">update?</span>
+      <span class="ruby-ivar">@delete</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete?</span>
 
-      <span class="ruby-ivar">@create</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value str">'create'</span>]
-      <span class="ruby-ivar">@update</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value str">'update'</span>]
-      <span class="ruby-ivar">@delete</span> = <span class="ruby-identifier">options</span>[<span class="ruby-value str">'delete'</span>]
+      <span class="ruby-ivar">@destination</span> = <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">destination</span> <span class="ruby-operator">||</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">pwd</span>)
 
-      <span class="ruby-comment cmt">#options.each do |k,v|</span>
-      <span class="ruby-comment cmt">#  __send__(&quot;#{k}=&quot;, v) if respond_to?(&quot;#{k}=&quot;)</span>
-      <span class="ruby-comment cmt">#end</span>
-
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">output</span>, <span class="ruby-value str">'{,.}config/sow.{yml,yaml}'</span>)).<span class="ruby-identifier">first</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">destination</span>, <span class="ruby-value str">'{,.}config/sow.{yml,yaml}'</span>)).<span class="ruby-identifier">first</span>
         <span class="ruby-ivar">@config</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">file</span>))
         <span class="ruby-ivar">@sowed</span> = <span class="ruby-keyword kw">true</span>
       <span class="ruby-keyword kw">else</span>
@@ -316,7 +313,7 @@ Create a new session instance.
 
     
       <div id="config-method" class="method-detail ">
-        <a name="M000073"></a>
+        <a name="M000064"></a>
 
         <div class="method-heading">
         
@@ -337,7 +334,7 @@ Create a new session instance.
           <div class="method-source-code"
             id="config-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 119</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 107</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">config</span> ; <span class="ruby-ivar">@config</span> ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -348,7 +345,7 @@ Create a new session instance.
 
     
       <div id="create--method" class="method-detail ">
-        <a name="M000069"></a>
+        <a name="M000061"></a>
 
         <div class="method-heading">
         
@@ -369,8 +366,8 @@ Creation mode?
           <div class="method-source-code"
             id="create--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 102</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create?</span> ; <span class="ruby-identifier">mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:create</span> ; <span class="ruby-keyword kw">end</span></pre>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 90</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create?</span> ; <span class="ruby-ivar">@create</span> ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -380,7 +377,7 @@ Creation mode?
 
     
       <div id="debug--method" class="method-detail ">
-        <a name="M000059"></a>
+        <a name="M000055"></a>
 
         <div class="method-heading">
         
@@ -401,7 +398,7 @@ Provide debugging information?
           <div class="method-source-code"
             id="debug--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 69</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 57</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">debug?</span>  ; <span class="ruby-ivar">@debug</span>  ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -412,7 +409,7 @@ Provide debugging information?
 
     
       <div id="delete--method" class="method-detail ">
-        <a name="M000071"></a>
+        <a name="M000063"></a>
 
         <div class="method-heading">
         
@@ -433,8 +430,8 @@ Delete mode?
           <div class="method-source-code"
             id="delete--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 110</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete?</span> ; <span class="ruby-identifier">mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:delete</span> ; <span class="ruby-keyword kw">end</span></pre>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 98</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete?</span> ; <span class="ruby-ivar">@delete</span> ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -444,7 +441,7 @@ Delete mode?
 
     
       <div id="empty--method" class="method-detail ">
-        <a name="M000075"></a>
+        <a name="M000066"></a>
 
         <div class="method-heading">
         
@@ -465,9 +462,9 @@ Does the destination contain any files?
           <div class="method-source-code"
             id="empty--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 127</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 115</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">empty?</span>
-      <span class="ruby-ivar">@empty</span> <span class="ruby-operator">||=</span> (<span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">destination</span>) <span class="ruby-operator">-</span> [<span class="ruby-value str">'.'</span>, <span class="ruby-value str">'..'</span>]).<span class="ruby-identifier">empty?</span>
+      <span class="ruby-ivar">@empty</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Dir</span>[<span class="ruby-identifier">destination</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'*'</span>].<span class="ruby-identifier">empty?</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -475,14 +472,14 @@ Does the destination contain any files?
 
         
         <div class="aliases">
-          Also aliased as: <a href="Session.html#M000076">new_project?</a>
+          Also aliased as: <a href="Session.html#M000069">new?</a>
         </div>
         
       </div>
 
     
       <div id="force--method" class="method-detail ">
-        <a name="M000061"></a>
+        <a name="M000057"></a>
 
         <div class="method-heading">
         
@@ -503,7 +500,7 @@ Override protected operations.
           <div class="method-source-code"
             id="force--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 77</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 65</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">force?</span>  ; <span class="ruby-ivar">@force</span>  ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -514,7 +511,7 @@ Override protected operations.
 
     
       <div id="metadata-method" class="method-detail ">
-        <a name="M000077"></a>
+        <a name="M000070"></a>
 
         <div class="method-heading">
         
@@ -535,7 +532,7 @@ Override protected operations.
           <div class="method-source-code"
             id="metadata-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 140</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 128</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
       <span class="ruby-ivar">@metadata</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Metadata</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">destination</span>)
     <span class="ruby-keyword kw">end</span></pre>
@@ -548,7 +545,7 @@ Override protected operations.
 
     
       <div id="metadata--method" class="method-detail ">
-        <a name="M000080"></a>
+        <a name="M000071"></a>
 
         <div class="method-heading">
         
@@ -569,7 +566,7 @@ Destination has metadata?
           <div class="method-source-code"
             id="metadata--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 146</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 134</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata?</span>
       <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">exist?</span>
     <span class="ruby-keyword kw">end</span></pre>
@@ -582,7 +579,7 @@ Destination has metadata?
 
     
       <div id="metadir-method" class="method-detail ">
-        <a name="M000081"></a>
+        <a name="M000073"></a>
 
         <div class="method-heading">
         
@@ -604,7 +601,7 @@ If none then defaults to <tt>.meta</tt>.
           <div class="method-source-code"
             id="metadir-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 153</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 141</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadir</span>
       <span class="ruby-ivar">@meta_directory</span> <span class="ruby-operator">||=</span> (<span class="ruby-constant">Dir</span>[<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">destination</span>, <span class="ruby-value str">'{.meta,meta}/'</span>)].<span class="ruby-identifier">first</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'.meta/'</span>).<span class="ruby-identifier">chomp</span>(<span class="ruby-value str">'/'</span>)
     <span class="ruby-keyword kw">end</span></pre>
@@ -617,7 +614,7 @@ If none then defaults to <tt>.meta</tt>.
 
     
       <div id="mode-method" class="method-detail ">
-        <a name="M000067"></a>
+        <a name="M000060"></a>
 
         <div class="method-heading">
         
@@ -638,12 +635,12 @@ Return command mode based on command options. Defaults to <tt>:create</tt>.
           <div class="method-source-code"
             id="mode-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 93</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 81</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mode</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:create</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@create</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:update</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@update</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:delete</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@delete</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">:create</span> <span class="ruby-comment cmt">#sowed? ? :update : :create</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-value str">'create'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@create</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-value str">'update'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@update</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-value str">'delete'</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@delete</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-value str">'create'</span> <span class="ruby-comment cmt">#sowed? ? :update : :create</span>
     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -653,12 +650,12 @@ Return command mode based on command options. Defaults to <tt>:create</tt>.
       </div>
 
     
-      <div id="new-project--method" class="method-detail method-alias">
-        <a name="M000076"></a>
+      <div id="new--method" class="method-detail method-alias">
+        <a name="M000069"></a>
 
         <div class="method-heading">
         
-          <span class="method-name">new_project?</span><span
+          <span class="method-name">new?</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         
@@ -667,7 +664,7 @@ Return command mode based on command options. Defaults to <tt>:create</tt>.
         <div class="method-description">
           
           <p>
-Alias for <a href="Session.html#M000075">empty?</a>
+Alias for <a href="Session.html#M000066">empty?</a>
 </p>
           
 
@@ -679,7 +676,7 @@ Alias for <a href="Session.html#M000075">empty?</a>
 
     
       <div id="prompt--method" class="method-detail ">
-        <a name="M000065"></a>
+        <a name="M000058"></a>
 
         <div class="method-heading">
         
@@ -700,7 +697,7 @@ Prompot the user for options?
           <div class="method-source-code"
             id="prompt--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 81</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 69</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prompt?</span> ; <span class="ruby-ivar">@prompt</span> ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -711,7 +708,7 @@ Prompot the user for options?
 
     
       <div id="quiet--method" class="method-detail ">
-        <a name="M000060"></a>
+        <a name="M000056"></a>
 
         <div class="method-heading">
         
@@ -732,7 +729,7 @@ Run silently?
           <div class="method-source-code"
             id="quiet--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 73</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 61</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">quiet?</span>  ; <span class="ruby-ivar">@quiet</span>  ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -743,7 +740,7 @@ Run silently?
 
     
       <div id="skip--method" class="method-detail ">
-        <a name="M000066"></a>
+        <a name="M000059"></a>
 
         <div class="method-heading">
         
@@ -764,7 +761,7 @@ Skip overwrites?
           <div class="method-source-code"
             id="skip--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 85</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 73</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">skip?</span>   ; <span class="ruby-ivar">@skip</span>   ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -775,7 +772,7 @@ Skip overwrites?
 
     
       <div id="sowed--method" class="method-detail ">
-        <a name="M000074"></a>
+        <a name="M000065"></a>
 
         <div class="method-heading">
         
@@ -796,7 +793,7 @@ Previously sowed?
           <div class="method-source-code"
             id="sowed--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 123</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 111</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sowed?</span> ; <span class="ruby-ivar">@sowed</span> ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -807,7 +804,7 @@ Previously sowed?
 
     
       <div id="trial--method" class="method-detail ">
-        <a name="M000058"></a>
+        <a name="M000054"></a>
 
         <div class="method-heading">
         
@@ -828,7 +825,7 @@ Tiral run? (Also know as a <tt>noop</tt>.)
           <div class="method-source-code"
             id="trial--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 65</span>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 53</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">trial?</span>  ; <span class="ruby-ivar">@trial</span>  ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
@@ -839,7 +836,7 @@ Tiral run? (Also know as a <tt>noop</tt>.)
 
     
       <div id="update--method" class="method-detail ">
-        <a name="M000070"></a>
+        <a name="M000062"></a>
 
         <div class="method-heading">
         
@@ -860,8 +857,8 @@ Update mode?
           <div class="method-source-code"
             id="update--source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/session.rb, line 106</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update?</span> ; <span class="ruby-identifier">mode</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:update</span> ; <span class="ruby-keyword kw">end</span></pre>
+<span class="ruby-comment cmt"># File lib/sow/session.rb, line 94</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update?</span> ; <span class="ruby-ivar">@update</span> ; <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>

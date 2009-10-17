@@ -1,28 +1,31 @@
 
 body { 
   margin: 0; padding: 0; font-family: sans-serif; font-size: 11pt; 
+  background: url(../images/flowers2.jpg) no-repeat left top;
 }
 
-a { color: #ff0055; text-decoration: none; font-size: 11pt; font-weight: normal; }
+a { color: #ff0055; text-decoration: none; }
+
+h1,h2 { color: #cccc00; }
 
 hr { margin: 0 auto; width: 760px; }
-
 
 li { font-family: monospace ; }
 
 p { line-height: 18pt; text-align: justify; }
 
-pre { font-size: 0.9em; background: #cccc00; padding: 5px; }
+pre { font-size: 0.9em; background: #eeeeee; padding: 5px; color: #5566FF; padding: 10px 0px; border: 1px solid #ccc; }
 
-  #main {}
+code { color: #77AA77; }
 
-  span.red
-    { color: #ff0055; }
+#main {}
+
+span.red { color: #ff0055; }
 
 #canvas { 
   margin:     0 auto;
   width:      720px; 
-  background: url(../images/BB_flowers.jpg) no-repeat top right;
+  background: url(../images/logo.jpg) no-repeat 370px -15px;
 }
 
 #head { 
@@ -30,32 +33,32 @@ pre { font-size: 0.9em; background: #cccc00; padding: 5px; }
   margin: 0px; 
   height: 300px; right -30px no-repeat; 
   border: 0px solid gray;
+  position: relative;
 }
 
 #title{
-  margin: 0px;
+  margin: 0px; padding: 0px;
   color: #cccc00;
-  font: bold 140px monospace;
+  font: bold 150px courier;
 }
 
-#subtitle { margin: -20px 10px 10px 10px; color: #5566FF; font-size: 12pt; padding-left: 0px; font-weight: bold; width: 270px; }
+#subtitle { margin: -25px 10px 10px 15px; color: #5566FF; font-size: 18px; padding-left: 0px; font-weight: bold; }
 
-#formats { margin-left: 50px; color: gray; }
+#formats { position: absolute; right: 50px; color: gray; }
 
-#menu { padding: 10px 0 0 0; text-align: right; }
-#menu a { color: green; font-weight: bold; font-size: 11pt; line-height: 22pt; }
+#menu { margin: 5px 0 0 20px; padding: 5px 0 2px 10px; text-align: left; }
+#menu a { color: #FF88aa; font-weight: bold; font-size: 10pt; line-height: 18pt; }
 #menu a:hover { color: red; }
 
 #copy { clear: both; font-size: 8px; color: gray; text-align: center; border-top: 1px solid gray; margin: 30px 0px; padding-top: 5px; }
 #copy a { color: green; font-size: 8pt; font-weight: bold; }
 
 .section {
-   margin-top: 20px;
-   font-weight: bold; font-size: 14pt;
-   color: white;
-   background: orange;
-   padding: 5px 20px;
-   border: 1px solid gray;
+   margin-top: 10px;
+   font-weight: normal; font-size: 14pt;
+   color: #666666;
+   padding: 5px 0;
+   border: 0px solid gray;
 }
 
 .flower {
