@@ -1,0 +1,4 @@
+Website directory structure design based on the concept of aquasition.
+Assets are stored in the directory where they are used. If an assest
+is shared it ise move up the directory hierarchy until it reaches the
+common parent directory between the files sharing the resource.

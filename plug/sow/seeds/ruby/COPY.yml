@@ -3,8 +3,9 @@
 - from: "**/*"
   less: "meta"
 
-- from: "meta/*"
+- from: "*"
   to  : <%= metadir %>/
+  cd  : "meta"
 
 - from: "bin/*"
   chmod: 0744
