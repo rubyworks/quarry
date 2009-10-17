@@ -7,26 +7,32 @@ require 'tmpdir'
 
 include FileUtils
 
-$PROJECT_ROOT = File.expand_path(File.dirname(__FILE__) + '../../../..')
-$TMP_DIR = Dir.tmpdir + '/cucumber/sow'
+$PROJECT_ROOT = (
+  dir = File.dirname(__FILE__)
+  until Dir[dir + '/README*'].first do
+    dir = File.expand_path(File.join(dir, '..'))
+  end
+  raise "no project root" unless dir
+  dir
+)
 
-puts "[tmpdir] #{$TMP_DIR}"
+$TEMP_DIR = Dir.tmpdir + '/cucumber/sow'
+
+puts "[tmp] #{$TEMP_DIR}"
 
 Before do
-  @tmp_path = $TMP_DIR
-  #@tmp_path = File.expand_path(File.dirname(__FILE__) + '../../../../.cache/cucumber')
-  rm_rf   @tmp_path
-  mkdir_p @tmp_path
+  rm_rf   $TEMP_DIR
+  mkdir_p $TEMP_DIR
 end
 
 def in_temporary_directory(&block)
-  Dir.chdir(@tmp_path) do
+  Dir.chdir($TEMP_DIR) do
     block.call
   end
 end
 
 def in_project_directory(*name, &block)
-  Dir.chdir(File.join(@tmp_path, *name)) do
+  Dir.chdir(File.join($TEMP_DIR, *name)) do
     block.call
   end
 end
