@@ -51,12 +51,12 @@ module Sow
       session.metadata
     end
 
-    #
+    # Destination for scaffolding.
     def destination
       session.destination
     end
 
-    #
+    # Argument for main command option.
     def argument
       options.argument
     end
@@ -86,7 +86,7 @@ module Sow
       @script_file ||= grab('script{,.rb}')
     end
 
-    #
+    # Usage text.
     def usage
       @usage ||= (
         if usage_file
@@ -97,7 +97,9 @@ module Sow
       )
     end
 
-    #
+    # Plugin's special metadata. These entries are
+    # converted to methods for rendering of the 
+    # transfer list.
     def meta
       @meta ||= (
         if meta_file
@@ -108,7 +110,7 @@ module Sow
       )
     end
 
-    #
+    # Plugin's transfer list.
     def seed
       @seed ||= (
         if seed_file
@@ -122,13 +124,13 @@ module Sow
 
   private
 
-    #
+    # Grab the first instance of a mathcing glob as a Pathname object.
     def grab(glob)
       file = Dir.glob(File.join(location, glob), File::FNM_CASEFOLD).first
       file ? Pathname.new(file) : nil
     end
 
-    # ERB OpenTemplate
+    # Erb OpenTemplate
     def template
       @template ||= (
         ERB::OpenTemplate.new(options, session, :options => options, :metadata=>metadata)
@@ -155,7 +157,16 @@ module Sow
 
   public
 
+    # Prepare for scaffolding procedure. If a script.rb file
+    # was provided then uses the class defined within it
+    # to build the proper copylist.
     #
+    # IMPORTANT: The class name must have the same as the
+    # plugin directory it is within.
+    #
+    # If not using a script.rb, but rather a seed.yml and/or
+    # a meta.yml file, this reads and prepares those instead.
+
     def setup
       if script_file
         require(File.expand_path(script_file))
@@ -211,7 +222,7 @@ module Sow
     #  #end
     #end
 
-    #
+    # Define metadata entries as singleton methods of the  Erb template.
     def prepare_meta
       meta.each do |m,c|
         template.instance_class do

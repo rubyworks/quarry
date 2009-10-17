@@ -8,13 +8,13 @@ module Sow
 
   class Script
 
-    #
+    # Script registery/
 
     def self.registry
       @registry ||= {}
     end
 
-    #
+    # If inherited, register the script by it's class basename downcased.
 
     def self.inherited(base)
       registry[base.basename.downcase] = base
@@ -56,13 +56,17 @@ module Sow
       copy '**/*', '.'
     end
 
-    #
+    # Instance of Session.
+
     attr :session
 
     #
+
     attr :options
 
-    #
+    # Copylist contains the a list of transfire operations as 
+    # compiled from the plugin.
+
     attr :copylist
 
     #
@@ -189,6 +193,7 @@ module Sow
 
   #
   module Plugins
+    # see Sow::Script
     Script = Sow::Script
   end
 
