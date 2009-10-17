@@ -57,7 +57,7 @@ project scaffolding squarely in mind.</p>
 </pre>
 
 <p>Manual site installation can be achived via Ruby Setup. Please see the
-<a href="http://rdoc/README.html">README</a> included in the 
+<a href="http://rdoc/README.html">README</a> included in the
 <a href="http://">tarball</a> for more information.</p>
 
 </div>
@@ -185,48 +185,115 @@ To get that you need to create a <code>.meta</code> direcroty in your project.</
 
 <h2>Designing Sow Plugins</h2>
 
-<p>Creating your own plugin is actually quite easy. You simply need
-to add a folder to a Ruby project's loadpath following the naming
-convention <code>&lt;name&gt;.sow/</code>. This folder can be in
-a dedicate project or part of another project. Typically your
-project's loadpath with be under <code>lib/</code>. Let's say you want to call
-you plugin <code>mohgee</code>, so you would have <code>lib/mohgee.sow</code>
-directory in your project. Aternatively you can make a separate folder for
-plugins, and add it's path to your project's loadpath (which
-is what I do). In that case you might have a folder with a pathname
-of <code>plug/moghee.sow</code>.</p>
+<p>Creating your own plugin is actually quite easy. You simply need to add
+a folder to a Ruby project's loadpath following the naming convention
+<code>sow/seeds/&lt;name&gt;/</code>. This folder can be in a dedicated project
+or part of another project. Typically your project's loadpath with be under
+<code>lib/</code>. Let's say you want to call your plugin <code>mohgee</code>,
+so you would have a <code>lib/sow/seeds/mohgee/</code> directory. Aternatively
+you can make a separate folder for plugins, and add it's path to your project's
+loadpath (which is what I do). In that case you might have a folder with a pathname
+of <code>plug/sow/seeds/moghee/</code> and add <code>plug/</code> to the loadpath.</p>
 
-<p>Within this folder you simply put whatever files you want
-to be apart of your scaffolding, using <code>erb</code> within them
-when they need to contain dynamically generated content.</p>
+<p>The plugin folder houses script(s) to instruct sow how to generate a
+scaffold and a directory called <code>template</code> to hold the template
+files you want to use for your scaffolding.</p>
 
-<p>Finally you need to add a <code>script.sow.rb</code> file to the
-folder. This script instructs Sow on how to conduct the file
-transfer and generation when the plugin is used. Essentailly, a Sow
-script is a small Ruby DSL script. There are only a few methods you
-need to know in order to create you own plugin.</p>
+<p>The instruction file(s) will either be a <code>SCRIPT.rb</code> file, or
+a META.yaml and SEED.yaml file. Which of the two you decide depends mostly
+on your preference. <code>SCRIPT.rb</code> is the the traditional approach, and is
+probably best suited to complex scaffoldings. The script instructs Sow on how to
+conduct the file transfers and generation in plain Ruby code. Essentailly, a Sow
+script is a small Ruby DSL script containg a subclass of Sow::Script within the
+Sow::Plugins namespace. There are only a few methods you need to know in order to
+create you own plugin.</p>
 
-<p>Below is the <code>script.sow.rb</code> for the Ruby plugin.
-It covers the majority of available options.</p>
+<p>To get up to speed quickly on how a <code>SCRIPT.rb</code> is constructed, below
+is the <code>SCRIPT.rb</code> for the built-in License plugin.</p>
 
 <pre>
-  about "Scaffold a traditional ruby project."
+  module Sow::Plugins
 
-  usage "--ruby[=&lt;package-name&gt;]"
+    # Add specified license to your project.
 
-  argument(:name, 'package name of new application/library') do |val|
-    val = val || pathname
-    abort "Name is required." unless val
-    metadata.package = val
-  end
+    class License &lt; Script
 
-  scaffold do
-    copy('**/*', '.')
-    copy('.meta/*', metadir)
+      LICENSES = %w[gpl lgpl mit]
+
+      about "Add LICENSE/COPYING file to project."
+
+      usage "--license[=&lt;name&gt;]"
+
+      argument :license
+
+      setup do
+        lic = license.downcase
+        abort "License name required" unless LICENSES.include?(lic)
+        metadata.license = lic.upcase
+      end
+
+      manifest do
+        copy "*", '.', :cd => license.downcase
+      end
+
+    end
+
   end
 </pre>
 
-<p></p>
+<p>Notice we have specifed the main argument via the <code>argument</code> meta-method.
+This means the commandline <code>--license</code> option will take an argument.
+In the setup method we set the <code>metadata.license</code> to thsi argument so that
+it can be used for any erb template varaible in our <code>template/</code> directory.
+The <code>manifest</code> method specifies the transfer instructions of copying
+the appropriate contents from the template directory to our destination. The <code>:cd</cod>
+is a convenince option that tell the copy command to drop down into a subdirectory
+before performing the copy operation.</p>
+
+<p>The layout of the license plugin looks basically like this:</p>
+
+<pre>
+  SCRIPT.rb
+  template/
+    gpl/
+      COPYING
+    lgpl/
+      COPYING
+      LICENSE
+    mit/
+      LICENSE
+</pre>
+
+<p>So for example, upon invoking <code>sow --license=lgpl</code>, sow will copy the
+contest fo the <code>lgpl</code> directory into your project directory.</p>
+
+<p>The other approach, of using the META.yml and SEED.yml files instead of a SCRIPT.rb,
+allows you to specify the scaffolding instructions in the YAML format.
+For comparison, in the above case the META.yml file would be as follows:</p>
+
+<pre>
+---
+about   : "Add LICENSE/COPYING file to project."
+usage   : "--license[=&lt;name&gt;]"
+license : argument
+licenses: [gpl, lgpl, mit]
+validate:
+  name = license.downcase;
+  abort "License name required" unless licenses.include?(name)
+</pre>
+
+<p>And the SEED.yml file as:</p>
+
+<pre>
+---
+- from: "*"
+  to  : '.'
+  cd  : &lt;%= license.downcase %&gt;
+</pre>
+
+<p>I am sure you already see the similarities between the two. The effectively do the
+exact same thing. The later just happens to be a little bit easier to digest, and not
+quite a tadbit less programmable.</p>
 
 </div>
 
@@ -246,7 +313,7 @@ It covers the majority of available options.</p>
 
 <h3>Copying</h3>
 
-<p>Copyright &#169; 2007, 2008 TigerOps</p>
+<p>Copyright &#169; 2007, 2009 Thomas Sawyer</p>
 
 <p>This program is free software: you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
@@ -277,7 +344,7 @@ with this program. If not, see
 <p>Can you believe it's been two years? Over two years since I began this
 crazy eyed journey to create the ultimate Ruby build tool. If I had any idea what I was
 getting myself into I would likely have ran away screaming, thankful for having saved myself
-an extrodinarily amount of <i>time</i>. Thankfully I can finally say that day has 
+an extrodinarily amount of <i>time</i>. Thankfully I can finally say that day has
 almost arrived. And about time too. I was starting to get worried ;) The final result turned out
 to be just a single project, rather three came from the edeavor: Ratch, Sow and Reap.</p>
 
@@ -287,8 +354,8 @@ to be just a single project, rather three came from the edeavor: Ratch, Sow and 
 <!---------------- FOOTER ------------------>
 
 <div id="copy">
-  <a href="http://sow.rubyforge.org">sow</a> copyright (c) 2006 thomas sawyer (trans), all rights reserved.
-  Copyright (c) 2006 Thomas Sawyer, all rights reserved.
+  <a href="http://proutils.github.com/sow">Sow</a>
+  Copyright (c) 2009 Thomas Sawyer (trans), all rights reserved.
 </div>
 
 </div></body>
