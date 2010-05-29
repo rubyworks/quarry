@@ -1,0 +1,13 @@
+---
+title  : Sow
+contact: proutils@googlegropus.com
+suite  : proutils
+authors: Thomas Sawyer
+
+description:
+  Sow is a flexible and straightforward project file generation system.
+
+resources:
+  homepage: http://proutils.github.com/sow
+  repository: git://github.com/proutils/sow.git
+
