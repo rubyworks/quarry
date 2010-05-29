@@ -1,9 +1,0 @@
-plugin   : readme2web
-version  : 1.1
-master   : sow
-author   : 7rans <transfire AT gmail.com>
-abstract :
-  Generates a basic website based on a README
-  file. It does this by sectioning the README
-  into tabs based on <h2>'s.
-
