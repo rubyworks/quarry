@@ -1,4 +1,10 @@
+require 'plugin'
+require 'xdg'
+require 'facets/pathname'
+require 'facets/ostruct'
+
 require 'sow/metadata'
+require 'sow/scaffold'
 
 module Sow
 
@@ -10,67 +16,113 @@ module Sow
   #
   class Session
 
+    SOURCE_DIRS = XDG::Config.select('/sow/sources/')
+
     # Create a new session instance.
+    def initialize(resource, destination, environment, options)
+      @resource  = resource
 
-    def initialize(arguments, options)
-      @arguments = arguments
-      @options   = options
+      @options     = OpenStruct.new(options)
+      @environment = OpenStruct.new(environment)
 
-      @trial  = options.trial?
-      @debug  = options.debug?
-      @quiet  = options.quiet?
-      @force  = options.force?
-      @prompt = options.prompt?
-      @skip   = options.skip?
+      @destination = (
+        if destination
+          Pathname.new(destination)
+        else
+          Pathname.new(Dir.pwd)
+        end
+      )
 
-      @create = options.create?
-      @update = options.update?
-      @delete = options.delete?
+      @location  = find_scaffold(resource)
 
-      @destination = Pathname.new(options.destination || Dir.pwd)
-
-      if file = Dir.glob(File.join(destination, '{,.}config/sow.{yml,yaml}')).first
+      if file = @destination.glob('{,.}config/sow.{yml,yaml}').first
         @config = YAML.load(File.new(file))
-        @sowed = true
+        @sowed  = true
       else
         @config = {}
-        @sowed = false
+        @sowed  = false
       end
+
+      @scaffold = Scaffold.new(self)
+    end
+
+    #
+    def scaffold
+      @scaffold
+    end
+
+    #
+    def copylist
+      @scaffold.copylist
+    end
+
+    #
+    def generator
+      @generator ||= (
+        case action.to_sym
+        when :create
+          Generators::Create.new(self, copylist)
+        when :update
+          Generators::Update.new(self, copylist)
+        when :delete
+          Generators::Delete.new(self, copylist)
+        else
+          raise "Unknown command type."
+        end
+      )
+    end
+
+    #
+    def run
+      generator.generate
     end
 
   public
 
-    # Destination for generated scaffolding.
+    # Location of scaffolding.
+    attr :location
 
+    # Destination for generated scaffolding.
     attr :destination
 
-    # DEPREICATE: Is "output" too generic a name for a tool like Sow?
+    # Environment settings.
+    attr :environment
 
+    # Commandline options.
+    attr :options
+
+    # DEPRICATE: Is "output" too generic a name for a tool like Sow?
     alias_method :output, :destination
 
     # Tiral run? (Also know as a +noop+.)
-
-    def trial?  ; @trial  ; end
+    def trial?
+      @options.trial
+    end
 
     # Provide debugging information?
-
-    def debug?  ; @debug  ; end
+    def debug?
+      $DEBUG #@options.debug
+    end
 
     # Run silently?
-
-    def quiet?  ; @quiet  ; end
+    def quiet?
+      @options.quiet
+    end
 
     # Override protected operations.
-
-    def force?  ; @force  ; end
+    def force?
+      @options.force
+    end
 
     # Prompot the user for options?
-
-    def prompt? ; @prompt ; end
+    def prompt?
+      @options.prompt
+    end
 
     # Skip overwrites?
-
-    def skip?   ; @skip   ; end
+    def skip?
+      @options.skip
+    end
 
     # Return command mode based on command options.
     # Defaults to +:create+.
@@ -78,24 +130,26 @@ module Sow
     # TODO: Are their circumstances where mode should defualt to update?
     #++
 
-    def mode
-      return 'create' if @create
-      return 'update' if @update
-      return 'delete' if @delete
-      return 'create' #sowed? ? :update : :create
+    def action
+      @options.action || :create  #sowed? ? :update : :create
+    end
+    alias_method :mode, :action
+
+    def update?
+      action == :update
     end
 
-    # Creation mode?
+    def create?
+      action == :create
+    end
 
-    def create? ; @create ; end
+    def delete?
+      action == :delete
+    end
 
-    # Update mode?
-
-    def update? ; @update ; end
-
-    # Delete mode?
-
-    def delete? ; @delete ; end
+    def managed?
+      force? or skip? or prompt?
+    end
 
     #
     #def scaffold?
@@ -103,48 +157,81 @@ module Sow
     #end
 
     # Sow configuration.
-
-    def config ; @config ; end
+    def config
+      @config
+    end
 
     # Previously sowed?
-
-    def sowed? ; @sowed ; end
+    def sowed?
+      @sowed
+    end
 
     # Does the destination contain any files?
-
     def empty?
       @empty ||= Dir[destination + '*'].empty?
     end
 
     # Alias for #empty?
-
     alias_method :new?, :empty?
 
     # Metadata for destination, if any.
     #--
     # TODO: Use POM::Metadata in future?
     #++
-
     def metadata
-      @metadata ||= Metadata.new(destination)
+      @metadata ||= Metadata.new(environment)
     end
 
     # Destination has metadata?
-
     def metadata?
       metadata.exist?
     end
 
-    # What is the destinations meta directory (+meta+ or +.meta+)?
-    # If none then defaults to +.meta+.
+    ## What is the destinations meta directory (+meta+ or +.meta+)?
+    ## If none then defaults to +.meta+.
+    #def metadir
+    #  @meta_directory ||= (Dir[File.join(destination, '{.meta,meta}/')].first || '.meta/').chomp('/')
+    #end
 
-    def metadir
-      @meta_directory ||= (Dir[File.join(destination, '{.meta,meta}/')].first || '.meta/').chomp('/')
+    ## Alias for meta_directory
+    ##alias_method :metadir, :meta_directory
+
+    #
+    def sources
+      @sources ||= SOURCE_DIRS.map{ |dir| Dir[dir + '/*/'] }.flatten
     end
 
-    # Alias for meta_directory
-    #alias_method :metadir, :meta_directory
+  private
+
+    #
+    def find_scaffold(name)
+      #case name
+      #when /^git:/
+      #  source = File.join(Dir.tmpdir, 'sow', File.basename(uri))
+      #  `git clone #{uri} #{source}`
+      #when /^svn:/
+      #  source = File.join(Dir.tmpdir, 'sow', File.basename(uri))
+      #  `svn checkout clone #{uri} #{source}`
+      #else
+        source = nil
+        source ||= find_source(name)
+        source ||= ::Plugin.find(File.join('sow', name)).first
+      #end
+      raise "Can't find #{name} scaffold." unless source
+      Pathname.new(source)
+    end
+
+    #
+    def find_source(name)
+      dir = nil
+      src = sources.find do |source|
+        dir = File.join(source,name)
+        File.directory?(dir)
+      end
+      src ? File.join(src,name) : nil
+    end
 
   end
 
 end
+

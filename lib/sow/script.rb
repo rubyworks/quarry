@@ -8,41 +8,72 @@ module Sow
 
   class Script
 
-    # Script registery/
+    ## Script registery/
+    #def self.registry
+    #  @registry ||= {}
+    #end
 
-    def self.registry
-      @registry ||= {}
-    end
+    ## If inherited, register the script by it's class basename downcased.
+    ##def self.inherited(base)
+    ##  registry[base.basename.downcase] = base
+    ##end
 
-    # If inherited, register the script by it's class basename downcased.
+    ## Specify a valid option.
+    #def self.about(description=nil)
+    #  @about = description if description
+    #  @about
+    #end
 
-    def self.inherited(base)
-      registry[base.basename.downcase] = base
+    #
+    def self.utilize(name)
+      require "sow/extensions/#{name}"
     end
 
     # Setup procedure, used to setup metadata.
-
     def self.setup(&block)
-      define_method(:setup,&block)
+      define_method(:setup, &block)
     end
 
-    # Manifest procedure, used to invoke #copy.
-
-    def self.manifest(&block)
-      define_method(:manifest,&block)
+    # Scaffolding procedure, used to invoke #copy.
+    def self.scaffold(&block)
+      define_method(:scaffold, &block)
     end
 
     # Specify a valid option.
-
-    def self.option(name)
-      attr_accessor(name)
+    # TODO: Store description for use in help.
+    def self.option(name, description=nil)
+      class_eval %{
+        def #{name}
+          metadata.__send__(name)
+        end
+      }
     end
 
-    # Give the main argument a name.
+    ## Give the main argument a name.
+    #def self.argument(name)
+    #  define_method(name){ argument }
+    #end
 
-    def self.argument(name)
-      define_method(name){ argument }
+    #
+    def initialize(session)
+      @session  = session
+      @copylist = []
     end
+
+    # Instance of Session.
+    attr :session
+
+    #
+    def environment
+      @session.environment
+    end
+
+    #
+    alias_method :env, :environment
+
+    # Copylist contains the a list of transfer operations as 
+    # compiled from the plugin.
+    attr :copylist
 
     # Override and setup metadata and validate.
     # If something does jive, then use #abort to
@@ -52,33 +83,11 @@ module Sow
 
     # Override and place copy statment in this method.
     #
-    def manifest
+    def scaffold
       copy '**/*', '.'
     end
 
-    # Instance of Session.
-
-    attr :session
-
-    #
-
-    attr :options
-
-    # Copylist contains the a list of transfer operations as 
-    # compiled from the plugin.
-
-    attr :copylist
-
-    #
-    def initialize(session, options)
-      @session = session
-      @options = options
-
-      @copylist  = []
-    end
-
     # Main argument.
-
     def argument
       options.argument
     end
@@ -166,9 +175,9 @@ module Sow
     end
 
     # If method missing, routes the call to +session+.
-    def method_missing(var,*a)
-      if val = @session.__send__(var)
-        return val
+    def method_missing(s,*a)
+      if @session.respond_to?(s)
+        return @session.__send__(s)
       else
         super
       end

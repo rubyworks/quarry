@@ -1,4 +1,4 @@
-require 'sow/manager'
+require 'sow/session'
 require 'facets/string/tabto'
 
 module Sow
@@ -17,17 +17,21 @@ module Sow
     end
 
     # Commandline arguments.
-    attr :argv
+    attr :arguments
+
+    #
+    attr :options
 
     # New Command.
     def initialize(argv=ARGV)
-      @argv = argv.dup
+      @arguments = argv.dup
+      @options   = OpenStruct.new
     end
 
-    # Plugin manger.
-    def manager
-      @manager ||= Manager.new
-    end
+    ## Plugin manger.
+    #def manager
+    #  @manager ||= Manager.new
+    #end
 
     # Run command.
     #
@@ -36,68 +40,61 @@ module Sow
     # change directory to that location?
     #
     def execute
-      arguments, cooptions = *parse_argv(argv)
+      option_parser.parse!(arguments)
 
-      # Extract standard commandline options.
-      options, cooptions = standard_options(cooptions)
-
-      if options.help?
-        puts help
-        exit
-      end
-
-      # Ensure only one command type selected.
-      if [options.create?, options.delete?, options.update?].compact.size > 1
-        raise "Conflicting commands. Choose one: create, delete or update."
-      end
-
-      # Path to destination is the last argument, if given. Otherwise it is
-      # the current working path.
-      pathname = (arguments.pop || '.').chomp('/')
-
-      options.destination = pathname
-
-      # All options should appear after plugin/scaffold name.
-      # however, it is able to look past purely flag switches.
-      #name = arguments.find{ |e| e !~ /^\-/ }
-
-      session = Session.new(arguments, options)
-
-      #command = session.mode
-
-      # collect plugin options
-      options = Hash.new{ |h,k| h[k] = {} }
-      cooptions.each do |(name, value)|
-        if name.index('.')
-          name, var = *name.split('.')
-          options[name][var] = value
+      environment = {}
+      arguments.reject! do |arg|
+        case arg
+        when /(.*)\=(.*?)/
+          environment[$1] = $2
+          true
         else
-          options[name]['argument'] = value
+          false
         end
       end
 
-      # collect plugins
-      plugins = options.map do |(name, opts)|
-        # Get plugin by name
-        plugin = manager.plugin(session, name, opts)
-        # Setup the plugin
-        plugin.setup #(command, arguments, options)
-        #
-        plugin
+      resource    = arguments.shift
+      destination = arguments.shift
+
+      session = Session.new(resource, destination, environment, options)
+
+      #session.setup
+
+      ## collect plugins
+      #plugins = options.map do |(name, opts)|
+      #  # Get plugin by name
+      #  plugin = manager.plugin(session, name, opts)
+      #  # Setup the plugin
+      #  plugin.setup #(command, arguments, options)
+      #  #
+      #  plugin
+      #end
+
+      ## Abort if no scaffold type given.
+      #if plugins.empty?
+      #  $stderr.puts "No scaffold type given."
+      #  exit
+      #end
+
+      ## Get copylists from each plugin and combine them into
+      ## a single compylist.
+      #copylist = plugins.inject([]) do |array, plugin|
+      #  array.concat(plugin.copylist)
+      #end
+
+      begin
+        session.run
+      rescue => err
+        if debug?
+          raise err
+        else
+          puts err
+          puts "try --help or --debug"
+          exit -1
+        end
       end
 
-      # Abort if no scaffold type given.
-      if plugins.empty?
-        $stderr.puts "No scaffold type given."
-        exit
-      end
-
-      # Get copylists from each plugin and combine them into
-      # a single compylist.
-      copylist = plugins.inject([]) do |array, plugin|
-        array.concat(plugin.copylist)
-      end
-
+=begin
       begin
         case session.mode
         when 'create'
@@ -121,8 +118,71 @@ module Sow
           exit
         end
       end
+=end
+
     end
 
+    #
+    def option_parser
+      OptionParser.new do |opts|
+
+        opts.on('--create', '-c') do
+          options.action = :create
+        end
+
+        opts.on('--delete', '-d') do
+          options.action = :delete
+        end
+
+        opts.on('--update', '-u') do
+          options.action = :update
+        end
+
+        opts.on('--prompt', '-p') do
+          options.prompt = true
+        end
+
+        opts.on('--skip', '-s') do
+          options.skip = true
+        end
+
+        opts.on('--force', '-f') do
+          options.force = true
+        end
+
+        opts.on('--quiet', '-q') do
+          options.quiet = true
+        end
+
+        opts.on('--trial', '-t') do
+          options.trial = true
+        end
+
+        opts.on('--debug', '-D') do
+          $VERBOSE = true
+          $DEBUG   = true
+        end
+
+        opts.on_tail('--help', '-h', 'show this help message') do
+          puts opts
+          exit
+        end
+      end
+    end
+
+  end
+
+end
+
+
+
+
+
+
+
+
+
+=begin
     # Very simply ARGV parser. In the future we may make
     # this a bit smarter. We do it manually to preserve the
     # order of plugin options.
@@ -137,9 +197,10 @@ module Sow
           args << arg
         end
       end
-      opts = opts.map{ |o| o.sub(/^\-+/, '').split('=') }
+      opts = opts.map{ |          $DEBUG = trueo| o.sub(/^\-+/, '').split('=') }
       return args, opts
     end
+
 
     # Return command type based on option.
     #def command(options)
@@ -162,18 +223,19 @@ module Sow
       'debug'  => 'debug' ,
     }
 
-    # Returns a hash of standard options and an assoc array
-    # of plugin options.
-    def standard_options(opts)
-      h, o = OpenStruct.new, []
+
+    # Returns am OpenStruct of standard options and one
+    # for the scaffold's options.
+    def split_options(opts)
+      h, s = OpenStruct.new, OpenStruct.new
       opts.each do |(k,v)|
         if opt = STANDARD_OPTIONS[k]
           h[opt+'?'] = true
         else
-          o << [k,v]
+          s[k] = v
         end
       end
-      return h, o
+      return h, s
     end
 
     # General help message.
@@ -194,8 +256,5 @@ module Sow
         -h --help           Show this message
       END
     end
-
-  end#class Command
-
-end#module Sow
+=end
 

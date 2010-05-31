@@ -1,31 +1,28 @@
 module Sow
 
-  # Metadata located in destination.
-  #
-  # This can be used to "prefill" template variables in some
+  # Metadata for use by template variables in some
   # types of scaffolding.
   #
   #--
-  # TODO: Use POM::Metadata instead?
-  #
   # TODO: Should this only be used when updating?
   #
-  # TODO: If we copy meta/ first then it can be reused. ?
+  # TODO: If we copy PROFILE first then it can be reused. ?
   #++
+
   class Metadata
     alias :__id__ :object_id
 
     instance_methods.each{ |m| private m unless m.to_s =~ /^__/ }
 
     #
-    def initialize(destination)
-      @dir   = destination
+    def initialize(*resources)
+      @resources = resources
       @cache = {}
     end
 
-    # Is there a metadata directory located in the destination directory?
-    def exist?
-      @exist ||= Dir.glob(File.join(@dir, '{.meta,meta}/')).first
+    #
+    def <<(resource)
+      @resources << resource
     end
 
     # If method is missing, lookup metdata value by that name.
@@ -45,20 +42,20 @@ module Sow
       self[entry] ? true : false
     end
 
-    # Get a metadata value directly from the metadata cache.
-    def __get__(entry)
-      @cache[entry.to_s]
-    end
-
-    # Get a metadata value. If not found in the cache,
-    # attempt to load it from the path store.
+    # Get a metadata value. If not found in the cache return
+    # a "FIXME" value.
     def [](s)
       s = s.to_s
       if @cache.key?(s)
         @cache[s]
       else
-        #@cache[s] = HOLE + " (#{s})"
-        @cache[s] = load_value(s) #|| HOLE + " (#{s})"
+        val = lookup(s)
+        if val
+          @cache[s]= val
+        else
+          @cache[s] = "FIXME: ___#{s}___"
+          #@cache[s] = load_value(s) #|| HOLE + " (#{s})"
+        end
       end
     end
 
@@ -67,8 +64,33 @@ module Sow
       @cache[k.to_s] = v
     end
 
+    #
+    def lookup(name)
+p name
+      result = false
+      @resources.find do |resource|
+        case resource
+        when Hash
+          result = resource[name.to_sym] || resource[name.to_s]
+        else
+          if resource.respond_to?(name)
+            result = resource.__send__(name)
+          else
+            result = false
+          end
+        end
+      end
+      result
+    end
+
+    # Get a metadata value directly from the metadata cache.
+    def __get__(entry)
+      @cache[entry.to_s]
+    end
+
   private
 
+=begin
     # Load metadata value.
     #
     # In update mode, metadata is looked for in the receiving end.
@@ -108,6 +130,7 @@ module Sow
     def binding!
       binding
     end
+=end
 
   end
 

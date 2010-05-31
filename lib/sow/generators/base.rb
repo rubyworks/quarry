@@ -1,6 +1,5 @@
-require 'pathname'
+require 'facets/pathname'
 require 'sow/core_ext'
-require 'sow/plugin'
 require 'sow/context'
 
 module Sow
@@ -23,10 +22,11 @@ module Sow
       attr :logger
 
       def initialize(session, copylist)
+
         if session.debug?
           puts "\n[copylist]"
           copylist.each do |loc, tname, fname, opts|
-            puts "#{loc} #{tname} #{fname} #{opts.inspect}"
+            puts "#{loc.to_s.inspect} #{tname.inspect} #{fname.inspect} #{opts.inspect}"
           end
         end
 

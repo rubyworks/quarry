@@ -14,37 +14,69 @@ module Sow
 
   # Plugin encapsulates information about a sow plugin.
   #
-  class Plugin
+  class Scaffold
+
+    # Name of sow script file.
+    SCRIPT = 'Sowfile{,.rb}'
+
+    # Name of readme document.
+    README = 'README{,.txt}'
+
     # Name of template directory.
-    TEMPLATE_NAME = 'template/'
-    # Name of plugin script file.
-    SCRIPT_NAME = 'SCRIPT{,.rb}'
-    # Name of usage document.
-    USAGE_NAME = 'USAGE{,.txt}'
-    # Name of metadata file.
-    DATA_NAME = 'DATA{,.yml,.yaml}'
-    # Name of copy file.
-    COPY_NAME = 'COPY{,.yml,.yaml}'
+    DIRECTORY = 'template/'
 
     # Instanance of Session.
     attr :session
+
     # Location of plugin.
     attr :location
-    # Argmuent
-    attr :argument
-    # Options
-    attr :options
-    # Desitnation pathname
-    attr :destination
+
+    ## Argmuent
+    #3attr :argument
+
+    ## Options
+    #attr :options
+
+    ## Desitnation pathname
+    #attr :destination
+
+    #attr :copy
 
     #
-    def initialize(session, location, options)
+    def initialize(session)
       @session  = session
-      @options  = options.to_ostruct
-
-      @location = Pathname.new(location)
+      @location = Pathname.new(session.location)
 
       @copy = []
+
+      setup
+    end
+
+    # Prepare for scaffolding procedure. If a script.rb file
+    # was provided then uses the class defined within it
+    # to build the proper copylist.
+    #
+    # IMPORTANT: The class name must have the same as the
+    # plugin directory it is within.
+    #
+    # If not using a script.rb, but rather a seed.yml and/or
+    # a meta.yml file, this reads and prepares those instead.
+
+    def setup
+      code = sowfile.read
+      @sow_class = Class.new(Script)
+      @sow_class.class_eval(code, sowfile)
+
+      @sow = @sow_class.new(session)
+      @sow.setup
+      @sow.scaffold
+
+      @copy = @sow.copylist
+    end
+
+    #
+    def sow_class
+      @sow_class
     end
 
     # Metadata from scaffold destination.
@@ -57,75 +89,61 @@ module Sow
       session.destination
     end
 
-    # Argument for main command option.
-    def argument
-      options.argument
-    end
+    ## Argument for main command option.
+    #def argument
+    #  session.argument
+    #end
+
 
     # Directory with template files.
     def template_dir
-      @template_dir ||= grab(TEMPLATE_NAME)
+      @template_dir ||= grab(DIRECTORY)
     end
 
-    # File containing usage text.
-    def usage_file
-      @usage_file ||= grab(USAGE_NAME)
+    #
+    def sowfile
+      @sowfile ||= grab(SCRIPT)
     end
 
-    # Metadata file.
-    def meta_file
-      @meta_file ||= grab(DATA_NAME)
-    end
-
-    # Transfer file.
-    def seed_file
-      @seed_file ||= grab(COPY_NAME)
-    end
-
-    # Traditional alternative to the meta & seed file.
-    def script_file
-      @script_file ||= grab(SCRIPT_NAME)
-    end
-
-    # Usage text.
-    def usage
+    # README text.
+    def readme
       @usage ||= (
-        if usage_file
-          Usage.new(usage_file)
+        if file = grab(README)
+          File.read(file)
         else
-          "Generate #{self.class.name} scaffolding."
+          "Generate scaffolding."
         end
       )
     end
 
-    # Plugin's special metadata. These entries are
-    # converted to methods for rendering of the 
-    # transfer list.
-    def meta
-      @meta ||= (
-        if meta_file
-          YAML.load(File.new(meta_file))
-        else
-          {}
-        end
-      )
-    end
+    ## Plugin's special metadata. These entries are
+    ## converted to methods for rendering of the 
+    ## transfer list.
+    #def meta
+    #  @meta ||= (
+    #    if meta_file
+    #      YAML.load(File.new(meta_file))
+    #    else
+    #      {}
+    #    end
+    #  )
+    #end
 
-    # Plugin's transfer list.
-    def seed
-      @seed ||= (
-        if seed_file
-          res = template.erb_result(File.read(seed_file))
-          YAML.load(res)
-        else
-          [{'from' => '**/*'}]
-        end
-      )
-    end
+    ## Plugin's transfer list.
+    #def seed
+    #  @seed ||= (
+    #    if seed_file
+    #      res = template.erb_result(File.read(seed_file))
+    #      YAML.load(res)
+    #    else
+    #      [{'from' => '**/*'}]
+    #    end
+    #  )
+    #end
 
   private
 
-    # Grab the first instance of a mathcing glob as a Pathname object.
+    # Grab the first instance of a matching glob as a Pathname object.
     def grab(glob)
       file = Dir.glob(File.join(location, glob), File::FNM_CASEFOLD).first
       file ? Pathname.new(file) : nil
@@ -134,7 +152,7 @@ module Sow
     # Erb OpenTemplate
     def template
       @template ||= (
-        ERB::OpenTemplate.new(options, session, :options => options, :metadata=>metadata)
+        ERB::OpenTemplate.new(options, session, :options=>options, :metadata=>metadata)
       )
     end
 
@@ -158,30 +176,6 @@ module Sow
 
   public
 
-    # Prepare for scaffolding procedure. If a script.rb file
-    # was provided then uses the class defined within it
-    # to build the proper copylist.
-    #
-    # IMPORTANT: The class name must have the same as the
-    # plugin directory it is within.
-    #
-    # If not using a script.rb, but rather a seed.yml and/or
-    # a meta.yml file, this reads and prepares those instead.
-
-    def setup
-      if script_file
-        require(File.expand_path(script_file))
-        scriptClass = Script.registry[location.basename.to_s]
-        @script = scriptClass.new(session, options)
-        @script.setup
-        @script.manifest
-        @copy = @script.copylist
-      else
-        prepare_meta
-        prepare_seed
-        prepare_data
-      end
-    end
 
       #setup_arguments #(arguments)
       #setup_metadata
@@ -223,39 +217,39 @@ module Sow
     #  #end
     #end
 
-    # Define metadata entries as singleton methods of the  Erb template.
-    def prepare_meta
-      meta.each do |m,c|
-        template.instance_class do
-          eval %{
-            def #{m}
-              #{c}
-            end
-          }
-        end
-      end
-      # validate
-      template.validate if meta['validate']
-    end
+    ## Define metadata entries as singleton methods of the  Erb template.
+    #def prepare_meta
+    #  meta.each do |m,c|
+    #    template.instance_class do
+    #      eval %{
+    #        def #{m}
+    #          #{c}
+    #        end
+    #      }
+    #    end
+    #  end
+    #  # validate
+    #  template.validate if meta['validate']
+    #end
 
-    #
-    def prepare_seed
-      seed.each do |opts|
-        opts.rekey!(&:to_s)
-        from = opts.delete('from')
-        to   = opts.delete('to') || '.'
-        cond = opts.delete('if')
-        next unless template.instance_eval(cond) if cond
-        @copy << [from, to, opts]
-      end
-    end
+    ##
+    #def prepare_seed
+    #  seed.each do |opts|
+    #    opts.rekey!(&:to_s)
+    #    from = opts.delete('from')
+    #    to   = opts.delete('to') || '.'
+    #    cond = opts.delete('if')
+    #    next unless template.instance_eval(cond) if cond
+    #    @copy << [from, to, opts]
+    #  end
+    #end
 
-    #
-    def prepare_data
-      meta.each do |m,c|
-        metadata[m] = template.__send__(m)
-      end
-    end
+    ##
+    #def prepare_data
+    #  meta.each do |m,c|
+    #    metadata[m] = template.__send__(m)
+    #  end
+    #end
 
     # Designate a copying action.
     #
