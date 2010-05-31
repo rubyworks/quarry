@@ -1,0 +1,46 @@
+= Scaffold Layout
+
+A scaffold is a directory that contains a README document, a Sowfile
+and a template directory.
+
+The README document simply consists of text describing the scaffold and any
+special options if handles that the user might want to know about. A simple
+example of a README might read...
+
+  Sample scaffold will create a sample project layout
+  suitable for testing by Sow's test suite.
+
+The Sowfile is a script that collects any information the scaffold might need
+and designates what files include in the scaffolding. An example Sowfile
+might look something like this...
+
+  option :name
+
+  setup do
+  end
+
+  scaffold do
+    copy '**/*'
+  end
+
+The template directory holds all the erb templates and static files that may
+be copied. For example, the template directory might have a template file
+called README.erb ...
+
+  Welcome to <%= name %>.
+
+  FIXME: Describe you project here.
+
+  Copyright (c) <%= Time.now.strftime('%Y') %> <%= author %>
+
+The template directory might also have a static file called +LICENSE+ ...
+
+  Pancake License
+
+  You can do whatever the hell you want with this software
+  just so long as lawyers do not become involved.
+
+And that's it. That is the basic outline of Sow scaffold. The nice thing
+about Sow scaffold is that the layout is straight-forward and that the 
+Sowfile DSL is very easy to use.
+
