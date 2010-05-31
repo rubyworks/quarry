@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+about "Scaffold a traditional ruby project."
+
+utilize 'pom'
+
+option :name, 'package name of new application/library'
+
+scaffold do
+  if destination.glob('PROFILE')
+    profile = YAML.load('PROFILE')
+    metadata << profile
+  end
+
+  if destination.glob('VERSION')
+    version = YAML.load('VERSION')
+    metadata << version
+  end
+
+  name = metadata.name || destination.basename.to_s
+p name
+  abort "Name is required."         unless name
+  abort "Name must be single word." unless name =~ /\w+/
+
+  metadata.name = name
+
+  if destination.exist?
+    files = destination.entries - ['.', '..', 'PROFILE']
+    #if !(files.empty? or update? or managed?)
+    #  abort "Ruby scaffold is intended for new projects. Use --update, or --force, --skip or --prompt to override."
+    #end
+  end
+
+  copy("**/*") #, :omit => "meta")
+  copy("bin/*", :chmod=>0744)
+  copy("README.rdoc.till", :verbatim => true)
+end
+
