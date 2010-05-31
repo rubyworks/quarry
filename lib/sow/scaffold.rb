@@ -63,9 +63,12 @@ module Sow
     # a meta.yml file, this reads and prepares those instead.
 
     def setup
-      code = sowfile.read
       @sow_class = Class.new(Script)
-      @sow_class.class_eval(code, sowfile)
+
+      if sowfile
+        code = sowfile.read
+        @sow_class.class_eval(code, sowfile)
+      end     
 
       @sow = @sow_class.new(session)
       @sow.setup

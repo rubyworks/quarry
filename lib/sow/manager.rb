@@ -1,18 +1,110 @@
-require 'sow/plugin'
-require 'facets/plugin_manager'
+require 'plugin'
 
 module Sow
 
-  # The Manager class locates sow plugins.
+  # The Manager class manages and locates sow scaffolds.
   #
   class Manager
 
-    #
-    PLUGIN_DIRECTORY = "sow/seeds"
+    SOURCE_DIRS = XDG::Config.select('/sow/sources/')
 
-    def initialize
+    #
+    def initialize(options)
+      @options = options
     end
 
+    attr :options
+
+    #
+    def sources
+      @sources ||= SOURCE_DIRS.map{ |dir| Dir[dir + '/*/'] }.flatten
+    end
+
+    #
+    def find_scaffold(name)
+      #case name
+      #when /^git:/
+      #  source = File.join(Dir.tmpdir, 'sow', File.basename(uri))
+      #  `git clone #{uri} #{source}`
+      #when /^svn:/
+      #  source = File.join(Dir.tmpdir, 'sow', File.basename(uri))
+      #  `svn checkout clone #{uri} #{source}`
+      #else
+        source = nil
+        source ||= find_source(name)
+        source ||= ::Plugin.find(File.join('sow', name)).first
+      #end
+      raise "Can't find #{name} scaffold." unless source
+      Pathname.new(source)
+    end
+
+    #
+    def find_source(name)
+      dir = nil
+      src = sources.find do |source|
+        dir = File.join(source,name)
+        File.directory?(dir)
+      end
+      src ? File.join(src,name) : nil
+    end
+
+    #
+    def list
+      l = sources.map{ |source| Dir[File.join(source, '*/')] }.flatten
+      l.map{ |f| File.chomp('/').basename(f) }
+    end
+
+    #
+    def install(resource)
+      dir  = XDG::Config.home + '/sow/sources/'
+      name = File.basename(resource).chomp(File.extname(resource))
+      dest = File.join(dir, name)
+      if File.exist?(dest)
+        raise "#{dest} already exists"
+      end
+      case resource
+      when /^git\:/, /\.git$/
+        cmd = "git clone #{resource} #{dest}"
+      when /^svn\:/
+        cmd = "svn checkout clone #{resource} #{dest}"
+      else
+        cmd = "ln -s #{resource} #{dest}"
+      end
+      if options.trial
+        $stderr.puts(cmd)
+      else
+        `#{cmd}`
+      end
+    end
+
+    #
+    def update(name)
+      dir  = XDG::Config.home('sow/sources/')
+      dest = File.join(dir, name)
+      if !File.exist?(dest)
+        raise '#{dest} does not exists'
+      end
+      if File.exist?(File.join(dest, '.git'))
+        cmd = "cd #{dest}; git pull origin master"
+      elsif File.exist?(File.join(dest, '.svn'))
+        cmd = "cd #{dest}; svn update"
+      end
+      if options.trial
+        $stderr.puts(cmd)
+      else
+        `#{cmd}`
+      end
+    end
+
+    #
+    def uninstall(resource)
+      dir  = XDG::Config.home('sow/sources/')
+      name = File.basename(resource).chomp(File.extname(resource))
+      dest = File.join(dir, name)
+      #FileUtils.rm_rf(dest)
+    end
+
+=begin
     # Plugins
     #--
     # Note that order of paths is important here.
@@ -54,44 +146,6 @@ module Sow
       PluginManager.find(match).map do |path|
         path.chomp('/')
       end
-    end
-
-=begin
-    # Plugins installed in other packages.
-    # This routine searches through the $LOAD_PATH
-    # looking for directories with a MANIFEST.sow file.
-    #
-    def plugins_from_packages
-      plugins = []
-      # Standard $LOAD_PATH
-      $LOAD_PATH.uniq.each do |path|
-        dirs = Dir.glob(File.join(path, PLUGIN_DIRECTORY, '*/'))
-        #dirs = dirs.select{ |d| File.directory?(d) }
-        dirs = dirs.map{ |d| d.chomp('/') }
-        plugins.concat(dirs)
-      end
-      # ROLL (load latest versions only)
-      if defined?(::Roll)
-        ::Roll::Library.ledger.each do |name, lib|
-          lib = lib.sort.first if Array===lib
-          lib.load_path.each do |path|
-            path = File.join(lib.location, path)
-            dirs = Dir.glob(File.join(path, PLUGIN_DIRECTORY, '*/'))
-            #dirs = dirs.select{ |d| File.directory?(d) }
-            dirs = dirs.map{ |d| d.chomp('/') }
-            plugins.concat(dirs)
-          end
-        end
-      end
-      # RubyGems (load latest versions only)
-      if defined?(::Gem)
-        Gem.latest_load_paths do |path|
-          dirs = Dir.glob(File.join(path, PLUGIN_DIRECTORY, '*/'))
-          dirs = dirs.map{ |d| d.chomp('/') }
-          plugins.concat(dirs)
-        end
-      end
-      plugins
     end
 =end
 

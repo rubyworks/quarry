@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-about "Scaffold a traditional ruby project."
-
 utilize 'pom'
 
 option :name, 'package name of new application/library'
@@ -17,8 +15,8 @@ scaffold do
     metadata << version
   end
 
-  name = metadata.name || destination.basename.to_s
-p name
+  name = metadata.lookup('name') || destination.basename.to_s
+
   abort "Name is required."         unless name
   abort "Name must be single word." unless name =~ /\w+/
 

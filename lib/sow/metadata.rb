@@ -7,6 +7,8 @@ module Sow
   # TODO: Should this only be used when updating?
   #
   # TODO: If we copy PROFILE first then it can be reused. ?
+  #
+  # TODO: Use ~/.config/sow/meta.yml and env as fallbacks.
   #++
 
   class Metadata
@@ -66,11 +68,10 @@ module Sow
 
     #
     def lookup(name)
-p name
       result = false
       @resources.find do |resource|
         case resource
-        when Hash
+        when Hash, OpenStruct
           result = resource[name.to_sym] || resource[name.to_s]
         else
           if resource.respond_to?(name)

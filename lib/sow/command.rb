@@ -39,13 +39,16 @@ module Sow
     # file to determine if this has been previously sowed and maybe
     # change directory to that location?
     #
+    # TODO: instead of a separate environment variable, add them to 
+    # ENV['sow_name'] ?
+    #
     def execute
       option_parser.parse!(arguments)
 
       environment = {}
       arguments.reject! do |arg|
         case arg
-        when /(.*)\=(.*?)/
+        when /^(.*)\=(.*?)$/
           environment[$1] = $2
           true
         else
@@ -76,50 +79,17 @@ module Sow
       #  exit
       #end
 
-      ## Get copylists from each plugin and combine them into
-      ## a single compylist.
-      #copylist = plugins.inject([]) do |array, plugin|
-      #  array.concat(plugin.copylist)
-      #end
-
       begin
         session.run
       rescue => err
-        if debug?
+        if options.debug
           raise err
         else
-          puts err
-          puts "try --help or --debug"
+          $stderr.puts err
+          $stderr.puts "try --help or --debug"
           exit -1
         end
       end
-
-=begin
-      begin
-        case session.mode
-        when 'create'
-          generator = Generators::Create.new(session, copylist)
-          generator.generate
-        when 'update'
-          generator = Generators::Update.new(session, copylist)
-          generator.generate
-        when 'delete'
-          generator = Generators::Delete.new(session, copylist)
-          generator.generate
-        else
-          raise "[IMPOSSIBLE] Unknown command type."
-        end
-      rescue => err
-        if options['debug']
-          raise err
-        else
-          puts err
-          puts "try --help or --debug"
-          exit
-        end
-      end
-=end
-
     end
 
     #
@@ -136,6 +106,14 @@ module Sow
 
         opts.on('--update', '-u') do
           options.action = :update
+        end
+
+        opts.on('--install', '-i', "add a new source location/repository") do
+          options.action = :install
+        end
+
+        opts.on('--remove', "remove a source location/repository") do
+          options.action = :uninstall
         end
 
         opts.on('--prompt', '-p') do

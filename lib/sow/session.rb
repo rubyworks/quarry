@@ -5,6 +5,7 @@ require 'facets/ostruct'
 
 require 'sow/metadata'
 require 'sow/scaffold'
+require 'sow/manager'
 
 module Sow
 
@@ -32,19 +33,10 @@ module Sow
           Pathname.new(Dir.pwd)
         end
       )
-
-      @location  = find_scaffold(resource)
-
-      if file = @destination.glob('{,.}config/sow.{yml,yaml}').first
-        @config = YAML.load(File.new(file))
-        @sowed  = true
-      else
-        @config = {}
-        @sowed  = false
-      end
-
-      @scaffold = Scaffold.new(self)
     end
+
+    #
+    attr :resource
 
     #
     def scaffold
@@ -74,7 +66,30 @@ module Sow
 
     #
     def run
-      generator.generate
+      case action.to_sym
+      when :install
+        manager.install(resource)
+      when :uninstall
+        manager.uninstall(resource)
+      else
+        setup_scaffold
+        generator.generate
+      end
+    end
+
+    #
+    def setup_scaffold
+      @location  = manager.find_scaffold(resource)
+
+      if file = @destination.glob('{,.}config/sow.{yml,yaml}').first
+        @config = YAML.load(File.new(file))
+        @sowed  = true
+      else
+        @config = {}
+        @sowed  = false
+      end
+
+      @scaffold = Scaffold.new(self)
     end
 
   public
@@ -197,38 +212,13 @@ module Sow
     ##alias_method :metadir, :meta_directory
 
     #
+    def manager
+      @manager ||= Manager.new(options)
+    end
+
+    #
     def sources
-      @sources ||= SOURCE_DIRS.map{ |dir| Dir[dir + '/*/'] }.flatten
-    end
-
-  private
-
-    #
-    def find_scaffold(name)
-      #case name
-      #when /^git:/
-      #  source = File.join(Dir.tmpdir, 'sow', File.basename(uri))
-      #  `git clone #{uri} #{source}`
-      #when /^svn:/
-      #  source = File.join(Dir.tmpdir, 'sow', File.basename(uri))
-      #  `svn checkout clone #{uri} #{source}`
-      #else
-        source = nil
-        source ||= find_source(name)
-        source ||= ::Plugin.find(File.join('sow', name)).first
-      #end
-      raise "Can't find #{name} scaffold." unless source
-      Pathname.new(source)
-    end
-
-    #
-    def find_source(name)
-      dir = nil
-      src = sources.find do |source|
-        dir = File.join(source,name)
-        File.directory?(dir)
-      end
-      src ? File.join(src,name) : nil
+      manager.sources
     end
 
   end
