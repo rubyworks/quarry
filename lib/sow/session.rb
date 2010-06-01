@@ -17,7 +17,7 @@ module Sow
   #
   class Session
 
-    SOURCE_DIRS = XDG::Config.select('/sow/sources/')
+    #SOURCE_DIRS = XDG::Config.select('/sow/sources/')
 
     # Create a new session instance.
     def initialize(resource, destination, environment, options)
@@ -33,53 +33,6 @@ module Sow
           Pathname.new(Dir.pwd)
         end
       )
-    end
-
-    #
-    attr :resource
-
-    #
-    def scaffold
-      @scaffold
-    end
-
-    #
-    def copylist
-      @scaffold.copylist
-    end
-
-    #
-    def generator
-      @generator ||= (
-        case action.to_sym
-        when :create
-          Generators::Create.new(self, copylist)
-        when :update
-          Generators::Update.new(self, copylist)
-        when :delete
-          Generators::Delete.new(self, copylist)
-        else
-          raise "Unknown command type."
-        end
-      )
-    end
-
-    #
-    def run
-      case action.to_sym
-      when :install
-        manager.install(resource)
-      when :uninstall
-        manager.uninstall(resource)
-      else
-        setup_scaffold
-        generator.generate
-      end
-    end
-
-    #
-    def setup_scaffold
-      @location  = manager.find_scaffold(resource)
 
       if file = @destination.glob('{,.}config/sow.{yml,yaml}').first
         @config = YAML.load(File.new(file))
@@ -88,14 +41,63 @@ module Sow
         @config = {}
         @sowed  = false
       end
-
-      @scaffold = Scaffold.new(self)
     end
 
-  public
+    #
+    attr :resource
 
     # Location of scaffolding.
-    attr :location
+    def location
+      @location ||= manager.find_scaffold(resource)
+    end
+
+    #
+    def scaffold
+      @scaffold ||= Scaffold.new(self)
+    end
+
+    #
+    def copylist
+      @scaffold.copylist
+    end
+
+    #
+    def create
+      generator = Generators::Create.new(self, copylist)
+      generator.generate
+    end
+
+    ##
+    #def update
+    #  generator = Generators::Update.new(self, copylist)
+    #  generator.generate
+    #end
+
+    #
+    def delete
+      generator = Generators::Delete.new(self, copylist)
+      generator.generate
+    end
+
+    # Install source.
+    def install
+      manager.install(resource)
+    end
+
+    # Update source.
+    def update
+      manager.update(resource)
+    end
+
+    # Uninstall source.
+    def uninstall
+      manager.uninstall(resource)
+    end
+
+    #
+    def list
+      puts manager.list.join("\n")
+    end
 
     # Destination for generated scaffolding.
     attr :destination
@@ -145,22 +147,22 @@ module Sow
     # TODO: Are their circumstances where mode should defualt to update?
     #++
 
-    def action
-      @options.action || :create  #sowed? ? :update : :create
-    end
-    alias_method :mode, :action
+    #def action
+    #  @options.action || :create  #sowed? ? :update : :create
+    #end
+    #alias_method :mode, :action
 
-    def update?
-      action == :update
-    end
+    #def update?
+    #  action == :update
+    #end
 
-    def create?
-      action == :create
-    end
+    #def create?
+    #  action == :create
+    #end
 
-    def delete?
-      action == :delete
-    end
+    #def delete?
+    #  action == :delete
+    #end
 
     def managed?
       force? or skip? or prompt?

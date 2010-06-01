@@ -51,7 +51,7 @@ module Sow
     #
     def list
       l = sources.map{ |source| Dir[File.join(source, '*/')] }.flatten
-      l.map{ |f| File.chomp('/').basename(f) }
+      l.map{ |f| File.basename(f.chomp('/')) }
     end
 
     #

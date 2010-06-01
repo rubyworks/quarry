@@ -4,15 +4,15 @@ The Session class is the primary controller of the Sow system. By setting up a S
 
   require 'sow/session'
 
-Given that we have Sow sources setup, and a scaffold as defined in scaffold_layout.rdoc[qed://scaffold_layout.rdoc]. To create a session we need a +resource+, which is the name of a scaffold, the +destination+ for the scaffolding, an  +environment+, which is a Hash that becomes part of template metadata, and general options that control operation, such as +action+,  +force+, +skip+, etc.
+Given that we have Sow sources setup, and a scaffold as defined in scaffold_layout.rdoc[qed://scaffold_layout.rdoc]. To create a session we need a +resource+, which is the name of a scaffold, the +destination+ for the scaffolding, an  +environment+, which is a Hash that becomes part of template metadata, and general options that control operation, such as +force+, +skip+, etc.
 
   resource = 'demo'
 
   destination = File.join(Dir.tmpdir, 'sow', 'myapp')
 
-  environment = {:name => 'myapp'}
+  environment = {:name=>'myapp'}
 
-  options = {:action=>:create}
+  options = {:skip=>true}
 
   session = Sow::Session.new(resource, destination, environment, options)
 
@@ -28,15 +28,11 @@ Using the +location+ the Session creates a Scaffold object, which models the con
 
   session.scaffold.is_a?(Sow::Scaffold)
 
-We will not go in depth with the Scaffold class here (see the scaffold.rdoc demonstradum for that), but to point out that it extecutes the scaffold's Sowfile and from it creates a +copylist+.
+We will not go into the Scaffold class here (see the scaffold.rdoc demonstradum for that), but to point out that it extecutes the scaffold's Sowfile which creates a +copylist+.
 
   session.copylist
 
-This +copylist+ is then passed to the selected "action" generator.
-
-  session.generator
-
-And it is this generator that handles the final stage of execution which is the actual rendering of templates and copying file to (or deleting files from) the destination.
+It is thi +copylist+ that is passed to the generator which handles the actual scaffolding.
 
 
 

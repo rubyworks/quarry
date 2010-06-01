@@ -80,7 +80,22 @@ module Sow
       #end
 
       begin
-        session.run
+        case @action
+        when :create
+          session.create
+        when :delete
+          session.delete
+        when :install
+          session.install
+        when :update
+          session.update
+        when :uninstall
+          session.uninstall
+        when :list
+          session.list
+        else
+          raise "unknown action"
+        end
       rescue => err
         if options.debug
           raise err
@@ -97,23 +112,27 @@ module Sow
       OptionParser.new do |opts|
 
         opts.on('--create', '-c') do
-          options.action = :create
+          @action = :create
         end
 
         opts.on('--delete', '-d') do
-          options.action = :delete
-        end
-
-        opts.on('--update', '-u') do
-          options.action = :update
+          @action = :delete
         end
 
         opts.on('--install', '-i', "add a new source location/repository") do
-          options.action = :install
+          @action = :install
+        end
+
+        opts.on('--update', '-u') do
+          @action = :update
         end
 
         opts.on('--remove', "remove a source location/repository") do
-          options.action = :uninstall
+          @action = :uninstall
+        end
+
+        opts.on('--list') do
+          @action = :list
         end
 
         opts.on('--prompt', '-p') do
