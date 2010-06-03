@@ -998,7 +998,7 @@ mode, simply return the  current list.
 166:         <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
 167:           <span class="ruby-identifier">dups</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span>, (<span class="ruby-identifier">output</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">fname</span>).<span class="ruby-identifier">file?</span>]
 168:         <span class="ruby-keyword kw">end</span>
-169:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;Select (y/n) which files to overwrite:\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prompt?</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">quiet?</span>
+169:         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Select (y/n) which files to #{clobber_term}:\n&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prompt?</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">quiet?</span>
 170:         <span class="ruby-identifier">dups</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span>, <span class="ruby-identifier">check</span><span class="ruby-operator">|</span>
 171:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">check</span>
 172:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">skip?</span>
@@ -1129,25 +1129,25 @@ any of these conditions are found, unless force? is set to true.
           <div class="method-source-code"
             id="check-conflicts-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 232</span>
-232:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_conflicts</span>(<span class="ruby-identifier">list</span>)
-233:         <span class="ruby-comment cmt">#return if force?</span>
-234:         <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
-235:           <span class="ruby-identifier">tpath</span> = <span class="ruby-identifier">loc</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">tname</span>
-236:           <span class="ruby-identifier">fpath</span> = <span class="ruby-identifier">output</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">fname</span>
-237:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">fpath</span>)
-238:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tpath</span>.<span class="ruby-identifier">directory?</span>
-239:               <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">directory?</span>
-240:                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Directory to be created clashes with a pre-existent file -- #{fname}&quot;</span>
-241:               <span class="ruby-keyword kw">end</span>
-242:             <span class="ruby-keyword kw">else</span>
-243:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">directory?</span>
-244:                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File to be created clashes with a pre-existent directory -- #{fname}&quot;</span>
-245:               <span class="ruby-keyword kw">end</span>
-246:             <span class="ruby-keyword kw">end</span>
-247:           <span class="ruby-keyword kw">end</span>
-248:         <span class="ruby-keyword kw">end</span>
-249:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 233</span>
+233:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">check_conflicts</span>(<span class="ruby-identifier">list</span>)
+234:         <span class="ruby-comment cmt">#return if force?</span>
+235:         <span class="ruby-identifier">list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">action</span>, <span class="ruby-identifier">loc</span>, <span class="ruby-identifier">tname</span>, <span class="ruby-identifier">fname</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
+236:           <span class="ruby-identifier">tpath</span> = <span class="ruby-identifier">loc</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">tname</span>
+237:           <span class="ruby-identifier">fpath</span> = <span class="ruby-identifier">output</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">fname</span>
+238:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">fpath</span>)
+239:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tpath</span>.<span class="ruby-identifier">directory?</span>
+240:               <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">directory?</span>
+241:                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Directory to be created clashes with a pre-existent file -- #{fname}&quot;</span>
+242:               <span class="ruby-keyword kw">end</span>
+243:             <span class="ruby-keyword kw">else</span>
+244:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">fpath</span>.<span class="ruby-identifier">directory?</span>
+245:                 <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;File to be created clashes with a pre-existent directory -- #{fname}&quot;</span>
+246:               <span class="ruby-keyword kw">end</span>
+247:             <span class="ruby-keyword kw">end</span>
+248:           <span class="ruby-keyword kw">end</span>
+249:         <span class="ruby-keyword kw">end</span>
+250:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1187,7 +1187,7 @@ TODO: Make this a list filter with check for &#8220;identical&#8221; files?
 203:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">force?</span>
 204:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">prompt?</span>
 205:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">skip?</span>
-206:         <span class="ruby-comment cmt">#return if session.overwrite?  # TODO: not so sure overwirte? option is a good idea.</span>
+206:         <span class="ruby-comment cmt">#return if session.overwrite?  # TODO: not so sure overwrite? option is a good idea.</span>
 207: 
 208:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">newproject?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">output</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-value str">'**/*'</span>).<span class="ruby-identifier">empty?</span> <span class="ruby-comment cmt"># FIXME?</span>
 209:           <span class="ruby-identifier">abort</span> <span class="ruby-value str">&quot;New project isn't empty. Use --force, --skip or --prompt.&quot;</span>
@@ -1202,11 +1202,12 @@ TODO: Make this a list filter with check for &#8220;identical&#8221; files?
 218:           <span class="ruby-keyword kw">end</span>
 219:         <span class="ruby-keyword kw">end</span>
 220: 
-221:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">clobbers</span>.<span class="ruby-identifier">empty?</span>
-222:           <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;    &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">clobbers</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n    &quot;</span>)
-223:           <span class="ruby-identifier">abort</span> <span class="ruby-value str">&quot;These files would be overwritten. Use --force, --skip or --prompt.&quot;</span>  <span class="ruby-comment cmt"># TODO: implement --skip</span>
-224:         <span class="ruby-keyword kw">end</span>
-225:       <span class="ruby-keyword kw">end</span></pre>
+221:         <span class="ruby-comment cmt"># TODO: implement --skip</span>
+222:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">clobbers</span>.<span class="ruby-identifier">empty?</span>
+223:           <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;    &quot;</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">clobbers</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;\n    &quot;</span>)
+224:           <span class="ruby-identifier">abort</span> <span class="ruby-value str">&quot;These files would be overwritten. Use --force, --skip or --prompt.&quot;</span>
+225:         <span class="ruby-keyword kw">end</span>
+226:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1235,15 +1236,15 @@ TODO: Make this a list filter with check for &#8220;identical&#8221; files?
           <div class="method-source-code"
             id="chmod-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 283</span>
-283:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">mode</span>, <span class="ruby-identifier">file</span>)
-284:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
-285:           <span class="ruby-identifier">f</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">file</span>)
-286:           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;chmod #{f} #{mode}&quot;</span>
-287:         <span class="ruby-keyword kw">else</span>
-288:           <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">mode</span>, <span class="ruby-identifier">file</span>)
-289:         <span class="ruby-keyword kw">end</span>
-290:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 284</span>
+284:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">mode</span>, <span class="ruby-identifier">file</span>)
+285:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+286:           <span class="ruby-identifier">f</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">file</span>)
+287:           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;chmod #{f} #{mode}&quot;</span>
+288:         <span class="ruby-keyword kw">else</span>
+289:           <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">mode</span>, <span class="ruby-identifier">file</span>)
+290:         <span class="ruby-keyword kw">end</span>
+291:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1272,16 +1273,16 @@ TODO: Make this a list filter with check for &#8220;identical&#8221; files?
           <div class="method-source-code"
             id="cp-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 262</span>
-262:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cp</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>)
-263:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
-264:           <span class="ruby-identifier">s</span> = <span class="ruby-identifier">src</span> <span class="ruby-comment cmt">#relative_to_source(src)</span>
-265:           <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
-266:           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;cp #{s} #{d}&quot;</span>
-267:         <span class="ruby-keyword kw">else</span>
-268:           <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">cp</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>)
-269:         <span class="ruby-keyword kw">end</span>
-270:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 263</span>
+263:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cp</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>)
+264:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+265:           <span class="ruby-identifier">s</span> = <span class="ruby-identifier">src</span> <span class="ruby-comment cmt">#relative_to_source(src)</span>
+266:           <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
+267:           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;cp #{s} #{d}&quot;</span>
+268:         <span class="ruby-keyword kw">else</span>
+269:           <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">cp</span>(<span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>)
+270:         <span class="ruby-keyword kw">end</span>
+271:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1347,10 +1348,10 @@ Access to FileUtils
           <div class="method-source-code"
             id="fu-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 257</span>
-257:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fu</span>
-258:         <span class="ruby-identifier">trial?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">FileUtils</span><span class="ruby-operator">::</span><span class="ruby-constant">DryRun</span> <span class="ruby-operator">:</span> <span class="ruby-constant">FileUtils</span>
-259:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 258</span>
+258:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fu</span>
+259:         <span class="ruby-identifier">trial?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">FileUtils</span><span class="ruby-operator">::</span><span class="ruby-constant">DryRun</span> <span class="ruby-operator">:</span> <span class="ruby-constant">FileUtils</span>
+260:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1379,10 +1380,10 @@ Access to FileUtils
           <div class="method-source-code"
             id="inspect-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 337</span>
-337:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
-338:         <span class="ruby-node">&quot;#&lt;#{self.class} @session=#{@session.inspect}&gt;&quot;</span>
-339:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 338</span>
+338:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+339:         <span class="ruby-node">&quot;#&lt;#{self.class} @session=#{@session.inspect}&gt;&quot;</span>
+340:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1441,15 +1442,15 @@ Access to FileUtils
           <div class="method-source-code"
             id="mkdir-p-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 273</span>
-273:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>)
-274:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
-275:           <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dir</span>)
-276:           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;mkdir_p #{d}&quot;</span>
-277:         <span class="ruby-keyword kw">else</span>
-278:           <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dir</span>)
-279:         <span class="ruby-keyword kw">end</span>
-280:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 274</span>
+274:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>)
+275:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+276:           <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dir</span>)
+277:           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;mkdir_p #{d}&quot;</span>
+278:         <span class="ruby-keyword kw">else</span>
+279:           <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dir</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dir</span>)
+280:         <span class="ruby-keyword kw">end</span>
+281:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1478,14 +1479,14 @@ Access to FileUtils
           <div class="method-source-code"
             id="relative-to-output-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 328</span>
-328:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
-329:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dest</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\//</span>
-330:           <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dest</span>).<span class="ruby-identifier">relative_path_from</span>(<span class="ruby-identifier">output</span>)
-331:         <span class="ruby-keyword kw">else</span>
-332:           <span class="ruby-identifier">dest</span>
-333:         <span class="ruby-keyword kw">end</span>
-334:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 329</span>
+329:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
+330:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">dest</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\//</span>
+331:           <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dest</span>).<span class="ruby-identifier">relative_path_from</span>(<span class="ruby-identifier">output</span>)
+332:         <span class="ruby-keyword kw">else</span>
+333:           <span class="ruby-identifier">dest</span>
+334:         <span class="ruby-keyword kw">end</span>
+335:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1514,24 +1515,24 @@ Access to FileUtils
           <div class="method-source-code"
             id="rm-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 304</span>
-304:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rm</span>(<span class="ruby-identifier">dest</span>)
-305:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dest</span>)
-306:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
-307:             <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
-308:             <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;rmdir #{d}&quot;</span>
-309:           <span class="ruby-keyword kw">else</span>
-310:             <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">rmdir</span>(<span class="ruby-identifier">dest</span>)
-311:           <span class="ruby-keyword kw">end</span>
-312:         <span class="ruby-keyword kw">else</span>
-313:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
-314:             <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
-315:             <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;rm #{d}&quot;</span>
-316:           <span class="ruby-keyword kw">else</span>
-317:             <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">rm</span>(<span class="ruby-identifier">dest</span>)
-318:           <span class="ruby-keyword kw">end</span>
-319:         <span class="ruby-keyword kw">end</span>
-320:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 305</span>
+305:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rm</span>(<span class="ruby-identifier">dest</span>)
+306:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">dest</span>)
+307:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+308:             <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
+309:             <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;rmdir #{d}&quot;</span>
+310:           <span class="ruby-keyword kw">else</span>
+311:             <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">rmdir</span>(<span class="ruby-identifier">dest</span>)
+312:           <span class="ruby-keyword kw">end</span>
+313:         <span class="ruby-keyword kw">else</span>
+314:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+315:             <span class="ruby-identifier">d</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">dest</span>)
+316:             <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;rm #{d}&quot;</span>
+317:           <span class="ruby-keyword kw">else</span>
+318:             <span class="ruby-identifier">fu</span>.<span class="ruby-identifier">rm</span>(<span class="ruby-identifier">dest</span>)
+319:           <span class="ruby-keyword kw">end</span>
+320:         <span class="ruby-keyword kw">end</span>
+321:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1560,10 +1561,10 @@ Access to FileUtils
           <div class="method-source-code"
             id="skip-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 252</span>
-252:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">skip</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
-253:         <span class="ruby-keyword kw">return</span> <span class="ruby-value str">'skip'</span>, <span class="ruby-identifier">dest</span>
-254:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 253</span>
+253:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">skip</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
+254:         <span class="ruby-keyword kw">return</span> <span class="ruby-value str">'skip'</span>, <span class="ruby-identifier">dest</span>
+255:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -1594,16 +1595,16 @@ Write file.
           <div class="method-source-code"
             id="write-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 293</span>
-293:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">text</span>)
-294:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
-295:           <span class="ruby-identifier">f</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">file</span>)
-296:           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;write #{f}&quot;</span>
-297:         <span class="ruby-keyword kw">else</span>
-298:           <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">file</span>))
-299:           <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">'w'</span>){ <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text</span> }
-300:         <span class="ruby-keyword kw">end</span>
-301:       <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/generators/base.rb, line 294</span>
+294:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">text</span>)
+295:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">trial?</span>
+296:           <span class="ruby-identifier">f</span> = <span class="ruby-identifier">relative_to_output</span>(<span class="ruby-identifier">file</span>)
+297:           <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;write #{f}&quot;</span>
+298:         <span class="ruby-keyword kw">else</span>
+299:           <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">file</span>))
+300:           <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">'w'</span>){ <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text</span> }
+301:         <span class="ruby-keyword kw">end</span>
+302:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>

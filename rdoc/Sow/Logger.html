@@ -415,7 +415,7 @@ Output to provide as generation is progressing.
         <div class="method-heading">
         
           <span class="method-name">report_fixes</span><span
-            class="method-args">(marker='#___')</span>
+            class="method-args">(marker='___')</span>
           <span class="method-click-advice">click to toggle source</span>
         
         </div>
@@ -432,7 +432,7 @@ Use this to report any &#8220;templating&#8221; that needs to done by hand.
             id="report-fixes-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/sow/logger.rb, line 39</span>
-39:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report_fixes</span>(<span class="ruby-identifier">marker</span>=<span class="ruby-value str">'#___'</span>)
+39:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">report_fixes</span>(<span class="ruby-identifier">marker</span>=<span class="ruby-value str">'___'</span>)
 40:       <span class="ruby-identifier">glist</span> = <span class="ruby-identifier">check_for_fixes</span>(<span class="ruby-identifier">marker</span>)
 41:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">glist</span>.<span class="ruby-identifier">empty?</span>
 42:         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\nYou need to fix the occurances of '#{marker}' in the following files:\n\n&quot;</span>

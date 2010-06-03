@@ -512,10 +512,10 @@ Partition the list between directories and files.
           <div class="method-source-code"
             id="copylist-partition-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/scaffold.rb, line 329</span>
-329:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copylist_partition</span>(<span class="ruby-identifier">list</span>)
-330:       <span class="ruby-identifier">list</span>.<span class="ruby-identifier">partition</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">loc</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">src</span>).<span class="ruby-identifier">directory?</span> }
-331:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/scaffold.rb, line 328</span>
+328:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copylist_partition</span>(<span class="ruby-identifier">list</span>)
+329:       <span class="ruby-identifier">list</span>.<span class="ruby-identifier">partition</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">loc</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">src</span>).<span class="ruby-identifier">directory?</span> }
+330:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -546,11 +546,11 @@ Sort the list, directory before files and in alphabetical order.
           <div class="method-source-code"
             id="copylist-sort-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/sow/scaffold.rb, line 323</span>
-323:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copylist_sort</span>(<span class="ruby-identifier">list</span>)
-324:       <span class="ruby-identifier">dirs</span>, <span class="ruby-identifier">files</span> = *<span class="ruby-identifier">copylist_partition</span>(<span class="ruby-identifier">list</span>)
-325:       <span class="ruby-identifier">dirs</span>.<span class="ruby-identifier">sort</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">a</span>,<span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>[<span class="ruby-value">2</span>]<span class="ruby-operator">&lt;=&gt;</span><span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>]} <span class="ruby-operator">+</span> <span class="ruby-identifier">files</span>.<span class="ruby-identifier">sort</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">a</span>,<span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>[<span class="ruby-value">2</span>]<span class="ruby-operator">&lt;=&gt;</span><span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>]}
-326:     <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/scaffold.rb, line 322</span>
+322:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copylist_sort</span>(<span class="ruby-identifier">list</span>)
+323:       <span class="ruby-identifier">dirs</span>, <span class="ruby-identifier">files</span> = *<span class="ruby-identifier">copylist_partition</span>(<span class="ruby-identifier">list</span>)
+324:       <span class="ruby-identifier">dirs</span>.<span class="ruby-identifier">sort</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">a</span>,<span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>[<span class="ruby-value">2</span>]<span class="ruby-operator">&lt;=&gt;</span><span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>]} <span class="ruby-operator">+</span> <span class="ruby-identifier">files</span>.<span class="ruby-identifier">sort</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">a</span>,<span class="ruby-identifier">b</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>[<span class="ruby-value">2</span>]<span class="ruby-operator">&lt;=&gt;</span><span class="ruby-identifier">b</span>[<span class="ruby-value">2</span>]}
+325:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -847,14 +847,13 @@ substitution in the pathnames themselves by using
 310:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_to_filename</span>(<span class="ruby-identifier">path</span>)
 311:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">dup</span> <span class="ruby-comment cmt">#chomp('.erb')</span>
 312:       <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/__(.*?)__/</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">md</span><span class="ruby-operator">|</span>
-313: <span class="ruby-identifier">p</span> <span class="ruby-node">$1</span>
-314:         <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">__get__</span>(<span class="ruby-node">$1</span>) <span class="ruby-operator">||</span> <span class="ruby-node">&quot;__#{$1}__&quot;</span>  <span class="ruby-comment cmt"># TODO: raise error?</span>
-315:       <span class="ruby-keyword kw">end</span>
-316:       <span class="ruby-comment cmt">#if md =~ /^(.*?)[-]$/</span>
-317:       <span class="ruby-comment cmt">#  name = metadata[md[1]] || plugin.metadata(md[1]) || name</span>
-318:       <span class="ruby-comment cmt">#end</span>
-319:       <span class="ruby-identifier">name</span>
-320:     <span class="ruby-keyword kw">end</span></pre>
+313:         <span class="ruby-identifier">metadata</span>.<span class="ruby-identifier">__get__</span>(<span class="ruby-node">$1</span>) <span class="ruby-operator">||</span> <span class="ruby-node">&quot;__#{$1}__&quot;</span>  <span class="ruby-comment cmt"># TODO: raise error?</span>
+314:       <span class="ruby-keyword kw">end</span>
+315:       <span class="ruby-comment cmt">#if md =~ /^(.*?)[-]$/</span>
+316:       <span class="ruby-comment cmt">#  name = metadata[md[1]] || plugin.metadata(md[1]) || name</span>
+317:       <span class="ruby-comment cmt">#end</span>
+318:       <span class="ruby-identifier">name</span>
+319:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
