@@ -1,0 +1,88 @@
+= 2010.06.03
+
+The question of destination.
+
+  sow ruby myappd
+
+Should the destination be a required argument of all seeds.
+If so, then a seed like a test generator would be kind of odd.
+
+  sow testunit . foo
+
+But what about all the supporting files vs. just the test
+itself? Does creating one test build the support files if they
+are not there? But what if someone is using a variant style,
+but still wants the test itself? It would seem there would need
+to be two scaffolds.
+
+  sow testunit-setup
+  sow testunit-test
+
+If we allowed for scaffold options we might do:
+
+  sow testunit
+  sow testunit --test
+
+Though that seems a bit long winded.
+
+What we really have here is the difference between
+a scaffolding and a reusable form.
+
+Now it is not uncommon to want to customize a reusable form
+(such as our test form). So in that case it makes sense
+that a form would be added to the project somewhere and
+utilized from there. Let say a form/ directory.
+
+If this directory was just anouth template source, but
+one that too precedence. Then we could have both private
+and share "forms".
+
+We might ease the typinh involved using an inverse reference
+and matching by "best match of first characters", e.g.
+
+  sow testunit
+  sow test.testunit
+  sow test.lemon
+
+If our forms directory had a testunit/test scaffolding and
+no other "test" scaffolds and we only put
+
+  sow test
+
+Then if would assume test.testunit. Only question is how
+to store testunit. Let's see.
+
+  plugins/
+    sow/
+      testunit/
+        README
+        Sowfile
+        templates/
+      test.testunit/
+        README
+        Sowfile
+        templates/
+
+And hence
+
+  forms/
+    test.testunit/
+      README
+      Sowfile
+      templates/
+
+We might evn go a step further to ensure distinction between different
+seeds witht he same names but form different vendors.
+
+  ~/.config/sow/seeds/
+    seeds.trans.github.com/
+      testunit.seeds.trans.github.com/
+        README
+        Sowfile
+        templates/
+      test.testunit.seeds.trans.github.com/
+        README
+        Sowfile
+        templates/
+
+
