@@ -1,7 +1,7 @@
 = Sow 
 
-* http://proutils.github.com/sow
-* http://github.com/proutils/sow
+* home: http://proutils.github.com/sow
+* work: http://github.com/proutils/sow
 
 
 == TENDING TO PROJECT ECOLOGY
@@ -20,46 +20,51 @@ those projects blooming!
 
 General usage follws the pattern:
 
-  sow [options] --<plugin>[=arg] --<plugin>.<var>[=arg] ... [destination]
+  sow <plugin> [options] [*arguments] [*name=value]
 
 For instance to scaffold a new, basic ruby project with the
 name 'myapp' in the directory 'myapp':
 
-  $ sow --ruby myapp/
+  $ sow ruby -o myapp/
 
-By default, Sow's +ruby+ plugin will use the destination path
+By default, Sow's build in +ruby+ seed will use the destination path
 as the project name. If we wished to name the project something
-other than the destination path, we can supply that as an argument.
+other than the destination path, we can supply that as an extra 
+argument.
 
-  $ sow --ruby=foo myapp/
+  $ sow ruby -o myapp foo
+
+Or we could supply it via an evironment setting.
+
+  $ sow ruby -o myapp name=foo
 
 Alternately we could make the the directory ourselves and, and
 scaffold it from within.
 
   $ mkdir myapp
   $ cd myapp
-  $ sow --ruby=foo
+  $ sow ruby foo
 
 Once you have a project, Sow can be used to generate components
 as well, kind of like script/generate in Rails. For instance,
-to generate a test/unit starter file.
+to a TestUnit/MiniTest starter test file.
 
-  $ sow --testunit.name=mytest
+  $ sow testunit mytest
 
-For more details on how to use Sow, what plugins are available and how
-to build your own cusotm plugins, please see the documentation
-provided on Sow's website.
+For more details on how to use Sow, what seeds are available and how
+to build your own seeds, please see the documentation provided
+on Sow's website or the Wiki.
 
 
 == CURRENT STATUS
 
 Sow is still a little wet behind the ears, and you might come across
 the ocassional odd behavior. Please report on the Protutils
-mailing list (http://googlegroups.com/group/proutils). Usually the
-issue will be some over-looked in a given plugin --since plugins
+mailing-list[http://groups.google.com/group/proutils]. Usually the
+issue will be some over-looked in a given seed --since they
 have a lot of flexability in their design. It will take some time
 and some widespread usage to work out all the corner cases and
-to bring each plugin to a fine polish.
+to bring each to a fine polish.
 
 
 == HOE USERS
@@ -67,20 +72,18 @@ to bring each plugin to a fine polish.
 *IMPORTANT NOTICE FOR HOE USERS!*
 
 Hoe users will discover that the +sow+ command that comes with Hoe will
-be overwritten by Sow. This may seem a not-so-nice thing to do, but truth
+be clobbered by Sow. This may seem a not-so-nice thing to do, but truth
 be told Sow is a slightly older project than Hoe (albeit orginally it was
-a very different program). Since there is no command called +hoe+, I 
-recommend renaming Hoe's +sow+ command.
+a very different program). Since there is no command called +hoe+, it 
+would seem a more logical choice and I recommend renaming Hoe's
++sow+ command.
 
   sudo mv /usr/bin/sow /usr/bin/hoe
 
-As an alternative, Sow ships with a Hoe plugin, so there is nothing lost even
-if Hoe's +sow+ command is overwritten, simply use:
+As an alternative, Sow ships with a Hoe seed, so there is nothing lost
+even if Hoe's +sow+ command is overwritten, simply use:
 
-  $ sow --hoe <name>
-
-Note, that Hoe scaffolding does not support the in-project templating
-system. To get that you need to add a .meta/ directory to your project.
+  $ sow hoe -o <name>
 
 
 == INSTALLATION
@@ -92,13 +95,13 @@ Install using RubyGems as you would expect:
   $ gem install sow
 
 This will install Sow, it's Facets dependency if not alreay installed,
-and a number of built-in plugins. Keep in mind that some plugins
+and a number of built-in seeds. Keep in mind that some seeds
 come from the packages with which they are associated. For example,
-the Reap plugin is distributed with the Reap package.
+the Syckle seed is distributed with the Syckle package.
 
-=== Old School Site Install
+=== Site Install
 
-Old-fashion site installs require Ruby Setup (see http://proutils.rubyforge.org/setup).
+Old-fashion site installs require Ruby Setup[http://proutils.rubyforge.org/setup].
 If you don't have Ruby Setup you can install it via Rubygems:
 
   $ gem install setup
@@ -108,16 +111,16 @@ then install by invoking setup.rb.
 
   $ tar -xvvzf sow-1.0.0.tar.gz
   $ cd sow-1.0.0 
-  $ sudo setup.rb all
+  $ sudo setup.rb
 
-If you use Hoe, please see the the important message below before
+If you use Hoe, please see the the important message above before
 installing.
 
 
 == DEVELOPMENT
 
 Sow is being developed on <a href="http://hithub.com">GitHub</a>, as part of the
-ProUtils set of project development tools. You can browse the Sow project here:
+ProUtils set of project tools. You can browse the Sow project here:
 
   http://github.com/proutils/sow/tree/master
 
@@ -126,32 +129,18 @@ Sow's public repository can be pulled via:
   git://github.com/proutils/sow.git 
 
 Please feel free to fork the project and submit pull requests. Discussion of
-Sow occurs on the TigerOps Community Mailinglist.
+Sow occurs on the ProUtils mailinglist.
 
-  http://groups.google.com/group/tigerops-community?hl=en
+  http://groups.google.com/group/proutils
 
 Happy hacking!
 
 
 == COPYRIGHT & LICENSE
 
-Copyright (c) 2007, 2009 Thomas Sawyer
+Copyright (c) 2007 Thomas Sawyer
 
-Unless other premmited by the author, this software is distributed under
-the terms of the GPL version 3 license.
+This software is distributed under the terms of the MIT license.
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
-
-Please see COPYING file for details.
+Please see LICENSE file for details.
 
