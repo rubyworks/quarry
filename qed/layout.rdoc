@@ -14,9 +14,8 @@ The Sowfile is a script that collects any information the scaffold might need
 and designates what files include in the scaffolding. An example Sowfile
 might look something like this...
 
-  option :name
-
-  setup do
+  setup do |name, *_|
+    metadata.name = name || 'annonymous'
   end
 
   scaffold do
@@ -31,7 +30,7 @@ called README.erb ...
 
   FIXME: Describe you project here.
 
-  Copyright (c) <%= Time.now.strftime('%Y') %> <%= author %>
+  Copyright (c) <%= Time.now.strftime('%Y') %> <%= name %>
 
 The template directory might also have a static file called +LICENSE+ ...
 
