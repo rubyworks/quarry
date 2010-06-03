@@ -15,13 +15,16 @@ email:
 
 box:
   service  : Box
-  types    : [gem, gz]
+  types    : [gem]
   active   : true
+
+grancher:
+  active: true
 
 rdoc:
   service  : RDoc
   template : newfish
-  include  : [ lib/**/*.rb, README, LICENSE, HISTORY ]
+  include  : [ lib/sow/**/*.rb, lib/sow.rb, README, LICENSE, HISTORY ]
 #  exclude  :
 #    - "lib/webri/generators/*/template/**/*"
 #    - "lib/webri/generators/*/static/**/*"
@@ -34,7 +37,7 @@ rdoc:
 
 ridoc:
   service: RIDoc
-  include: [ lib/**/*.rb ]
+  include: [ lib/sow/**/*.rb, lib/sow.rb ]
 #  exclude:
 #    - "lib/webri/generators/*/template/**/*"
 #    - "lib/webri/generators/*/static/**/*"
