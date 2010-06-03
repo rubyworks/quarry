@@ -2,33 +2,36 @@
 
 utilize 'pom'
 
-option :name, 'package name of new application/library'
-
-scaffold do
-  if destination.glob('PROFILE')
-    profile = YAML.load('PROFILE')
-    metadata << profile
-  end
-
-  if destination.glob('VERSION')
-    version = YAML.load('VERSION')
-    metadata << version
-  end
-
-  name = metadata.lookup('name') || destination.basename.to_s
+setup do |*args|
+  name = args.first || metadata['name'] || destination.basename.to_s
 
   abort "Name is required."         unless name
   abort "Name must be single word." unless name =~ /\w+/
 
-  metadata.name = name
+  metadata.name  = name
+  metadata.title = metadata['title'] || name.capitalize
 
   if destination.exist?
-    files = destination.entries - ['.', '..', 'PROFILE']
-    #if !(files.empty? or update? or managed?)
-    #  abort "Ruby scaffold is intended for new projects. Use --update, or --force, --skip or --prompt to override."
-    #end
+    files = Dir.entries(destination) - ['.', '..', 'PROFILE', 'VERSION']
+    if !files.empty? and !managed?
+      abort "The ruby scaffold is intended for new projects.\n" +
+            "But this destination directory is not empty.\n" +
+            "Please use the --force, --skip or --prompt to proceed."
+    end
   end
 
+  #if destination.glob('PROFILE').first
+  #  profile = YAML.load(File.new('PROFILE'))
+  #  metadata << profile
+  #end
+
+  #if destination.glob('VERSION').first
+  #  version = YAML.load(File.new('VERSION'))
+  #  metadata << version
+  #end
+end
+
+scaffold do
   copy("**/*") #, :omit => "meta")
   copy("bin/*", :chmod=>0744)
   copy("README.rdoc.till", :verbatim => true)

@@ -1,6 +1,6 @@
 = <%= title %>
 
-* <%= homepage %>
+* home: <%= homepage %>
 
 
 == DESCRIPTION
@@ -13,31 +13,31 @@
 Please see HISTORY file.
 
 
-== HOW TO INSTALL
+== SYNOPSIS
+
+<%= title %> does what it does!
+
+
+== INSTALATION
 
 To install with RubyGems simply open a console and type:
 
-  gem install <%= package %>
+  $ gem install <%= package %>
 
-To manually installation, download the tgz package and type:
+For a site install you will need Ruby Setup and the compressed
+packages (tar.gz or zip usually). Uncompress the package
+cd into it and run setup.rb, e.g.
 
-  tar -xvzf <%= package %>-x.y.z.tgz
-  cd <%= package %>-x.y.z.tgz
-  sudo ruby setup.rb config
-  sudo ruby setup.rb setup
-  sudo ruby setup.rb install
-
-
-== SYNOPSIS
-
-Describe how to use your library or application here.  __FIX__
+  $ tar -xvzf <%= name %>-x.y.z.tgz
+  $ cd <%= name %>-x.y.z.tgz
+  $ sudo setup.rb
 
 
 == LICENSE
 
-Copyright (c) 2008 <%= author %>
+Copyright (c) <%= Time.now.strftime('%Y') %> <%= author %>
 
 This program is ditributed unser the terms of the <%= license %> license.
 
-Please see COPYING file.
+See the LICENSE or COPYING file for details.
 
