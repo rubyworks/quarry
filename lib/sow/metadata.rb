@@ -19,6 +19,7 @@ module Sow
     #
     def initialize(*resources)
       @resources = resources
+      @resources << ENV
       @cache = {}
     end
 
@@ -32,10 +33,10 @@ module Sow
       s = s.to_s
       if s =~ /=$/
         s = s.chomp('=')
-        self[s] = a[0]
+        self[s] = a.first
       else
         s = s.chomp('?')
-        self[s]
+        self[s] || "FIXME ___#{s}___"
       end
     end
 
@@ -55,7 +56,7 @@ module Sow
         if val
           @cache[s]= val
         else
-          @cache[s] = "FIXME: ___#{s}___"
+          @cache[s] = nil
           #@cache[s] = load_value(s) #|| HOLE + " (#{s})"
         end
       end
@@ -71,8 +72,10 @@ module Sow
       result = false
       @resources.find do |resource|
         case resource
+        when ENV
+          result = resource[name.to_s]
         when Hash, OpenStruct
-          result = resource[name.to_sym] || resource[name.to_s]
+          result = resource[name.to_s] || resource[name.to_sym]
         else
           if resource.respond_to?(name)
             result = resource.__send__(name)

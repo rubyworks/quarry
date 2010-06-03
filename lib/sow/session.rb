@@ -20,19 +20,21 @@ module Sow
     #SOURCE_DIRS = XDG::Config.select('/sow/sources/')
 
     # Create a new session instance.
-    def initialize(resource, destination, environment, options)
+    def initialize(resource, arguments, options) #environment, options)
       @resource  = resource
 
       @options     = OpenStruct.new(options)
-      @environment = OpenStruct.new(environment)
+      #@environment = OpenStruct.new(environment)
 
       @destination = (
-        if destination
-          Pathname.new(destination)
+        if options.output
+          Pathname.new(options.output)
         else
           Pathname.new(Dir.pwd)
         end
       )
+
+      @arguments = arguments
 
       if file = @destination.glob('{,.}config/sow.{yml,yaml}').first
         @config = YAML.load(File.new(file))
@@ -58,7 +60,7 @@ module Sow
 
     #
     def copylist
-      @scaffold.copylist
+      scaffold.copylist
     end
 
     #
@@ -99,11 +101,16 @@ module Sow
       puts manager.list.join("\n")
     end
 
+    #
+    attr :arguments
+
     # Destination for generated scaffolding.
     attr :destination
 
     # Environment settings.
-    attr :environment
+    def environment
+      ENV
+    end
 
     # Commandline options.
     attr :options
@@ -196,7 +203,7 @@ module Sow
     # TODO: Use POM::Metadata in future?
     #++
     def metadata
-      @metadata ||= Metadata.new(environment)
+      @metadata ||= Metadata.new #(environment)
     end
 
     # Destination has metadata?
@@ -221,6 +228,11 @@ module Sow
     #
     def sources
       manager.sources
+    end
+
+    #
+    def readme
+      manager.readme(resource)
     end
 
   end

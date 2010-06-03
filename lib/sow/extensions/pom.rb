@@ -6,7 +6,7 @@ module Sow
 
     #
     def project
-      @project
+      @project ||= POM::Project.new(destination)
     end
 
     #
@@ -22,9 +22,9 @@ module Sow
     def metadata
       @metadata ||= (
         if project?
-          Metadata.new(environment, project.metadata)
+          Metadata.new(project.metadata)
         else
-          Metadata.new(environment)
+          Metadata.new()
         end
       )
     end
