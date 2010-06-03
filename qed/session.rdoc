@@ -4,7 +4,7 @@ The Session class is the primary controller of the Sow system. By setting up a S
 
   require 'sow/session'
 
-Given that we have Sow sources setup, and a scaffold as defined in scaffold_layout.rdoc[qed://scaffold_layout.rdoc]. To create a session we need a +resource+, which is the name of a scaffold, the +destination+ for the scaffolding, an  +environment+, which is a Hash that becomes part of template metadata, and general options that control operation, such as +force+, +skip+, etc.
+Given that we have Sow sources setup, and a scaffold as defined in layout.rdoc[qed://layout.rdoc]. To create a session we need a +resource+, which is the name of a scaffold, the +destination+ for the scaffolding, an  +environment+, which is a Hash that becomes part of template metadata, and general options that control operation, such as +force+, +skip+, etc.
 
   resource = 'demo'
 
