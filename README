@@ -1,10 +1,28 @@
 = Sow 
 
+TENDING TO PROJECT ECOLOGY
+
+           ,            __ \/ __
+       /\^/`\          /o \{}/ o\   If I had a flower for each time   
+      | \/   |         \   ()   /     I thought of you, my gardenDove
+      | |    |          `> /\ <`   ,,,     would be full...
+      \ \    /  @@@@    (o/\/\o)  {{{}}                 _ _
+       '\\//'  @@()@@  _ )    (    ~Y~       @@@@     _{ ' }_
+         ||     @@@@ _(_)_   wWWWw .oOOo.   @@()@@   { `.!.` }
+         ||     ,/  (_)@(_)  (___) OO()OO    @@@@  _ ',_/Y\_,'
+         ||  ,\ | /)  (_)\     Y   'OOOO',,,(\|/ _(_)_ {_,_}
+     |\  ||  |\\|// vVVVv`|/@@@@    _ \/{{}}}\| (_)@(_)  |  ,,,
+     | | ||  | |;,,,(___) |@@()@@ _(_)_| ~Y~ wWWWw(_)\ (\| {{{}}
+     | | || / / {{}}} Y  \| @@@@ (_)#(_) \|  (___)   |  \| /~Y~
+      \ \||/ /\\|~Y~ \|/  | \ \/  /(_) |/ |/   Y    \|/  |//\|/
+  jgs\ `\\//`,.\|/|//.|/\\|/\\|,\|/ //\|/\|.\\\| // \|\\ |/,\|/
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 * home: http://proutils.github.com/sow
 * work: http://github.com/proutils/sow
 
 
-== TENDING TO PROJECT ECOLOGY
+== INTRODUCTION
 
 Sow is a project scaffolding system. The system is pluggable
 and utilizes eRuby templating to make it easy to extend. Sow
