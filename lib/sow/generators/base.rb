@@ -86,7 +86,11 @@ module Sow
 
         source = '' # FIXME
         logger.report_startup(source, output)
-        mkdir_p(output) #unless File.directory?(output)
+
+        mkdir_p(output) unless File.directory?(output)
+
+        backup(actionlist)
+
         Dir.chdir(output) do
           actionlist.each do |action, loc, src, dest, opts|
             atime = Time.now
@@ -95,11 +99,31 @@ module Sow
             #logger.report_create(dest, result, atime)
           end
         end
+
         logger.report_complete
         logger.report_fixes #if session.newproject?
       end
 
     private
+
+      #
+      def backup(actionlist)
+        list = []
+        actionlist.each do |action, loc, src, dest, opts|
+          case action
+          when 'copy'
+            list << dest
+          end
+        end
+        stamp = Time.now.strftime('%Y%m%d%H%M%S')
+        base = session.destination + ".sow/undo/#{stamp}"
+        list.each do |file|
+          next unless File.file?(file)
+          back = base + file.sub(Dir.pwd,'')
+          back.parent.mkpath
+          cp(file, back)
+        end
+      end
 
       # Processes with erb.
       def erb(file)
@@ -164,6 +188,7 @@ module Sow
         return safe
       end
 
+      #
       def actionlist_check(list)
         check_conflicts(list)  # TODO: should this come before or after prompt?
         check_overwrite(list)
@@ -250,7 +275,7 @@ module Sow
           d = relative_to_output(dir)
           puts "mkdir_p #{d}"
         else
-          fu.mkdir_p(dir)
+          fu.mkdir_p(dir) unless File.directory?(dir)
         end
       end
 
