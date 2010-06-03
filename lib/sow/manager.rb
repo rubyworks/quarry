@@ -129,8 +129,12 @@ module Sow
 
     #
     def path_to_name(path)
-      div = path.split('/') # File::SEPARATOR ?
-      div.reverse.join('.').chomp('.')
+      div  = path.split('/') # File::SEPARATOR ?
+      name = div.reverse.join('.').chomp('.')
+      if md = /default\./.match(name)
+        name = md.post_match
+      end
+      name
     end
 
     #
