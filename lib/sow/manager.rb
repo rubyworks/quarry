@@ -6,101 +6,165 @@ module Sow
   #
   class Manager
 
-    SOURCE_DIRS = XDG::Config.select('/sow/sources/')
+    # Location of sources. These are stored in $XDG_CONFIG_DIRS/sow/sources/.
+    SOURCE_DIRS = XDG::Config.select('/sow/seeds')
+
+    # User seeds.
+    HOME = Pathname.new(XDG::Config.home + '/sow/seeds')
 
     #
     def initialize(options)
       @options = options
     end
 
+    #
     attr :options
 
     #
     def sources
-      @sources ||= SOURCE_DIRS.map{ |dir| Dir[dir + '/*/'] }.flatten
+      @sources ||= SOURCE_DIRS #.map{ |dir| Dir[dir + '/*/'] }.flatten
     end
 
     #
-    def find_scaffold(name)
-      #case name
-      #when /^git:/
-      #  source = File.join(Dir.tmpdir, 'sow', File.basename(uri))
-      #  `git clone #{uri} #{source}`
-      #when /^svn:/
-      #  source = File.join(Dir.tmpdir, 'sow', File.basename(uri))
-      #  `svn checkout clone #{uri} #{source}`
-      #else
-        source = nil
-        source ||= find_source(name)
-        source ||= ::Plugin.find(File.join('sow', name)).first
-      #end
-      raise "Can't find #{name} scaffold." unless source
-      Pathname.new(source)
-    end
+    #def find_scaffold(name)
+    #  source = nil
+    #  source ||= find_source(name)
+    #  source ||= ::Plugin.find(File.join('sow', name)).first
+    #  raise "Can't find #{name} scaffold." unless source
+    #  Pathname.new(source)
+    #end
 
     #
-    def find_source(name)
-      dir = nil
-      src = sources.find do |source|
-        dir = File.join(source,name)
-        File.directory?(dir)
+    def find_scaffold(match)
+      map.each do |name, dir|
+        return dir if /^#{match}\./ =~ name
       end
-      src ? File.join(src,name) : nil
+      map.each do |name, dir|
+        return dir if match == name
+      end
+      nil
+      #dir = nil
+      #src = sources.find do |source|
+      #  dir = File.join(source,name)
+      #  File.directory?(dir)
+      #end
+      #src ? File.join(src,name) : nil
     end
 
     #
     def list
-      l = sources.map{ |source| Dir[File.join(source, '*/')] }.flatten
-      l.map{ |f| File.basename(f.chomp('/')) }
+      map.map{ |l| l.first }
+    end
+
+    #
+    def map
+      list = []
+      # uri and linked sources
+      sources.each do |source|
+        locs = Dir[File.join(source, '**/template')]
+        locs = locs.map{ |l| File.dirname(l) }
+        locs.each do |l|
+          k = path_to_name(l.sub(source,''))
+          list << [k, l]
+        end
+      end
+      # installed sow plugin seeds
+      locs = ::Plugin.find(File.join('sow', '**/template'))
+      locs = locs.map{ |l| File.dirname(l) }
+      locs.each do |l|
+        k = path_to_name(l[l.rindex('sow')+4..-1])
+        list << [k, l]
+      end
+      list
+    end
+
+    # Lookup seed and and return the contents of it's
+    # README file. If it does not have a README file
+    # it will return 'No README'.
+    def readme(resource)
+      dir = find_scaffold(resource)
+      if dir
+        if file = File.join(dir, 'README')
+          return File.read(file)
+        end
+      end
+      return 'No README' unless dir
     end
 
     #
     def install(resource)
-      dir  = XDG::Config.home + '/sow/sources/'
+      dir  = HOME #Pathname.new(XDG::Config.home + '/sow/seeds/')
+      out  = dir + uri_to_path(resource)
       name = File.basename(resource).chomp(File.extname(resource))
-      dest = File.join(dir, name)
-      if File.exist?(dest)
-        raise "#{dest} already exists"
+      if File.exist?(out + name)
+        $stderr.puts "#{out + name} already exists"
+        return # update ?
       end
       case resource
       when /^git\:/, /\.git$/
-        cmd = "git clone #{resource} #{dest}"
+        cmd = "git clone #{resource} #{name}"
       when /^svn\:/
-        cmd = "svn checkout clone #{resource} #{dest}"
-      else
-        cmd = "ln -s #{resource} #{dest}"
+        cmd = "svn checkout clone #{resource} #{name}"
+      else # local path
+        cmd = "ln -s #{resource} #{out}"
       end
       if options.trial
-        $stderr.puts(cmd)
+        $stderr.puts("  mkdir -p #{out}")
+        $stderr.puts("  cd #{out}")
+        $stderr.puts("  #{cmd}")
       else
-        `#{cmd}`
+        FileUtils.mkdir_p(out)
+        `cd #{out}; #{cmd}`
       end
     end
 
     #
-    def update(name)
-      dir  = XDG::Config.home('sow/sources/')
-      dest = File.join(dir, name)
-      if !File.exist?(dest)
-        raise '#{dest} does not exists'
-      end
-      if File.exist?(File.join(dest, '.git'))
-        cmd = "cd #{dest}; git pull origin master"
-      elsif File.exist?(File.join(dest, '.svn'))
-        cmd = "cd #{dest}; svn update"
-      end
-      if options.trial
-        $stderr.puts(cmd)
-      else
-        `#{cmd}`
-      end
+    def uri_to_path(uri)
+      uri = uri.dup
+      uri.sub!(/^git\:\/\//, '')
+      uri.sub!(/^svn\:\/\//, '')
+      div = File.dirname(uri).split('/') # File::SEPARATOR ?
+      div.reverse.join('.')
     end
 
     #
+    def path_to_name(path)
+      div = path.split('/') # File::SEPARATOR ?
+      div.reverse.join('.').chomp('.')
+    end
+
+    #
+    def update(resource=nil)
+      dir = HOME #Pathname.new(XDG::Config.home + '/sow/seeds/')
+      if resource
+        out  = dir + uri_to_path(resource)
+        if !out.exist
+          raise '#{out} does not exists'
+        end
+        paths = [out]
+      else
+        paths = dir.glob('*')
+      end
+      paths.each do |out|
+        if (out + '.git').exist?
+          cmd = "cd #{out}; git pull origin master"
+        elsif (out + '.svn').exist?
+          cmd = "cd #{out}; svn update"
+        end
+        if options.trial
+          $stderr.puts(cmd)
+        else
+          `#{cmd}`
+        end
+      end
+    end
+
+    # TODO
     def uninstall(resource)
-      dir  = XDG::Config.home('sow/sources/')
-      name = File.basename(resource).chomp(File.extname(resource))
-      dest = File.join(dir, name)
+      dir  = Pathname.new(XDG::Config.home + '/sow/seeds')
+      out  = dir + uri_to_path(resource)
+      #name = File.basename(resource).chomp(File.extname(resource))
+      #dest = File.join(dir, name)
       #FileUtils.rm_rf(dest)
     end
 
@@ -138,15 +202,6 @@ module Sow
     #  path = Pathname.new(path) unless path.is_a?(Pathname)
     #  Plugin.new(:location => path, :project => project, :command => cli)
     #end
-
-    # This routine searches for seeds (sow plugins),
-    #
-    def plugins_from_packages
-      match = File.join(PLUGIN_DIRECTORY, '*/')
-      PluginManager.find(match).map do |path|
-        path.chomp('/')
-      end
-    end
 =end
 
   end
