@@ -1,4 +1,5 @@
 runtime:
   - facets >=2.4.3
   - xdg
+  - plugin
 

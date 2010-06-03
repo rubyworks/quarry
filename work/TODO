@@ -5,36 +5,11 @@
 Allow for a static/ directory in a plugin. The files in
 this directory will be copied verbatim.
 
-
 == Partials
 
 Scaffolds themselves support partial scaffolding when sow is in
 generation mode. For instance you may want to add a standard
 Rakefile. You can do that with Sow:
 
-  $ sow --ruby[Rakefile]
-
-== Till ?
-
-Sow can also be used for general project templating. To do this, add
-template files to the temps/ directory, reflecting the
-same layout of your project. For example:
-
-  myapp/
-    lib/
-      myapp/
-        myapp.rb
-    temps/
-      lib/
-        myapp/
-          myapp.rb.erb
-    meta/
-      ...
-
-Change into your project directory and type @sow@ with no arguments.
-
-  $ sow
-
-Project files will be generated based on the templates and your porjects
-metadata.
+  $ sow ruby -m Rakefile
 
