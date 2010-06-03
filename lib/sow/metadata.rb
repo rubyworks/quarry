@@ -29,6 +29,7 @@ module Sow
     end
 
     # If method is missing, lookup metdata value by that name.
+    # If not found, returns a "FIXME" value.
     def method_missing(s, *a, &b)
       s = s.to_s
       if s =~ /=$/
@@ -36,7 +37,7 @@ module Sow
         self[s] = a.first
       else
         s = s.chomp('?')
-        self[s] || "FIXME ___#{s}___"
+        self[s] #|| "___#{s}___"
       end
     end
 
@@ -45,8 +46,7 @@ module Sow
       self[entry] ? true : false
     end
 
-    # Get a metadata value. If not found in the cache return
-    # a "FIXME" value.
+    # Get a metadata value. If not found return nil.
     def [](s)
       s = s.to_s
       if @cache.key?(s)
@@ -57,7 +57,6 @@ module Sow
           @cache[s]= val
         else
           @cache[s] = nil
-          #@cache[s] = load_value(s) #|| HOLE + " (#{s})"
         end
       end
     end

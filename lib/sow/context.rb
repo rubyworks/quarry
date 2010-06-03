@@ -1,6 +1,6 @@
 module Sow
 
-  FIX = "FIXME"
+  #FIX = "FIXME"
 
   # Erb templates are all rendered within the scope
   # a context object. This limits access to only
@@ -16,7 +16,7 @@ module Sow
     end
 
     def method_missing(s)
-      @metadata.__send__(s) || "#{FIX}: (#{s})"
+      @metadata.__send__(s) || "___#{s}___"
     end
 
     # Processes file through erb.

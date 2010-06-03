@@ -355,7 +355,7 @@ module Sow
     def template_to_filename(path)
       name = path.dup #chomp('.erb')
       name = name.gsub(/__(.*?)__/) do |md|
-        metadata.__get__($1) || 'FIXME'  # TODO: raise error?
+        metadata.__get__($1) || '__#{$1}__'  # TODO: raise error?
       end
       #if md =~ /^(.*?)[-]$/
       #  name = metadata[md[1]] || plugin.metadata(md[1]) || name
