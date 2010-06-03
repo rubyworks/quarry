@@ -84,7 +84,6 @@ module Sow
     end
 
     # Override and place copy statment in this method.
-    #
     def scaffold
       copy '**/*', '.'
     end
@@ -114,28 +113,6 @@ module Sow
       session.destination
     end
 
-    #def values
-    #  @values
-    #end
-
-    #def location=(path)
-    #  @location = Pathname.new(path)
-    #end
-
-    # Define the commandline argument.
-    #def argument(name, desc=nil, &valid)
-    #  @arguments << [name, desc, valid]
-    #  #argv[name] = @arguments[@argc+=1]
-    #  #valid.call(argv[name]) if valid
-    #  #define_method(name) do
-    #  #  @arguments[i]
-    #  #end
-    #end
-
-    #def option(name, desc=nil, &valid)
-    #  @options << [name, desc, valid]
-    #end
-
     # Designate a copying action.
     #
     # call-seq:
@@ -149,6 +126,7 @@ module Sow
       @copylist << [from, to, opts.rekey(&:to_s)]
     end
 
+=begin
     # This is to allow a plugin access to the internal state. ???
     def [](var)
       instance_variable_get("@#{var}")
@@ -163,6 +141,7 @@ module Sow
       end
       #@session[var.to_sym] = val
     end
+=end
 
     # If method missing, routes the call to +session+.
     def method_missing(s,*a)
@@ -170,6 +149,18 @@ module Sow
         return session.__send__(s)
       else
         super
+      end
+    end
+
+    #
+    def abort_unless_empty_or_managed(*ignore)
+      if destination.exist?
+        files = Dir.entries(destination) - (['.', '..'] + ignore)
+        if !files.empty? and !managed?
+          abort "This seed is intended for new projects.\n" +
+                "But the destination directory is not empty.\n" +
+                "Please use --force, --skip or --prompt to proceed."
+        end
       end
     end
 
