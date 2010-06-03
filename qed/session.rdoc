@@ -8,13 +8,11 @@ Given that we have Sow sources setup, and a scaffold as defined in layout.rdoc[q
 
   resource = 'demo'
 
-  destination = File.join(Dir.tmpdir, 'sow', 'myapp')
+  arguments = ['myapp']
 
-  environment = {:name=>'myapp'}
+  options = {:skip=>true, :output=>File.join(Dir.tmpdir, 'sow', 'myapp')}
 
-  options = {:skip=>true}
-
-  session = Sow::Session.new(resource, destination, environment, options)
+  session = Sow::Session.new(resource, arguments, options)
 
 With the instantiation of a Session object, a fair amount of information is setup. For starters, the session has found the scaffold associated with the +resource+.
 

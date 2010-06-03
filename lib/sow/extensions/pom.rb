@@ -23,7 +23,7 @@ module Sow
     def metadata
       @metadata ||= (
         if pom?
-          Metadata.new(project.metadata)
+          Metadata.new(pom.metadata)
         else
           srcs = load_raw_pom_metadata.compact
           Metadata.new(*srcs)

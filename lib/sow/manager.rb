@@ -26,29 +26,16 @@ module Sow
     end
 
     #
-    #def find_scaffold(name)
-    #  source = nil
-    #  source ||= find_source(name)
-    #  source ||= ::Plugin.find(File.join('sow', name)).first
-    #  raise "Can't find #{name} scaffold." unless source
-    #  Pathname.new(source)
-    #end
-
-    #
     def find_scaffold(match)
+      loc = nil
       map.each do |name, dir|
-        return dir if /^#{match}\./ =~ name
+        loc = dir if /^#{match}\./ =~ name
       end
       map.each do |name, dir|
-        return dir if match == name
+        loc = dir if match == name
       end
-      nil
-      #dir = nil
-      #src = sources.find do |source|
-      #  dir = File.join(source,name)
-      #  File.directory?(dir)
-      #end
-      #src ? File.join(src,name) : nil
+      loc = Pathname.new(loc) if loc
+      loc
     end
 
     #

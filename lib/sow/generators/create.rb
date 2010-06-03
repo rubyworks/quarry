@@ -56,6 +56,11 @@ module Sow
       #  plugin.erb(file)
       #end
 
+      #
+      def clobber_term
+        "overwrite"
+      end
+
 =begin
       ###
       def erb(file)

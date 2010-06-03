@@ -27,8 +27,8 @@ module Sow
       #@environment = OpenStruct.new(environment)
 
       @destination = (
-        if options.output
-          Pathname.new(options.output)
+        if @options.output
+          Pathname.new(@options.output)
         else
           Pathname.new(Dir.pwd)
         end
@@ -47,6 +47,12 @@ module Sow
 
     #
     attr :resource
+
+    #
+    attr :arguments
+
+    #
+    attr :options
 
     # Location of scaffolding.
     def location
@@ -100,9 +106,6 @@ module Sow
     def list
       puts manager.list.join("\n")
     end
-
-    #
-    attr :arguments
 
     # Destination for generated scaffolding.
     attr :destination

@@ -166,7 +166,7 @@ module Sow
         list.each do |action, loc, tname, fname, opts|
           dups << [action, loc, tname, fname, opts, (output + fname).file?]
         end
-        puts "Select (y/n) which files to overwrite:\n" if prompt? unless quiet?
+        puts "Select (y/n) which files to #{clobber_term}:\n" if prompt? unless quiet?
         dups.each do |action, loc, tname, fname, opts, check|
           if check
             if skip?
@@ -203,7 +203,7 @@ module Sow
         return if force?
         return if prompt?
         return if skip?
-        #return if session.overwrite?  # TODO: not so sure overwirte? option is a good idea.
+        #return if session.overwrite?  # TODO: not so sure overwrite? option is a good idea.
 
         if newproject? && !output.glob('**/*').empty? # FIXME?
           abort "New project isn't empty. Use --force, --skip or --prompt."
@@ -218,9 +218,10 @@ module Sow
           end
         end
 
+        # TODO: implement --skip
         if !clobbers.empty?
           puts "    " + clobbers.join("\n    ")
-          abort "These files would be overwritten. Use --force, --skip or --prompt."  # TODO: implement --skip
+          abort "These files would be overwritten. Use --force, --skip or --prompt."
         end
       end
 

@@ -42,6 +42,11 @@ module Sow
         return how, dest
       end
 
+      #
+      def clobber_term
+        "delete"
+      end
+
     end#class Delete
 
   end#module Generators
