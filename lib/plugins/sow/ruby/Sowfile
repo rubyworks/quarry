@@ -3,37 +3,32 @@
 utilize 'pom'
 
 setup do |*args|
+  abort_unless_empty_or_managed('PROFILE', 'VERSION')
+
+  #if destination.exist?
+  #  files = Dir.entries(destination) - ['.', '..', 'PROFILE', 'VERSION']
+  #  if !files.empty? and !managed?
+  #    abort "The ruby scaffold is intended for new projects.\n" +
+  #          "But this destination directory is not empty.\n" +
+  #          "Please use the --force, --skip or --prompt to proceed."
+  #  end
+  #end
+
   name = args.first || metadata['name'] || destination.basename.to_s
 
   abort "Name is required."         unless name
   abort "Name must be single word." unless name =~ /\w+/
 
-  metadata.name  = name
-  metadata.title = metadata['title'] || name.capitalize
-
-  if destination.exist?
-    files = Dir.entries(destination) - ['.', '..', 'PROFILE', 'VERSION']
-    if !files.empty? and !managed?
-      abort "The ruby scaffold is intended for new projects.\n" +
-            "But this destination directory is not empty.\n" +
-            "Please use the --force, --skip or --prompt to proceed."
-    end
-  end
-
-  #if destination.glob('PROFILE').first
-  #  profile = YAML.load(File.new('PROFILE'))
-  #  metadata << profile
-  #end
-
-  #if destination.glob('VERSION').first
-  #  version = YAML.load(File.new('VERSION'))
-  #  metadata << version
-  #end
+  metadata.name    = name
+  metadata.title   = metadata['title'] || name.capitalize
+  metadate.contact = metadata['EMAIL']
 end
 
+# TODO: Do not overwrite PROFILE, VERSION or REQUIRE if they exist
 scaffold do
-  copy("**/*") #, :omit => "meta")
+  copy("**/*") #, :omit => "PROFILE")
   copy("bin/*", :chmod=>0744)
-  copy("README.rdoc.till", :verbatim => true)
+  #copy("README.rdoc.till", :verbatim => true)
+  #skip('PROFILE', 'VERSION', 'REQUIRE')
 end
 

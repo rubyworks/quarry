@@ -1,27 +1,18 @@
-#
+#!/usr/bin/env ruby
 
-module Sow::Plugins
+# Add specified license to your project.
 
-  # Add specified license to your project.
+LICENSES = %w[gpl lgpl mit]
 
-  class License < Script
-
-    LICENSES = %w[gpl lgpl mit]
-
-    argument :license
-
-    setup do
-      lic = license.downcase
-      abort "License name required" unless LICENSES.include?(lic)
-      metadata.license = lic.upcase
-    end
-
-    manifest do
-      copy "META/*", metadir
-      copy "*", '.', :cd => license.downcase
-    end
-
+setup do |licence, *_|
+  lic = (license || 'mit').downcase
+  unless LICENSES.include?(lic)
+    abort "Unrecognized license name. Choose:\n  " + LICENSES.join("\n  ")
   end
+  metadata.license = lic.upcase
+end
 
+scaffold do
+  copy "*", '.', :cd => license.downcase
 end
 

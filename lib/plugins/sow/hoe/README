@@ -1,6 +1,11 @@
-How plugin, to make up for the fact the Sow clobber's
+Hoe seed makes up for the fact the Sow clobber's
 Hoe's +sow+ command.
 
-It's silly for Hoe to have a command called +sow+ when
-it could just as well used +hoe+ andyway.
+Usage:
+
+  sow hoe [-o pathname | name]
+
+Note the usage is slighly different from the original
+hoe command. To put the scaffolding in a subdirectory
+you need to supply the --output option.
 

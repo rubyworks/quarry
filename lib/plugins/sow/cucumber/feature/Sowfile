@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+# TODO: Perhaps add automatic detection of location of features?
+
+setup do |*arguments|
+  name = arguments.shift
+  abort "feature name is required" unless name
+  metadata.feature   = name
+  metadata.directory = arguments.shift || 'features'
+end
+
+scaffold do
+  copy "__feature__.feature", metadata.directory.chomp('/') + '/'
+end
+

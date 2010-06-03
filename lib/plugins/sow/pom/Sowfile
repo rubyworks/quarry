@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+utilize 'pom'
+
+setup do |*args|
+  name = args.first || metadata['name'] || destination.basename.to_s
+
+  abort "Name is required."         unless name
+  abort "Name must be single word." unless name =~ /\w+/
+
+  metadata.name    = name
+  metadata.title   = metadata['title'] || name.capitalize
+  metadate.contact = metadata['EMAIL']
+end
+
+#
+scaffold do
+  copy("PROFILE")
+  copy("VERSION")
+  copy("REQUIRE") unless destination.glob('Gemfile').first #include?
+end
+

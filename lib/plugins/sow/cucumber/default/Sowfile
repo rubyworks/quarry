@@ -1,20 +1,11 @@
-option :feature
+#!/usr/bin/env ruby
 
-setup do
-  if argument
-    @dir = argument.chomp('/') + '/'
-  else
-    @dir = Dir["{test/,}features/"].first || 'features/'
-  end
-  metadata.feature = feature || 'generic'
+setup do |*arguments|
+  metadata.directory = arguments.shift || 'features'
+  metadata.feature   = arguments.shift || 'your_first'
 end
 
 scaffold do
-  if feature
-    #TODO: copy support files if does not exists ?
-    copy "features/__feature__.feature", @dir
-  else
-    copy "**/*", @dir, :cd => "features"
-  end
+  copy "**/*", metadata.directory.chomp('/') + '/'
 end
 
