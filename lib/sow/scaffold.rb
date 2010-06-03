@@ -119,31 +119,6 @@ module Sow
       )
     end
 
-    ## Plugin's special metadata. These entries are
-    ## converted to methods for rendering of the 
-    ## transfer list.
-    #def meta
-    #  @meta ||= (
-    #    if meta_file
-    #      YAML.load(File.new(meta_file))
-    #    else
-    #      {}
-    #    end
-    #  )
-    #end
-
-    ## Plugin's transfer list.
-    #def seed
-    #  @seed ||= (
-    #    if seed_file
-    #      res = template.erb_result(File.read(seed_file))
-    #      YAML.load(res)
-    #    else
-    #      [{'from' => '**/*'}]
-    #    end
-    #  )
-    #end
-
   private
 
     # Grab the first instance of a matching glob as a Pathname object.
@@ -282,7 +257,6 @@ module Sow
     #end
 
     # Expand copylist by globbing entries.
-
     def copylist_glob(copylist)
       list = []
       dotpaths = ['.', '..']
@@ -321,7 +295,6 @@ module Sow
     # Reduce copylist to uniq transfers. If transfers are the same
     # the later transfere takes precedence. Transfire options are
     # not considered in determining uniquness.
-
     def uniq(list)
       h = {}
       list.each do |dir, src, dest, opts|
@@ -329,24 +302,6 @@ module Sow
       end
       h.inject([]){ |a,x| a << x.flatten; a }
     end
-
-=begin
-    # Filter out special paths from copylist.
-    #
-    def filter_paths(paths)
-      filter.each do |re|
-        paths = paths.reject do |pn|
-          case re
-          when Regexp
-            re =~ pn.to_s
-          else
-            re == pn.to_s
-          end
-        end
-      end
-      paths
-    end
-=end
 
     # Convert a template pathname into a destination pathname.
     # This allows for substitution in the pathnames themselves
@@ -412,6 +367,24 @@ module Sow
     #  end
     #  return text
     #end
+
+=begin
+    # Filter out special paths from copylist.
+    #
+    def filter_paths(paths)
+      filter.each do |re|
+        paths = paths.reject do |pn|
+          case re
+          when Regexp
+            re =~ pn.to_s
+          else
+            re == pn.to_s
+          end
+        end
+      end
+      paths
+    end
+=end
 
   end
 

@@ -1,17 +1,9 @@
 module Sow
 
-  # Metadata for use by template variables in some
-  # types of scaffolding.
+  # Metadata for use by template variables.
   #
-  #--
-  # TODO: Should this only be used when updating?
-  #
-  # TODO: If we copy PROFILE first then it can be reused. ?
-  #
-  # TODO: Use ~/.config/sow/meta.yml and env as fallbacks.
-  #++
-
   class Metadata
+
     alias :__id__ :object_id
 
     instance_methods.each{ |m| private m unless m.to_s =~ /^__/ }
@@ -19,13 +11,14 @@ module Sow
     #
     def initialize(*resources)
       @resources = resources
-      @resources << ENV
+      @resources.concat(fallback)
+      @resources.push(ENV)
       @cache = {}
     end
 
-    #
+    # Put resource on top of lookup stack.
     def <<(resource)
-      @resources << resource
+      @resources.unshift(resource)
     end
 
     # If method is missing, lookup metdata value by that name.
@@ -93,6 +86,13 @@ module Sow
 
   private
 
+    def fallback
+      files = XDG::Config.select('sow/metadata.yml')
+      files.map do |file|
+        YAML.load(File.new(file))
+      end
+    end
+
 =begin
     # Load metadata value.
     #
@@ -123,17 +123,13 @@ module Sow
     #    @metadata_source[File.basename(f)] = erb(f).strip
     #  end
     #end
+=end
 
     # Processes with erb.
-    def erb(file)
-      erb = ERB.new(File.read(file))
-      erb.result(binding!)
-    end
-
-    def binding!
-      binding
-    end
-=end
+    #def erb(file)
+    #  erb = ERB.new(File.read(file))
+    #  erb.result(binding)
+    #end
 
   end
 

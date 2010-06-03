@@ -21,7 +21,7 @@ setup do |*args|
 
   metadata.name    = name
   metadata.title   = metadata['title'] || name.capitalize
-  metadate.contact = metadata['EMAIL']
+  metadata.contact = metadata['EMAIL']
 end
 
 # TODO: Do not overwrite PROFILE, VERSION or REQUIRE if they exist

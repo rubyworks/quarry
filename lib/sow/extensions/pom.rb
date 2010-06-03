@@ -22,7 +22,7 @@ module Sow
     # Override metadata to include POM metadata.
     def metadata
       @metadata ||= (
-        if project?
+        if pom?
           Metadata.new(project.metadata)
         else
           srcs = load_raw_pom_metadata.compact
@@ -45,9 +45,9 @@ module Sow
       if destination.glob('VERSION').first
         begin
           verfile = YAML.load(File.new('VERSION'))
-          if Hash===version
+          if Hash===verfile
             verfile.rekey!
-            verfile[:version] = verfile.values_at(:major,:minor,:patch,:state,:build).compact.join('.'))
+            verfile[:version] = verfile.values_at(:major,:minor,:patch,:state,:build).compact.join('.')
           else
             verfile = {:version => version}
           end
