@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -8,45 +7,965 @@
 
   <title>File: script.rb [Sow]</title>
 
-  <link rel="SHORTCUT ICON" href="../../images/file.png">
+  <link rel="SHORTCUT ICON" href="../../assets/icon/file.png">
 
-  <link type="text/css" media="screen" rel="stylesheet" href="../../rdoc.css" />
+  <link type="text/css" rel="stylesheet" href="../../assets/rdoc.css" media="screen" />
+  <link type="text/css" rel="stylesheet" href="../../assets/highlight/styles/github.css" title="GitHub" />
 
-  <script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/highlight/highlight.pack.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/quicksearch.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/main.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#documentation pre').wrapInner('<code></code>');
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad('ruby');
+
+	    hookSourceViews();
+	    hookDebuggingToggle();
+	    hookQuickSearch();
+	    highlightLocationTarget();
+
+	    $('ul.link-list a').bind( "click", highlightClickTarget );
+    });
+  </script>
 </head>
 
+<body class="file"> <!-- .file-popup is no more -->
+<div id="main">
 
-<body class="file file-popup">
+  <div class="head">
+    <h1>
+      <img src="../../assets/icon/file.png" align="absmiddle">&nbsp;
+      <a href="../../index.html">Sow</a>&nbsp;
+      <a href="/">script.rb</a>
+    </h1>
+  </div>
+
   <div id="metadata">
-    <dl>
-      <dt class="modified-date">Last Modified</dt>
-      <dd class="modified-date">Sat Oct 17 08:11:19 -0400 2009</dd>
+    <div id="file-stats-section" class="section">
+      <h3 class="section-header">File Stats</h3>
+      <dl>
+        <dt class="modified-date">Last Modified</dt>
+        <dd class="modified-date">Thu Jun 03 12:35:59 -0400 2010</dd>
 
+        
+
+        
+      </dl>
+    </div>
+
+    <div id="project-metadata">
       
-      <dt class="requires">Requires</dt>
-      <dd class="requires">
+      
+      <div id="fileindex-section" class="section project-section">
+        <h3 class="section-header">Information</h3>
         <ul>
         
+          <li class="file"><a href="../../HISTORY.html">HISTORY</a></li>
+        
+          <li class="file"><a href="../../README.html">README</a></li>
+        
         </ul>
-      </dd>
+      </div>
       
 
+      <div id="classindex-section" class="section project-section">
+        <h3 class="section-header">Class Index
+          <span class="search-toggle"><img src="../../assets/icon/find.png"
+            height="16" width="16" alt="[+]"
+            title="show/hide quicksearch" /></span></h3>
+        <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+        <fieldset>
+          <legend>Quicksearch</legend>
+          <input type="text" name="quicksearch" value=""
+            class="quicksearch-field" />
+        </fieldset>
+        </form>
+
+        <ul class="link-list">
+        
+          <li class="module"><a href="../../Sow.html">Sow</a></li>
+        
+          <li class="class"><a href="../../Sow/Command.html">Sow::Command</a></li>
+        
+          <li class="class"><a href="../../Sow/Context.html">Sow::Context</a></li>
+        
+          <li class="module"><a href="../../Sow/Generators.html">Sow::Generators</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Base.html">Sow::Generators::Base</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Create.html">Sow::Generators::Create</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Delete.html">Sow::Generators::Delete</a></li>
+        
+          <li class="class"><a href="../../Sow/Generators/Update.html">Sow::Generators::Update</a></li>
+        
+          <li class="class"><a href="../../Sow/Logger.html">Sow::Logger</a></li>
+        
+          <li class="class"><a href="../../Sow/Manager.html">Sow::Manager</a></li>
+        
+          <li class="class"><a href="../../Sow/Metadata.html">Sow::Metadata</a></li>
+        
+          <li class="class"><a href="../../Sow/Scaffold.html">Sow::Scaffold</a></li>
+        
+          <li class="class"><a href="../../Sow/Script.html">Sow::Script</a></li>
+        
+          <li class="class"><a href="../../Sow/Session.html">Sow::Session</a></li>
+        
+          <li class="class"><a href="../../String.html">String</a></li>
+        
+        </ul>
+        <div id="no-class-search-results" style="display: none;">No matching classes.</div>
+      </div>
+
+      <!-- METHODS -->
+      <div id="methodindex-section" class="section project-section">
+        <h3 class="section-header">Method Index</h3>
+        <ul>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Command</span>
+              <a href="Sow/Command.html#method-c-execute">::execute</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Command</span>
+              <a href="Sow/Command.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Logger</span>
+              <a href="Sow/Logger.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Context</span>
+              <a href="Sow/Context.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Metadata</span>
+              <a href="Sow/Metadata.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-c-new">::new</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-c-scaffold">::scaffold</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-c-setup">::setup</a>
+            </li>
+          
+            
+            <li class="singleton" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-c-utilize">::utilize</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Metadata</span>
+              <a href="Sow/Metadata.html#method-i-%3C%3C">#<<</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Metadata</span>
+              <a href="Sow/Metadata.html#method-i-%5B%5D">#[]</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Metadata</span>
+              <a href="Sow/Metadata.html#method-i-%5B%5D%3D">#[]=</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Metadata</span>
+              <a href="Sow/Metadata.html#method-i-__get__">#__get__</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-i-abort_unless_empty_or_managed">#abort_unless_empty_or_managed</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-actionlist">#actionlist</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Delete</span>
+              <a href="Sow/Generators/Delete.html#method-i-actionlist_check">#actionlist_check</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-actionlist_check">#actionlist_check</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-actionlist_mark">#actionlist_mark</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-actionlist_safe">#actionlist_safe</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-actionlist_sort">#actionlist_sort</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Delete</span>
+              <a href="Sow/Generators/Delete.html#method-i-actionlist_sort">#actionlist_sort</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-i-argument">#argument</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-arguments">#arguments</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-backup">#backup</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-check_conflicts">#check_conflicts</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Logger</span>
+              <a href="Sow/Logger.html#method-i-check_for_fixes">#check_for_fixes</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-check_overwrite">#check_overwrite</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-chmod">#chmod</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-config">#config</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Create</span>
+              <a href="Sow/Generators/Create.html#method-i-copy">#copy</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-i-copy">#copy</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Create</span>
+              <a href="Sow/Generators/Create.html#method-i-copy_dir">#copy_dir</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Create</span>
+              <a href="Sow/Generators/Create.html#method-i-copy_doc">#copy_doc</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-copylist">#copylist</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-copylist">#copylist</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-copylist_glob">#copylist_glob</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-copylist_partition">#copylist_partition</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-copylist_sort">#copylist_sort</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-cp">#cp</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-create">#create</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-debug%3F">#debug?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-debug%3F">#debug?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-delete">#delete</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Delete</span>
+              <a href="Sow/Generators/Delete.html#method-i-delete">#delete</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-destination">#destination</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-i-destination">#destination</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-empty%3F">#empty?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-i-env">#env</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-i-environment">#environment</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-environment">#environment</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Context</span>
+              <a href="Sow/Context.html#method-i-erb">#erb</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-erb">#erb</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Command</span>
+              <a href="Sow/Command.html#method-i-execute">#execute</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Metadata</span>
+              <a href="Sow/Metadata.html#method-i-fallback">#fallback</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-i-find_scaffold">#find_scaffold</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-force%3F">#force?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-force%3F">#force?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-fu">#fu</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-generate">#generate</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-grab">#grab</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-inspect">#inspect</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-i-install">#install</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-install">#install</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-i-list">#list</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-list">#list</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-load_raw_pom_metadata">#load_raw_pom_metadata</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-location">#location</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Metadata</span>
+              <a href="Sow/Metadata.html#method-i-lookup">#lookup</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-managed%3F">#managed?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-manager">#manager</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-i-map">#map</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Delete</span>
+              <a href="Sow/Generators/Delete.html#method-i-mark">#mark</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-mark">#mark</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-i-metadata">#metadata</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-metadata">#metadata</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-metadata">#metadata</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-metadata">#metadata</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-metadata">#metadata</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-metadata%3F">#metadata?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Metadata</span>
+              <a href="Sow/Metadata.html#method-i-method_missing">#method_missing</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-i-method_missing">#method_missing</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Context</span>
+              <a href="Sow/Context.html#method-i-method_missing">#method_missing</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-mkdir_p">#mkdir_p</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-new%3F">#new?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-newproject%3F">#newproject?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Command</span>
+              <a href="Sow/Command.html#method-i-option_parser">#option_parser</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-output">#output</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-i-path_to_name">#path_to_name</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-pom">#pom</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-pom%3F">#pom?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-prompt%3F">#prompt?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-prompt%3F">#prompt?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-quiet%3F">#quiet?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-quiet%3F">#quiet?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-i-readme">#readme</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-readme">#readme</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-readme">#readme</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-relative_to_output">#relative_to_output</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Logger</span>
+              <a href="Sow/Logger.html#method-i-report">#report</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Logger</span>
+              <a href="Sow/Logger.html#method-i-report_complete">#report_complete</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Logger</span>
+              <a href="Sow/Logger.html#method-i-report_create">#report_create</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Logger</span>
+              <a href="Sow/Logger.html#method-i-report_fixes">#report_fixes</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Logger</span>
+              <a href="Sow/Logger.html#method-i-report_nothing_to_generate">#report_nothing_to_generate</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Logger</span>
+              <a href="Sow/Logger.html#method-i-report_startup">#report_startup</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Metadata</span>
+              <a href="Sow/Metadata.html#method-i-respond_to%3F">#respond_to?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-rm">#rm</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-i-scaffold">#scaffold</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-scaffold">#scaffold</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Script</span>
+              <a href="Sow/Script.html#method-i-setup">#setup</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-setup">#setup</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-skip">#skip</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-skip%3F">#skip?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-skip%3F">#skip?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-i-sources">#sources</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-sources">#sources</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-sow_class">#sow_class</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-sowed%3F">#sowed?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-sowfile">#sowfile</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-template">#template</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-template_dir">#template_dir</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-template_to_filename">#template_to_filename</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">String</span>
+              <a href="String.html#method-i-to_list">#to_list</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-trial%3F">#trial?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-trial%3F">#trial?</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-uninstall">#uninstall</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-i-uninstall">#uninstall</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Scaffold</span>
+              <a href="Sow/Scaffold.html#method-i-uniq">#uniq</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-i-update">#update</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Session</span>
+              <a href="Sow/Session.html#method-i-update">#update</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Manager</span>
+              <a href="Sow/Manager.html#method-i-uri_to_path">#uri_to_path</a>
+            </li>
+          
+            
+            <li class="method" style="clear: both;">
+              <span class="method-parent-aside">Sow::Generators::Base</span>
+              <a href="Sow/Generators/Base.html#method-i-write">#write</a>
+            </li>
+          
+        </ul>
+      </div>
+    </div>
+
+    <div id="validator-badges">
       
-    </dl>
+      <div style="float: right; margin-right: 5px;">
+        <a href="http://validator.w3.org/check/referer"><img src="../../assets/icon/check.png" alt="[Validate]" height="16" width="16" /></a>
+      </div>
+      Generated with <a href="http://proutils.github.com/webri">WebRI Newfish</a> 1.2.1
+      <br/><br/>
+    </div>
   </div>
+
+  <!-- .file-popup was wrapped:
+    <div id="documentation">
+      
+      <div class="description">
+          ... file.description ...
+      </div>
+      
+    </div>
+   So maybe that css is no longer needed.
+   -->
 
   <div id="documentation">
     
-    <div class="description">
-      <h2>Description</h2>
-      
-    </div>
-    
   </div>
+
+</div>
 </body>
-
-
 </html>
+

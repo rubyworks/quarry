@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -9,23 +8,39 @@
   <title>Class: Sow::Generators::Create</title>
 
   
-    <link rel="SHORTCUT ICON" href="../../images/class.png">
+    <link rel="SHORTCUT ICON" href="../../assets/icon/class.png">
   
 
-  <link type="text/css" media="screen" rel="stylesheet" href="../../rdoc.css" />
+  <link type="text/css" rel="stylesheet" href="../../assets/rdoc.css" media="screen" />
+  <link type="text/css" rel="stylesheet" href="../../assets/highlight/styles/github.css" title="GitHub" />
 
-  <script src="../../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/highlight/highlight.pack.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/quicksearch.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../assets/main.js"></script>
 
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#documentation pre').wrapInner('<code></code>');
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad('ruby');
+
+	    hookSourceViews();
+	    hookDebuggingToggle();
+	    hookQuickSearch();
+	    highlightLocationTarget();
+
+	    $('ul.link-list a').bind( "click", highlightClickTarget );
+    });
+  </script>
 </head>
 <body class="class">
+<div id="main">
 
   <div class="head">
     <h1>
       
-        <img src="../../images/class.png" align="absmiddle">&nbsp;
+        <img src="../../assets/icon/class.png" align="absmiddle">&nbsp;
       
       <a href="../../index.html">Sow</a>&nbsp;
       <a href="/">Sow::Generators::Create</a>
@@ -48,6 +63,7 @@
       </div>
 
       <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+      <!-- TODO: generalize this for all SCMs -->
 
       
     </div>
@@ -60,7 +76,8 @@
         <h3 class="section-header">Parent</h3>
         <ul>
           
-          <li class="class">Base</li>
+          <!-- why was this class="link" ? -->
+          <li class="class"><a href="Base.html">Sow::Generators::Base</a></li>
           
         </ul>
       </div>
@@ -75,11 +92,20 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li class="method"><a href="#M000000">#copy</a></li>
+            
+            <li class="method">
+              <a href="#method-i-copy">#copy</a>
+            </li>
           
-          <li class="method"><a href="#M000001">#copy_dir</a></li>
+            
+            <li class="method">
+              <a href="#method-i-copy_dir">#copy_dir</a>
+            </li>
           
-          <li class="method"><a href="#M000002">#copy_doc</a></li>
+            
+            <li class="method">
+              <a href="#method-i-copy_doc">#copy_doc</a>
+            </li>
           
         </ul>
       </div>
@@ -93,14 +119,10 @@
       
       
       <div id="fileindex-section" class="section project-section">
-        <h3 class="section-header">Files</h3>
+        <h3 class="section-header">Information</h3>
         <ul>
         
-          <li class="file"><a href="../../COPYING.html">COPYING</a></li>
-        
           <li class="file"><a href="../../HISTORY.html">HISTORY</a></li>
-        
-          <li class="file"><a href="../../NOTES.html">NOTES</a></li>
         
           <li class="file"><a href="../../README.html">README</a></li>
         
@@ -110,7 +132,7 @@
 
       <div id="classindex-section" class="section project-section">
         <h3 class="section-header">Class Index
-          <span class="search-toggle"><img src="../../images/find.png"
+          <span class="search-toggle"><img src="../../assets/icon/find.png"
             height="16" width="16" alt="[+]"
             title="show/hide quicksearch" /></span></h3>
         <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
@@ -146,9 +168,7 @@
         
           <li class="class"><a href="../../Sow/Metadata.html">Sow::Metadata</a></li>
         
-          <li class="class"><a href="../../Sow/Plugin.html">Sow::Plugin</a></li>
-        
-          <li class="module"><a href="../../Sow/Plugins.html">Sow::Plugins</a></li>
+          <li class="class"><a href="../../Sow/Scaffold.html">Sow::Scaffold</a></li>
         
           <li class="class"><a href="../../Sow/Script.html">Sow::Script</a></li>
         
@@ -159,13 +179,15 @@
         </ul>
         <div id="no-class-search-results" style="display: none;">No matching classes.</div>
       </div>
-
-      
     </div>
 
     <div id="validator-badges">
-      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a><br/><br/>
-      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+      
+      <div style="float: right; margin-right: 5px;">
+        <a href="http://validator.w3.org/check/referer"><img src="../../assets/icon/check.png" alt="[Validate]" height="16" width="16" /></a>
+      </div>
+      Generated with <a href="http://github.com/proutils/webri">WebRI Redfish</a> 1.2.1
+      <br/><br/>
     </div>
   </div>
 
@@ -191,7 +213,7 @@
 
     
       <div id="copy-method" class="method-detail ">
-        <a name="M000000"></a>
+        <a name="method-i-copy"></a>
 
         <div class="method-heading">
         
@@ -210,15 +232,15 @@
           <div class="method-source-code"
             id="copy-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/create.rb, line 12</span>
-      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
-        <span class="ruby-identifier">tmp</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>)
-        <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">tmp</span>)
-          <span class="ruby-identifier">copy_dir</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
-        <span class="ruby-keyword kw">else</span>
-          <span class="ruby-identifier">copy_doc</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
-        <span class="ruby-keyword kw">end</span>
-      <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/sow/generators/create.rb, line 12</span>
+12:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
+13:         <span class="ruby-identifier">tmp</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>)
+14:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">directory?</span>(<span class="ruby-identifier">tmp</span>)
+15:           <span class="ruby-identifier">copy_dir</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
+16:         <span class="ruby-keyword kw">else</span>
+17:           <span class="ruby-identifier">copy_doc</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
+18:         <span class="ruby-keyword kw">end</span>
+19:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -228,7 +250,7 @@
 
     
       <div id="copy-dir-method" class="method-detail ">
-        <a name="M000001"></a>
+        <a name="method-i-copy_dir"></a>
 
         <div class="method-heading">
         
@@ -247,16 +269,16 @@
           <div class="method-source-code"
             id="copy-dir-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/create.rb, line 22</span>
-      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy_dir</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
-        <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dest</span>) <span class="ruby-comment cmt">#&amp;&amp; src == dest</span>
-          <span class="ruby-identifier">how</span> = <span class="ruby-value str">'same'</span>
-        <span class="ruby-keyword kw">else</span>
-          <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dest</span>)
-          <span class="ruby-identifier">how</span> = <span class="ruby-value str">'create'</span>
-        <span class="ruby-keyword kw">end</span>
-        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">how</span>, <span class="ruby-identifier">dest</span>
-      <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/sow/generators/create.rb, line 22</span>
+22:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy_dir</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
+23:         <span class="ruby-keyword kw">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dest</span>) <span class="ruby-comment cmt">#&amp;&amp; src == dest</span>
+24:           <span class="ruby-identifier">how</span> = <span class="ruby-value str">'same'</span>
+25:         <span class="ruby-keyword kw">else</span>
+26:           <span class="ruby-identifier">mkdir_p</span>(<span class="ruby-identifier">dest</span>)
+27:           <span class="ruby-identifier">how</span> = <span class="ruby-value str">'create'</span>
+28:         <span class="ruby-keyword kw">end</span>
+29:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">how</span>, <span class="ruby-identifier">dest</span>
+30:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -266,7 +288,7 @@
 
     
       <div id="copy-doc-method" class="method-detail ">
-        <a name="M000002"></a>
+        <a name="method-i-copy_doc"></a>
 
         <div class="method-heading">
         
@@ -287,27 +309,27 @@ TODO: Can .stub be used to prevent erb?
           <div class="method-source-code"
             id="copy-doc-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/generators/create.rb, line 33</span>
-      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy_doc</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
-        <span class="ruby-identifier">tmp</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>)
-        <span class="ruby-comment cmt">#ext = File.extname(src)</span>
-        <span class="ruby-comment cmt">#case ext</span>
-        <span class="ruby-comment cmt">#when '.erb'</span>
-        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'verbatim'</span>]
-          <span class="ruby-identifier">how</span> = (<span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dest</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">'update'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'create'</span>)
-          <span class="ruby-comment cmt">#file = tmp_file.chomp('.stub')</span>
-          <span class="ruby-identifier">cp</span>(<span class="ruby-identifier">tmp</span>, <span class="ruby-identifier">dest</span>)
-        <span class="ruby-keyword kw">else</span>
-          <span class="ruby-comment cmt">#file = tname.chomp('.erb') # old way</span>
-          <span class="ruby-identifier">text</span> = <span class="ruby-identifier">erb</span>(<span class="ruby-identifier">tmp</span>) 
-          <span class="ruby-identifier">how</span> = (<span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dest</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">'update'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'create'</span>)
-          <span class="ruby-identifier">write</span>(<span class="ruby-identifier">dest</span>, <span class="ruby-identifier">text</span>)
-        <span class="ruby-keyword kw">end</span>
-        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'chmod'</span>]
-          <span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-value str">'chmod'</span>], <span class="ruby-identifier">dest</span>)
-        <span class="ruby-keyword kw">end</span>
-        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">how</span>, <span class="ruby-identifier">dest</span>
-      <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/sow/generators/create.rb, line 33</span>
+33:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy_doc</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>, <span class="ruby-identifier">dest</span>, <span class="ruby-identifier">opts</span>)
+34:         <span class="ruby-identifier">tmp</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">loc</span>, <span class="ruby-identifier">src</span>)
+35:         <span class="ruby-comment cmt">#ext = File.extname(src)</span>
+36:         <span class="ruby-comment cmt">#case ext</span>
+37:         <span class="ruby-comment cmt">#when '.erb'</span>
+38:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'verbatim'</span>]
+39:           <span class="ruby-identifier">how</span> = (<span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dest</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">'update'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'create'</span>)
+40:           <span class="ruby-comment cmt">#file = tmp_file.chomp('.stub')</span>
+41:           <span class="ruby-identifier">cp</span>(<span class="ruby-identifier">tmp</span>, <span class="ruby-identifier">dest</span>)
+42:         <span class="ruby-keyword kw">else</span>
+43:           <span class="ruby-comment cmt">#file = tname.chomp('.erb') # old way</span>
+44:           <span class="ruby-identifier">text</span> = <span class="ruby-identifier">erb</span>(<span class="ruby-identifier">tmp</span>) 
+45:           <span class="ruby-identifier">how</span> = (<span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">dest</span>) <span class="ruby-operator">?</span> <span class="ruby-value str">'update'</span> <span class="ruby-operator">:</span> <span class="ruby-value str">'create'</span>)
+46:           <span class="ruby-identifier">write</span>(<span class="ruby-identifier">dest</span>, <span class="ruby-identifier">text</span>)
+47:         <span class="ruby-keyword kw">end</span>
+48:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-value str">'chmod'</span>]
+49:           <span class="ruby-identifier">chmod</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-value str">'chmod'</span>], <span class="ruby-identifier">dest</span>)
+50:         <span class="ruby-keyword kw">end</span>
+51:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">how</span>, <span class="ruby-identifier">dest</span>
+52:       <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -328,5 +350,7 @@ TODO: Can .stub be used to prevent erb?
   
   </div>
 
+</main>
 </body>
 </html>
+

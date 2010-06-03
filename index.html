@@ -82,20 +82,13 @@ if you want to share.</p>
 <p>Sow can be used to generate a variety of scaffolding. General usage is as follows:</p>
 
 <pre>
-  $ sow --&lt;seed&gt;[=&lt;arg&gt;] [--&lt;seed&gt;.&lt;prop&gt;[=&lt;val&gt;] ...] &lt;destination&gt;
-</pre>
-
-<p>For example, to setup a project to use Test::Unit, storing tests in the <code>test/unit</code> directory
-and creating an initial empty <code>sample</code> test file, we could type:</p>
-
-<pre>
-  $ sow --testunit=test/unit --testunit.name=sample myapp/
+  $ sow &lt;seed&gt; [--option ...] [argument ...][&lt;prop&gt;=&lt;val&gt; ...]
 </pre>
 
 <p>To demonstrate the output of the <code>sow</code>, lets create a new Ruby project.</p>
 
 <pre>
-  $ sow --ruby myapp/
+  $ sow ruby -o myapp
 </pre>
 
 <p>You will see output resembling:</p>
@@ -104,47 +97,42 @@ and creating an initial empty <code>sample</code> test file, we could type:</p>
   Transferring ruby files to myapp/:
 
       create  bin
-      create  data
-      create  doc
+      create  bin/myapp
       create  doc
       create  lib
-      create  lib/myapp
-      create  meta
+      create  lib/myapp.rb
       create  test
-      create  HISTORY.rdoc
-      create  COPYING.rdoc
-      create  README.rdoc
-      create  meta/authors
-      create  meta/created
-      create  meta/description
-      create  meta/email
-      create  meta/homepage
-      create  meta/license
-      create  meta/package
-      create  meta/repository
-      create  meta/title
-      create  meta/version
+      create  HISTORY
+      create  LICENSE
+      create  README
 
   You need to fix the occurrences of &#8216;__FIX__&#8217; in the following files:
 
       README
-      meta/description
 </pre>
 
 <p>When you generate project scaffolding, be sure to go over the contents and fine-tune.
-In particular, edit all the files that contain &#8216;__FIX__&#8217; entries, but
+In particular, edit all the files that contain &#8216;#___&#8217; entries, but
 be sure to familiarize yourself with all the files produced by a given scaffold.</p>
 
-<p>Because seeds are specified using command-line options, you can string together any number
-of seeds and they will be combined in a single operation. For example we may scaffold a new
-ruby project with cucumber for testing:<p/>
+<p>Now let say we <code>cd myapp</code> and decided to we want to use TestUnit, storing tests in
+the <code>test/unit</code> directory and creating an initial empty <code>sample</code> test file,
+we could type:</p>
 
 <pre>
-  $ sow --ruby --cucumber new_project/
+  $ sow testunit test/unit sample
 </pre>
 
-<p>Any number of seeds can be strung together. The only limitation being that a given type of
-seed can only be used once per invocation of the <code>sow</code> command.</p>
+<p>Sow has a special mode of operation that allow you to  string together any number of seeds
+that will be combined into a single operation. For example we may scaffold a new
+Ruby project with TestUnit simultaniously:<p/>
+
+<pre>
+  $ sow -x ruby -o new_project | sow testunit test/unit sample
+</pre>
+
+<p>Using the '-x' option and piping the output to another excution of <code>code</code>
+any number of seeds can be merged.</p>
 
 </div>
 
@@ -160,7 +148,7 @@ with Hoe. Sow supports Hoe style projects, so there is nothing lost. You
 can simply use:</p>
 
 <pre>
-  $ sow --hoe [directory]
+  $ sow hoe -o <directory>
 </pre>
 
 <p>It is unfortunate that Hoe choose to create an executable outside it's
@@ -177,136 +165,88 @@ seemed rather silly in the end.</p>
 
 <h2>Designing Sow Plugins</h2>
 
-<p>Creating your own plugin is actually quite easy. You simply need to add
+<p>Creating your own seed is actually quite easy. You simply need to add
 a folder to a Ruby project's loadpath following the naming convention
-<code>sow/seeds/&lt;name&gt;/</code>. This folder can be in a dedicated project
+<code>plugins/sow/&lt;name&gt;/</code>. This folder can be in a dedicated project
 or part of another project. Typically your project's loadpath with be under
 <code>lib/</code>. Let's say you want to call your plugin <code>mohgee</code>,
-so you would have a <code>lib/sow/seeds/mohgee/</code> directory. Alternatively
-you can make a separate folder for plugins, and add it's path to your project's
-loadpath (which is what I do). In that case, you might have a folder like
-of <code>plug/sow/seeds/moghee/</code> and would add <code>plug/</code> to the loadpath.</p>
-The plugin folder houses files to instruct sow how to generate a scaffold and a directory
-to hold the template files you want to use for your scaffolding.</p>
+so you would have a <code>lib/plugins/sow/mohgee/</code> directory. Alternatively
+you can make a separate folder for seeds, and add it's path to your project's
+loadpath (though I no longer recommend it). In that case, you might have a folder
+like <code>plug/sow/moghee/</code> and would add <code>plug/</code> to the loadpath.</p>
 
-<p>A typical plugin layout will look like this:</p>
+<p>The folder houses a script to instruct Sow how to generate a scaffold, a README
+to explain what the seed is all about and a <code>template</codd> directory to hold
+files you want to use for your scaffolding. The folder will look like this:</p>
 
 <pre>
-  my_seed/
-    SCRIPT.rb
+  myseed/
+    README
+    Sowfile
     template/
       ...
 </pre>
 
-<p>Or, alternately it can look like this:</p>
+<p>Only the <code>template</code> directory is strictly neccessary. With a Sowfile all
+the files in the <code>template</code> directory will be copied. The Sowfile allows
+that process to be refined. And though not strictly necessary, you should alwasy add
+a READFILE so other can query sow as to the use of the seed.</p>
+
+<p>The <code>Sowfile</code> instructs Sow on how to conduct the scaffolding.
+Essentially, a Sowfile is a small Ruby DSL script which is used to extend a subclass of
+Sow::Script. There are only a few methods you need to know in order to create you own
+plugin.</p>
+
+<p>To get up to speed quickly on how a <code>Sowfile</code> is constructed, below
+is the <code>Sowfile</code> for the built-in license plugin.</p>
 
 <pre>
-  my_seed/
-    DATA.yaml
-    COPY.yaml
-    template/
-      ...
-</pre>
+  LICENSES = %w[gpl lgpl mit]
 
-<p>Which of the two you use depends mostly on your preference.</p>
-
-<p><code>SCRIPT.rb</code> is the the traditional approach, and is probably best suited to complex
-scaffolding. The script instructs Sow on how to conduct the scaffold generation in plain Ruby code.
-Essentially, a Sow script is a small Ruby DSL script containing a subclass of Sow::Script within the
-Sow::Plugins namespace. There are only a few methods you need to know in order to
-create you own plugin.</p>
-
-<p>To get up to speed quickly on how a <code>SCRIPT.rb</code> is constructed, below
-is the <code>SCRIPT.rb</code> for the built-in License plugin.</p>
-
-<pre>
-  module Sow::Plugins
-
-    # Add specified license to your project.
-
-    class License &lt; Script
-
-      LICENSES = %w[gpl lgpl mit]
-
-      about "Add LICENSE/COPYING file to project"
-
-      usage "--license[=&lt;NAME&gt;]"
-
-      argument :license
-
-      setup do
-        name = license.downcase
-        abort "License name required" unless LICENSES.include?(name)
-        metadata.license = name.upcase
-      end
-
-      manifest do
-        copy "*", '.', :cd => license.downcase
-      end
-
+  setup do |licence, *_|
+    lic = (license || 'mit').downcase
+    unless LICENSES.include?(lic)
+      abort "Unrecognized license name. Choose:\n  " + LICENSES.join("\n  ")
     end
+    metadata.license = lic.upcase
+  end
 
+  scaffold do
+    copy "*", '.', :cd => license.downcase
   end
 </pre>
 
-<p>Notice we have specified the main argument via the <code>argument</code> meta-method.
-This means the command-line <code>--license</code> option will take an argument.
-In the <code>setup</code> method we set <code>metadata.license</code> to this argument
-so that it can be used in by the eRuby templates. The <code>manifest</code> method specifies
-the transfer instructions of copying the appropriate contents from the <code>template</code>
-directory to our destination directory. The <code>:cd</code> option is a convenience option
-that tells the copy command to drop down into a template sub-directory before performing the
+<p>Notice we have specified the main argument via the setup block. This means the first
+commandline argument will be assigned to <code>license</code>. In the <code>setup</code>
+method we set <code>metadata.license</code> to this argument so that it can be used by
+the ERB templates. The <code>scaffold</code> method specifies the transfer instructions
+of copying the appropriate contents from the <code>template</code> directory to our
+destination directory. The <code>:cd</code> option is a convenience that tells the
+copy command to drop down into a template sub-directory before performing the
 copy operation.</p>
 
 <p>The layout of the license plugin looks basically like this:</p>
 
 <pre>
-  SCRIPT.rb
+  README
+  Sowfile
   template/
     gpl/
       COPYING
     lgpl/
       COPYING
-      LICENSE
+      COPYING.lesser
     mit/
       LICENSE
 </pre>
 
-<p>So for example, upon invoking <code>sow --license=lgpl</code>, sow will copy the
+<p>So for example, upon invoking <code>sow license lgpl</code>, Sow will copy the
 contents of the <code>lgpl</code> subdirectory into our project directory.</p>
 
-<p>The other approach, of using the DATA.yml and COPY.yml files instead of a SCRIPT.rb,
-allows us to specify the scaffolding instructions via YAML in a <i>declarative</i> style.
-By comparison, for the above License case the DATA.yml file would look like:</p>
-
-<pre>
-  ---
-  about    : Add LICENSE/COPYING file to project
-  usage    : "--license[=&lt;NAME&gt;]"
-  license  : argument.upcase
-  licenses : [gpl, lgpl, mit]
-  validate :
-    name = license.downcase;
-    abort "License name required" unless licenses.include?(name)
-</pre>
-
-<p>And the COPY.yml file like:</p>
-
-<pre>
-  ---
-  - from : "*"
-    to   : '.'
-    cd   : &lt;%= license.downcase %&gt;
-</pre>
-
-<p>I am sure you can see the similarities between the two. They effectively do the
-exact same thing. The later just happens to be a little bit easier to digest, but
-not quite as readily programmable.</p>
-
 <p>The contents of <code>template/</code> do not need any special extension to be
-processed by eRuby. All files in the template directory are considered eRuby
-files. To avoid eRuby processing, use the <code>:verbatim => true</code> option with
-the <code>copy</code> command.
+processed by ERB. All files in the template directory are considered ERB
+files. To avoid processing via ERB, use the <code>:verbatim => true</code> option
+with the <code>copy</code> command.
 
 </div>
 
@@ -369,6 +309,20 @@ to be just a single project, rather three came from the edeavor: Ratch, Sow and 
 -->
 
 <!---------------- FOOTER ------------------>
+
+<div style="text-align: center;">
+  <script type="text/javascript"><!--
+  google_ad_client = "pub-1126154564663472";
+  /* RUBYWORKS 09-10-02 728x90 */
+  google_ad_slot = "0788888658";
+  google_ad_width = 728;
+  google_ad_height = 90;
+  //-->
+  </script>
+  <script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+  </script>
+</div>
 
 <div id="copy">
   <a href="http://proutils.github.com/sow">Sow</a>

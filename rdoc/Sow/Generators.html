@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -9,23 +8,39 @@
   <title>Module: Sow::Generators</title>
 
   
-    <link rel="SHORTCUT ICON" href="../images/module.png">
+    <link rel="SHORTCUT ICON" href="../assets/icon/module.png">
   
 
-  <link type="text/css" media="screen" rel="stylesheet" href="../rdoc.css" />
+  <link type="text/css" rel="stylesheet" href="../assets/rdoc.css" media="screen" />
+  <link type="text/css" rel="stylesheet" href="../assets/highlight/styles/github.css" title="GitHub" />
 
-  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/highlight/highlight.pack.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/quicksearch.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/main.js"></script>
 
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#documentation pre').wrapInner('<code></code>');
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad('ruby');
+
+	    hookSourceViews();
+	    hookDebuggingToggle();
+	    hookQuickSearch();
+	    highlightLocationTarget();
+
+	    $('ul.link-list a').bind( "click", highlightClickTarget );
+    });
+  </script>
 </head>
 <body class="module">
+<div id="main">
 
   <div class="head">
     <h1>
       
-        <img src="../images/module.png" align="absmiddle">&nbsp;
+        <img src="../assets/icon/module.png" align="absmiddle">&nbsp;
       
       <a href="../index.html">Sow</a>&nbsp;
       <a href="/">Sow::Generators</a>
@@ -57,6 +72,7 @@
       </div>
 
       <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+      <!-- TODO: generalize this for all SCMs -->
 
       
     </div>
@@ -72,13 +88,13 @@
         <h3 class="section-header">Namespace</h3>
         <ul class="link-list">
           
-          <li class="module"><a href="Generators/Base.html">Sow::Generators::Base</a></li>
+          <li class="class"><a href="Generators/Base.html">Sow::Generators::Base</a></li>
           
-          <li class="module"><a href="Generators/Create.html">Sow::Generators::Create</a></li>
+          <li class="class"><a href="Generators/Create.html">Sow::Generators::Create</a></li>
           
-          <li class="module"><a href="Generators/Delete.html">Sow::Generators::Delete</a></li>
+          <li class="class"><a href="Generators/Delete.html">Sow::Generators::Delete</a></li>
           
-          <li class="module"><a href="Generators/Update.html">Sow::Generators::Update</a></li>
+          <li class="class"><a href="Generators/Update.html">Sow::Generators::Update</a></li>
           
         </ul>
       </div>
@@ -95,14 +111,10 @@
       
       
       <div id="fileindex-section" class="section project-section">
-        <h3 class="section-header">Files</h3>
+        <h3 class="section-header">Information</h3>
         <ul>
         
-          <li class="file"><a href="../COPYING.html">COPYING</a></li>
-        
           <li class="file"><a href="../HISTORY.html">HISTORY</a></li>
-        
-          <li class="file"><a href="../NOTES.html">NOTES</a></li>
         
           <li class="file"><a href="../README.html">README</a></li>
         
@@ -112,7 +124,7 @@
 
       <div id="classindex-section" class="section project-section">
         <h3 class="section-header">Class Index
-          <span class="search-toggle"><img src="../images/find.png"
+          <span class="search-toggle"><img src="../assets/icon/find.png"
             height="16" width="16" alt="[+]"
             title="show/hide quicksearch" /></span></h3>
         <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
@@ -148,9 +160,7 @@
         
           <li class="class"><a href="../Sow/Metadata.html">Sow::Metadata</a></li>
         
-          <li class="class"><a href="../Sow/Plugin.html">Sow::Plugin</a></li>
-        
-          <li class="module"><a href="../Sow/Plugins.html">Sow::Plugins</a></li>
+          <li class="class"><a href="../Sow/Scaffold.html">Sow::Scaffold</a></li>
         
           <li class="class"><a href="../Sow/Script.html">Sow::Script</a></li>
         
@@ -161,13 +171,15 @@
         </ul>
         <div id="no-class-search-results" style="display: none;">No matching classes.</div>
       </div>
-
-      
     </div>
 
     <div id="validator-badges">
-      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a><br/><br/>
-      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+      
+      <div style="float: right; margin-right: 5px;">
+        <a href="http://validator.w3.org/check/referer"><img src="../assets/icon/check.png" alt="[Validate]" height="16" width="16" /></a>
+      </div>
+      Generated with <a href="http://github.com/proutils/webri">WebRI Redfish</a> 1.2.1
+      <br/><br/>
     </div>
   </div>
 
@@ -199,5 +211,7 @@
   
   </div>
 
+</main>
 </body>
 </html>
+

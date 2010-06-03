@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -9,23 +8,39 @@
   <title>Class: Sow::Script</title>
 
   
-    <link rel="SHORTCUT ICON" href="../images/class.png">
+    <link rel="SHORTCUT ICON" href="../assets/icon/class.png">
   
 
-  <link type="text/css" media="screen" rel="stylesheet" href="../rdoc.css" />
+  <link type="text/css" rel="stylesheet" href="../assets/rdoc.css" media="screen" />
+  <link type="text/css" rel="stylesheet" href="../assets/highlight/styles/github.css" title="GitHub" />
 
-  <script src="../js/jquery.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/thickbox.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
-  <script src="../js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/highlight/highlight.pack.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/quicksearch.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../assets/main.js"></script>
 
+  <script type="text/javascript">
+    $(document).ready( function() {
+      $('#documentation pre').wrapInner('<code></code>');
+      hljs.tabReplace = '    ';
+      hljs.initHighlightingOnLoad('ruby');
+
+	    hookSourceViews();
+	    hookDebuggingToggle();
+	    hookQuickSearch();
+	    highlightLocationTarget();
+
+	    $('ul.link-list a').bind( "click", highlightClickTarget );
+    });
+  </script>
 </head>
 <body class="class">
+<div id="main">
 
   <div class="head">
     <h1>
       
-        <img src="../images/class.png" align="absmiddle">&nbsp;
+        <img src="../assets/icon/class.png" align="absmiddle">&nbsp;
       
       <a href="../index.html">Sow</a>&nbsp;
       <a href="/">Sow::Script</a>
@@ -48,6 +63,7 @@
       </div>
 
       <!-- What about Git info, or Hg info? This seems almost silly, albeit kind of cool. -->
+      <!-- TODO: generalize this for all SCMs -->
 
       
     </div>
@@ -75,39 +91,75 @@
         <h3 class="section-header">Methods</h3>
         <ul class="link-list">
           
-          <li class="method"><a href="#M000115">::argument</a></li>
+            
+            <li class="singleton">
+              <a href="#method-c-new">::new</a>
+            </li>
           
-          <li class="method"><a href="#M000111">::inherited</a></li>
+            
+            <li class="singleton">
+              <a href="#method-c-scaffold">::scaffold</a>
+            </li>
           
-          <li class="method"><a href="#M000113">::manifest</a></li>
+            
+            <li class="singleton">
+              <a href="#method-c-setup">::setup</a>
+            </li>
           
-          <li class="method"><a href="#M000119">::new</a></li>
+            
+            <li class="singleton">
+              <a href="#method-c-utilize">::utilize</a>
+            </li>
           
-          <li class="method"><a href="#M000114">::option</a></li>
+            
+            <li class="method">
+              <a href="#method-i-abort_unless_empty_or_managed">#abort_unless_empty_or_managed</a>
+            </li>
           
-          <li class="method"><a href="#M000109">::registry</a></li>
+            
+            <li class="method">
+              <a href="#method-i-argument">#argument</a>
+            </li>
           
-          <li class="method"><a href="#M000112">::setup</a></li>
+            
+            <li class="method">
+              <a href="#method-i-copy">#copy</a>
+            </li>
           
-          <li class="method"><a href="#M000127">#[]</a></li>
+            
+            <li class="method">
+              <a href="#method-i-destination">#destination</a>
+            </li>
           
-          <li class="method"><a href="#M000128">#[]=</a></li>
+            
+            <li class="method">
+              <a href="#method-i-env">#env</a>
+            </li>
           
-          <li class="method"><a href="#M000125">#about</a></li>
+            
+            <li class="method">
+              <a href="#method-i-environment">#environment</a>
+            </li>
           
-          <li class="method"><a href="#M000121">#argument</a></li>
+            
+            <li class="method">
+              <a href="#method-i-metadata">#metadata</a>
+            </li>
           
-          <li class="method"><a href="#M000126">#copy</a></li>
+            
+            <li class="method">
+              <a href="#method-i-method_missing">#method_missing</a>
+            </li>
           
-          <li class="method"><a href="#M000124">#destination</a></li>
+            
+            <li class="method">
+              <a href="#method-i-scaffold">#scaffold</a>
+            </li>
           
-          <li class="method"><a href="#M000118">#manifest</a></li>
-          
-          <li class="method"><a href="#M000122">#metadata</a></li>
-          
-          <li class="method"><a href="#M000129">#method_missing</a></li>
-          
-          <li class="method"><a href="#M000116">#setup</a></li>
+            
+            <li class="method">
+              <a href="#method-i-setup">#setup</a>
+            </li>
           
         </ul>
       </div>
@@ -121,14 +173,10 @@
       
       
       <div id="fileindex-section" class="section project-section">
-        <h3 class="section-header">Files</h3>
+        <h3 class="section-header">Information</h3>
         <ul>
         
-          <li class="file"><a href="../COPYING.html">COPYING</a></li>
-        
           <li class="file"><a href="../HISTORY.html">HISTORY</a></li>
-        
-          <li class="file"><a href="../NOTES.html">NOTES</a></li>
         
           <li class="file"><a href="../README.html">README</a></li>
         
@@ -138,7 +186,7 @@
 
       <div id="classindex-section" class="section project-section">
         <h3 class="section-header">Class Index
-          <span class="search-toggle"><img src="../images/find.png"
+          <span class="search-toggle"><img src="../assets/icon/find.png"
             height="16" width="16" alt="[+]"
             title="show/hide quicksearch" /></span></h3>
         <form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
@@ -174,9 +222,7 @@
         
           <li class="class"><a href="../Sow/Metadata.html">Sow::Metadata</a></li>
         
-          <li class="class"><a href="../Sow/Plugin.html">Sow::Plugin</a></li>
-        
-          <li class="module"><a href="../Sow/Plugins.html">Sow::Plugins</a></li>
+          <li class="class"><a href="../Sow/Scaffold.html">Sow::Scaffold</a></li>
         
           <li class="class"><a href="../Sow/Script.html">Sow::Script</a></li>
         
@@ -187,13 +233,15 @@
         </ul>
         <div id="no-class-search-results" style="display: none;">No matching classes.</div>
       </div>
-
-      
     </div>
 
     <div id="validator-badges">
-      Generated with <a href="http://github.com/proutils/rdazzle">Razzle Dazzle Redfish</a><br/><br/>
-      <a href="http://validator.w3.org/check/referer">[Validate]</a>
+      
+      <div style="float: right; margin-right: 5px;">
+        <a href="http://validator.w3.org/check/referer"><img src="../assets/icon/check.png" alt="[Validate]" height="16" width="16" /></a>
+      </div>
+      Generated with <a href="http://github.com/proutils/webri">WebRI Redfish</a> 1.2.1
+      <br/><br/>
     </div>
   </div>
 
@@ -205,12 +253,9 @@
       
 
       <p>
-A <a href="../Sow.html">Sow</a> <a href="Script.html">Script</a> provides a
-simple DSL for specifying arguments, a copylist and the various
-specificities needed to define a scaffold generator proccess.
-</p>
-<p>
-Note: This is the old way of building a plugin.
+A Sowfile <a href="Script.html">Script</a> provides a simple DSL for
+specifying a copylist and the various specificities needed to define a
+scaffold generator proccess.
 </p>
 
     </div>
@@ -241,21 +286,6 @@ Instance of <a href="Session.html">Session</a>.
         </div>
       </div>
       
-      <div id="options-attribute-method" class="method-detail">
-        <a name="options"></a>
-        
-        <div class="method-heading attribute-method-heading">
-          <span class="method-name">options</span><span
-            class="attribute-access-type">[R]</span>
-        </div>
-
-        <div class="method-description">
-        
-        
-        
-        </div>
-      </div>
-      
       <div id="copylist-attribute-method" class="method-detail">
         <a name="copylist"></a>
         
@@ -267,7 +297,7 @@ Instance of <a href="Session.html">Session</a>.
         <div class="method-description">
         
         <p>
-Copylist contains the a list of transfer operations as compiled from the
+Copylist contains the a list of transfer operations as  compiled from the
 plugin.
 </p>
         
@@ -283,115 +313,13 @@ plugin.
       <h3 class="section-header">Public Class Methods</h3>
 
     
-      <div id="argument-method" class="method-detail ">
-        <a name="M000115"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">argument</span><span
-            class="method-args">(name)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p>
-Give the main argument a name.
-</p>
-          
-
-          
-          <div class="method-source-code"
-            id="argument-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 43</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">argument</span>(<span class="ruby-identifier">name</span>)
-      <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">name</span>){ <span class="ruby-identifier">argument</span> }
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="inherited-method" class="method-detail ">
-        <a name="M000111"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">inherited</span><span
-            class="method-args">(base)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p>
-If inherited, register the script by it&#8217;s class basename downcased.
-</p>
-          
-
-          
-          <div class="method-source-code"
-            id="inherited-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 19</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">inherited</span>(<span class="ruby-identifier">base</span>)
-      <span class="ruby-identifier">registry</span>[<span class="ruby-identifier">base</span>.<span class="ruby-identifier">basename</span>.<span class="ruby-identifier">downcase</span>] = <span class="ruby-identifier">base</span>
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="manifest-method" class="method-detail ">
-        <a name="M000113"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">manifest</span><span
-            class="method-args">(&block)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p>
-Manifest procedure, used to invoke <a href="Script.html#M000126">copy</a>.
-</p>
-          
-
-          
-          <div class="method-source-code"
-            id="manifest-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 31</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">manifest</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-      <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">:manifest</span>,<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
       <div id="new-method" class="method-detail ">
-        <a name="M000119"></a>
+        <a name="method-c-new"></a>
 
         <div class="method-heading">
         
           <span class="method-name">new</span><span
-            class="method-args">(session, options)</span>
+            class="method-args">(session)</span>
           <span class="method-click-advice">click to toggle source</span>
         
         </div>
@@ -405,13 +333,11 @@ Manifest procedure, used to invoke <a href="Script.html#M000126">copy</a>.
           <div class="method-source-code"
             id="new-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 73</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">session</span>, <span class="ruby-identifier">options</span>)
-      <span class="ruby-ivar">@session</span> = <span class="ruby-identifier">session</span>
-      <span class="ruby-ivar">@options</span> = <span class="ruby-identifier">options</span>
-
-      <span class="ruby-ivar">@copylist</span>  = []
-    <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/sow/script.rb, line 60</span>
+60:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">session</span>)
+61:       <span class="ruby-ivar">@session</span>  = <span class="ruby-identifier">session</span>
+62:       <span class="ruby-ivar">@copylist</span> = []
+63:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -420,13 +346,13 @@ Manifest procedure, used to invoke <a href="Script.html#M000126">copy</a>.
       </div>
 
     
-      <div id="option-method" class="method-detail ">
-        <a name="M000114"></a>
+      <div id="scaffold-method" class="method-detail ">
+        <a name="method-c-scaffold"></a>
 
         <div class="method-heading">
         
-          <span class="method-name">option</span><span
-            class="method-args">(name)</span>
+          <span class="method-name">scaffold</span><span
+            class="method-args">(&block)</span>
           <span class="method-click-advice">click to toggle source</span>
         
         </div>
@@ -434,52 +360,20 @@ Manifest procedure, used to invoke <a href="Script.html#M000126">copy</a>.
         <div class="method-description">
           
           <p>
-Specify a valid option.
+Scaffolding procedure, used to invoke <a
+href="Script.html#method-i-copy">#</a>. TODO: allow there to be more than
+one.
 </p>
           
 
           
           <div class="method-source-code"
-            id="option-source">
+            id="scaffold-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 37</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">option</span>(<span class="ruby-identifier">name</span>)
-      <span class="ruby-identifier">attr_accessor</span>(<span class="ruby-identifier">name</span>)
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="registry-method" class="method-detail ">
-        <a name="M000109"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">registry</span><span
-            class="method-args">()</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p>
-<a href="Script.html">Script</a> registery/
-</p>
-          
-
-          
-          <div class="method-source-code"
-            id="registry-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 13</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">registry</span>
-      <span class="ruby-ivar">@registry</span> <span class="ruby-operator">||=</span> {}
-    <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/sow/script.rb, line 38</span>
+38:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">scaffold</span>(&amp;<span class="ruby-identifier">block</span>)
+39:       <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:scaffold</span>, &amp;<span class="ruby-identifier">block</span>)
+40:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -489,7 +383,7 @@ Specify a valid option.
 
     
       <div id="setup-method" class="method-detail ">
-        <a name="M000112"></a>
+        <a name="method-c-setup"></a>
 
         <div class="method-heading">
         
@@ -502,7 +396,8 @@ Specify a valid option.
         <div class="method-description">
           
           <p>
-Setup procedure, used to setup metadata.
+Setup procedure, used to setup metadata. TODO: allow there to be more than
+one. Then we can import other scaffolds.
 </p>
           
 
@@ -510,10 +405,42 @@ Setup procedure, used to setup metadata.
           <div class="method-source-code"
             id="setup-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 25</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">setup</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-      <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">:setup</span>,<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/sow/script.rb, line 32</span>
+32:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">setup</span>(&amp;<span class="ruby-identifier">block</span>)
+33:       <span class="ruby-identifier">define_method</span>(<span class="ruby-value">:setup</span>, &amp;<span class="ruby-identifier">block</span>)
+34:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="utilize-method" class="method-detail ">
+        <a name="method-c-utilize"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">utilize</span><span
+            class="method-args">(name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="utilize-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/sow/script.rb, line 26</span>
+26:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">utilize</span>(<span class="ruby-identifier">name</span>)
+27:       <span class="ruby-identifier">require</span> <span class="ruby-node">&quot;sow/extensions/#{name}&quot;</span>
+28:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -528,106 +455,37 @@ Setup procedure, used to setup metadata.
       <h3 class="section-header">Public Instance Methods</h3>
 
     
-      <div id="--method" class="method-detail ">
-        <a name="M000127"></a>
+      <div id="abort-unless-empty-or-managed-method" class="method-detail ">
+        <a name="method-i-abort_unless_empty_or_managed"></a>
 
         <div class="method-heading">
         
-          <span class="method-name">[]</span><span
-            class="method-args">(var)</span>
+          <span class="method-name">abort_unless_empty_or_managed</span><span
+            class="method-args">(*ignore)</span>
           <span class="method-click-advice">click to toggle source</span>
         
         </div>
 
         <div class="method-description">
           
-          <p>
-This is to allow <a href="Plugin.html">Plugin</a> access to the internal
-state.
-</p>
+          
           
 
           
           <div class="method-source-code"
-            id="--source">
+            id="abort-unless-empty-or-managed-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 154</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-identifier">var</span>)
-      <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-node">&quot;@#{var}&quot;</span>)
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="--method" class="method-detail ">
-        <a name="M000128"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">[]=</span><span
-            class="method-args">(var, val)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p>
-Set &#8230; using a singleton method.
-</p>
-          
-
-          
-          <div class="method-source-code"
-            id="--source">
-<pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 159</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-identifier">var</span>, <span class="ruby-identifier">val</span>)
-      <span class="ruby-identifier">quaclass</span> = (<span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">self</span>; <span class="ruby-keyword kw">end</span>)
-      <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;invalid argument name -- #{var}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">quaclass</span>.<span class="ruby-identifier">method_defined?</span>(<span class="ruby-identifier">var</span>)
-      <span class="ruby-identifier">quaclass</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
-        <span class="ruby-identifier">define_method</span>(<span class="ruby-identifier">var</span>){ <span class="ruby-identifier">val</span> }
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-comment cmt">#@session[var.to_sym] = val</span>
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
-          
-        </div>
-
-        
-      </div>
-
-    
-      <div id="about-method" class="method-detail ">
-        <a name="M000125"></a>
-
-        <div class="method-heading">
-        
-          <span class="method-name">about</span><span
-            class="method-args">(text)</span>
-          <span class="method-click-advice">click to toggle source</span>
-        
-        </div>
-
-        <div class="method-description">
-          
-          <p>
-Describe the purpose of this generator.
-</p>
-          
-
-          
-          <div class="method-source-code"
-            id="about-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 115</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">about</span>(<span class="ruby-identifier">text</span>)
-      <span class="ruby-ivar">@about</span> = <span class="ruby-identifier">text</span>
-    <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/script.rb, line 156</span>
+156:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">abort_unless_empty_or_managed</span>(*<span class="ruby-identifier">ignore</span>)
+157:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">destination</span>.<span class="ruby-identifier">exist?</span>
+158:         <span class="ruby-identifier">files</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">entries</span>(<span class="ruby-identifier">destination</span>) <span class="ruby-operator">-</span> ([<span class="ruby-value str">'.'</span>, <span class="ruby-value str">'..'</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">ignore</span>)
+159:         <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">files</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-keyword kw">and</span> <span class="ruby-operator">!</span><span class="ruby-identifier">managed?</span>
+160:           <span class="ruby-identifier">abort</span> <span class="ruby-value str">&quot;This seed is intended for new projects.\n&quot;</span> <span class="ruby-operator">+</span>
+161:                 <span class="ruby-value str">&quot;But the destination directory is not empty.\n&quot;</span> <span class="ruby-operator">+</span>
+162:                 <span class="ruby-value str">&quot;Please use --force, --skip or --prompt to proceed.&quot;</span>
+163:         <span class="ruby-keyword kw">end</span>
+164:       <span class="ruby-keyword kw">end</span>
+165:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -637,7 +495,7 @@ Describe the purpose of this generator.
 
     
       <div id="argument-method" class="method-detail ">
-        <a name="M000121"></a>
+        <a name="method-i-argument"></a>
 
         <div class="method-heading">
         
@@ -658,10 +516,10 @@ Main argument.
           <div class="method-source-code"
             id="argument-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 82</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">argument</span>
-      <span class="ruby-identifier">options</span>.<span class="ruby-identifier">argument</span>
-    <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/sow/script.rb, line 92</span>
+92:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">argument</span>
+93:       <span class="ruby-identifier">options</span>.<span class="ruby-identifier">argument</span>
+94:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -671,7 +529,7 @@ Main argument.
 
     
       <div id="copy-method" class="method-detail ">
-        <a name="M000126"></a>
+        <a name="method-i-copy"></a>
 
         <div class="method-heading">
         
@@ -692,13 +550,13 @@ Designate a copying action.
           <div class="method-source-code"
             id="copy-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 146</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">from_to_opts</span>)
-      <span class="ruby-identifier">opts</span> = <span class="ruby-constant">Hash</span><span class="ruby-operator">===</span><span class="ruby-identifier">from_to_opts</span>.<span class="ruby-identifier">last</span> <span class="ruby-value">? </span><span class="ruby-identifier">from_to_opts</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">:</span> {}
-      <span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span> = <span class="ruby-operator">*</span><span class="ruby-identifier">from_to_opts</span>
-      <span class="ruby-identifier">to</span> = <span class="ruby-identifier">to</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'.'</span>
-      <span class="ruby-ivar">@copylist</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span>, <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">rekey</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:to_s</span>)]
-    <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/script.rb, line 122</span>
+122:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy</span>(*<span class="ruby-identifier">from_to_opts</span>)
+123:       <span class="ruby-identifier">opts</span> = <span class="ruby-constant">Hash</span><span class="ruby-operator">===</span><span class="ruby-identifier">from_to_opts</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">from_to_opts</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">:</span> {}
+124:       <span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span> = *<span class="ruby-identifier">from_to_opts</span>
+125:       <span class="ruby-identifier">to</span> = <span class="ruby-identifier">to</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'.'</span>
+126:       <span class="ruby-ivar">@copylist</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">from</span>, <span class="ruby-identifier">to</span>, <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">rekey</span>(&amp;<span class="ruby-value">:to_s</span>)]
+127:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -708,7 +566,7 @@ Designate a copying action.
 
     
       <div id="destination-method" class="method-detail ">
-        <a name="M000124"></a>
+        <a name="method-i-destination"></a>
 
         <div class="method-heading">
         
@@ -731,10 +589,10 @@ the output directory.
           <div class="method-source-code"
             id="destination-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 102</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destination</span>
-      <span class="ruby-identifier">session</span>.<span class="ruby-identifier">destination</span>
-    <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/script.rb, line 112</span>
+112:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destination</span>
+113:       <span class="ruby-identifier">session</span>.<span class="ruby-identifier">destination</span>
+114:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -743,12 +601,12 @@ the output directory.
       </div>
 
     
-      <div id="manifest-method" class="method-detail ">
-        <a name="M000118"></a>
+      <div id="env-method" class="method-detail method-alias">
+        <a name="method-i-env"></a>
 
         <div class="method-heading">
         
-          <span class="method-name">manifest</span><span
+          <span class="method-name">env</span><span
             class="method-args">()</span>
           <span class="method-click-advice">click to toggle source</span>
         
@@ -756,20 +614,9 @@ the output directory.
 
         <div class="method-description">
           
-          <p>
-Override and place copy statment in this method.
-</p>
+          
           
 
-          
-          <div class="method-source-code"
-            id="manifest-source">
-<pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 55</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">manifest</span>
-      <span class="ruby-identifier">copy</span> <span class="ruby-value str">'**/*'</span>, <span class="ruby-value str">'.'</span>
-    <span class="ruby-keyword kw">end</span></pre>
-          </div>
           
         </div>
 
@@ -777,8 +624,44 @@ Override and place copy statment in this method.
       </div>
 
     
+      <div id="environment-method" class="method-detail ">
+        <a name="method-i-environment"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">environment</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code"
+            id="environment-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/sow/script.rb, line 69</span>
+69:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">environment</span>
+70:       <span class="ruby-identifier">session</span>.<span class="ruby-identifier">environment</span>
+71:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+        <div class="aliases">
+          Also aliased as: <a href="Script.html#method-i-env">env</a>
+        </div>
+        
+      </div>
+
+    
       <div id="metadata-method" class="method-detail ">
-        <a name="M000122"></a>
+        <a name="method-i-metadata"></a>
 
         <div class="method-heading">
         
@@ -804,10 +687,10 @@ the copy calls, if needed.
           <div class="method-source-code"
             id="metadata-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 94</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
-      <span class="ruby-identifier">session</span>.<span class="ruby-identifier">metadata</span>
-    <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/script.rb, line 104</span>
+104:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">metadata</span>
+105:       <span class="ruby-identifier">session</span>.<span class="ruby-identifier">metadata</span>
+106:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -817,12 +700,12 @@ the copy calls, if needed.
 
     
       <div id="method-missing-method" class="method-detail ">
-        <a name="M000129"></a>
+        <a name="method-i-method_missing"></a>
 
         <div class="method-heading">
         
           <span class="method-name">method_missing</span><span
-            class="method-args">(var,*a)</span>
+            class="method-args">(s,*a)</span>
           <span class="method-click-advice">click to toggle source</span>
         
         </div>
@@ -838,14 +721,48 @@ If method missing, routes the call to <tt>session</tt>.
           <div class="method-source-code"
             id="method-missing-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 169</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">var</span>,<span class="ruby-operator">*</span><span class="ruby-identifier">a</span>)
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">val</span> = <span class="ruby-ivar">@session</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">var</span>)
-        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">val</span>
-      <span class="ruby-keyword kw">else</span>
-        <span class="ruby-keyword kw">super</span>
-      <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">end</span></pre>
+     <span class="ruby-comment cmt"># File lib/sow/script.rb, line 147</span>
+147:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">s</span>,*<span class="ruby-identifier">a</span>)
+148:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">s</span>)
+149:         <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">session</span>.<span class="ruby-identifier">__send__</span>(<span class="ruby-identifier">s</span>)
+150:       <span class="ruby-keyword kw">else</span>
+151:         <span class="ruby-keyword kw">super</span>
+152:       <span class="ruby-keyword kw">end</span>
+153:     <span class="ruby-keyword kw">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+      </div>
+
+    
+      <div id="scaffold-method" class="method-detail ">
+        <a name="method-i-scaffold"></a>
+
+        <div class="method-heading">
+        
+          <span class="method-name">scaffold</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        
+        </div>
+
+        <div class="method-description">
+          
+          <p>
+Override and place copy statment in this method.
+</p>
+          
+
+          
+          <div class="method-source-code"
+            id="scaffold-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/sow/script.rb, line 87</span>
+87:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scaffold</span>
+88:       <span class="ruby-identifier">copy</span> <span class="ruby-value str">'**/*'</span>, <span class="ruby-value str">'.'</span>
+89:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -855,7 +772,7 @@ If method missing, routes the call to <tt>session</tt>.
 
     
       <div id="setup-method" class="method-detail ">
-        <a name="M000116"></a>
+        <a name="method-i-setup"></a>
 
         <div class="method-heading">
         
@@ -869,7 +786,7 @@ If method missing, routes the call to <tt>session</tt>.
           
           <p>
 Override and setup metadata and validate. If something does jive, then use
-abort to terminate execution.
+# to terminate execution.
 </p>
           
 
@@ -877,9 +794,9 @@ abort to terminate execution.
           <div class="method-source-code"
             id="setup-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sow/script.rb, line 50</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>
-    <span class="ruby-keyword kw">end</span></pre>
+    <span class="ruby-comment cmt"># File lib/sow/script.rb, line 83</span>
+83:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">setup</span>
+84:     <span class="ruby-keyword kw">end</span></pre>
           </div>
           
         </div>
@@ -900,5 +817,7 @@ abort to terminate execution.
   
   </div>
 
+</main>
 </body>
 </html>
+
