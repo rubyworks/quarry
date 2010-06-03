@@ -13,63 +13,64 @@
 
 <!--0-------------- HEADER ------------------->
 
-<div id="menu">
-  <a href="lowdown.html">Overview</a>       &#160;
-  <a href="plugins.html">Plugin Gallery</a> &#160;
-  <a href="rdoc/index.html">RDocs</a>       &#160;
-  <a href="http://github.com/proutils/sow">Development</a>
-</div>
-
 <div id="head">
-<div id="title">SOW</div>
-<div id="subtitle">tending to project ecology</div>
-<div id="formats">
-  README <br/> bin <br/> lib <br/> test <br/> . . .
-</div>
+  <div>
+    <div id="title">SOW</div>
+    <div id="subtitle">tending project ecology</div>
+  </div>
+  <div id="formats">
+    README <br/> bin <br/> lib <br/> test <br/> . . .
+  </div>
+  <div id="menu">
+    <a href="index.html">Overview</a> <br/>
+    <a href="seeds.html">Gallery</a> <br/>
+    <a href="rdoc/index.html">API</a> <br/>
+    <!-- <a href="qedoc/index.html">QEDocs</a> <br/> -->
+    <!-- <a href="http://rubyforge.org/projects/proutils">Rubyforge</a> <br/> -->
+    <a href="http://github.com/proutils/sow">Development</a> <br/>
+    <a href="http://googlegroups/group/proutils/">Mailing List</a>
+  </div>
 </div>
 
-<div id="main">
+<div id="main" style="margin-top: 80px; padding-left: 10px;">
 
 <!--1------------- FLOWERS ------------------>
 
 <div class="flower">
   <img src="assets/images/flowers/ruby.jpg"/>
   <h1>ruby</h1>
-  <code>Usage: ruby &lt;name&gt;</code>
   <p>Scaffolding for a basic Ruby project layout.</p>
-</div>
-
-<div class="flower">
-</div>
-
-<div class="flower">
-  <img src="assets/images/flowers/syckle.jpg"/>
-  <h1>syckle</h1>
-  <code>Usage: syckle</code>
-  <p>Create a Syckfile for Syckle-managed project.
-  Availble via <a href="http://proutils.github.com/syckle">Syckle</a>.</p>
-</div>
-
-<div class="flower">
-  <img src="assets/images/flowers/hoe.jpg"/>
-  <h1>hoe</h1>
-  <code>Usage: hoe -o &lt;name&gt;</code>
-  <p>Layout for a Hoe-managed Ruby project.</p>
-</div>
-
-<div class="flower">
-  <img src="assets/images/flowers/testunit.jpg"/>
-  <h1>testunit</h1>
-  <code>Usage: testunit [test-path] [test-name]</code><br/>
-  <code>Usage: test.testunit [test-name] [test-path]</code>
-  <p>Template for test/unit test.</p>
+  <p><code>Usage: ruby -o &lt;name&gt;</code></p>
 </div>
 
 <div class="flower">
   <img src="assets/images/flowers/license.jpg"/>
   <h1>license</h1>
-  <code>Usage: license &lt;license-type&gt;</code>
   <p>Add a license to your project.</p>
+  <p><code>Usage: license &lt;license-type&gt;</code></p>
+</div>
+
+<div class="flower">
+  <img src="assets/images/flowers/syckle.jpg"/>
+  <h1>syckle</h1>
+  <p>Create a Syckfile for Syckle-managed project.<br/>
+  Availble via <a href="http://proutils.github.com/syckle">Syckle</a>.</p>
+  <p><code>Usage: syckle</code></p>
+</div>
+
+<div class="flower">
+  <img src="assets/images/flowers/hoe.jpg"/>
+  <h1>hoe</h1>
+  <p>Layout for a Hoe-managed Ruby project.</p>
+  <p><code>Usage: hoe -o &lt;name&gt;</code></p>
+</div>
+
+<div class="flower">
+  <img src="assets/images/flowers/testunit.jpg"/>
+  <h1>testunit</h1>
+  <p>Templates for using TestUnit.</p>
+  <p><code>Usage: testunit [path] [name]</code><br/>
+  <code>Usage: test.testunit &lt;name&gt; [path]</code></p>
 </div>
 
 <br style="clear: both;"/>
