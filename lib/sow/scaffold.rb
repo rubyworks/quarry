@@ -12,7 +12,7 @@ require 'facets/kernel/instance_class'
 
 module Sow
 
-  # Plugin encapsulates information about a sow plugin.
+  # Seed encapsulates information about a scaffold.
   #
   class Scaffold
 
@@ -71,7 +71,7 @@ module Sow
       end     
 
       @sow = @sow_class.new(session)
-      @sow.setup
+      @sow.setup(*session.arguments)
       @sow.scaffold
 
       @copy = @sow.copylist
@@ -417,65 +417,3 @@ module Sow
 
 end#module Sow
 
-
-
-
-
-=begin
-    #
-    def create(arguments, options={})
-      setup_for(:create, arguments, options)
-
-      #setup_arguments #(arguments)
-      #session.mode = :create
-
-      # collect metadata settings
-      #plugin.script.metadata.each do |k,v|
-      #  metadata[k] = v
-      #end
-
-      # this is kind of odd here
-      #plugin.script_setup(session)
-
-      #session   = Session.new(arguments, options)
-      generator = Generators::Create.new(session, location, copylist)
-      generator.generate
-    end
-
-    #
-    def update(arguments, options={})
-      setup_for(:update, arguments, options)
-      #setup_arguments #(arguments)
-      #session.mode = :update
-
-      #session   = Session.new(arguments, options)
-      generator = Generators::Update.new(session, location, copylist)
-      generator.generate
-    end
-
-    #
-    def delete(arguments, options={})
-      setup_for(:delete, arguments, options)
-      #setup_arguments #(arguments)
-      #session.mode = :delete
-      #session   = Session.new(arguments, options)
-      generator = Generators::Delete.new(session, location, copylist)
-      generator.generate
-    end
-
-    # No specific operation mode given, select one
-    # based on plugin and state of current location.
-    def select(arguments, options={})
-      #setup_arguments #(arguments) # FIXME
-      #session = Session.new(arguments, options)
-      if name && session.sowed?  #FIXME name?
-        setup_for(:update, arguments, options)
-        generator = Generators::Update.new(session, location, copylist)
-        generator.generate
-      else
-        setup_for(:create, arguments, options)
-        generator = Generators::Create.new(session, location, copylist)
-        generator.generate
-      end
-    end
-=end

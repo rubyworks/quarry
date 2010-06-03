@@ -1,10 +1,8 @@
 module Sow
 
-  # A Sow Script provides a simple DSL for specifying
-  # arguments, a copylist and the various specificities
-  # needed to define a scaffold generator proccess.
-  #
-  # Note: This is the old way of building a plugin.
+  # A Sowfile Script provides a simple DSL for specifying
+  # a copylist and the various specificities needed to
+  # define a scaffold generator proccess.
 
   class Script
 
@@ -30,28 +28,32 @@ module Sow
     end
 
     # Setup procedure, used to setup metadata.
+    # TODO: allow there to be more than one. Then we can import other scaffolds.
     def self.setup(&block)
       define_method(:setup, &block)
     end
 
     # Scaffolding procedure, used to invoke #copy.
+    # TODO: allow there to be more than one.
     def self.scaffold(&block)
       define_method(:scaffold, &block)
     end
 
-    # Specify a valid option.
-    # TODO: Store description for use in help.
-    def self.option(name, description=nil)
-      class_eval %{
-        def #{name}
-          metadata.__send__(name)
-        end
-      }
-    end
+    ## Specify a valid option.
+    ## TODO: Store description for use in help.
+    #def self.option(name, description=nil)
+    #  class_eval %{
+    #    def #{name}
+    #      metadata.__send__('#{name}')
+    #    end
+    #  }
+    #end
 
     ## Give the main argument a name.
     #def self.argument(name)
-    #  define_method(name){ argument }
+    #  define_method(name){
+    #    session.argument
+    #  end
     #end
 
     #
@@ -65,7 +67,7 @@ module Sow
 
     #
     def environment
-      @session.environment
+      session.environment
     end
 
     #
@@ -120,18 +122,6 @@ module Sow
     #  @location = Pathname.new(path)
     #end
 
-    # Describe the purpose of this generator.
-    def about(text)
-      @about = text
-    end
-
-    # Give a one line usage template.
-    # Eg. '--reap=<name>'
-    # "Usage: sow" is automatically prefixed to this.
-    #def usage(usage)
-    #  @usage = usage
-    #end
-
     # Define the commandline argument.
     #def argument(name, desc=nil, &valid)
     #  @arguments << [name, desc, valid]
@@ -159,7 +149,7 @@ module Sow
       @copylist << [from, to, opts.rekey(&:to_s)]
     end
 
-    # This is to allow Plugin access to the internal state.
+    # This is to allow a plugin access to the internal state. ???
     def [](var)
       instance_variable_get("@#{var}")
     end
@@ -176,8 +166,8 @@ module Sow
 
     # If method missing, routes the call to +session+.
     def method_missing(s,*a)
-      if @session.respond_to?(s)
-        return @session.__send__(s)
+      if session.respond_to?(s)
+        return session.__send__(s)
       else
         super
       end
@@ -185,11 +175,11 @@ module Sow
 
   end#class Script
 
-  #
-  module Plugins
-    # see Sow::Script
-    Script = Sow::Script
-  end
+  ##
+  #module Plugins
+  #  # see Sow::Script
+  #  Script = Sow::Script
+  #end
 
 end#module Sow
 

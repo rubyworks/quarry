@@ -1,5 +1,6 @@
 require 'sow/session'
 require 'facets/string/tabto'
+require 'optparse'
 
 module Sow
 
@@ -26,6 +27,7 @@ module Sow
     def initialize(argv=ARGV)
       @arguments = argv.dup
       @options   = OpenStruct.new
+      @action    = nil
     end
 
     ## Plugin manger.
@@ -43,23 +45,25 @@ module Sow
     # ENV['sow_name'] ?
     #
     def execute
-      option_parser.parse!(arguments)
+      opts = option_parser
+      opts.parse!(arguments)
 
-      environment = {}
+      #environment = {}
       arguments.reject! do |arg|
         case arg
         when /^(.*)\=(.*?)$/
-          environment[$1] = $2
+          #environment[$1] = $2
+          ENV[$1] = $2
           true
         else
           false
         end
       end
 
-      resource    = arguments.shift
-      destination = arguments.shift
+      resource = arguments.shift
+      #destination = Dir.pwd #arguments.shift
 
-      session = Session.new(resource, destination, environment, options)
+      session = Session.new(resource, arguments, options) #environment, options)
 
       #session.setup
 
@@ -81,6 +85,13 @@ module Sow
 
       begin
         case @action
+        when :help
+          if resource
+            puts session.readme
+          else
+            puts opts
+          end
+          exit
         when :create
           session.create
         when :delete
@@ -94,7 +105,7 @@ module Sow
         when :list
           session.list
         else
-          raise "unknown action"
+          session.create
         end
       rescue => err
         if options.debug
@@ -155,14 +166,17 @@ module Sow
           options.trial = true
         end
 
+        opts.on('--output', '-o PATH', 'output directory') do |path|
+          options.output = path
+        end
+
         opts.on('--debug', '-D') do
           $VERBOSE = true
           $DEBUG   = true
         end
 
         opts.on_tail('--help', '-h', 'show this help message') do
-          puts opts
-          exit
+          @action = :help
         end
       end
     end
