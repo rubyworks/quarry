@@ -4,7 +4,7 @@
 
 LICENSES = %w[gpl lgpl mit]
 
-setup do |licence, *_|
+setup do |license, *_|
   lic = (license || 'mit').downcase
   unless LICENSES.include?(lic)
     abort "Unrecognized license name. Choose:\n  " + LICENSES.join("\n  ")
@@ -13,6 +13,6 @@ setup do |licence, *_|
 end
 
 scaffold do
-  copy "*", '.', :cd => license.downcase
+  copy "*", '.', :cd => metadata.license.downcase
 end
 
