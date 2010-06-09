@@ -1,3 +1,4 @@
+require 'yaml'
 require 'plugin'
 require 'xdg'
 require 'facets/pathname'
@@ -23,7 +24,7 @@ module Sow
     def initialize(resource, arguments, options) #environment, options)
       @resource  = resource
 
-      @options     = OpenStruct.new(options)
+      @options = OpenStruct.new(options)
       #@environment = OpenStruct.new(environment)
 
       @destination = (
@@ -64,9 +65,15 @@ module Sow
       @scaffold ||= Scaffold.new(self)
     end
 
-    #
+    # Get copylist to be used to plant seed(s). This includes both
+    # the scaffold.copylist and any optional copylist, e.g. passed
+    # in via a commandline pipe.
     def copylist
-      scaffold.copylist
+      if options.copylist
+        scaffold.copylist | options.copylist
+      else
+        scaffold.copylist
+      end
     end
 
     #
@@ -105,6 +112,14 @@ module Sow
     #
     def list
       puts manager.list.join("\n")
+    end
+
+    #
+    def print
+      list = copylist.map do |loc, src, dest, opts|
+        [loc.to_s, src.to_s, dest.to_s, opts.dup]
+      end
+      puts list.to_yaml
     end
 
     # Destination for generated scaffolding.

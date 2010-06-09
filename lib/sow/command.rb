@@ -1,14 +1,13 @@
-require 'sow/session'
-require 'facets/string/tabto'
+require 'fcntl'
 require 'optparse'
+require 'facets/string/tabto'
+require 'sow/session'
 
 module Sow
 
   # Sow Commandline Utility.
   #
   # TODO: Provide help messages for individual plugins.
-  #
-  # TODO: Move the core logic of execture to either Manger or another class.
   #
   class Command
 
@@ -37,16 +36,13 @@ module Sow
 
     # Run command.
     #
-    # TODO: Should we look up the directory tree for a .config/sow.yaml
-    # file to determine if this has been previously sowed and maybe
-    # change directory to that location?
-    #
-    # TODO: instead of a separate environment variable, add them to 
-    # ENV['sow_name'] ?
-    #
+    # TODO: Should we really be using ENV, or should we instead
+    # manage a separate variable list?
     def execute
       opts = option_parser
       opts.parse!(arguments)
+
+      options.copylist = extended_copylist
 
       #environment = {}
       arguments.reject! do |arg|
@@ -80,7 +76,7 @@ module Sow
       ## Abort if no scaffold type given.
       #if plugins.empty?
       #  $stderr.puts "No scaffold type given."
-      #  exit
+      #  exit$stderr.puts val
       #end
 
       begin
@@ -104,6 +100,8 @@ module Sow
           session.uninstall
         when :list
           session.list
+        when :print
+          session.print
         else
           session.create
         end
@@ -122,29 +120,37 @@ module Sow
     def option_parser
       OptionParser.new do |opts|
 
-        opts.on('--create', '-c') do
+        opts.separator('COMMAND OPTIONS (choose one):')
+
+        opts.on('--create', '-c', 'plant a seed') do
           @action = :create
         end
 
-        opts.on('--delete', '-d') do
+        opts.on('--delete', '-d', 'uproot a plant') do
           @action = :delete
         end
 
-        opts.on('--install', '-i', "add a new source location/repository") do
+        opts.on('--install', '-i', 'add a new seed source (path or repo url)') do
           @action = :install
         end
 
-        opts.on('--update', '-u') do
+        opts.on('--update', '-u', 'update a seed source') do
           @action = :update
         end
 
-        opts.on('--remove', "remove a source location/repository") do
+        opts.on('--remove', 'remove a seed source') do
           @action = :uninstall
         end
 
-        opts.on('--list') do
+        opts.on('--list', 'list all available seeds') do
           @action = :list
         end
+
+        opts.on('--extend', '-x', 'output copylist') do
+          @action = :print
+        end
+
+        opts.separator('SELECTION OPTIONS (choose one):')
 
         opts.on('--prompt', '-p') do
           options.prompt = true
@@ -158,19 +164,21 @@ module Sow
           options.force = true
         end
 
-        opts.on('--quiet', '-q') do
-          options.quiet = true
-        end
-
-        opts.on('--trial', '-t') do
-          options.trial = true
-        end
+        opts.separator('GENERAL OPTIONS:')
 
         opts.on('--output', '-o PATH', 'output directory') do |path|
           options.output = path
         end
 
-        opts.on('--debug', '-D') do
+        opts.on('--quiet', '-q', 'run silently (as much as possible)') do
+          options.quiet = true
+        end
+
+        opts.on('--trial', '-t', 'no disk writes') do
+          options.trial = true
+        end
+
+        opts.on('--debug', '-D', 'run in debug mode') do
           $VERBOSE = true
           $DEBUG   = true
         end
@@ -181,91 +189,19 @@ module Sow
       end
     end
 
+    # If an optional copylist is padded in via a stdin or a pipe.
+    def extended_copylist
+      list = []
+      if STDIN.fcntl(Fcntl::F_GETFL, 0) == 0
+        val = STDIN.read
+        if !val.empty?
+          list = YAML.load(val)
+        end
+      end
+      list
+    end
+
   end
 
 end
-
-
-
-
-
-
-
-
-
-=begin
-    # Very simply ARGV parser. In the future we may make
-    # this a bit smarter. We do it manually to preserve the
-    # order of plugin options.
-    def parse_argv(argv)
-      args = []
-      opts = []
-      argv.each_with_index do |arg, idx|
-        case arg
-        when /^-/
-          opts << arg
-        else
-          args << arg
-        end
-      end
-      opts = opts.map{ |          $DEBUG = trueo| o.sub(/^\-+/, '').split('=') }
-      return args, opts
-    end
-
-
-    # Return command type based on option.
-    #def command(options)
-    #  return 'create' if options['create'] #|| options[:c]
-    #  return 'update' if options['update'] #|| options[:u]
-    #  return 'delete' if options['delete'] #|| options[:d]
-    #  nil
-    #end
-
-    STANDARD_OPTIONS = {
-      'create' => 'create', 'c' => 'create',
-      'update' => 'update', 'u' => 'update',
-      'delete' => 'delete', 'd' => 'delete',
-      'quiet'  => 'quiet' , 'q' => 'quiet' ,
-      'prompt' => 'prompt', 'p' => 'prompt',
-      'skip'   => 'skip'  , 's' => 'skip'  ,
-      'force'  => 'force' , 'f' => 'force' ,
-      'trial'  => 'trial' , 't' => 'trial' ,
-      'help'   => 'help'  , 'h' => 'help'  ,
-      'debug'  => 'debug' ,
-    }
-
-
-    # Returns am OpenStruct of standard options and one
-    # for the scaffold's options.
-    def split_options(opts)
-      h, s = OpenStruct.new, OpenStruct.new
-      opts.each do |(k,v)|
-        if opt = STANDARD_OPTIONS[k]
-          h[opt+'?'] = true
-        else
-          s[k] = v
-        end
-      end
-      return h, s
-    end
-
-    # General help message.
-    def help
-      <<-END.tabto(0)
-      Usage: sow [options] --<plugin>[=<value>] ... [<path>]
-
-      Options:
-        -c --create         Create scaffolding
-        -u --update         Update scaffolding
-        -d --delete         Delete scaffolding
-        -p --prompt         Prompt on overwrites
-        -s --skip           Skip overwrites
-        -f --force          Force restricted operations
-        -q --quiet          Supress output messages
-        -t --trial          Trial run (won't write to disk)
-           --debug          Provide debuging information
-        -h --help           Show this message
-      END
-    end
-=end
 
