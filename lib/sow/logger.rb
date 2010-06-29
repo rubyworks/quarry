@@ -36,7 +36,7 @@ module Sow
     end
 
     # Use this to report any "templating" that needs to done by hand.
-    def report_fixes(marker='___')
+    def report_fixes(marker='__*__')
       glist = check_for_fixes(marker)
       unless glist.empty?
         puts "\nYou need to fix the occurances of '#{marker}' in the following files:\n\n"
@@ -49,7 +49,7 @@ module Sow
 
     # TODO: don't use grep
     def check_for_fixes(marker)
-      g = `grep -R #{marker} .` # FIXME: Use ruby code instead
+      g = `grep -R "#{marker}" .` # FIXME: Use ruby code instead
       glist = []
       g.each_line do |line|
         line = line.gsub('./','')

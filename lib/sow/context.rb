@@ -14,7 +14,7 @@ module Sow
     end
 
     def method_missing(s)
-      @metadata.__send__(s) || "#___#{s}___#"
+      @metadata.__send__(s) || "__'#{s}'__"
     end
 
     # Processes file through erb.

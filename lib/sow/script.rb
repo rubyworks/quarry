@@ -126,23 +126,6 @@ module Sow
       @copylist << [from, to, opts.rekey(&:to_s)]
     end
 
-=begin
-    # This is to allow a plugin access to the internal state. ???
-    def [](var)
-      instance_variable_get("@#{var}")
-    end
-
-    # Set ... using a singleton method.
-    def []=(var, val)
-      quaclass = (class << self; self; end)
-      raise "invalid argument name -- #{var}" if quaclass.method_defined?(var)
-      quaclass.class_eval do
-        define_method(var){ val }
-      end
-      #@session[var.to_sym] = val
-    end
-=end
-
     # If method missing, routes the call to +session+.
     def method_missing(s,*a)
       if session.respond_to?(s)
@@ -163,6 +146,23 @@ module Sow
         end
       end
     end
+
+=begin
+    # This is to allow a plugin access to the internal state. ???
+    def [](var)
+      instance_variable_get("@#{var}")
+    end
+
+    # Set ... using a singleton method.
+    def []=(var, val)
+      quaclass = (class << self; self; end)
+      raise "invalid argument name -- #{var}" if quaclass.method_defined?(var)
+      quaclass.class_eval do
+        define_method(var){ val }
+      end
+      #@session[var.to_sym] = val
+    end
+=end
 
   end#class Script
 
