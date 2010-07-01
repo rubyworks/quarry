@@ -91,17 +91,10 @@ to bring each to a fine polish.
 
 Hoe users will discover that the +sow+ command that comes with Hoe will
 be clobbered by Sow. This may seem a not-so-nice thing to do, but truth
-be told Sow is a slightly older project than Hoe (albeit orginally it was
-a very different program). Since there is no command called +hoe+, it 
-would seem a more logical choice and I recommend renaming Hoe's
-+sow+ command.
-
-  sudo mv /usr/bin/sow /usr/bin/hoe
-
-As an alternative, Sow ships with a Hoe seed, so there is nothing lost
-even if Hoe's +sow+ command is overwritten, simply use:
-
-  $ sow hoe -o <name>
+be told Sow is a slightly older project than Hoe (though admittedly it
+was originally a very different program). Since there is no command called
++hoe+, it would seem a more logical choice in any case, so Sow ships with
+a copy of Hoe's +sow+ command renamed to +hoe+.
 
 
 == INSTALLATION
