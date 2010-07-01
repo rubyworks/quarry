@@ -1,0 +1,8 @@
+# Put dependencies here. Eg.
+#
+#   production:
+#     - facets 2.8+
+#
+#   development/test:
+#     - rspec
+#

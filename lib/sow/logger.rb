@@ -5,11 +5,11 @@ module Sow
   class Logger
 
     #
-    attr :generator
+    attr :copier
 
     #
-    def initialize(generator)
-      @generator = generator
+    def initialize(copier)
+      @copier = copier
     end
 
     # If there is nothing to generate this will be called
@@ -60,10 +60,14 @@ module Sow
       glist.uniq
     end
 
-  private
+    #
+    def newline
+      puts
+    end
 
+    #
     def report(message)
-      puts message unless generator.quiet? or generator.trial?
+      puts message unless copier.quiet? or copier.trial?
     end
 
   end

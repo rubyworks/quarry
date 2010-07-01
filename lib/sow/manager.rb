@@ -2,31 +2,28 @@ require 'plugin'
 
 module Sow
 
-  # The Manager class manages and locates sow scaffolds.
+  # The Manager class manages and locates sow seeds.
   #
   class Manager
 
-    # Location of sources. These are stored in $XDG_CONFIG_DIRS/sow/sources/.
-    SOURCE_DIRS = XDG::Config.select('/sow/seeds')
-
-    # User seeds.
-    HOME = Pathname.new(XDG::Config.home + '/sow/seeds')
+    # User installed seeds location.
+    BANK = Pathname.new(File.expand_path('~/.config/sow/seeds'))
 
     #
-    def initialize(options)
-      @options = options
+    def initialize(options=nil)
+      @options = options || OpenStruct.new
     end
 
     #
     attr :options
 
     #
-    def sources
-      @sources ||= SOURCE_DIRS #.map{ |dir| Dir[dir + '/*/'] }.flatten
+    def banks
+      @banks ||= [BANK]
     end
 
     #
-    def find_scaffold(match)
+    def find_seed(match)
       loc = nil
       map.each do |name, dir|
         loc = dir if /^#{match}\./ =~ name
@@ -39,6 +36,11 @@ module Sow
     end
 
     #
+    def trial?
+      $DRYRUN
+    end
+
+    #
     def list
       map.map{ |l| l.first }
     end
@@ -46,41 +48,43 @@ module Sow
     #
     def map
       list = []
-      # uri and linked sources
-      sources.each do |source|
-        locs = Dir[File.join(source, '**/template')]
+
+      # uri and linked seeds
+      banks.each do |source|
+        locs = Dir[File.join(source, '**/Sowfile')]
         locs = locs.map{ |l| File.dirname(l) }
         locs.each do |l|
           k = path_to_name(l.sub(source,''))
           list << [k, l]
         end
       end
-      # installed sow plugin seeds
-      locs = ::Plugin.find(File.join('sow', '**/template'))
+
+      # plugin seeds
+      locs = ::Plugin.find(File.join('sow', '**/Sowfile'))
       locs = locs.map{ |l| File.dirname(l) }
       locs.each do |l|
         k = path_to_name(l[l.rindex('sow')+4..-1])
         list << [k, l]
       end
+
       list
     end
 
     # Lookup seed and and return the contents of it's
     # README file. If it does not have a README file
     # it will return 'No README'.
-    def readme(resource)
-      dir = find_scaffold(resource)
+    def readme(name)
+      dir = find_seed(name)
       if dir
-        if file = File.join(dir, 'README')
-          return File.read(file)
-        end
+        readme = File.join(dir, 'README')
+        return File.read(readme) if File.exist?(readme)
       end
       return 'No README' unless dir
     end
 
     #
     def install(resource)
-      dir  = HOME #Pathname.new(XDG::Config.home + '/sow/seeds/')
+      dir  = BANK
       out  = dir + uri_to_path(resource)
       name = File.basename(resource).chomp(File.extname(resource))
       if File.exist?(out + name)

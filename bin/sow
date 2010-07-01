@@ -1,4 +1,3 @@
 #!/usr/bin/env ruby
-require 'sow/command'
-Sow::Command.execute
-
+require 'sow'
+Sow.main(*ARGV)

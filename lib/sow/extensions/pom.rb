@@ -1,62 +1,28 @@
 begin
   require 'pom'
+
+  module Sow
+    class Sower
+      # Access to POM project object. Thus is useful for scaffoling
+      # Ruby project's that conform to POM specs. Keep in mind that
+      # this POM object points to the temporary duplicate of the project
+      # and not the actual project.
+      #
+      # Returns an instance of POM::Project, if available.
+      def pom
+        @pom ||= POM::Project.new(Dir.pwd)
+      end
+
+      class Data
+        def metadata_sources
+          [@data, @seed.settings, @seed.config, @seed.pom.metadata, ENV]
+        end
+      end
+    end
+  end#module Sow
+
 rescue LoadError
+  # hey, where's the pom?
+  warn 'POM is not installed.'
 end
 
-module Sow
-
-  class Session
-
-    # Returns an instance of POM::Project, if available.
-    def pom
-      if defined?(POM) && destination.exist?
-        @pom ||= POM::Project.new(destination)
-      end
-    end
-
-    # Use this method to see if pom is available.
-    def pom?
-      pom ? true : false
-    end
-
-    # Override metadata to include POM metadata.
-    def metadata
-      @metadata ||= (
-        if pom?
-          Metadata.new(pom.metadata)
-        else
-          srcs = load_raw_pom_metadata.compact
-          Metadata.new(*srcs)
-        end
-      )
-    end
-
-    # Fallback if POM library is not available but 
-    # POM metadata is in project nontheless.
-    def load_raw_pom_metadata
-      profile = nil
-      verfile = nil
-      if destination.glob('PROFILE').first
-        begin
-          profile = YAML.load(File.new('PROFILE'))
-        rescue
-        end
-      end
-      if destination.glob('VERSION').first
-        begin
-          verfile = YAML.load(File.new('VERSION'))
-          if Hash===verfile
-            verfile.rekey!
-            verfile[:version] = verfile.values_at(:major,:minor,:patch,:state,:build).compact.join('.')
-          else
-            verfile = {:version => version}
-          end
-        rescue
-        end
-      end
-      return profile, verfile
-    end
-
-  end#class Session
-
-end#module Sow

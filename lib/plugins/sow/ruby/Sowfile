@@ -2,33 +2,21 @@
 
 utilize 'pom'
 
-setup do |*args|
-  abort_unless_empty_or_managed('PROFILE', 'VERSION')
+ensure_empty('PROFILE', 'VERSION')
 
-  #if destination.exist?
-  #  files = Dir.entries(destination) - ['.', '..', 'PROFILE', 'VERSION']
-  #  if !files.empty? and !managed?
-  #    abort "The ruby scaffold is intended for new projects.\n" +
-  #          "But this destination directory is not empty.\n" +
-  #          "Please use the --force, --skip or --prompt to proceed."
-  #  end
-  #end
+argument :name #, :default => destname
 
-  name = args.first || metadata['name'] || destination.basename.to_s
+abort "Name is required."         unless name
+abort "Name must be single word." unless name =~ /\w+/
 
-  abort "Name is required."         unless name
-  abort "Name must be single word." unless name =~ /\w+/
-
-  metadata.name    = name
-  metadata.title   = metadata['title'] || name.capitalize
-  metadata.contact = metadata['EMAIL']
-end
+#metadata.name    = name  # TODO
+metadata.title   = metadata['title']   || name.capitalize
+metadata.contact = metadata['contact'] || metadata['EMAIL']
 
 # TODO: Do not overwrite PROFILE, VERSION or REQUIRE if they exist
 scaffold do
-  copy("**/*") #, :omit => "PROFILE")
-  copy("bin/*", :chmod=>0744)
-  #copy("README.rdoc.till", :verbatim => true)
+  copy("**/*")
+  copy("bin/*", 0744)
   #skip('PROFILE', 'VERSION', 'REQUIRE')
 end
 

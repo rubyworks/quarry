@@ -1,3 +1,11 @@
+# Facets Core
+require 'facets/kernel/ask'
+require 'facets/dir/recurse'
+
+# Facets Standard
+require 'facets/pathname'
+
+=begin
 require 'erb'
 require 'fileutils'
 
@@ -27,19 +35,6 @@ class String
 
   def to_list
     split(/[:;\n]/).collect{ |e| e.strip }
-  end
-
-end
-
-# NOTE: These are now in Facets.
-
-=begin
-module File
-
-  #
-  def split_root(path)
-    path_re = Regexp.new('[' + Regexp.escape(File::Separator + %q{\/}) + ']')
-    path.split(path_re, 2)
   end
 
 end

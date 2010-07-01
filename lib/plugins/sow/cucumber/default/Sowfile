@@ -1,11 +1,10 @@
 #!/usr/bin/env ruby
 
-setup do |*arguments|
-  metadata.directory = arguments.shift || 'features'
-  metadata.feature   = arguments.shift || 'your_first'
-end
+directory = arguments.shift || 'features'
+
+metadata.feature = arguments.shift || 'your_first'
 
 scaffold do
-  copy "**/*", metadata.directory.chomp('/') + '/'
+  copy "**/*", directory
 end
 

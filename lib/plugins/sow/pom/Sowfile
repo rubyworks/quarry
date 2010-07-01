@@ -2,21 +2,19 @@
 
 utilize 'pom'
 
-setup do |*args|
-  name = args.first || metadata['name'] || destination.basename.to_s
+name = arguments.first || metadata['name'] #|| destination.basename.to_s
 
-  abort "Name is required."         unless name
-  abort "Name must be single word." unless name =~ /\w+/
+abort "Name is required."         unless name
+abort "Name must be single word." unless name =~ /\w+/
 
-  metadata.name    = name
-  metadata.title   = metadata['title'] || name.capitalize
-  metadate.contact = metadata['EMAIL']
-end
+metadata.name    = name
+metadata.title   = metadata['title']   || name.capitalize
+metadata.contact = metadata['contact'] || metadata['EMAIL']
 
 #
 scaffold do
   copy("PROFILE")
   copy("VERSION")
-  copy("REQUIRE") unless destination.glob('Gemfile').first #include?
+  copy("REQUIRE") unless File.exist?('Gemfile') #destination.glob('Gemfile').first #include?
 end
 

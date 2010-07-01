@@ -1,26 +1,23 @@
-= Scaffold Layout
+= Seed Layout
 
-A scaffold is a directory that contains a README document, a Sowfile
-and a template directory.
+A seed is a directory that contains a README document, a Sowfile
+and a templates directory.
 
-The README document simply consists of text describing the scaffold and any
-special options if handles that the user might want to know about. A simple
-example of a README might read...
+The README document simply consists of text describing the seed and
+any special arguments if handles that the user will want to know about.
+A simple example of a README might read...
 
-  Sample scaffold will create a sample project layout
+  Sample seed will create a sample project layout
   suitable for testing by Sow's test suite.
 
-The Sowfile is a script that collects any information the scaffold might need
-and designates what files include in the scaffolding. An example Sowfile
-might look something like this...
+The Sowfile is a script that collects any information the seed needs
+and copies the files from the scaffold to staging ground, which is
+later copied to the output destination. An example Sowfile might 
+look something like this...
 
-  setup do |name, *_|
-    metadata.name = name || 'annonymous'
-  end
+  argument :name, :default => 'anonymous'
 
-  scaffold do
-    copy '**/*'
-  end
+  template '**/*'
 
 The template directory holds all the erb templates and static files that may
 be copied. For example, the template directory might have a template file
@@ -39,7 +36,7 @@ The template directory might also have a static file called +LICENSE+ ...
   You can do whatever the hell you want with this software
   just so long as lawyers do not become involved.
 
-And that's it. That is the basic outline of Sow scaffold. The nice thing
-about Sow scaffold is that the layout is straight-forward and that the 
+And that's it. That is the basic outline of Sow seed. The nice thing
+about seeds is that the layout is straight-forward and the 
 Sowfile DSL is very easy to use.
 

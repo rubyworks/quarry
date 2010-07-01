@@ -10,21 +10,29 @@ require 'yaml'
 module Sow
   DIRECTORY = File.dirname(__FILE__) + '/sow'
 
-  profile = YAML.load(File.new(DIRECTORY + '/profile.yml'))
-  verfile = YAML.load(File.new(DIRECTORY + '/version.yml'))
+  PROFILE = YAML.load(File.new(DIRECTORY + '/profile.yml'))
+  PACKAGE = YAML.load(File.new(DIRECTORY + '/version.yml'))
 
-  VERSION = verfile.values_at('major','minor','patch','state','build').compact.join('.')
+  VERSION = PACKAGE.values_at('major','minor','patch','build').compact.join('.')
 
   #
   def self.const_missing(name)
     key = name.to_s.downcase
-    if verfile.key?(key)
-      verfile[key]
+    if PACKAGE.key?(key)
+      PACKAGE[key]
     elsif profile.key?(key)
-      profile[key]
+      PROFILE[key]
     else
       super(name)
     end
   end
+
+  # Run sow command.
+  def self.main(*argv)
+    CLI.run(*argv)
+  end
+
 end
+
+require 'sow/cli'
 

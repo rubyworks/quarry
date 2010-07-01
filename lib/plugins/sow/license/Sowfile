@@ -1,18 +1,16 @@
 #!/usr/bin/env ruby
 
-# Add specified license to your project.
+LICENSES = %w[gpl lgpl mit apache]
 
-LICENSES = %w[gpl lgpl mit]
+argument :license  #, :default => 'mit'
 
-setup do |license, *_|
-  lic = (license || 'mit').downcase
-  unless LICENSES.include?(lic)
-    abort "Unrecognized license name. Choose:\n  " + LICENSES.join("\n  ")
-  end
-  metadata.license = lic.upcase
+lic = (metadata.license || 'mit').downcase
+unless LICENSES.include?(lic)
+  raise "Unrecognized license name. Choose:\n  " + LICENSES.join("\n  ")
 end
+metadata.license = lic.upcase
 
 scaffold do
-  copy "*", '.', :cd => metadata.license.downcase
+  copy "#{lic}//*", '.'
 end
 

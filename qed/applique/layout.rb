@@ -1,4 +1,4 @@
-When 'scaffold is a directory' do
+When 'seed is a directory' do
   @tmpdir = File.join(Dir.tmpdir, 'sow/sources/test/demo/')
   FileUtils.mkdir_p(@tmpdir)
 end
