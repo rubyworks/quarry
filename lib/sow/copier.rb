@@ -17,7 +17,7 @@ module Sow
     def initialize(source, output, options)
       @source   = Pathname.new(source)
       @output   = Pathname.new(output)
-      @options  = options
+      @options  = options.to_h
 
       @logger   = Logger.new(self)
       @copylist = initialize_copylist
@@ -71,6 +71,8 @@ module Sow
     def prompt? ; options[:mode] == :prompt ; end
     def skip?   ; options[:mode] == :skip   ; end
 
+    def backup? ; options[:backup].nil? or options[:backup] ; end
+
     def managed?
       write? or skip? or prompt?
     end
@@ -107,22 +109,25 @@ module Sow
   private
 
     #
+    BACKUP_DIRECTORY = '.sow/undo'
+
+    #
     def backup(actionlist)
       list = []
       actionlist.each do |action, fname|
-        case action
-        when 'copy'
+        case action.to_sym
+        when :copy
           list << fname
         end
       end
       stamp = Time.now.strftime('%Y%m%d%H%M%S')
-      base = output + ".sow/undo/#{stamp}"
+      base = output + File.join(BACKUP_DIRECTORY, stamp)
       list.each do |fname|
         dest = output + fname
         next unless dest.file?
         back = base + fname #.sub(Dir.pwd,'')
         back.parent.mkpath
-        cp(file, back)
+        cp(fname, back)
       end
     end
 

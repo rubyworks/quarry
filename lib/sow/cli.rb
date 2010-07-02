@@ -26,6 +26,9 @@ module Sow
       when 'gen', '-g', '--gen'
         cmdc = CLI::Plant
         args = argv
+      when 'undo', '-u', '--undo'
+        cmdc = CLI::Undo
+        args = argv
       else
         cmdc = CLI::Plant
         args = [cmd, *argv]
@@ -71,7 +74,7 @@ end
 require 'sow/cli/abstract'
 require 'sow/cli/new'
 require 'sow/cli/plant'
-require 'sow/cli/uproot'
+require 'sow/cli/undo'
 
 require 'sow/cli/bank_list'
 require 'sow/cli/bank_install'

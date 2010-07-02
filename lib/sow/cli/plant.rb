@@ -13,11 +13,6 @@ module Sow::CLI
       generator.generate
     end
 
-      #sets, args = parse_settings(argv)
-      #options.seed = args.shift
-      #options.arguments = args
-      #options.settings  = sets
-
     #
     def opts
       OptionParser.new{ |o|
@@ -37,6 +32,7 @@ module Sow::CLI
       groups = [[]]
       argv.each do |arg|
         if arg == '-'
+          next if groups.last.empty?
           groups << []
         else
           groups.last << arg

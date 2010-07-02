@@ -1,9 +1,11 @@
 # Facets Core
 require 'facets/kernel/ask'
 require 'facets/dir/recurse'
+require 'facets/hash/to_h'
 
 # Facets Standard
 require 'facets/pathname'
+require 'facets/ostruct'
 
 =begin
 require 'erb'
@@ -20,10 +22,6 @@ require 'facets/string/tab'
 require 'facets/string/pathize'
 require 'facets/string/modulize'
 require 'facets/string/methodize'
-
-# Facets More
-require 'facets/ostruct'
-require 'facets/pathname'
 
 # ARE THESE NEEDED?
 #require 'facets/yaml' # for to_yamlfrag
