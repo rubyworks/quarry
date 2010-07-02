@@ -35,11 +35,17 @@ module Sow
       report "%10s [%.4fs] %s" % [how, (Time.now - atime), file]
     end
 
+    MARKER = /__.*?__/
+
     # Use this to report any "templating" that needs to done by hand.
-    def report_fixes(marker='__*__')
-      glist = check_for_fixes(marker)
+    #
+    # files  - array of file names to check
+    # marker - the Regexp to search for
+    #
+    def report_fixes(files, marker=nil)
+      glist = check_for_fixes(files, marker)
       unless glist.empty?
-        puts "\nYou need to fix the occurances of '#{marker}' in the following files:\n\n"
+        puts "\nYou need to fix the occurances of missing information in the following files:\n\n"
         glist.each do |file|
           puts "      #{file}"
         end
@@ -47,17 +53,22 @@ module Sow
       end
     end
 
-    # TODO: don't use grep
-    def check_for_fixes(marker)
-      g = `grep -R "#{marker}" .` # FIXME: Use ruby code instead
-      glist = []
-      g.each_line do |line|
-        line = line.gsub('./','')
-        indx = line.index(':')
-        file, *desc = *line.split(':')
-        glist << file
+    # Grep each file in +files+ for occurance of +marker+.
+    #
+    # files  - array of file names to check
+    # marker - the Regexp to search for
+    #
+    # Returns an Array of file names containing the marker.
+    def check_for_fixes(files, marker)
+      marker ||= MARKER
+      list = []
+      files.each do |file|
+        next if File.directory?(file)
+        File.open(file) do |f|
+          f.grep(marker){ |l| list << file }
+        end
       end
-      glist.uniq
+      list.uniq
     end
 
     #

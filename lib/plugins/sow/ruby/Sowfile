@@ -4,14 +4,15 @@ utilize 'pom'
 
 ensure_empty('PROFILE', 'VERSION')
 
-argument :name #, :default => destname
+#argument :name, :default => destname
+metadata.name = arguments.shift || metadata.name || destname
 
-abort "Name is required."         unless name
-abort "Name must be single word." unless name =~ /\w+/
+raise "Name is required."         unless metadata.name
+raise "Name must be single word." unless metadata.name =~ /\w+/
 
 #metadata.name    = name  # TODO
-metadata.title   = metadata['title']   || name.capitalize
-metadata.contact = metadata['contact'] || metadata['EMAIL']
+metadata.title   = metadata.title   || metadata.name.capitalize
+metadata.contact = metadata.contact || metadata['EMAIL']
 
 # TODO: Do not overwrite PROFILE, VERSION or REQUIRE if they exist
 scaffold do

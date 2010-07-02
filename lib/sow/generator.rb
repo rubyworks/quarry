@@ -10,15 +10,27 @@ module Sow
   class Generator
 
     #
-    def initialize(options)
-      @options     = options
+    def initialize(seeds, options)
+      @seeds   = seeds
+      @options = options
 
-      @seed        = options.seed
-      @arguments   = options.arguments
-      @settings    = options.settings
+      #@seedname    = options.seed #name
+      #@arguments   = options.arguments
+      #@settings    = options.settings
+
       @destination = options.output || Dir.pwd
-      @stage       = Dir.tmpdir + "/sow/stage/#{Time.now.to_i}"
-      #@config      = Config.new(@stage)
+
+      destname = File.basename(@destination).chomp('/')
+
+      #@settings['destname'] = destname  # TODO
+
+      @stage = Dir.tmpdir + "/sow/stage/#{Time.now.to_i}/#{destname}"
+    end
+
+
+    # Seeds to germinate.
+    def seeds
+      @seeds
     end
 
     #
@@ -26,40 +38,30 @@ module Sow
       @options
     end
 
-    #
-    def seed
-      @seed
-    end
-
-    #
-    def arguments
-      @arguments
-    end
-
-    #
-    def settings
-      @settings
-    end
-
-    #
+    # Output directory.
     def destination
       @destination
     end
 
-    # TODO: Add name to stage.
+    # Temporary staging directory.
     def stage
       @stage
     end
 
     #
-    def config
-      @config
-    end
+    #def config
+    #  @config
+    #end
 
-    # Plant the seed! TODO: Rename to germinate?
+    # Plant the seed! 
+    #--
+    # TODO: Rename to germinate ?
+    #++
     def generate
       archive_copy(destination, stage)
-      Seed.new(seed, arguments, settings).sow!(stage)
+      seeds.each do |seed|
+        seed.sow!(stage)
+      end
       managed_copy(stage, destination)
       #remove_stage(stage) unless $DEBUG
     end

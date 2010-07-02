@@ -45,11 +45,6 @@ module CLI
     end
 
     #
-    def generator
-      @generator ||= Generator.new(options)
-    end
-
-    #
     def manager
       @manager ||= Manager.new(options)
     end
@@ -57,5 +52,4 @@ module CLI
   end
 
 end
-
 end

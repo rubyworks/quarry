@@ -10,32 +10,25 @@ module Sow
 
     # Entry point for commandline interface.
     def self.run(*argv)
-      name = argv.shift
-      case name
-      when 'bank'
-        case argv.first
-        when 'install'
-          argv.shift
-          cmdc = CLI::BankInstall
-          args = argv
-        when 'update'
-          argv.shift
-          cmdc = CLI::BankUpdate
-          args = argv
-        when 'remove'
-          argv.shift
-          cmdc = CLI::BankRemove
-          args = argv
-        else
-          cmdc = CLI::BankList
-          args = argv
-        end
+      cmd = argv.shift
+      case cmd
       when 'help'
         cmdc = CLI::Help
         args = argv
+      when 'bank', '-b', '--bank'
+        cmdc, args = bank(argv)
+      when 'init', '-i', '--init'
+        cmdc = CLI::Init
+        args = argv
+      when 'new', '-n', '--new'
+        cmdc = CLI::New
+        args = argv
+      when 'gen', '-g', '--gen'
+        cmdc = CLI::Plant
+        args = argv
       else
         cmdc = CLI::Plant
-        args = [name, *argv]
+        args = [cmd, *argv]
       end       
 
       if $DEBUG
@@ -48,17 +41,43 @@ module Sow
         end
       end
     end
+
+    #
+    def self.bank(argv)
+      case argv.first
+      when 'install'
+        argv.shift
+        cmdc = CLI::BankInstall
+        args = argv
+      when 'update'
+        argv.shift
+        cmdc = CLI::BankUpdate
+        args = argv
+      when 'remove'
+        argv.shift
+        cmdc = CLI::BankRemove
+        args = argv
+      else
+        cmdc = CLI::BankList
+        args = argv
+      end
+      return cmdc, args
+    end
+
   end
 
 end
 
 require 'sow/cli/abstract'
+require 'sow/cli/new'
 require 'sow/cli/plant'
 require 'sow/cli/uproot'
 
-require 'sow/cli/list'
-require 'sow/cli/install'
-require 'sow/cli/update'
-require 'sow/cli/remove'
+require 'sow/cli/bank_list'
+require 'sow/cli/bank_install'
+require 'sow/cli/bank_update'
+require 'sow/cli/bank_remove'
+require 'sow/cli/bank_save'
 
 require 'sow/cli/help'
+

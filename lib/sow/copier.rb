@@ -101,7 +101,7 @@ module Sow
       end
 
       logger.report_complete
-      logger.report_fixes #if options.newproject?
+      logger.report_fixes(actionlist.map{|a,f|f})
     end
 
   private

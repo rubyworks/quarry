@@ -2,7 +2,7 @@ require 'sow/cli/abstract'
 
 module Sow::CLI
 
-  class Uproot < Abstract
+  class Undo < Abstract
 
     def call(argv)
       app.undo

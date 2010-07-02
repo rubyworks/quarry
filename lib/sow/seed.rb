@@ -5,9 +5,7 @@ require 'sow/config'
 
 module Sow
 
-  # TODO: It may be prudent to divide this into two classes
-  # like the old Scaffold and Script classes --one to ecapsulate
-  # the seed on disc and the other to run the sowfile.
+  #
   class Seed
 
     # Find a seed by +name+.
@@ -20,11 +18,18 @@ module Sow
       @manager ||= Manager.new
     end
 
-    # New seed.
-    def initialize(name, arguments, settings)
+    # New Seed.
+    #
+    # name      - name of the seed (or best prefix match)
+    # arguments - additional arguments for the seed
+    # settings  - overriding metadata for the seed
+    # options   - additional processing options
+    #
+    def initialize(name, arguments, settings, options)
       @name        = name
       @arguments   = arguments
       @settings    = settings
+      @options     = options
 
       @source  = self.class.find(name)
 
@@ -43,6 +48,9 @@ module Sow
 
     # Metadata settings (from commandline).
     def settings; @settings ; end
+
+    #
+    def options; @options ; end
 
     # Seed's source directory.
     def source_directory
@@ -72,13 +80,21 @@ module Sow
 
     # New seed.
     def initialize(seed)
-      @seed  = seed
-      @empty = Dir['*'].empty?
+      @seed   = seed
+      @empty  = Dir['*'].empty?
+      @offset = nil
     end
 
-    # The seed's location on disc.
+    # The seed object.
     def seed
       @seed
+    end
+
+    # Basename of output destination directory.
+    def destname
+      @destname ||= (
+        File.basename((seed.options.output || Dir.pwd).chomp('/'))
+      )
     end
 
     # TODO: Make extensions plugable?
@@ -87,9 +103,9 @@ module Sow
     end
 
     # Name of the seed.
-    def name
-      seed.name
-    end
+    #def name
+    #  seed.name
+    #end
 
     # Arguments (from commandline).
     def arguments
@@ -103,6 +119,11 @@ module Sow
 
     # Basenames of files to ignore in template files.
     IGNORE = %w{. .. .svn}
+
+    #
+    def template_directory
+      seed.template_directory
+    end
 
     # Returns the list of template files.
     def template_files
@@ -119,8 +140,14 @@ module Sow
 
     # Give a commandline argument a name, assign it to
     # metadata and shift it off the arguments list.
-    def argument(name)
-      value = arguments.shift
+    # If the argument is nil, fallback to :default option.
+    #
+    # This is equivalent to:
+    #
+    #   metadata.<name> = arguments.shift || default
+    #
+    def argument(name, options={})
+      value = arguments.shift || options[:default]
       metadata[name] = value if value
     end
 
@@ -158,7 +185,12 @@ module Sow
     # Make directory. This will auto-create subdirecties,
     # equivalent to `mkdir -p`.
     def mkdir(dir)
-      fileutils.mkdir_p(dir)
+      fileutils.mkdir_p(dir) unless File.directory?(dir)
+    end
+
+    # Append +text+ to the end of a +file+.
+    def append(file, text)
+      File.open(file, 'a'){ |f| f << text.to_s }
     end
 
     # Copy a template file or a glob of template files. Except for specially
@@ -203,7 +235,8 @@ module Sow
         if template?(fname)
           #fname  = fname.chomp('.erb')
           result = erb(File.new(from))
-          mkdir(File.dirname(fname))
+          parent = File.dirname(fname)
+          mkdir(parent)
           File.open(fname, 'w'){|f| f << result.to_s}
           fileutils.chmod(mode, fname) if mode
         else
@@ -223,7 +256,8 @@ module Sow
         text = io.read
         io.close
       end
-      ERB.new(text).result(metadata.__binding__)
+      context = Context.new(metadata)  # TODO: Do we need a new context every time?
+      ERB.new(text).result(context.to_binding)
     end
 
     #
@@ -297,8 +331,9 @@ module Sow
 
       #
       def initialize(sower, &block)
-        @sower    = sower
-        @copylist = {}
+        @sower       = sower
+        @copy_list   = {}
+        @append_list = {}
         instance_eval(&block)
       end
 
@@ -326,14 +361,22 @@ module Sow
         end
 
         list.each do |from, fname|
-          @copylist[fname] = [from, mode]
+          @copy_list[fname] = [from, mode]
         end
       end
 
       #
+      def append(file, text)
+        @append_list << [file, text]
+      end
+
+      # Copies occur before appends.
       def commit!
-        @copylist.each do |fname, (from, mode)|
+        @copy_list.each do |fname, (from, mode)|
           sower.template(from, fname, mode)
+        end
+        @append_list.each do |file, text|
+          sower.append(file, text)
         end
       end
     end
@@ -373,16 +416,31 @@ module Sow
       def method_missing(sym, *args)
         sym = sym.to_s
         case sym
-        when /=$/
+        when /\=$/
           name = sym.chomp('=')
           @data[name] = args.first
+        when /\?$/
+          self[sym.chomp('?')]
+        when /\!$/
+          # TODO: if method_missing ends in '!'
         else
-          self[sym] || "__#{sym}__"
+          self[sym]
         end
       end
+    end
 
+    #
+    class Context
       #
-      def __binding__
+      def initialize(metadata)
+        @metadata = metadata
+      end
+      #
+      def method_missing(s, *a, &b)
+        @metadata[s.to_s] || "__#{s}__"
+      end
+      #
+      def to_binding
         binding
       end
     end

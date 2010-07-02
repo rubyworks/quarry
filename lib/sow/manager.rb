@@ -1,4 +1,5 @@
 require 'plugin'
+require 'sow/copier'
 
 module Sow
 
@@ -9,13 +10,24 @@ module Sow
     # User installed seeds location.
     BANK = Pathname.new(File.expand_path('~/.config/sow/seeds'))
 
+    # TODO: Stores location of personal seed bank.
+    CONFIG = Pathname.new(File.expand_path('~/.config/sow/config.yml'))
+
     #
     def initialize(options=nil)
       @options = options || OpenStruct.new
+
     end
 
     #
     attr :options
+
+    #
+    def config
+      @config ||= (
+        File.exist?(CONFIG) ? YAML.load(CONFIG) : {}
+      )
+    end
 
     #
     def banks
@@ -163,41 +175,34 @@ module Sow
       #FileUtils.rm_rf(dest)
     end
 
-=begin
-    # Plugins
-    #--
-    # Note that order of paths is important here.
-    #++
-    def plugin_locations
-      @plugin_locations ||= (
-        pl = {}
-        pa = []
-        pa |= plugins_from_packages
-       #pa |= plugins_core)
-       #pa |= plugins_user
-        pa.each do |d|
-          pl[File.basename(d)] = d
-        end
-        pl
-      )
+
+    # TODO: Maybe save Sowfile in current directory?
+    #
+    # TODO: Anyway to set directory instead of Dir.pwd?
+    def save(name)
+      pot = config['pot'] || '~/.config/sow/pot'
+      raise "seed needs a name" unless name
+      dir = File.join(pot, name)
+      #shell.mkdir_p(dir)
+      copier = Copier.new(Dir.pwd, dir, options)
+      copier.copy
+      #shell.cp_r(Dir.pwd, dir)
+      sowfile = File.join(dir, 'Sowfile')
+      if !File.exist?(sowfile)
+        File.open(sowfile, 'w'){ |f| f << 'template all' }
+      end
+      return dir
     end
 
-    def plugins
-      @plugins ||= plugin_locations.keys
+    #
+    def custom
+    
     end
 
-    def plugin(session, name, options)
-      location = plugin_locations[name]
-      raise "unknown scaffolding -- #{name}" unless location
-      Plugin.new(session, location, options)
-    end
-
-    # Convert path into plugin.
-    #def plugin(path)
-    #  path = Pathname.new(path) unless path.is_a?(Pathname)
-    #  Plugin.new(:location => path, :project => project, :command => cli)
+    #
+    #def shell
+    #  FileUtils
     #end
-=end
 
   end
 

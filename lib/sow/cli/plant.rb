@@ -1,4 +1,5 @@
 require 'sow/cli/abstract'
+require 'sow/generator'
 
 module Sow::CLI
 
@@ -6,19 +7,16 @@ module Sow::CLI
   class Plant < Abstract
 
     #
-    def call
+    def call(argv)
+      seeds     = parse_seeds(argv)
+      generator = Sow::Generator.new(seeds, options)
       generator.generate
     end
 
-    #
-    def run(*argv)
-      opts.parse!(argv)
-      sets, args = parse_settings(argv)
-      options.seed = args.shift
-      options.arguments = args
-      options.settings  = sets
-      call
-    end
+      #sets, args = parse_settings(argv)
+      #options.seed = args.shift
+      #options.arguments = args
+      #options.settings  = sets
 
     #
     def opts
@@ -32,6 +30,23 @@ module Sow::CLI
         o.on('--debug'       ){ $DEBUG  = true }
         o.on('--help', '-h'  ){ puts o; exit }
       }
+    end
+
+    #
+    def parse_seeds(argv)
+      groups = [[]]
+      argv.each do |arg|
+        if arg == '-'
+          groups << []
+        else
+          groups.last << arg
+        end
+      end
+      groups.map do |args|
+        settings, arguments = parse_settings(args)
+        seed_name = arguments.shift
+        Sow::Seed.new(seed_name, arguments, settings, options)
+      end
     end
 
     # Parse out the metadata setting given on the commandline.
