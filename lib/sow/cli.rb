@@ -53,13 +53,13 @@ module Sow
         argv.shift
         cmdc = CLI::BankInstall
         args = argv
+      when 'uninstall'
+        argv.shift
+        cmdc = CLI::BankUninstall
+        args = argv
       when 'update'
         argv.shift
         cmdc = CLI::BankUpdate
-        args = argv
-      when 'remove'
-        argv.shift
-        cmdc = CLI::BankRemove
         args = argv
       else
         cmdc = CLI::BankList
@@ -81,8 +81,9 @@ require 'sow/cli/copy'
 require 'sow/cli/bank_list'
 require 'sow/cli/bank_install'
 require 'sow/cli/bank_update'
-require 'sow/cli/bank_remove'
+require 'sow/cli/bank_uninstall'
 require 'sow/cli/bank_save'
+#require 'sow/cli/bank_delete'
 
 require 'sow/cli/help'
 

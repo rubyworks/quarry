@@ -7,15 +7,21 @@ module Sow
   #
   class Manager
 
+    # Home configuration directory.
+    HOME_CONFIG = ENV['XDG_CONFIG_HOME'] || '~/.config'
+
     # User installed seeds location.
-    BANKS = [Pathname.new(File.expand_path('~/.config/sow/seeds'))]
+    BANKS = (
+      str = ENV['SOW_BANK'] || HOME_CONFIG + '/sow/seeds'
+      str.split(/[:;]/)
+    )
 
     # TODO: Stores location of personal seed bank.
     CONFIG = Pathname.new(File.expand_path('~/.config/sow/config.yml'))
 
     #
     def self.banks
-      BANKS
+      BANKS.map{ |dir| Pathname.new(dir) }
     end
 
     #

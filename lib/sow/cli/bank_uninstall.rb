@@ -3,11 +3,11 @@ require 'sow/cli/abstract'
 module Sow::CLI
 
   # Remove a seed bank.
-  class BankRemove < Abstract
+  class BankUninstall < Abstract
 
     #
     def call(argv)
-      manager.remove(argv.first)
+      manager.uninstall(argv.first)
     end
 
     #

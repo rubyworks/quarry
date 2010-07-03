@@ -153,7 +153,7 @@ module Sow
     #   metadata.<name> = arguments.shift || default
     #
     def argument(name, options={})
-      value = arguments.shift || options[:default]
+      value = arguments.shift || metadata[name] || options[:default]
       metadata[name] = value if value
     end
 
