@@ -12,17 +12,11 @@ module Sow
     #
     def initialize(seeds, options)
       @seeds   = seeds
-      @options = options
+      @options = options.to_ostruct
 
-      #@seedname    = options.seed #name
-      #@arguments   = options.arguments
-      #@settings    = options.settings
+      @output  = @options.output || Dir.pwd
 
-      @destination = options.output || Dir.pwd
-
-      destname = File.basename(@destination).chomp('/')
-
-      #@settings['destname'] = destname  # TODO
+      destname = File.basename(@output).chomp('/')
 
       @stage = Dir.tmpdir + "/sow/stage/#{Time.now.to_i}/#{destname}"
     end
@@ -39,9 +33,11 @@ module Sow
     end
 
     # Output directory.
-    def destination
-      @destination
+    def output
+      @output
     end
+
+    alias_method :destination, :output
 
     # Temporary staging directory.
     def stage
@@ -58,7 +54,7 @@ module Sow
     # TODO: Rename to germinate ?
     #++
     def generate
-      archive_copy(destination, stage)
+      setup_stage(destination, stage)
       seeds.each do |seed|
         seed.sow!(stage)
       end
@@ -67,10 +63,10 @@ module Sow
     end
 
     #
-    def archive_copy(destination, stage)
+    def setup_stage(destination, stage)
       fu.mkdir_p(stage)
-      fu.mkdir_p(destination) unless File.exist?(destination)
-      fu.cp_r(destination+'/.', stage)
+      #fu.mkdir_p(destination) unless File.exist?(destination)
+      #fu.cp_r(destination+'/.', stage)
     end
 
     #

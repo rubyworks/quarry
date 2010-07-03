@@ -8,10 +8,15 @@ module Sow
   class Manager
 
     # User installed seeds location.
-    BANK = Pathname.new(File.expand_path('~/.config/sow/seeds'))
+    BANKS = [Pathname.new(File.expand_path('~/.config/sow/seeds'))]
 
     # TODO: Stores location of personal seed bank.
     CONFIG = Pathname.new(File.expand_path('~/.config/sow/config.yml'))
+
+    #
+    def self.banks
+      BANKS
+    end
 
     #
     def initialize(options=nil)
@@ -31,7 +36,7 @@ module Sow
 
     #
     def banks
-      @banks ||= [BANK]
+      @banks ||= self.class.banks
     end
 
     #

@@ -2,6 +2,7 @@ require 'erb'
 require 'plugin'
 require 'sow/core_ext'
 require 'sow/config'
+require 'sow/manager'
 
 module Sow
 
@@ -28,8 +29,8 @@ module Sow
     def initialize(name, arguments, settings, options)
       @name        = name
       @arguments   = arguments
-      @settings    = settings
-      @options     = options
+      @settings    = settings || {}
+      @options     = options.to_ostruct
 
       @source  = self.class.find(name)
 
@@ -37,7 +38,7 @@ module Sow
 
       @sowfile = (@source + 'Sowfile').to_s
       @sowcode = File.read(@sowfile).strip
-      @sowcode = "template all" if @sowcode.empty?
+      @sowcode = "copy all" if @sowcode.empty?
     end
 
     # Name of seed.
@@ -62,6 +63,11 @@ module Sow
     # name `template` or `templates`.
     def template_directory
       @template ||= source.glob('template{,s}').first
+    end
+
+    #
+    def destination_directory
+      @destination ||= (options.output || Dir.pwd)
     end
 
     # Do it!
@@ -162,21 +168,6 @@ module Sow
       @metadata ||= Metadata.new(self)
     end
 
-=begin
-    # Access to POM project object. Thus is useful for scaffoling
-    # Ruby project's that conform to POM specs. Keep in mind that
-    # this POM object points to the temporary duplicate of the project
-    # and not the actual project.
-    #
-    # TODO: Need to make pom an optional extension that can be loaded by seeds.
-    def pom
-      @pom ||= (
-        require 'pom'
-        POM::Project.new(Dir.pwd)
-      )
-    end
-=end
-
     #
     def config
       @config ||= Config.new(Dir.pwd)
@@ -190,6 +181,14 @@ module Sow
 
     # Append +text+ to the end of a +file+.
     def append(file, text)
+      # cow procedure
+      if !File.exist?(file)
+        mkdir(File.dirname(file))
+        if File.exist?(seed.destination_directory + file)
+          fileutils.cp(seed.destination_directory + file, file)
+        end
+      end
+      # append text to file
       File.open(file, 'a'){ |f| f << text.to_s }
     end
 

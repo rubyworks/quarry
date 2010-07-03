@@ -7,6 +7,13 @@ require 'facets/hash/to_h'
 require 'facets/pathname'
 require 'facets/ostruct'
 
+class OpenStruct #:nodoc:
+  # Missing from early version of Facets
+  def to_ostruct
+    self
+  end
+end
+
 =begin
 require 'erb'
 require 'fileutils'

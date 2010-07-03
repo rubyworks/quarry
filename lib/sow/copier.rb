@@ -14,7 +14,7 @@ module Sow
 
     # output - destination directory
     #
-    def initialize(source, output, options)
+    def initialize(source, output, options={})
       @source   = Pathname.new(source)
       @output   = Pathname.new(output)
       @options  = options.to_h
@@ -41,6 +41,8 @@ module Sow
       copylist = copylist.reject{ |fname| identical?(fname) }
       copylist
     end
+
+    private :initialize_copylist
 
     #
     def identical?(fname)
@@ -100,10 +102,14 @@ module Sow
           logger.report_create(fname, how, atime)
           #logger.report_create(dest, result, atime)
         end
+        logger.report_complete
+        logger.report_fixes(actionlist.map{|a,f|f})
       end
+    end
 
-      logger.report_complete
-      logger.report_fixes(actionlist.map{|a,f|f})
+    #
+    def inspect
+      "#<#{self.class} @options=#{@options.inspect}>"
     end
 
   private
@@ -386,11 +392,6 @@ module Sow
       else
         dest
       end
-    end
-
-    #
-    def inspect
-      "#<#{self.class} @options=#{@options.inspect}>"
     end
 
   end

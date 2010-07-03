@@ -3,8 +3,6 @@ require 'ostruct'
 
 module Sow
 
-  #$DEBUG = true
-
   #
   module CLI
 
