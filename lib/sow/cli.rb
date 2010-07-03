@@ -27,6 +27,9 @@ module Sow
       when 'undo', '-u', '--undo'
         cmdc = CLI::Undo
         args = argv
+      when 'copy', '-c', '--copy'
+        cmdc = CLI::Copy
+        args = argv
       else
         cmdc = CLI::Plant
         args = [cmd, *argv]
@@ -73,6 +76,7 @@ require 'sow/cli/abstract'
 require 'sow/cli/new'
 require 'sow/cli/plant'
 require 'sow/cli/undo'
+require 'sow/cli/copy'
 
 require 'sow/cli/bank_list'
 require 'sow/cli/bank_install'
