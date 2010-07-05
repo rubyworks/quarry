@@ -1,0 +1,64 @@
+= Working with Seed Banks
+
+== Installing a Seed Bank
+
+We can install a seed bank using the +install+ command. A seed bank
+is simply a source control repository or a local file path. If a local
+file path is used, Sow will soft link the path into the bank store.
+
+  # TODO
+
+If a repository URI is given, Sow will clone or checkout the repository
+into the bank store.
+
+  `sow bank install git://github.com/trans/seeds.git`
+
+Sow will convert the URI into a flat directory name to store the repository.
+We can verify the bank was in fact installed.
+
+  assert seed_bank_exists?('seeds.trans.github.com')
+
+If we wish to use a different name for the seed bank, we can supply
+the name in a second argument.
+
+  `sow bank install git://github.com/trans/seeds.git seeds.trans`
+
+  assert seed_bank_exists?('seeds.trans')
+
+== Listing Installed Banks
+
+A listing of installed seed banks can be printed with a plain `sow bank`
+command.
+
+  `sow bank`
+
+The output will look like this ...
+
+  * seeds.repo.somehub.com
+  * seeds.trans
+  * seeds.trans.github.com
+
+== Updating Seed Banks
+
+A seed bank and be updated, if it is from a repo, using the `sow update`
+command.
+
+  `sow bank update seeds.trans`
+
+You can see from this that referencing an installed bank (or seed for that
+matter) can be done with only a portion of the actual name, as long
+as it uniquely identifies the bank.
+
+== Uninstalling a Seed Bank
+
+We can uninstall seed bank via the +uninstall+ command. For instance, in
+this case let's uninstall the 'seeds.trans' bank. Again we do not have to
+give the full name of the bank, only enough to uniquely identify it. We
+use the the force option to bypass the confirmation prompt.
+
+  `sow bank uninstall --force seeds.trans`
+
+We can verify the bank was in fact uninstalled.
+
+  refute seed_bank_exists?('seeds.trans')
+

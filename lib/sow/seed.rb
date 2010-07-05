@@ -62,7 +62,7 @@ module Sow
     # Seed's template directory. The directory must be
     # name `template` or `templates`.
     def template_directory
-      @template ||= source.glob('template{,s}').first
+      @template_directory ||= source.glob('template{,s}').first
     end
 
     #

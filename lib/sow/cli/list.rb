@@ -4,19 +4,19 @@ require 'sow/manager'
 module Sow::CLI
 
   #
-  class BankList < Abstract
+  class List < Abstract
 
     #
     def call(argv)
-      banks = manager.banks
-      banks.each do |bank|
-        puts "  * #{bank}"
+      seeds = manager.seeds
+      seeds.each do |seed|
+        puts "  * #{seed}"
       end
     end
 
     def opts
       super do |o|
-        o.banner = "Usage: sow bank"
+        o.banner = "Usage: sow seed"
       end
     end
 

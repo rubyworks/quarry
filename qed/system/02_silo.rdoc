@@ -1,0 +1,39 @@
+= Working with Personal Seeds
+
+You personal seeds are stored in a "silo".
+
+== Saving Personal Seeds
+
+Seeds can easily be created from a working directory using the `sow silo save`
+command. You need only give it a name, and the current directory or a given
+target directory will be saved to the user's personal "silo" of seeds.
+
+  `sow silo save foo tmp/qed/system/foo_seed`
+
+We can verify the seed exists.
+
+  assert seed_silo_exists?('foo')
+
+== Listing Personal Seeds
+
+Silo seeds can be lists indendently of all other seeds via a bare `sow silo`
+command.
+
+  `sow silo`
+
+The output will look like this ...
+
+  * foo
+
+== Removing Personal Seeds
+
+To remove a silo seed, use the `sow silo remove` command. Simply provide
+the name, or closest uniquely identifying match. We use the --force option
+in the following example to bypass the confirmation prompt.
+
+  `sow silo remove foo --force`
+
+We can verify the seed no longer exists.
+
+  refute seed_silo_exists?('foo')
+

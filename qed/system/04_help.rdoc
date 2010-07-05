@@ -1,0 +1,21 @@
+= Getting Help
+
+The `sow` command provides a fair amount of help information.
+You can get general help about the commands available simply
+by using the +help+ command.
+
+  `sow help`
+
+In additon, each sow command will provide help information
+about what it does and what options it accepts by putting
+the --help flag after the command.
+
+  `sow bank --help`
+
+Finally, each seed will provide help information about it's
+purpose and accepted arguments, so long as the author did his or
+her duty and provided a README file. Simply provide the name of
+the seed after the +help+ command.
+
+  `sow help ruby`
+

@@ -15,8 +15,8 @@ module Sow
     # output - destination directory
     #
     def initialize(source, output, options={})
-      @source   = Pathname.new(source)
-      @output   = Pathname.new(output)
+      @source   = Pathname.new(File.expand_path(source))
+      @output   = Pathname.new(File.expand_path(output))
       @options  = options.to_h
 
       @logger   = Logger.new(self)
@@ -93,7 +93,7 @@ module Sow
 
       mkdir_p(output) unless File.directory?(output)
 
-      backup(actionlist)
+      backup(actionlist) if backup?
 
       Dir.chdir(output) do
         actionlist.each do |action, fname|

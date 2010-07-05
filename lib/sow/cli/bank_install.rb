@@ -6,7 +6,7 @@ module Sow::CLI
   class BankInstall < Abstract
 
     def call(argv)
-      manager.install(argv.first)
+      manager.install(*argv)
     end
 
     def opts

@@ -1,1 +1,1 @@
-require 'tmpdir'
+require 'facets/kernel/silence'

@@ -7,13 +7,17 @@ module Sow::CLI
 
     #
     def call(argv)
-      manager.uninstall(argv.first)
+      name = argv.first
+      bank = manager.find_bank(name)
+      if confirm?("uninstall #{bank.basename.to_s}")
+        manager.uninstall(name)
+      end
     end
 
     #
     def opts
       super do |o|
-        o.banner = "Usage: sow bank remove <name>"
+        o.banner = "Usage: sow bank uninstall <name>"
       end
     end
 

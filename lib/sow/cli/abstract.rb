@@ -39,6 +39,7 @@ module CLI
     def opts(&block)
       opt = OptionParser.new(&block)
       opt.on('--dryrun'      ){ $DRYRUN = true }
+      opt.on('--force'       ){ $FORCE  = true }
       opt.on('--debug'       ){ $DEBUG  = true }
       opt.on('--help', '-h'  ){ puts opt; exit }
       opt
@@ -47,6 +48,18 @@ module CLI
     #
     def manager
       @manager ||= Manager.new(options)
+    end
+
+    # Get a confirmation from the user. If $FORCE is true,
+    # assume the answer it 'yes'.
+    def confirm?(message)
+      ans = $FORCE ? 'y' : ask("Confirm #{message} (y/N)? ")
+      case ans.strip.downcase
+      when 'y', 'yes'
+        true
+      else
+        false
+      end
     end
 
   end

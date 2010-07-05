@@ -8,39 +8,37 @@ module Sow
 
     # Entry point for commandline interface.
     def self.run(*argv)
-      cmd = argv.shift
-      case cmd
-      when 'help'
+      argv.shift if argv.first == '-'
+      case cmd = argv.shift
+      when 'help', '-h', '--help'
         cmdc = CLI::Help
-        args = argv
       when 'bank', '-b', '--bank'
-        cmdc, args = bank(argv)
+        cmdc = bank(argv)
+      when 'silo', '-s', '--silo'
+        cmdc = silo(argv)
+      when 'seed', 'seeds', 'list', '-l', '--list'
+        cmdc = CLI::List
       when 'init', '-i', '--init'
         cmdc = CLI::Init
-        args = argv
       when 'new', '-n', '--new'
         cmdc = CLI::New
-        args = argv
       when 'gen', '-g', '--gen'
-        cmdc = CLI::Plant
-        args = argv
+        cmdc = CLI::Gen
       when 'undo', '-u', '--undo'
         cmdc = CLI::Undo
-        args = argv
       when 'copy', '-c', '--copy'
         cmdc = CLI::Copy
-        args = argv
       else
-        cmdc = CLI::Plant
-        args = [cmd, *argv]
-      end       
+        cmdc = CLI::Gen
+        argv.unshift(cmd) if argv
+      end
 
       if $DEBUG
-        cmdc.run(*args)
+        cmdc.run(*argv)
       else
         begin
-          cmdc.run(*args)
-        rescue Exception => error
+          cmdc.run(*argv)
+        rescue StandardError => error
           $stderr << error.to_s + "\n"
         end
       end
@@ -48,24 +46,32 @@ module Sow
 
     #
     def self.bank(argv)
-      case argv.first
+      case cmd = argv.shift
       when 'install'
-        argv.shift
         cmdc = CLI::BankInstall
-        args = argv
       when 'uninstall'
-        argv.shift
         cmdc = CLI::BankUninstall
-        args = argv
       when 'update'
-        argv.shift
         cmdc = CLI::BankUpdate
-        args = argv
       else
         cmdc = CLI::BankList
-        args = argv
+        argv.unshift(cmd) if cmd
       end
-      return cmdc, args
+      return cmdc
+    end
+
+    #
+    def self.silo(argv)
+      case cmd = argv.shift
+      when 'save'
+        cmdc = CLI::SiloSave
+      when 'remove', 'rm'
+        cmdc = CLI::SiloRemove
+      else
+        cmdc = CLI::SiloList
+        argv.unshift(cmd) if cmd
+      end
+      return cmdc
     end
 
   end
@@ -73,8 +79,10 @@ module Sow
 end
 
 require 'sow/cli/abstract'
+
+require 'sow/cli/list'
 require 'sow/cli/new'
-require 'sow/cli/plant'
+require 'sow/cli/gen'
 require 'sow/cli/undo'
 require 'sow/cli/copy'
 
@@ -82,8 +90,10 @@ require 'sow/cli/bank_list'
 require 'sow/cli/bank_install'
 require 'sow/cli/bank_update'
 require 'sow/cli/bank_uninstall'
-require 'sow/cli/bank_save'
-#require 'sow/cli/bank_delete'
+
+require 'sow/cli/silo_list'
+require 'sow/cli/silo_save'
+require 'sow/cli/silo_remove'
 
 require 'sow/cli/help'
 

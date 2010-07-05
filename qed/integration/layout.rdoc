@@ -17,11 +17,11 @@ look something like this...
 
   argument :name, :default => 'anonymous'
 
-  template '**/*'
+  copy '**/*'
 
 The template directory holds all the erb templates and static files that may
 be copied. For example, the template directory might have a template file
-called README.erb ...
+called README ...
 
   Welcome to <%= name %>.
 
@@ -29,14 +29,14 @@ called README.erb ...
 
   Copyright (c) <%= Time.now.strftime('%Y') %> <%= name %>
 
-The template directory might also have a static file called +LICENSE+ ...
+The template directory might also have a static file called LICENSE ...
 
   Pancake License
 
   You can do whatever the hell you want with this software
   just so long as lawyers do not become involved.
 
-And that's it. That is the basic outline of Sow seed. The nice thing
-about seeds is that the layout is straight-forward and the 
+And that's really all there is to it. That is the basic outline of Sow seed.
+The nice thing about Sow seeds is that the layout is straight-forward and the 
 Sowfile DSL is very easy to use.
 

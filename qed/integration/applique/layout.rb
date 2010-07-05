@@ -1,5 +1,10 @@
+Before :document do
+  FileUtils.rm_r('tmp/bank')  if File.exist?('tmp/bank')
+  FileUtils.rm_r('tmp/myapp') if File.exist?('tmp/myapp')
+end
+
 When 'seed is a directory' do
-  @tmpdir = File.join(Dir.tmpdir, 'sow/sources/test/demo/')
+  @tmpdir = File.join('tmp/bank/demo/')
   FileUtils.mkdir_p(@tmpdir)
 end
 

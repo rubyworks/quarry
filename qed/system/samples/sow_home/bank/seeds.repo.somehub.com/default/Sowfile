@@ -1,0 +1,3 @@
+argument :name, :default => 'anonymous'
+
+copy '**/*'

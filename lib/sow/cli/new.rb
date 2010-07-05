@@ -1,16 +1,18 @@
-require 'sow/cli/plant'
+require 'sow/cli/gen'
 
 module Sow::CLI
 
   # Sow a new project.
-  class New < Plant
+  class New < Gen
 
     #
-    #def call(argv)
-    #  seeds     = parse_seeds(argv)
-    #  generator = Sow::Generator.new(seeds, options)
-    #  generator.generate
-    #end
+    def call(argv)
+      if argv.empty?
+        FileUtils.mkdir_p(File.join(options.output || Dir.pwd, '.sow'))
+      else
+        super(argv)
+      end
+    end
 
     #
     def run(*argv)

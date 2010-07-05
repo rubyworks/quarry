@@ -1,40 +1,43 @@
 = Generator
 
 The Generator class is the primary controller of the Sow system. By setting
-up a Generator object, it can be used to "germinate" a new seed.
+up a Generator object, it can be used to "germinate" new seeds.
 
   require 'sow/generator'
 
-Given that we have Sow setup, and a seed as defined in layout.rdoc[qed://layout.rdoc].
-To create a generator we need a seed +name+, any arguments the seed takes, the
-+destination+ for the new scaffolding, an +environment+, which is simply a Hash
-that becomes part of template metadata, and any general options that control
-operation, such as +write+, +skip+, etc.
+Given that we have a seed as defined in layout.rdoc[qed://layout.rdoc].
+To create a generator we need a seed, the +destination+ for the new scaffolding,
+and any general options that control operation, such as +write+, +skip+, etc.
 
-  name = 'demo'
+  dir  = 'tmp/myapp'
 
-  args = ['myapp']
+  opts = {:skip=>true, :output=>dir}
 
-  opts = {:skip=>true, :output=>File.join(Dir.tmpdir, 'sow', 'myapp')}
+  seed = Sow::Seed.new('demo', ['myapp'], {'name'=>'Sow Demo'}, opts)
 
-  gen  = Sow::Generator.new(name, args, opts)
+  gen  = Sow::Generator.new([seed], opts)
 
 With the instantiation of a Generator, a fair amount of information is
-setup. For starters, the session has found the seed associated with the
-+name+.
+setup.
 
-  gen.source.basename == 'demo'
-
-You will also notice that it has convered paths to Pathname objects.
-
-  gen.output.assert.is_a?(Pathname)
-
-Using the +source+ directory the Generator creates a seed object, which models
-the contents of the scaffold.
-
-  gen.seed.is_a?(Sow::Seed)
+  gen.output.assert == 'tmp/myapp'
 
 We will not go into the Seed class here (see seed.rdoc for that), but to point
 out that it extecutes the seed's Sowfile which updates a stagged copy of
 the destination. It is this staged set of files that is ultimately copied back
 to the output directory.
+
+  silently do
+    gen.generate
+  end
+
+Now if we look in the designated output directory, we will find our demo files.
+
+  File.assert.exist?(dir + '/README')
+  File.assert.exist?(dir + '/LICENSE')
+
+And we will likewise see that README has been filled in with the settings
+metadata.
+
+  File.read(dir + '/README').include?('Sow Demo')
+

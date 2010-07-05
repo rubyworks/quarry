@@ -1,3 +1,4 @@
+require 'uri'
 require 'plugin'
 require 'sow/copier'
 
@@ -8,44 +9,66 @@ module Sow
   class Manager
 
     # Home configuration directory.
-    HOME_CONFIG = ENV['XDG_CONFIG_HOME'] || '~/.config'
+    HOME_CONFIG = ENV['XDG_CONFIG_HOME'] || File.expand_path('~/.config')
 
-    # User installed seeds location.
-    BANKS = (
-      str = ENV['SOW_BANK'] || HOME_CONFIG + '/sow/seeds'
-      str.split(/[:;]/)
-    )
+    # User configuration directory for sow.
+    SOW_CONFIG  = ENV['SOW_HOME'] || HOME_CONFIG + '/sow'
 
-    # TODO: Stores location of personal seed bank.
-    CONFIG = Pathname.new(File.expand_path('~/.config/sow/config.yml'))
+    # User seed location.
+    #BANK_FOLDER = ENV['SOW_BANK'] || HOME_CONFIG + '/sow/seeds'
+
+    # Where to store personal seeds.
+    #SAVE_FOLDER = ENV['SOW_SAVE'] || HOME_CONFIG + '/sow/seeds/personal'
 
     #
-    def self.banks
-      BANKS.map{ |dir| Pathname.new(dir) }
+    def self.bank_folder
+      @bank_folder ||= (
+        default = SOW_CONFIG + '/bank'
+        folder  = read_setting('bank_folder', default)
+        Pathname.new(File.expand_path(folder))
+      )
+    end
+
+    #
+    def self.silo_folder
+      @silo_folder ||= (
+        default = SOW_CONFIG + '/silo'
+        folder  = read_setting('silo_folder', default)
+        Pathname.new(File.expand_path(folder))
+      )
+    end
+
+    #
+    def self.read_setting(name, default=nil)
+      file = SOW_CONFIG + "/settings/#{name}"
+      if File.exist?(file)
+        File.read(file).strip
+      else
+        default
+      end
     end
 
     #
     def initialize(options=nil)
       @options = options || OpenStruct.new
-
     end
 
     #
-    attr :options
-
-    #
-    def config
-      @config ||= (
-        File.exist?(CONFIG) ? YAML.load(CONFIG) : {}
-      )
+    def options
+      @options
     end
 
     #
-    def banks
-      @banks ||= self.class.banks
+    def bank_folder
+      @bank_folder ||= self.class.bank_folder
     end
 
     #
+    def silo_folder
+      @silo_folder ||= self.class.silo_folder
+    end
+
+    # TODO: look for exact match first
     def find_seed(match)
       loc = nil
       map.each do |name, dir|
@@ -64,25 +87,33 @@ module Sow
     end
 
     #
-    def list
+    def seeds
       map.map{ |l| l.first }
     end
+
+    alias_method :list, :seeds
 
     #
     def map
       list = []
 
-      # uri and linked seeds
-      banks.each do |source|
-        locs = Dir[File.join(source, '**/Sowfile')]
-        locs = locs.map{ |l| File.dirname(l) }
-        locs.each do |l|
-          k = path_to_name(l.sub(source,''))
-          list << [k, l]
-        end
+      # personal silo
+      locs = silo_folder.glob('**/Sowfile')
+      locs = locs.map{ |l| File.dirname(l) }
+      locs.each do |l|
+        k = path_to_name(l.sub(silo_folder.to_s,''))
+        list << [k, l]
       end
 
-      # plugin seeds
+      # seed bank
+      locs = bank_folder.glob('**/Sowfile')
+      locs = locs.map{ |l| File.dirname(l) }
+      locs.each do |l|
+        k = path_to_name(l.sub(bank_folder.to_s,''))
+        list << [k, l]
+      end
+
+      # seed plugins
       locs = ::Plugin.find(File.join('sow', '**/Sowfile'))
       locs = locs.map{ |l| File.dirname(l) }
       locs.each do |l|
@@ -105,22 +136,23 @@ module Sow
       return 'No README' unless dir
     end
 
-    #
-    def install(resource)
-      dir  = BANK
-      out  = dir + uri_to_path(resource)
-      name = File.basename(resource).chomp(File.extname(resource))
+    # Install a seed bank.
+    def install(uri, alt=nil)
+      alt  = alt || uri_to_name(uri)
+      dir  = bank_folder
+      out  = dir + alt
+      name = File.basename(uri).chomp(File.extname(uri))
       if File.exist?(out + name)
         $stderr.puts "#{out + name} already exists"
         return # update ?
       end
-      case resource
+      case uri
       when /^git\:/, /\.git$/
-        cmd = "git clone #{resource} #{name}"
+        cmd = "git clone #{uri} #{name}"
       when /^svn\:/
-        cmd = "svn checkout clone #{resource} #{name}"
+        cmd = "svn checkout clone #{uri} #{name}"
       else # local path
-        cmd = "ln -s #{resource} #{out}"
+        cmd = "ln -s #{uri} #{out}"
       end
       if options.trial
         $stderr.puts("  mkdir -p #{out}")
@@ -133,15 +165,6 @@ module Sow
     end
 
     #
-    def uri_to_path(uri)
-      uri = uri.dup
-      uri.sub!(/^git\:\/\//, '')
-      uri.sub!(/^svn\:\/\//, '')
-      div = File.dirname(uri).split('/') # File::SEPARATOR ?
-      div.reverse.join('.')
-    end
-
-    #
     def path_to_name(path)
       div  = path.split('/') # File::SEPARATOR ?
       name = div.reverse.join('.').chomp('.')
@@ -151,69 +174,105 @@ module Sow
       name
     end
 
-    #
-    def update(resource=nil)
-      dir = HOME #Pathname.new(XDG::Config.home + '/sow/seeds/')
-      if resource
-        out  = dir + uri_to_path(resource)
-        if !out.exist
-          raise '#{out} does not exists'
-        end
-        paths = [out]
+    # Update seed bank(s).
+    def update(name=nil)
+      if name
+        paths = bank_folder.glob(name)
+        paths = bank_folder.glob("#{name}*") if paths.empty?
       else
-        paths = dir.glob('*')
+        paths = bank_folder.glob("*")
       end
+
       paths.each do |out|
         if (out + '.git').exist?
-          cmd = "cd #{out}; git pull origin master"
+          cmd = "git pull" # origin master"
         elsif (out + '.svn').exist?
-          cmd = "cd #{out}; svn update"
-        end
-        if options.trial
-          $stderr.puts(cmd)
+          cmd = "svn update"
         else
-          `#{cmd}`
+          cmd = nil
+        end
+        if cmd
+          if trial?
+            $stderr.puts("cd #{out}; #{cmd}")
+          else
+            Dir.chdir(out.to_s) do
+              `#{cmd}`
+            end
+          end
         end
       end
     end
 
-    # TODO
-    def uninstall(resource)
-      dir  = Pathname.new(XDG::Config.home + '/sow/seeds')
-      out  = dir + uri_to_path(resource)
-      #name = File.basename(resource).chomp(File.extname(resource))
-      #dest = File.join(dir, name)
-      #FileUtils.rm_rf(dest)
+    # Remove installed seed bank.
+    def uninstall(name)
+      bank = find_bank(name)
+      shell.rm_rf(bank.to_s) if bank
     end
 
+    # Find a seed bank by name, or closest prefix match.
+    def find_bank(name)
+      banks = bank_folder.glob(name)
+      banks = bank_folder.glob("#{name}*") if banks.empty?
+      raise "no such seed bank" if banks.size < 1
+      raise "not a unique seed bank reference" if banks.size > 1
+      bank = banks.first
+      bank ? Pathname.new(bank) : nil
+    end
 
-    # TODO: Maybe save Sowfile in current directory?
-    #
-    # TODO: Anyway to set directory instead of Dir.pwd?
-    def save(name)
-      pot = config['pot'] || '~/.config/sow/pot'
-      raise "seed needs a name" unless name
-      dir = File.join(pot, name)
-      #shell.mkdir_p(dir)
-      copier = Copier.new(Dir.pwd, dir, options)
+    # Return an Array of banks.
+    def banks(match=nil)
+      bank_folder.glob("#{match}*").map{ |s| s.basename.to_s }.sort
+    end
+
+    # Save a silo seed.
+    def save(name, src=nil)
+      raise "no seed name given" unless name
+      src = src || Dir.pwd
+      dir = silo_folder + "#{name}/template"
+      copier = Copier.new(src, dir, :backup=>false)
       copier.copy
-      #shell.cp_r(Dir.pwd, dir)
-      sowfile = File.join(dir, 'Sowfile')
-      if !File.exist?(sowfile)
-        File.open(sowfile, 'w'){ |f| f << 'template all' }
+      sowfile = dir.parent + 'Sowfile'
+      if !sowfile.exist?
+        File.open(sowfile, 'w'){ |f| f << 'copy all' }
       end
-      return dir
+      dir
     end
 
-    #
-    def custom
-    
+    # Remove a silo seed.
+    def remove(name)
+      dir = find_silo_seed(name)
+      shell.rm_rf(dir) if dir
     end
 
-    #
-    #def shell
-    #  FileUtils
-    #end
+    # Find a silo seed by name, or closest prefix match.
+    def find_silo_seed(name)
+      raise "no seed name given" unless name
+      seeds = silo_folder.glob(name)
+      seeds = silo_folder.glob("#{name}*") if seeds.empty?
+      raise "no such silo seed" if seeds.size < 1
+      raise "not a unique silo seed reference" if seeds.size > 1
+      seed = seeds.first
+      seed ? Pathname.new(seed) : nil
+    end
+
+    # Returns an Array of silo seed names.
+    def silos
+      silo_folder.glob('*').map{ |s| s.basename.to_s }
+    end
+
+    # Convert an URI into a suitable directory name.
+    def uri_to_name(uri)
+      uri = URI.parse(uri)
+      path = uri.path
+      path = path.chomp(File.extname(path))
+      path = path.split('/').reverse.join('.')
+      path + uri.host
+    end
+
+    # Interface to FileUtils or FileUtils::DryRun.
+    def shell
+      $DRYRUN ? FileUtils::DryRun : FileUtils
+    end
 
   end
 

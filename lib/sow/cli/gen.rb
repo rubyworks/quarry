@@ -4,7 +4,7 @@ require 'sow/generator'
 module Sow::CLI
 
   # Sow a seed. This is the deafult commandline interface.
-  class Plant < Abstract
+  class Gen < Abstract
 
     #
     def call(argv)

@@ -1,0 +1,96 @@
+= Planting Seeds
+
+== Getting a List of Available Seeds
+
+Before generating a seed, it is of course helpfule to know what seeds
+are available. This is easily done via the `sow list` command.
+
+  `sow list`
+
+The output will look like something like this ...
+
+  * cucumber
+  * feature.cucumber
+  * ruby
+
+== Creating New Projects
+
+The +new+ command is used to create a new project directory ready for new
+scaffolding to be added. Without providing a seed name following the directory
+argument, sow will simply create the directory.
+
+  `sow new tmp/qed/foo`
+
+  File.assert.directory?('tmp/qed/foo/.sow')
+
+By providing a seed name, +new+ is usefuly for quickly scaffold new project
+layouts from scratch.
+
+  `sow new tmp/qed/bar demo name=CoolCat`
+
+We can verify the scaffoling was built as expected.
+
+  File.assert.file?('tmp/qed/bar/README')
+  File.assert.file?('tmp/qed/bar/LICENSE')
+  readme = File.read('tmp/qed/bar/README')
+  readme.assert.index('CoolCat')
+
+If the directory already exists, to which the new project will
+be made, then an error is reported.
+
+  `sow new tmp/qed/bar`
+
+  @err.assert.include?('already exists')
+
+== Seeding Existing Projects
+
+The +gen+ command allows the end-user to add new scaffoling to an already
+established project, or an empty directory. 
+
+For example, given an empty temporary directory 'foo' we can generate
+the demo seed.
+
+  Dir.chdir('tmp/qed/foo') {
+    `sow gen demo name=CoolCat`
+  }
+
+We will find the demo seed's files present.
+
+  File.assert.file?('tmp/qed/foo/README')
+  File.assert.file?('tmp/qed/foo/LICENSE')
+  readme = File.read('tmp/qed/foo/README')
+  readme.assert.index('CoolCat')
+
+Working from within a project that is already established, we will
+need to contend with possbile merge conflicts.
+
+For example, lets say the 'foo' project already has a README file. There
+are three ways to handle this. We can either instruct sow to automatically
+skip any conflicting files via the --skip option, leaving the original
+intact.
+
+  Dir.chdir('tmp/qed/foo') {
+    `sow gen demo name=CoolCat --skip`
+  }
+
+We can verify,
+
+  readme = File.read('tmp/qed/foo/README')
+  readme.refute.index('CoolCat')
+
+Or we can instruct sow to automatically overwrite any conflicting files
+via the --write option.
+
+  Dir.chdir('tmp/qed/foo') {
+    `sow gen demo name=CoolCat --write`
+  }
+
+We can verify,
+
+  readme = File.read('tmp/qed/foo/README')
+  readme.assert.index('CoolCat')
+
+Or we can use the --prompt option to have sow ask which to do for each
+overlapping file encountered. We will not test that here as it requires
+user input for each file in question.
+
