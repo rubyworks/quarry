@@ -46,7 +46,7 @@ end
 #end
 
 When "output will look like this" do |text|
-  @stdout.tabto(0).strip.assert == text.tabto(0).strip
+  @out.tabto(0).strip.assert == text.tabto(0).strip
 end
 
 # Some helper methods

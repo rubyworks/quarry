@@ -1,2 +1,5 @@
-Sample seed will create a sample project layout
-suitable for testing by Sow's test suite.
+Welcome to <%= name %>.
+
+FIXME: Describe you project here.
+
+Copyright (c) <%= Time.now.strftime('%Y') %> <%= name %>

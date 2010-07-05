@@ -9,7 +9,7 @@ Given that we have a seed as defined in layout.rdoc[qed://layout.rdoc].
 To create a generator we need a seed, the +destination+ for the new scaffolding,
 and any general options that control operation, such as +write+, +skip+, etc.
 
-  dir  = 'tmp/myapp'
+  dir  = 'tmp/qed/myapp'
 
   opts = {:skip=>true, :output=>dir}
 
@@ -20,7 +20,7 @@ and any general options that control operation, such as +write+, +skip+, etc.
 With the instantiation of a Generator, a fair amount of information is
 setup.
 
-  gen.output.assert == 'tmp/myapp'
+  gen.output.assert == 'tmp/qed/myapp'
 
 We will not go into the Seed class here (see seed.rdoc for that), but to point
 out that it extecutes the seed's Sowfile which updates a stagged copy of

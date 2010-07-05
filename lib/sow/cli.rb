@@ -38,7 +38,7 @@ module Sow
       else
         begin
           cmdc.run(*argv)
-        rescue StandardError => error
+        rescue => error
           $stderr << error.to_s + "\n"
         end
       end

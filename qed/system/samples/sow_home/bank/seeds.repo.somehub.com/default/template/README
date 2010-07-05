@@ -1,5 +1,0 @@
-Welcome to <%= name %>.
-
-FIXME: Describe you project here.
-
-Copyright (c) <%= Time.now.strftime('%Y') %> <%= name %>

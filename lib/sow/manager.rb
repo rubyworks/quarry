@@ -169,7 +169,7 @@ module Sow
 
     #
     def path_to_name(path)
-      div  = path.split('/') # File::SEPARATOR ?
+      div  = path.to_s.split('/') # File::SEPARATOR ?
       name = div.reverse.join('.').chomp('.')
       if md = /default\./.match(name)
         name = md.post_match
@@ -231,10 +231,10 @@ module Sow
     def save(name, src=nil)
       raise "no seed name given" unless name
       src = src || Dir.pwd
-      dir = silo_folder + "#{name}/template"
+      dir = silo_folder + "#{name}"
       copier = Copier.new(src, dir, :backup=>false)
       copier.copy
-      sowfile = dir.parent + 'Sowfile'
+      sowfile = dir + '.sow/Sowfile'
       if !sowfile.exist?
         File.open(sowfile, 'w'){ |f| f << 'copy all' }
       end
