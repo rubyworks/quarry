@@ -50,7 +50,7 @@ module Sow
 
     #
     def initialize(options=nil)
-      @options = options || OpenStruct.new
+      @options = (options || OpenStruct.new).to_ostruct
     end
 
     #
@@ -88,7 +88,7 @@ module Sow
 
     #
     def seeds
-      seed_map.map{ |a| a.first }
+      @seeds ||= seed_map.map{ |a| a.first }
     end
 
     alias_method :list, :seeds
@@ -157,7 +157,7 @@ module Sow
       else # local path
         cmd = "ln -s #{uri} #{out}"
       end
-      if options.trial
+      if trial?
         $stderr.puts("  mkdir -p #{out}")
         $stderr.puts("  cd #{out}")
         $stderr.puts("  #{cmd}")
@@ -271,6 +271,8 @@ module Sow
       path = path.split('/').reverse.join('.')
       path + uri.host
     end
+
+    ; ; ; private ; ; ;
 
     # Interface to FileUtils or FileUtils::DryRun.
     def shell
