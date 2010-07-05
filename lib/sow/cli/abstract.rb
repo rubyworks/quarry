@@ -1,3 +1,5 @@
+require 'sow/manager'
+
 module Sow
 module CLI
 
@@ -8,6 +10,11 @@ module CLI
 
   #
   class Abstract
+
+    #
+    def self.cli
+      [name.split('::').last.downcase]
+    end
 
     #
     def self.inherited(subclass)

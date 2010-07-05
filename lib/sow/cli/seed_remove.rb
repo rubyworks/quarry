@@ -2,7 +2,12 @@ require 'sow/cli/abstract'
 
 module Sow::CLI
 
-  class SiloRemove < Abstract
+  class SeedRemove < Abstract
+
+    #
+    def self.cli
+      ['seed', /(remove|rm)/]
+    end
 
     #
     def call(argv)
@@ -15,8 +20,8 @@ module Sow::CLI
     #
     def opts
       super do |o|
-        o.banner = "Usage: sow bank save [name]"
-        o.separator "Save directory as seed to personal seed bank."
+        o.banner = "Usage: sow seed remove [name]"
+        o.separator "Remove seed from personal silo."
       end
     end
 

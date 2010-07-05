@@ -6,6 +6,11 @@ module Sow::CLI
   class BankUninstall < Abstract
 
     #
+    def self.cli
+      ['bank', 'uninstall']
+    end
+
+    #
     def call(argv)
       name = argv.first
       bank = manager.find_bank(name)

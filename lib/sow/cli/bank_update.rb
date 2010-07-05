@@ -6,6 +6,11 @@ module Sow::CLI
   class BankUpdate < Abstract
 
     #
+    def self.cli
+      ['bank', 'update']
+    end
+
+    #
     def call(argv)
       manager.update(argv.first)
     end

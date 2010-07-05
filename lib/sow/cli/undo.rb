@@ -6,6 +6,7 @@ module Sow::CLI
   # Utilize backup and "uproot" previous sowing.
   class Undo < Abstract
 
+    #
     def call(argv)
       options.backup = false
       output = options.output || Dir.pwd

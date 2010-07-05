@@ -17,11 +17,7 @@ module Sow::CLI
     #
     def run(*argv)
       opts.parse!(argv)
-      #sets, args = parse_settings(argv)
       options.output    = argv.shift
-      #options.seed      = args.shift
-      #options.arguments = args
-      #options.settings  = sets
       raise "Directory #{options.output} already exists." if File.exist?(options.output)
       call(argv)
     end
