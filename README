@@ -36,38 +36,52 @@ those projects blooming!
 
 == SOWING SEEDS
 
-General usage follws the pattern:
+General usage follows the pattern:
 
-  sow <plugin> [options] [*arguments] [*name=value]
+  sow [command] <seed> [*arguments] [*options] [*name=value]
 
-For instance to scaffold a new, basic ruby project with the
-name 'myapp' in the directory 'myapp':
-
-  $ sow ruby -o myapp/
-
-By default, Sow's build in +ruby+ seed will use the destination path
-as the project name. If we wished to name the project something
-other than the destination path, we can supply that as an extra 
-argument.
-
-  $ sow ruby -o myapp foo
-
-Or we could supply it via an evironment setting.
-
-  $ sow ruby -o myapp name=foo
-
-Alternately we could make the the directory ourselves and, and
-scaffold it from within.
+If no command is given, then +gen+ is the default. For instance to scaffold
+a new, basic ruby project with the name 'myapp' in the directory 'myapp':
 
   $ mkdir myapp
   $ cd myapp
+  $ sow ruby
+
+By default, Sow's built-in +ruby+ seed will use the destination's basename
+as the project name. If we wished to name the project something
+other than the destination's path, we can supply that as an extra 
+argument.
+
   $ sow ruby foo
+
+Or we could supply it via an environment setting.
+
+  $ sow ruby name=foo
+
+When creating a new project, having to mkdir and cd is not convenient.
+For this sow provides the +new+ command. With it we could create an empty
+project.
+
+  $ sow new myapp
+
+Or do the same but also include a seed.
+
+  $ sow new myapp ruby
+
+Finally, sow can plant multiple seeds at once by dividing each seed with '-'.
+For example lets say we needs a ruby project with cucumber features and
+an Apache license.
+
+  $ sow new foo ruby - license apache - cucumber
+
+In the is way, sow promotes the use of mirco-scaffolding --seeds can be small
+and narrowly focused.
 
 Once you have a project, Sow can be used to generate components
 as well, kind of like script/generate in Rails. For instance,
-to a TestUnit/MiniTest starter test file.
+to get a TestUnit starter test file.
 
-  $ sow testunit mytest
+  $ sow test.testunit mytest
 
 For more details on how to use Sow, what seeds are available and how
 to build your own seeds, please see the documentation provided
@@ -77,9 +91,9 @@ on Sow's website or the Wiki.
 == CURRENT STATUS
 
 Sow is still a little wet behind the ears, and you might come across
-the ocassional odd behavior. Please report on the Protutils
+the occasional odd behavior. Please report on the Protutils
 mailing-list[http://groups.google.com/group/proutils]. Usually the
-issue will be some over-looked in a given seed --since they
+issue will be something over-looked in a given seed --since they
 have a lot of flexability in their design. It will take some time
 and some widespread usage to work out all the corner cases and
 to bring each to a fine polish.
@@ -91,10 +105,13 @@ to bring each to a fine polish.
 
 Hoe users will discover that the +sow+ command that comes with Hoe will
 be clobbered by Sow. This may seem a not-so-nice thing to do, but truth
-be told Sow is a slightly older project than Hoe (though admittedly it
-was originally a very different program). Since there is no command called
-+hoe+, it would seem a more logical choice in any case, so Sow ships with
-a copy of Hoe's +sow+ command renamed to +hoe+.
+be told Sow is a slightly older project than Hoe (albeit admittedly 
+a very different program originally --what is now called Box). Since there
+is no command called +hoe+, it would seem a more logical choice in any case. 
+I am not sure why it wasn't used in the first place. To play nice, Sow ships
+with a copy of Hoe's +sow+ command renamed to +hoe+. Hoe users can simply
+use this command instead. Keep in mind however, that updating Hoe can likewise
+clobber Sow's sow command.
 
 
 == INSTALLATION
@@ -103,7 +120,7 @@ a copy of Hoe's +sow+ command renamed to +hoe+.
 
 Install using RubyGems as you would expect:
 
-  $ gem install sow
+  $ sudo gem install sow
 
 This will install Sow, it's Facets dependency if not alreay installed,
 and a number of built-in seeds. Keep in mind that some seeds
