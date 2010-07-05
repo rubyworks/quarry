@@ -1,0 +1,5 @@
+This is a fake project, for Sow to run tests on.
+While using a FileMock would probably be a better
+approach, at the moment it is easier to get some
+tests in here based on a simple mock project.
+
