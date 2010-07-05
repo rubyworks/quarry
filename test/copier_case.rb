@@ -7,12 +7,12 @@ TestCase Sow::Copier do
 
   Unit :source => '' do
     copier = Sow::Copier.new(source, output)
-    copier.source.assert = Pathname.new(source)
+    copier.source.assert = Pathname.new(File.expand_path(source))
   end
 
   Unit :output => '' do
     copier = Sow::Copier.new(source, output)
-    copier.output.assert = Pathname.new(output)
+    copier.output.assert = Pathname.new(File.expand_path(output))
   end
 
   Unit :options => '' do
