@@ -2,6 +2,8 @@
 MANIFEST
 doc/rdoc
 doc/ri
+doc/sow-ruby
 log
 pkg
+tmp
 work/sandbox

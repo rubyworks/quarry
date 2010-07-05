@@ -1,4 +1,4 @@
-require 'sow/copier'
+Covers 'sow/copier'
 
 TestCase Sow::Copier do
 

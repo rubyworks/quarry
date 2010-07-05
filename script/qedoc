@@ -1,0 +1,2 @@
+#/usr/bin/env sh
+qedoc -t "Sow Command" -o doc/sow-ruby/qedoc/command qed/system/*.rdoc
