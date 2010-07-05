@@ -1,7 +1,7 @@
 = Seed Layout
 
-A seed is a directory that contains a README document, a Sowfile
-and a templates directory.
+A seed is a directory that contains a set of template files along with
+a .sow directory which contains a README file and a Sowfile.
 
 The README document simply consists of text describing the seed and
 any special arguments if handles that the user will want to know about.
@@ -11,7 +11,7 @@ A simple example of a README might read...
   suitable for testing by Sow's test suite.
 
 The Sowfile is a script that collects any information the seed needs
-and copies the files from the scaffold to staging ground, which is
+and copies the files from the seed to a staging ground, which is
 later copied to the output destination. An example Sowfile might 
 look something like this...
 
@@ -19,8 +19,8 @@ look something like this...
 
   copy '**/*'
 
-The template directory holds all the erb templates and static files that may
-be copied. For example, the template directory might have a template file
+The seed directory holds all the erb templates and static files that may
+be copied. For example, the seed directory might have a template file
 called README ...
 
   Welcome to <%= name %>.

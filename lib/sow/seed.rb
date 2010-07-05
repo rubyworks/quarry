@@ -36,7 +36,7 @@ module Sow
 
       raise "No seed -- #{name}" unless @source
 
-      @sowfile = (@source + 'Sowfile').to_s
+      @sowfile = (@source + '.sow/Sowfile').to_s
       @sowcode = File.read(@sowfile).strip
       @sowcode = "copy all" if @sowcode.empty?
     end
@@ -62,7 +62,8 @@ module Sow
     # Seed's template directory. The directory must be
     # name `template` or `templates`.
     def template_directory
-      @template_directory ||= source.glob('template{,s}').first
+      #@template_directory ||= source.glob('template{,s}').first
+      @source
     end
 
     #
@@ -126,6 +127,9 @@ module Sow
     # Basenames of files to ignore in template files.
     IGNORE = %w{. .. .svn}
 
+    # Files to remove in template files.
+    REMOVE = %w{.sow/Sowfile .sow/README}
+
     #
     def template_directory
       seed.template_directory
@@ -139,7 +143,7 @@ module Sow
           next if IGNORE.include?(File.basename(path))
           files << path.sub(seed.template_directory.to_s+'/','')
         end
-        files
+        files - REMOVE
       )
     end
     alias_method(:all, :template_files)

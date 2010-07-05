@@ -5,25 +5,26 @@ end
 
 When 'seed is a directory' do
   @tmpdir = File.join('tmp/bank/demo/')
-  FileUtils.mkdir_p(@tmpdir)
+  withsow = @tmpdir + '.sow'
+  FileUtils.mkdir_p(withsow)
 end
 
 When 'A simple example of a README might read' do |quote|
-  file = @tmpdir + 'README'
+  file = @tmpdir + '.sow/README'
   File.open(file, 'w'){ |f| f << quote }
 end
 
 When 'An example Sowfile might look something like this' do |quote|
-  file = @tmpdir + 'Sowfile'
+  file = @tmpdir + '.sow/Sowfile'
   File.open(file, 'w'){ |f| f << quote }
 end
 
-When "template directory holds" do
+When "seed directory holds" do
   FileUtils.mkdir_p(@tmpdir + 'template')
 end
 
-When 'template directory might', 'have a', 'file called (((\S+)))' do |fname, quote|
-  file = @tmpdir + "template/#{fname}"
+When 'seed directory might', 'have a', 'file called (((\S+)))' do |fname, quote|
+  file = @tmpdir + "#{fname}"
   File.open(file, 'w'){ |f| f << quote }
 end
 

@@ -71,10 +71,10 @@ module Sow
     # TODO: look for exact match first
     def find_seed(match)
       loc = nil
-      map.each do |name, dir|
+      seed_map.each do |name, dir|
         loc = dir if /^#{match}\./ =~ name
       end
-      map.each do |name, dir|
+      seed_map.each do |name, dir|
         loc = dir if match == name
       end
       loc = Pathname.new(loc) if loc
@@ -88,37 +88,40 @@ module Sow
 
     #
     def seeds
-      map.map{ |l| l.first }
+      seed_map.map{ |a| a.first }
     end
 
     alias_method :list, :seeds
 
-    #
-    def map
+    # Returns an Array of [seed name, seed directory] pairs.
+    def seed_map
       list = []
 
       # personal silo
-      locs = silo_folder.glob('**/Sowfile')
-      locs = locs.map{ |l| File.dirname(l) }
-      locs.each do |l|
-        k = path_to_name(l.sub(silo_folder.to_s,''))
-        list << [k, l]
+      dirs = silo_folder.glob('**/.sow/Sowfile')
+      dirs = dirs.map{ |d| d.parent.parent }
+      dirs.each do |d|
+        n = d.sub(silo_folder.to_s,'')
+        k = path_to_name(n)
+        list << [k, d]
       end
 
       # seed bank
-      locs = bank_folder.glob('**/Sowfile')
-      locs = locs.map{ |l| File.dirname(l) }
-      locs.each do |l|
-        k = path_to_name(l.sub(bank_folder.to_s,''))
-        list << [k, l]
+      dirs = bank_folder.glob('**/.sow/Sowfile')
+      dirs = dirs.map{ |d| d.parent.parent }
+      dirs.each do |d|
+        n = d.sub(bank_folder.to_s,'')
+        k = path_to_name(n)
+        list << [k, d]
       end
 
       # seed plugins
-      locs = ::Plugin.find(File.join('sow', '**/Sowfile'))
-      locs = locs.map{ |l| File.dirname(l) }
-      locs.each do |l|
-        k = path_to_name(l[l.rindex('sow')+4..-1])
-        list << [k, l]
+      dirs = ::Plugin.find(File.join('sow', '**/.sow/Sowfile'))
+      dirs = dirs.map{ |d| File.dirname(File.dirname(d)) }
+      dirs.each do |d|
+        n = d[d.rindex('/sow/')+5..-1]
+        k = path_to_name(n)
+        list << [k, d]
       end
 
       list
