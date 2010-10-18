@@ -6,10 +6,8 @@ module Sow::CLI
   #
   class BankList < Abstract
 
-    #
-    def self.cli
-      ['bank']
-    end
+    command 'bank'
+    command 'bank list'
 
     #
     def call(argv)

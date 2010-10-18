@@ -4,13 +4,6 @@ email:
   file    : ~
   subject : ~
   mailto  : ruby-talk@ruby-lang.org
-  from    : <%= ENV['EMAIL_ACCOUNT'] %>
-  server  : <%= ENV['EMAIL_SERVER'] %>
-  port    : <%= ENV['EMAIL_PORT'] %>
-  account : <%= ENV['EMAIL_ACCOUNT'] %>
-  domain  : <%= ENV['EMAIL_DOMAIN'] %>
-  login   : <%= ENV['EMAIL_LOGIN'] %>
-  secure  : <%= ENV['EMAIL_SECURE'] %>
   active  : true
 
 box:
@@ -21,29 +14,25 @@ box:
 grancher:
   active: true
 
+qedoc:
+  service  : Custom
+  cycle    : main
+  document : |
+    system "qedoc -t 'Sow' -o site/docs/qed qed/**/*.rdoc"
+
 rdoc:
   service  : RDoc
   template : newfish
   include  : [ lib/sow/**/*.rb, lib/sow.rb, README, LICENSE, HISTORY ]
-#  exclude  :
-#    - "lib/webri/generators/*/template/**/*"
-#    - "lib/webri/generators/*/static/**/*"
-#    - "lib/webri/components/*/static/**/*"
-#    - "lib/webri/server/assets/**/*"
-#    - "lib/webri/server/templates/**/*"
   main     : ~
   extra    : ~
+  output   : site/docs/api
   active   : true
 
 ridoc:
   service: RIDoc
   include: [ lib/sow/**/*.rb, lib/sow.rb ]
-#  exclude:
-#    - "lib/webri/generators/*/template/**/*"
-#    - "lib/webri/generators/*/static/**/*"
-#    - "lib/webri/components/*/static/**/*"
-#    - "lib/webri/riserver/assets/**/*"
-#    - "lib/webri/riserver/templates/**/*"
+  output : ri
   active : true
 
 dnote:

@@ -5,6 +5,8 @@ module Sow::CLI
   # Sow a new project.
   class New < Gen
 
+    command 'seed new'
+
     #
     def call(argv)
       if argv.empty?

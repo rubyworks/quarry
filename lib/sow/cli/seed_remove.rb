@@ -4,16 +4,14 @@ module Sow::CLI
 
   class SeedRemove < Abstract
 
-    #
-    def self.cli
-      ['seed', /(remove|rm)/]
-    end
+    command 'seed remove'
+    command 'seed rm'
 
     #
     def call(argv)
       name = argv.first
       if confirm?("remove #{name}")
-        manager.remove(name)
+        Sow.seed_remove(name)
       end
     end
 

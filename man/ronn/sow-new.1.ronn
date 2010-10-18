@@ -1,0 +1,18 @@
+sow-new(1) -- germinate a new seed
+==================================
+
+## SYNOPSIS
+
+`sow new` <path> <name> [<args>...]
+
+## DESCRIPTION
+
+Germinate a new seed.
+
+## OPTIONS
+
+These options control whether output is written to file(s).
+
+  * `-f`, `--force`:
+    Force overwrites of any destination files that already exist.
+

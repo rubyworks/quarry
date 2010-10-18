@@ -10,7 +10,7 @@ module Sow
     attr :output
     attr :options
     attr :copylist
-    attr :logger
+    #attr :logger
 
     # output - destination directory
     #
@@ -19,7 +19,7 @@ module Sow
       @output   = Pathname.new(File.expand_path(output))
       @options  = options.to_h
 
-      @logger   = Logger.new(self)
+      #@logger   = Logger.new(self)
       @copylist = initialize_copylist
 
       if debug?
@@ -59,22 +59,38 @@ module Sow
       end
     end
 
+    #
+    def job
+      options[:job]
+    end
+
     # New use of sow? In other words, is the destination empty?
     #def new_project?
     #  options.new?
     #end
 
+    #
     def debug? ; $DEBUG  ; end
+
+    #
     def trial? ; $DRYRUN ; end
 
+    #
     def quiet?  ; options[:quiet] ; end
 
+    #
     def write?  ; options[:mode] == :write  ; end
+
+    #
     def prompt? ; options[:mode] == :prompt ; end
+
+    #
     def skip?   ; options[:mode] == :skip   ; end
 
+    #
     def backup? ; options[:backup].nil? or options[:backup] ; end
 
+    #
     def managed?
       write? or skip? or prompt?
     end
@@ -85,11 +101,11 @@ module Sow
       actionlist = actionlist(:copy, copylist)
 
       if actionlist.empty?
-        logger.report_nothing_to_generate
+        report_nothing_to_generate
         return
       end
 
-      logger.report_startup(source, output)
+      #logger.report_startup(job, output)
 
       mkdir_p(output) unless File.directory?(output)
 
@@ -99,11 +115,10 @@ module Sow
         actionlist.each do |action, fname|
           atime = Time.now
           how = __send__("#{action}_item", Pathname.new(fname))
-          logger.report_create(fname, how, atime)
-          #logger.report_create(dest, result, atime)
+          report_create(fname, how, atime)
         end
-        logger.report_complete
-        logger.report_fixes(actionlist.map{|a,f|f})
+        #logger.report_complete
+        #logger.report_fixes(actionlist.map{|a,f|f})
       end
     end
 
@@ -113,6 +128,22 @@ module Sow
     end
 
   private
+
+    # If there is nothing to generate this will be called
+    # to display a message to the effect.
+    def report_nothing_to_generate
+      report "Nothing to generate."
+    end
+
+    # Output to provide as generation is progressing.
+    def report_create(file, how, atime)
+      report "%10s [%.4fs] %s" % [how, (Time.now - atime), file]
+    end
+
+    # Same a puts, but only is quiet option if +false+.
+    def report(message)
+      puts message unless quiet? #or trial?
+    end
 
     #
     BACKUP_DIRECTORY = '.sow/undo'
@@ -170,7 +201,7 @@ module Sow
       list.each do |action, fname|
         dups << [action, fname, (output + fname).file?]
       end
-      logger.report "Select (y/n) which files to overwrite:\n" if prompt?
+      report "Select (y/n) which files to overwrite:\n" if prompt?
       dups.each do |action, fname, check|
         if check
           if skip?
@@ -187,7 +218,7 @@ module Sow
           safe << [action, fname]
         end
       end
-      logger.newline
+      report "\n"  #puts unless quiet?
       return safe
     end
 
@@ -322,6 +353,7 @@ module Sow
         d = relative_to_output(dest)
         puts "cp #{s} #{d}"
       else
+        #mkdir_p(File.dirname(dest))
         fu.cp(src, dest)
       end
     end

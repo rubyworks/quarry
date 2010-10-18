@@ -49,13 +49,21 @@ module Sow
     end
 
     #
-    def initialize(options=nil)
-      @options = (options || OpenStruct.new).to_ostruct
+    def initialize #(options=nil)
+      #@options = (options || OpenStruct.new).to_ostruct
     end
 
     #
-    def options
-      @options
+    #def options
+    #  @options
+    #end
+
+    # Current working directory.
+    #--
+    # THINK: Should this be a lookup of project root instead?
+    #++
+    def work_folder
+      @work_folder ||= Pathname.new(Dir.pwd) #self.class.bank_folder
     end
 
     #
@@ -97,9 +105,18 @@ module Sow
     def seed_map
       list = []
 
+      # project silo
+      dirs = work_folder.glob('sow/**/{,_}Sowfile') # .sow/ ?
+      dirs = dirs.map{ |d| d.parent }
+      dirs.each do |d|
+        n = d.sub(work_folder.to_s,'')
+        k = path_to_name(n)
+        list << [k, d]
+      end
+
       # personal silo
-      dirs = silo_folder.glob('**/.sow/Sowfile')
-      dirs = dirs.map{ |d| d.parent.parent }
+      dirs = silo_folder.glob('**/{,_}Sowfile')
+      dirs = dirs.map{ |d| d.parent }
       dirs.each do |d|
         n = d.sub(silo_folder.to_s,'')
         k = path_to_name(n)
@@ -107,8 +124,8 @@ module Sow
       end
 
       # seed bank
-      dirs = bank_folder.glob('**/.sow/Sowfile')
-      dirs = dirs.map{ |d| d.parent.parent }
+      dirs = bank_folder.glob('**/{,_}Sowfile')
+      dirs = dirs.map{ |d| d.parent }
       dirs.each do |d|
         n = d.sub(bank_folder.to_s,'')
         k = path_to_name(n)
@@ -116,8 +133,8 @@ module Sow
       end
 
       # seed plugins
-      dirs = ::Plugin.find(File.join('sow', '**/.sow/Sowfile'))
-      dirs = dirs.map{ |d| File.dirname(File.dirname(d)) }
+      dirs = ::Plugin.find(File.join('sow', '**/{,_}Sowfile'))
+      dirs = dirs.map{ |d| File.dirname(d) }
       dirs.each do |d|
         n = d[d.rindex('/sow/')+5..-1]
         k = path_to_name(n)

@@ -4,14 +4,11 @@ module Sow::CLI
 
   class SeedSave < Abstract
 
-    #
-    def self.cli
-      ['seed', 'save']
-    end
+    command 'seed save'
 
     #
     def call(argv)
-      manager.save(*argv)
+      Sow.seed_save(*argv)
     end
 
     #

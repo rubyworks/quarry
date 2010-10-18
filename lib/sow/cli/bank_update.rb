@@ -5,10 +5,7 @@ module Sow::CLI
   # Update a seed bank.
   class BankUpdate < Abstract
 
-    #
-    def self.cli
-      ['bank', 'update']
-    end
+    command 'bank update'
 
     #
     def call(argv)

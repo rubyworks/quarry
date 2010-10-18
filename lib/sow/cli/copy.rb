@@ -9,8 +9,7 @@ module Sow::CLI
     def call(argv)
       from   = argv.shift
       to     = argv.shift
-      copier = Sow::Copier.new(from, to, options)
-      copier.copy
+      Sow.copy(from, to, options)
     end
 
     #

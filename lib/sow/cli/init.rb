@@ -5,10 +5,12 @@ module Sow::CLI
   #
   class Init < Abstract
 
+    command 'seed init'
+
     #
     def call(argv)
       output = options.output || Dir.pwd
-      FileUtils.mkdir_p(File.join(output, '.sow'))
+      Sow.init(output)
     end
 
     #

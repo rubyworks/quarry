@@ -4,9 +4,7 @@ module Sow::CLI
 
   class Help < Abstract
 
-    def self.cli
-      ['help']
-    end
+    command 'help'
 
     #
     def call(argv)
@@ -22,6 +20,7 @@ module Sow::CLI
         puts "sow bank install <uri> [name]  # install a seed bank"
         puts "sow bank uninstall <name>      # uninstall a seed bank"
         puts "sow bank update [name]         # update seed bank(s)"
+        puts "sow copy <src> <dest>          # germinate from directory"
         puts "sow help                       # show this help message"
       end
     end

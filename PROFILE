@@ -11,3 +11,6 @@ resources:
   homepage: http://proutils.github.com/sow
   repository: git://github.com/proutils/sow.git
 
+copyright:
+  Copyright (c) 2006 Thomas Sawyer
+

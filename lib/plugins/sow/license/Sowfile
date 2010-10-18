@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+argument :license  #, :default => 'mit'
+
+lic = (metadata.license || 'mit').downcase
+
+available_licenses = %w[gpl lgpl mit apache]
+
+unless available_licenses.include?(lic)
+  raise "Unrecognized license name. Choose:\n  " + available_licenses.join("\n  ")
+end
+
+metadata.license = lic.upcase
+
+scaffold do
+  copy :from=>lic, :files=>"*", :to=>'.'
+end
+

@@ -1,16 +1,20 @@
 require 'sow/cli/abstract'
-require 'sow/generator'
+require 'sow/sower'
+require 'sow/seed'
 
 module Sow::CLI
 
-  # Sow a seed. This is the deafult commandline interface.
-  class Gen < Abstract
+  # Sow seed(s). This is the deafult commandline interface.
+  class Seed < Abstract
+
+    command ''
+    command 'seed'
 
     #
     def call(argv)
-      seeds     = parse_seeds(argv)
-      generator = Sow::Generator.new(seeds, options)
-      generator.generate
+      seeds = parse_seeds(argv)
+      sower = Sow::Sower.new(seeds, options)
+      sower.sow!
     end
 
     #
@@ -40,8 +44,8 @@ module Sow::CLI
       end
       groups.map do |args|
         settings, arguments = parse_settings(args)
-        seed_name = arguments.shift
-        Sow::Seed.new(seed_name, arguments, settings, options)
+        name = arguments.shift
+        [name, arguments, settings]
       end
     end
 

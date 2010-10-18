@@ -4,17 +4,17 @@ module Sow::CLI
 
   class SeedList < Abstract
 
+    command 'seed list'
+    command 'seed ls'
+
     #
-    def self.cli
-      ['seed']
-    end
+    #def self.cli
+    #  ['seed']
+    #end
 
     #
     def call(argv)
-      seeds = manager.seeds
-      seeds.each do |seed|
-        puts "  * #{seed}"
-      end
+      Sow.seed_list
     end
 
     def opts

@@ -1,3 +1,4 @@
+require 'optparse'
 require 'sow/manager'
 
 module Sow
@@ -5,21 +6,26 @@ module CLI
 
   #
   def self.registry
-    @registry ||= []
+    @registry ||= {}
   end
 
   #
   class Abstract
 
     #
-    def self.cli
-      [name.split('::').last.downcase]
+    def self.command(string)
+      CLI.registry[string] = self
     end
 
     #
-    def self.inherited(subclass)
-      CLI.registry << subclass
-    end
+    #def self.cli
+    #  [name.split('::').last.downcase]
+    #end
+
+    #
+    #def self.inherited(subclass)
+    #  CLI.registry << subclass
+    #end
 
     #
     def self.run(*argv)
@@ -43,16 +49,6 @@ module CLI
     end
 
     #
-    def opts(&block)
-      opt = OptionParser.new(&block)
-      opt.on('--dryrun'      ){ $DRYRUN = true }
-      opt.on('--force'       ){ $FORCE  = true }
-      opt.on('--debug'       ){ $DEBUG  = true }
-      opt.on('--help', '-h'  ){ puts opt; exit }
-      opt
-    end
-
-    #
     def manager
       @manager ||= Manager.new(options)
     end
@@ -67,6 +63,16 @@ module CLI
       else
         false
       end
+    end
+
+    #
+    def opts(&block)
+      opt = OptionParser.new(&block)
+      opt.on('--dryrun'      ){ $DRYRUN = true }
+      opt.on('--force'       ){ $FORCE  = true }
+      opt.on('--debug'       ){ $DEBUG  = true }
+      opt.on('--help', '-h'  ){ puts opt; exit }
+      opt
     end
 
   end

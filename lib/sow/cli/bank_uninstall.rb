@@ -5,17 +5,15 @@ module Sow::CLI
   # Remove a seed bank.
   class BankUninstall < Abstract
 
-    #
-    def self.cli
-      ['bank', 'uninstall']
-    end
+    command 'bank uninstall'
 
     #
     def call(argv)
       name = argv.first
-      bank = manager.find_bank(name)
-      if confirm?("uninstall #{bank.basename.to_s}")
-        manager.uninstall(name)
+      if bank = Sow.manager.find_bank(name)
+        if confirm?("uninstall #{bank.basename.to_s}")
+          Sow.bank_uninstall(name)
+        end
       end
     end
 

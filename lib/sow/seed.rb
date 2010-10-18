@@ -8,6 +8,12 @@ module Sow
   #
   class Seed
 
+    # Basenames of files to ignore in template files.
+    IGNORE = %w{. .. .svn}
+
+    # Files to remove in template files.
+    REMOVE = %w{Sowfile _Sowfile _README}
+
     # Find a seed by +name+.
     def self.find(name)
       manager.find_seed(name)
@@ -20,64 +26,98 @@ module Sow
 
     # New Seed.
     #
-    # name      - name of the seed (or best prefix match)
-    # arguments - additional arguments for the seed
-    # settings  - overriding metadata for the seed
-    # options   - additional processing options
+    # ## ARGUMENTS
     #
-    def initialize(name, arguments, settings, options)
-      @name        = name
-      @arguments   = arguments
-      @settings    = settings || {}
-      @options     = options.to_ostruct
+    #   * `name`
+    #     Name of the seed (or best prefix match).
+    #
+    #   * `arguments`:
+    #     Seeds can accept an Array of *arguments* which can refine their 
+    #     behvior.
+    #
+    #   * `settings`:
+    #     Seed can accept a Hash of `key=>value` *settings* which refine
+    #     their behavior.
+    #
+    #--
+    # TODO: OPTIONS?
+    #++
+    def initialize(name, arguments, settings)
+      @name      = name
+      @arguments = arguments
+      @settings  = settings
 
-      @source  = self.class.find(name)
+      @directory = self.class.find(name)
 
-      raise "No seed -- #{name}" unless @source
+      raise "No seed -- #{name}" unless @directory
 
-      @sowfile = (@source + '.sow/Sowfile').to_s
-      @sowcode = File.read(@sowfile).strip
-      @sowcode = "copy all" if @sowcode.empty?
+      @sowfile = Dir[@directory + '{,_}Sowfile'].first 
     end
 
     # Name of seed.
-    def name ; @name ; end
+    def name
+      @name
+    end
 
     # Arguments (from commandline).
-    def arguments ; @arguments ; end
+    def arguments
+      @arguments
+    end
 
     # Metadata settings (from commandline).
-    def settings; @settings ; end
-
-    #
-    def options; @options ; end
-
-    # Seed's source directory.
-    def source_directory
-      @source
-    end
-    alias_method :source, :source_directory
-
-    # Seed's template directory. The directory must be
-    # name `template` or `templates`.
-    def template_directory
-      #@template_directory ||= source.glob('template{,s}').first
-      @source
+    def settings
+      @settings 
     end
 
     #
-    def destination_directory
-      @destination ||= (options.output || Dir.pwd)
+    #def options; @options ; end
+
+    # Seed directory.
+    def directory
+      @directory
     end
+
+    #
+    def sowfile
+      @sowfile
+    end
+
+    #
+    def script
+      @script ||= (
+        s = File.read(sowfile).strip
+        s.empty? ? "copy all" : s
+      )
+    end
+
+    # Returns the list of seed files.
+    def files
+      @files ||= (
+        files = []
+        Dir.recurse(directory.to_s) do |path|
+          next if IGNORE.include?(File.basename(path))
+          files << path.sub(directory.to_s+'/','')
+        end
+        files - REMOVE
+      )
+    end
+
+    #
+    #def destination_directory
+#puts "==> #{(options.output || Dir.pwd)}"
+    #  @destination ||= (options.output || Dir.pwd)
+    #end
+
+    # Present working directory.
+    #def working_directory
+    #  @work
+    #end
 
     # Do it!
-    def sow!(stage)
-      sower = Sower.new(self)
-      Dir.chdir(stage) do
-        #sower.instance_eval(@sowcode, @sowfile.to_s)
-        eval(@sowcode, sower.to_binding, @sowfile.to_s)
-      end
-    end
+    #def sow!(stage, options)
+    #  sower = Sower.new(self, options)
+    #  sower.sow!(stage)
+    #end
 
   end
 
