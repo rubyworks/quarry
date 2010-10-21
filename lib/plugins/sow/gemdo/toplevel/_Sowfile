@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+# The toplevel.gemdo seed creates "old-school" top-level GEM DO POM metadata
+# files:
+#
+#   PROFILE
+#   VERSION
+#
+
+utilize 'gemdo'
+
+argument :name
+
+name = metadata.name
+#name = arguments.first || metadata['name'] #|| destination.basename.to_s
+
+abort "Name is required."         unless name
+abort "Name must be single word." unless name =~ /\w+/
+
+metadata.title   = metadata['title']   || name.capitalize
+metadata.contact = metadata['contact'] || metadata['email']
+
+scaffold do
+  copy("**/*", :render=>'erb')
+end
+

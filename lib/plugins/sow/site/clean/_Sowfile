@@ -3,7 +3,7 @@
 utilize 'gemdo'
 
 metadata.font ||= 'sans serif'
-metadata.size ||= 'sans serif'
+metadata.size ||= '1em'
 
 metadata.bg ||= '#ffffff'
 metadata.fg ||= '#222222'

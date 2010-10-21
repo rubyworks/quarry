@@ -1,16 +1,19 @@
 #!/usr/bin/env ruby
 
-# TODO: Perhaps add automatic detection of location of features?
+# Create a new cucumber feature file.
+# 
+#   name      - the name of the new feature (required)
+#   directory - the features directory (default `features/`)
+#
+argument :name
+argument :directory 
 
-name = arguments.shift
+abort "feature name is required" unless meatadata.name
 
-abort "feature name is required" unless name
-
-metadata.feature = name
-
-directory = arguments.shift || 'features'
+directory = metadata.directory || 'features'
 
 scaffold do
-  copy "__feature__.feature", directory
+  copy "___feature___.feature", directory
 end
 
+# TODO: Perhaps add automatic detection of location of features?

@@ -4,15 +4,13 @@
 <HEAD>
   <TITLE><%= title %></TITLE>
 
-  <LINK rel="shortcut icon" href="assets/images/ruby.png"/>
+  <LINK rel="shortcut icon" href="assets/icon.png"/>
 
-  <LINK type="text/css" rel="stylesheet" href="assets/styles/reset.css" />
-  <LINK type="text/css" rel="stylesheet" href="assets/styles/tag.css" />
-  <LINK type="text/css" rel="stylesheet" href="assets/styles/class.css" />
-  <LINK type="text/css" rel="stylesheet" href="assets/styles/id.css" />
+  <LINK type="text/css" rel="stylesheet" href="assets/reset.css" />
+  <LINK type="text/css" rel="stylesheet" href="assets/custom.css" />
 
-  <SCRIPT language="javascript" type="text/javascript" src="assets/scripts/jquery.js"></SCRIPT>
-  <SCRIPT language="javascript" type="text/javascript" src="assets/scripts/highlight.js"></SCRIPT>
+  <SCRIPT language="javascript" type="text/javascript" src="assets/jquery.js"></SCRIPT>
+  <SCRIPT language="javascript" type="text/javascript" src="assets/highlight.js"></SCRIPT>
 
   <SCRIPT type="text/javascript">
     $(document).ready(function() {
@@ -22,7 +20,7 @@
     });
   </SCRIPT>
 
-  <LINK type="text/css" rel="stylesheet" href="assets/styles/highlight.css" />
+  <LINK type="text/css" rel="stylesheet" href="assets/highlight.css" />
 </HEAD>
 <BODY>
 
@@ -31,7 +29,7 @@
     <% if version %>
       <div class="download">
         Get Version
-        <h1><a href="<%= download %>"><%= version %></a></h1>
+        <h1><a href="<%= link %>"><%= version %></a></h1>
       </div>
     <% end %>
     <%= header %>
@@ -40,11 +38,9 @@
 
 <div id="nav">
   <div class="menu">
+    <!-- TODO: use a javascript-based table of contents -->
     <ul>
     <li style="font-size: 150%;"><a href="#"><%= title %></a></li>
-    <% sections.each do |i, s| %>
-      <li>&nbsp; <a href="#section_<%= i %>"><%= s %></a></li>
-    <% end %>
     </ul>
   </div>
 </div>
@@ -68,4 +64,3 @@
 </HTML>
 
 <!-- WebMe Copyright (c) 2009 Thomas Sawyer -->
-

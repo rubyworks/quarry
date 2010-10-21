@@ -1,5 +1,14 @@
 #!/usr/bin/env ruby
 
+# Setup a project for use with Cucumber testing framework.
+# This seed takes two optional arguments.
+#
+#   directory - where to put features (defaults to 'features/')
+#   feature   - name of your first feature file (deafults to 'your_first')
+#
+# This see will create the step_features and support directories
+# each with some minimal starter files to get up moving quickly.
+
 directory = arguments.shift || 'features'
 
 metadata.feature = arguments.shift || 'your_first'
@@ -8,3 +17,4 @@ scaffold do
   copy "**/*", directory
 end
 
+# TODO: add starter config file

@@ -1,9 +1,0 @@
-This seed creates POM metadata files:
-
-  PROFILE
-  VERSION
-  REQUIRE
-
-It will not create the REQUIRE file if
-it detects a Gemfile in the project.
-

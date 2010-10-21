@@ -1,0 +1,7 @@
+name    : <%= name %>
+date    : <%= Time.now.strftime('%Y-%m-%d') %>
+version : 0.0.1
+
+requires:
+  - gemdo (build)
+
