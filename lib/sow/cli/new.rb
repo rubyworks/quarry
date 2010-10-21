@@ -1,9 +1,9 @@
-require 'sow/cli/gen'
+require 'sow/cli/seed'
 
 module Sow::CLI
 
   # Sow a new project.
-  class New < Gen
+  class New < Seed
 
     command 'seed new'
 

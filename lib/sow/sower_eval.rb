@@ -1,4 +1,4 @@
-#require 'erb'
+require 'erb'
 require 'malt'
 require 'fileutils'
 require 'tmpdir'
@@ -11,6 +11,15 @@ module Sow
   # files to a staging ground.
   # 
   class SowerEval
+
+    # Location of Sow user configuration. Uses XDG directrory standard!!!
+    HOME_CONFIG = ENV['XDG_CONFIG_HOME'] || '~/.config'
+
+    # File pattern for looking up user matadata.
+    HOME_METADATA = File.join(HOME_CONFIG,'sow/metadata.{yml,yaml}')
+
+    # File pattern for looking up desination matadata.
+    DEST_METADATA = '{.sow,.config,config}/sow/metadata.{yml,yaml}'
 
     #
     def initialize(seed, options)
@@ -110,21 +119,22 @@ module Sow
       seed.files
     end
 
-    # TODO: output settings ?
+    # TODO: rename output_settings or dest_settings ?
     def work_settings
       @work_settings ||= (
-        file = work_path.glob('.config/sow/metadata.{yml,yaml}').first
+        file = output.glob(DEST_METADATA).first
         data = file ? YAML.load(File.new(file)) : {}
         data
       )
     end
 
-    # TODO: Use XDG for .config
-    # TODO: Run thru ERB
+    # TODO: `:type` will change to `:to` in future version of Malt.
     def user_settings
       @user_settings ||= (
-        file = Dir[File.expand_path('~/.config/sow/metadata.{yml,yaml}')].first
-        data = file ? YAML.load(File.new(file)) : {}
+        file = Dir[File.expand_path(HOME_METADATA)].first
+        #text = File.read(file)
+        yaml = Malt.render(:file=>file, :type=>:erb, :data=>binding)
+        data = file ? YAML.load(yaml) : {}
         data
       )
     end
@@ -186,13 +196,16 @@ module Sow
       tmpl = seed.directory
 
       list = []
-
       if from
         (tmpl + from).glob_relative(files).each do |f|
+          next if f.basename.to_s == "Sowfile"
+          next if f.basename.to_s == "_Sowfile"
           list << [File.join(from, f), f.to_s]
         end
       else
         tmpl.glob_relative(files).each do |f|
+          next if f.basename.to_s == "Sowfile"
+          next if f.basename.to_s == "_Sowfile"
           list << [f.to_s, f.to_s]
         end
       end
@@ -274,10 +287,11 @@ module Sow
     # TODO: Do we need a new context every time?
     #++
     def render(file, ext)
-      #context = Context.new(self, metadata)
+      data = Context.new(self, metadata)
       #ERB.new(text).result(context.to_binding)
-      data = metadata.data
-      Malt.render(:file=>file, :data=>data, :type=>ext)  #TODO: rename `type`
+      #data = metadata.data
+      ext  = ext.to_s.sub(/^\./, '')  # FIXME
+      Malt.render(:file=>file, :data=>data, :to=>ext)  # TODO: rename `type` to `to`
     end
 
     #
@@ -386,10 +400,14 @@ module Sow
 
         if from
           (tmpl + from).glob_relative(files).each do |f|
+            next if f.basename.to_s == "Sowfile"
+            next if f.basename.to_s == "_Sowfile"
             list << [File.join(from, f), f.to_s]
           end
         else
           tmpl.glob_relative(files).each do |f|
+            next if f.basename.to_s == "Sowfile"
+            next if f.basename.to_s == "_Sowfile"
             list << [f.to_s, f.to_s]
           end
         end
@@ -440,7 +458,7 @@ module Sow
       #
       def settings
         @settings ||= [
-          ENV,
+          #ENV,
           #@sower.seed_setting,
           @sower.user_settings,
           @sower.work_settings,
@@ -487,7 +505,6 @@ module Sow
       end
     end
 
-=begin
     # Templates are all rendered within the scope of a context object.
     # This limits access to information pertinent. All metadata
     # can be accessed by name, as this this object delegate missing methods to a Metadata instance.
@@ -514,7 +531,7 @@ module Sow
       #
       def render(file, options={})
         options[:file] = file
-        options[:data] = @metadata #binding
+        options[:data] ||= @metadata #binding
         Malt.render(options)
       end
 
@@ -523,11 +540,25 @@ module Sow
       #  @metadata.seed.working_directory
       #end
 
+      #
+      def method_missing(s,*a,&b)
+#p @metadata
+        if @metadata.key?(s.to_s)
+          @metadata[s.to_s]
+        else
+          super(s,*a,&b)
+        end
+      end
+
+      #
+      def to_h
+        metadata.data
+      end
+
       def inspect
         "#<Sow::Sower::Context>"
       end
     end
-=end
 
   end
 

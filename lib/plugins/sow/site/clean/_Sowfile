@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+utilize 'gemdo'
+
+metadata.font ||= 'sans serif'
+metadata.size ||= 'sans serif'
+
+metadata.bg ||= '#ffffff'
+metadata.fg ||= '#222222'
+metadata.hg ||= '#222222'
+
+scaffold do
+  copy
+end

@@ -1,4 +1,3 @@
-require 'sow/logger'
 require 'sow/core_ext'
 
 module Sow

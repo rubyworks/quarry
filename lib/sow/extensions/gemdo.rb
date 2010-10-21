@@ -3,7 +3,7 @@ begin
 
   module Sow
 
-    class Sower
+    class SowerEval
 
       # Access to POM project object. Thus is useful for scaffoling
       # Ruby project's that conform to POM specs. Keep in mind that
@@ -12,7 +12,7 @@ begin
       #
       # Returns an instance of POM::Project, if available.
       def pom_project
-         @pom_project ||= Gemdo::Project.new(working_directory)
+         @pom_project ||= Gemdo::Project.lookup(work_path.to_s) #working_directory)
       end
 
       #
@@ -24,15 +24,17 @@ begin
         # Add project metadata to metadata lookup.
         #
         # TODO: This is "extreme" and we need a better way to handle it.
-        def metadata_sources
-          @metdata_sources ||= [
-            @data,
-            @sower.settings,
-            @sower.work_settings,
-            @sower.pom_settings,
+        #
+        def settings
+          @settings ||= [
+            #ENV,
+            #@sower.seed_setting,
             @sower.user_settings,
-            @sower.seed_settings,
-            ENV
+            @sower.pom_project.profile.to_h,
+            @sower.pom_project.package.to_h,
+            #@sower.pom_settings,
+            @sower.work_settings,
+            @sower.settings
           ]
         end
       end

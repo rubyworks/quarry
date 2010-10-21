@@ -11,9 +11,10 @@ module Sow::CLI
       if name = argv.first
         puts manager.readme(name)
       else
-        puts "sow new <path> <seed> ...      # germinate a new seed"
-        puts "sow gen <seed> ...             # germinate a seed"
-        puts "sow seed                       # list all available seeds"
+        puts "sow <name> ...                 # sow a seed (same as `seed`)"
+        puts "sow new <path> <name> ...      # sow a new seed"
+        puts "sow seed <name> ...            # sow a seed"
+        puts "sow seed list                  # list all available seeds"
         puts "sow seed save <name>           # save personal seed"
         puts "sow seed remove <name>         # remove personal seed"
         puts "sow bank list                  # list installed seed banks"
