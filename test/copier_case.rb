@@ -83,10 +83,10 @@ TestCase Sow::Copier do
     copier.refute.backup?
   end
 
-  Unit :logger => '' do
-    copier = Sow::Copier.new(source, output, :quiet=>true)
-    copier.logger.assert.is_a?(Sow::Logger)
-  end
+  #Unit :logger => '' do
+  #  copier = Sow::Copier.new(source, output, :quiet=>true)
+  #  copier.logger.assert.is_a?(Sow::Logger)
+  #end
 
   Unit :quiet? => '' do
     copier = Sow::Copier.new(source, output, :quiet=>true)

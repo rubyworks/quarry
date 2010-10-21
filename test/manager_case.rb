@@ -30,11 +30,11 @@ TestCase Sow::Manager do
     @manager.silo_folder.assert == path
   end
 
-  Unit :options => '' do
-    manager = Sow::Manager.new(:skip=>true)
-    manager.options.assert.is_a?(OpenStruct)
-    manager.options.skip.assert == true
-  end
+  #Unit :options => '' do
+  #  manager = Sow::Manager.new(:skip=>true)
+  #  manager.options.assert.is_a?(OpenStruct)
+  #  manager.options.skip.assert == true
+  #end
 
   Unit :seed_map => '' do
     seed_map = @manager.seed_map

@@ -48,7 +48,9 @@ module Sow
       end
     end
 
-    #
+    #--
+    # TODO: Does the Manager class need any options?
+    #++
     def initialize #(options=nil)
       #@options = (options || OpenStruct.new).to_ostruct
     end
