@@ -7,7 +7,7 @@ module Sow
 
   class SowerEval
 
-    class Context
+    #class Context
 
       # Returns an instance of Color given an HTML color string.
       # Simply use #html on the color to get an HTML valid color string.
@@ -29,7 +29,7 @@ module Sow
         Color::RGB.new(rand(255),rand(255),rand(255))
       end
 
-    end
+    #end
 
   end
 
