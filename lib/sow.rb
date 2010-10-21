@@ -3,34 +3,11 @@
 # Sow namespace in which all Sow components are defined.
 #
 # Sow does use a number of core extensions, but these are 
-# all managed by Ruby Facets to help promote standardized
+# all managed by Ruby Facets to help promote standardization
 # in the area and reduce potential name conflicts.
 module Sow
 
-  #
-  DIRECTORY = File.dirname(__FILE__) + '/sow'
-
-  # Load and cache project profile.
-  def self.profile
-    @profile ||= (
-      require 'yaml'
-      YAML.load(File.new(DIRECTORY + '/PROFILE.yml'))
-    )
-  end
-
-  # Load and cache project version file.
-  def self.version
-    @version ||= (
-      require 'yaml'
-      YAML.load(File.new(DIRECTORY + '/VERSION.yml'))
-    )
-  end
-
-  # Lookup project metadata.
-  def self.const_missing(name)
-    key = name.to_s.downcase
-    version[key] || profile[key] || super(name)
-  end
+  require 'sow/meta/data'
 
   # Run sow command line interface.
   def self.cli(*argv)
@@ -111,6 +88,3 @@ module Sow
   end
 
 end
-
-# Remove VERSION constant becuase Ruby 1.8~ gets in the way of Sow::VERSION.
-Object.__send__(:remove_const, :VERSION) if Object.const_defined?(:VERSION)
