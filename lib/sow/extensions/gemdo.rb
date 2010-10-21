@@ -10,33 +10,26 @@ begin
       # this POM object points to the temporary duplicate of the project
       # and not the actual project.
       #
-      # Returns an instance of POM::Project, if available.
-      def pom_project
-         @pom_project ||= Gemdo::Project.lookup(work_path.to_s) #working_directory)
+      # Returns an instance of Gemdo::Project, if available.
+      def project
+         @project ||= Gemdo::Project.lookup(work.to_s) #working_directory)
       end
 
       #
-      def pom_settings
-         @pom_settings ||= (pom_project ? pom_project.metadata : {})
+      def project_settings
+        #@pom_settings ||= (pom_project ? pom_project.metadata.to_h : {})
+        @pom_settings ||= (
+          sets = [project.profile.to_h, project.package.to_h]
+          sets.inject({}){ |h,s| h.merge!(s); h }
+        )
       end
 
-      class Metadata
-        # Add project metadata to metadata lookup.
-        #
-        # TODO: This is "extreme" and we need a better way to handle it.
-        #
-        def settings
-          @settings ||= [
-            #ENV,
-            #@sower.seed_setting,
-            @sower.user_settings,
-            @sower.pom_project.profile.to_h,
-            @sower.pom_project.package.to_h,
-            #@sower.pom_settings,
-            @sower.work_settings,
-            @sower.settings
-          ]
-        end
+      #
+      def settings
+        @settings ||= (
+          sets = [user_settings, project_settings, work_settings, seed_settings]
+          sets.inject({}){ |h,s| h.merge!(s); h }
+        )
       end
 
       class Context
@@ -47,7 +40,7 @@ begin
         #
         # Returns an instance of POM::Project, if available.
         def project
-          @sower.pom_project
+          @sower.project
         end
       end
     end
@@ -57,7 +50,7 @@ begin
 rescue LoadError
 
   # Hey, where's the POM?
+  # TODO: raise error? better would be an #availabilty validator for extensions.
   warn 'Gemdo is not installed.'
 
 end
-
