@@ -514,7 +514,7 @@ module Sow
       #
       def initialize(sower, metadata)
         @sower    = sower
-        @metadata = metadata.data
+        @metadata = metadata.data.rekey(&:to_s)
       end
 
       #
@@ -536,7 +536,6 @@ module Sow
 
       #
       def method_missing(s,*a,&b)
-#p @metadata
         if @metadata.key?(s.to_s)
           @metadata[s.to_s]
         else
