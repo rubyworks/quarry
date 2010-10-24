@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+# ## DESCRIPTION
+#
+# Generate a basic standard Ruby project layout.
+# This is a no-frills scaffold.
+
+copy '**/*', :render=>'erb'
+

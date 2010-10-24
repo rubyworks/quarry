@@ -1,8 +1,0 @@
-Add a specified license to your project.
-
-Usage:
-
-  sow license [name]
-
-If no license name is given, it defaults to 
-the MIT License.

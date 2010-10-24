@@ -1,18 +1,31 @@
 #!/usr/bin/env ruby
 
-argument :license  #, :default => 'mit'
+# Add a specified license to your project.
+# 
+# Usage:
+# 
+#   sow license <name>
+# 
+# If no license name is given, it defaults to
+# the Apache 2.0 License.
 
-lic = (metadata.license || 'mit').downcase
+licenses = %w{apache gpl lpgl mit ruby}
 
-available_licenses = %w[gpl lgpl mit apache]
+licenses.each do |license|
 
-unless available_licenses.include?(lic)
-  raise "Unrecognized license name. Choose:\n  " + available_licenses.join("\n  ")
+  select license do
+    copy '*', :from=>license
+  end
+
 end
 
-metadata.license = lic.upcase
-
-scaffold do
-  copy :from=>lic, :files=>"*", :to=>'.'
+select :default do
+  copy '*', :from=>'apache'
 end
+
+#select_missing do
+#  abort "License not found. Try:\n  " + licenses.join("\n  ")
+#end
+
+
 

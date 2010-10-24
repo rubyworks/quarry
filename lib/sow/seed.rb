@@ -1,18 +1,23 @@
 require 'sow/core_ext'
-require 'sow/config'
+#require 'sow/config'
 require 'sow/manager'
-require 'sow/sower'
 
 module Sow
 
-  #
+  # A Seed is simpl the location in the file system of a Sowfile.
   class Seed
 
     # Basenames of files to ignore in template files.
     IGNORE = %w{. .. .svn}
 
     # Files to remove in template files.
-    REMOVE = %w{Sowfile _Sowfile _README}
+    REMOVE = %w{Sowfile _Sowfile}
+
+    #
+    SOWFILE_PATTERN = '{_,}Sowfile'
+
+    #
+    SOWCTRL_PATTERN = '../{_,}Sowctrl'
 
     # Find a seed by +name+.
     def self.find(name)
@@ -24,73 +29,96 @@ module Sow
       @manager ||= Manager.new
     end
 
+    #def self.load(name)
+    #  path = find(name)
+    #  raise "No seed -- #{name}" unless path
+    #  new(path)
+    #end
+
     # New Seed.
     #
     # ## ARGUMENTS
     #
-    #   * `name`
+    #   * `name`:
     #     Name of the seed (or best prefix match).
     #
-    #   * `arguments`:
-    #     Seeds can accept an Array of *arguments* which can refine their 
-    #     behvior.
-    #
-    #   * `settings`:
-    #     Seed can accept a Hash of `key=>value` *settings* which refine
-    #     their behavior.
-    #
-    #--
-    # TODO: OPTIONS?
-    #++
-    def initialize(name, arguments, settings)
-      @name      = name
-      @arguments = arguments
-      @settings  = settings
+    def initialize(path, options={})
+      @path = Pathname.new(path)
+      @type = options[:type].to_s
 
-      @directory = self.class.find(name)
+      @sowfile = Dir[File.join(@path,SOWFILE_PATTERN)].first 
+      @sowctrl = Dir[File.join(@path,SOWCTRL_PATTERN)].first
 
-      raise "No seed -- #{name}" unless @directory
-
-      @sowfile = Dir[@directory + '{,_}Sowfile'].first 
+      raise "not a seed - #{name}" unless @sowfile
     end
+
+    #
+    attr :type
 
     # Name of seed.
     def name
-      @name
-    end
-
-    # Arguments (from commandline).
-    def arguments
-      @arguments
-    end
-
-    # Metadata settings (from commandline).
-    def settings
-      @settings 
+      @name ||= (
+        rpath = path.to_s.sub(/^#{location}/, '')
+        parts = rpath.split('/')  
+        parts.reverse.join('.').chomp('.')
+      )
     end
 
     #
-    #def options; @options ; end
-
-    # Seed directory.
-    def directory
-      @directory
+    def location
+      case type
+      when 'bank'
+        Manager.bank_folder
+      when 'silo'
+        Manager.silo_folder
+      when 'work'  # should be output dir ?
+        Dir.pwd
+      when 'plugin'
+        path.to_s[0..path.to_s.rindex('/sow/')+4]
+      else
+        path.to_s[0..path.to_s.rindex('/sow/')+4]
+      end
     end
 
+    # Seed directory.
+    def path
+      @path
+    end
+
+    #
+    alias_method :directory, :path
+
+    # Full file system path to the seed's Sowfile.
+    #
+    #   `sowfile() -> String`
     #
     def sowfile
       @sowfile
     end
 
     #
+    def sowctrl
+      @sowctrl
+    end
+
+    #
     def script
       @script ||= (
-        s = File.read(sowfile).strip
-        s.empty? ? "copy all" : s
+        s = ""
+        if sowctrl
+          s << File.read(sowctrl)
+          s << "\n"
+        end
+        s << File.read(sowfile)
+        s.strip!
+        s.empty? ? "copy '**/*'" : s   # don't really need this
       )
     end
 
-    # Returns the list of seed files.
+    # Returns the list of seed files, less files to ignore.
+    #
+    #   `files() -> Array`
+    #
     def files
       @files ||= (
         files = []
@@ -102,22 +130,34 @@ module Sow
       )
     end
 
-    #
-    #def destination_directory
-#puts "==> #{(options.output || Dir.pwd)}"
-    #  @destination ||= (options.output || Dir.pwd)
-    #end
-
-    # Present working directory.
-    #def working_directory
-    #  @work
-    #end
-
     # Do it!
-    #def sow!(stage, options)
-    #  sower = Sower.new(self, options)
-    #  sower.sow!(stage)
+    #def sow!(selection, arguments, settings, options)
+    #  Seeder.new(self, selection, arguments, settings, options)
+    #  seeder.call
     #end
+
+    def help
+      docs = false
+      text = ""
+      File.readlines(sowfile).each do |line|
+        if docs
+          break if line !~ /^\#/
+          text << line
+        else
+          next  if line =~ /^\#\!/
+          next  if line =~ /^\s*$/
+          break if line !~ /^\#/
+          text << line
+          docs = true
+        end
+      end
+      text
+    end
+
+    #
+    def to_s
+      name.to_s
+    end
 
   end
 

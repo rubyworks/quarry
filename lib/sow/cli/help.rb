@@ -9,7 +9,7 @@ module Sow::CLI
     #
     def call(argv)
       if name = argv.first
-        puts manager.readme(name)
+        Sow.help(name)
       else
         puts "sow <name> ...                 # sow a seed (same as `seed`)"
         puts "sow new <path> <name> ...      # sow a new seed"

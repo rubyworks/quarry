@@ -2,15 +2,17 @@ require 'erb'
 require 'malt'
 require 'fileutils'
 require 'tmpdir'
-require 'sow/seed'
-require 'sow/copier'
+
+require 'sow/sowfile/context'
+require 'sow/sowfile/metadata'
+require 'sow/sowfile/transaction'
 
 module Sow
 
-  # Evaluation context for a seed's Sowfile, which "sows" the seed's template
+  # Evaluation context for a seed's Sowfile, which "sows" the seed's
   # files to a staging ground.
-  # 
-  class SowerEval
+  #
+  class Sowfile
 
     # Location of Sow user configuration. Uses XDG directrory standard!!!
     HOME_CONFIG = ENV['XDG_CONFIG_HOME'] || '~/.config'
@@ -22,25 +24,57 @@ module Sow
     DEST_METADATA = '{.sow,.config,config}/sow/metadata.{yml,yaml}'
 
     #
+    def self.run(seed, arguments, settings, options)
+      new(seed, options).call(arguments, settings)
+    end
+
+    # New Sowfile.
+    #
+    # ## ARGUMENTS
+    #
+    #   * `seed`
+    #     Seed to which the Sowfile belongs.
+    #
     def initialize(seed, options)
       @seed    = seed
+      @name    = seed.name
       @options = options
 
       @output  = Pathname.new(options[:output] || Dir.pwd)
-      @work    = Pathname.new(Dir.pwd)
+      #@work    = Pathname.new(Dir.pwd)
+      @stage   = options[:stage]
     end
 
+    # ## ARGUMENTS
     #
-    def sow!(stage)
-      @stage = stage
-      Dir.chdir(stage) do
+    #   * `selection`
+    #     Specific aspect of seed to germinate.
+    #
+    #   * `arguments`:
+    #     Seeds can accept an Array of *arguments* which can refine their 
+    #     behvior.
+    #
+    #   * `settings`:
+    #     Seed can accept a Hash of `key=>value` *settings* which refine
+    #     their behavior.
+    #
+    def call(arguments, settings)
+      @arguments = arguments
+      @call_settings  = settings
+
+      Dir.chdir(stage_directory) do
         instance_eval(seed.script, seed.sowfile)
       end
     end
 
-    # The seed object.
+    #
     def seed
       @seed
+    end
+
+    # Output directory.
+    def output
+      @output
     end
 
     # Basename of output destination directory.
@@ -50,23 +84,18 @@ module Sow
     #  )
     #end
 
-    # TODO: Make extensions plugable?
-    def utilize(libname)
-      require "sow/extensions/#{libname}"
+    # Temporary staging directory.
+    def stage_directory
+      @stage ||= (
+        name = File.basename(output).chomp('/')
+        time = Time.now.to_i
+        Dir.tmpdir + "/sow/stage/#{name}/#{time}"
+      )
     end
 
-    # Import another seed. Be specific about the seed name when using this.
-    #--
-    # TODO: This indicates that this whole class needs some refactoring.
-    #++
-    def import(name)
-      seed = Seed.new(name, seed.arguments, seed.settings)
-      Sower.new(seed, @options).sow!(@stage)
-    end
-
-    #
-    def seed
-      @seed
+    # The seed name.
+    def name
+      @name
     end
 
     # Name of the seed.
@@ -74,14 +103,14 @@ module Sow
       seed.name
     end
 
+    #
+    #def selection
+    #  @selection
+    #end
+
     # Arguments (from commandline).
     def arguments
-      seed.arguments
-    end
-
-    # Output directory.
-    def output
-      @output
+      @arguments
     end
 
     # Current working directory.
@@ -91,10 +120,6 @@ module Sow
     def work
       @output #@work
     end
-
-    #def stage_path
-    #  @stage_path
-    #end
 
     # Give a commandline argument a name, assign it to
     # metadata and shift it off the arguments list.
@@ -120,12 +145,35 @@ module Sow
       @metadata ||= Metadata.new(self)
     end
 
+    #
+    alias_method :data, :metadata
+
+    #
+    def get(key)
+      data[key]
+    end
+
+    #
+    def set(key, value)
+      data[key] = value
+    end
+
+    #
+    def let(key, value)
+      data[key] ||= value
+    end
+
     #def template_files
     #  seed.files
     #end
 
-    def all
-      seed.files
+    #def all
+    #  seed.files
+    #end
+
+    #
+    def resources
+      [seed_settings, work_settings, user_settings]
     end
 
     # Merged settings from seed_settings, work_settings and user_settings,
@@ -140,10 +188,10 @@ module Sow
       )
     end
 
-    # Invocation settings are passed in via #initialize as part of the seed.
+    # Invocation settings are passed in via #initialize along with the seed.
     # These settings typically come from the commandline.
     def seed_settings
-      seed.settings
+      @call_settings
     end
 
     # Work settings are found in the output directory (which is usually the
@@ -167,6 +215,40 @@ module Sow
         data
       )
     end
+
+    # TODO: Make extensions plugable?
+    def utilize(libname)
+      require "sow/extensions/#{libname}"
+    end
+
+    #
+    def import(relpath)
+      file = File.join(seed.path, relpath)
+      instance_eval(File.read(file), file)
+    end
+
+    # Plant another seed.
+    #--
+    # TODO: This indicates that this whole class needs some refactoring.
+    #++
+    #def plant(seed_name)
+    #  #seed = Seed.new(name, seed.arguments, seed.settings)
+    #  #Sower.new(seed, @options).sow!(@stage)
+    #end
+
+    #
+    #def setup(&block)
+    #  @setup = block if block
+    #  @setup
+    #end
+
+    #
+    #def select(name, &block)
+    #  if selection == name.to_s
+    #    setup.call if setup
+    #    block.call
+    #  end
+    #end
 
     # Make directory. This will auto-create subdirecties,
     # equivalent to `mkdir -p`.
@@ -252,36 +334,36 @@ module Sow
     end
 
 =begin
-    # Copy a template file or a glob of template files. Except for specially
-    # recognized files (.png, .jpg, etc.) all files will be run thru ERB.
-    # The extension `.verbatim` can be used to prevent this and instead copied
-    # verbatim --e.g. `foo.erb.verbatim` will result in `foo.erb`.
-    def cp(from, to=nil, opts={})
-      opts, to = to, nil if Hash===to
+  # Copy a template file or a glob of template files. Except for specially
+  # recognized files (.png, .jpg, etc.) all files will be run thru ERB.
+  # The extension `.verbatim` can be used to prevent this and instead copied
+  # verbatim --e.g. `foo.erb.verbatim` will result in `foo.erb`.
+  def cp(from, to=nil, opts={})
+    opts, to = to, nil if Hash===to
 
-      tmpl = seed.directory
+    tmpl = seed.directory
 
-      list = []
+    list = []
 
-      if from.index('//')
-        d, f = *file.split('//')
-        (tmpl + d).glob_relative(f).each do |x|
-          list << [File.join(d, x), x.to_s]
-        end
-      else
-        tmpl.glob_relative(from).each do |x|
-          list << [x.to_s, x.to_s]
-        end
+    if from.index('//')
+      d, f = *file.split('//')
+      (tmpl + d).glob_relative(f).each do |x|
+        list << [File.join(d, x), x.to_s]
       end
-
-      if to
-        list.map{ |from, fname| [from, File.join(to,fname)] }
-      end
-
-      list.each do |from, fname|
-        template(from, fname, opts)
+    else
+      tmpl.glob_relative(from).each do |x|
+        list << [x.to_s, x.to_s]
       end
     end
+
+    if to
+      list.map{ |from, fname| [from, File.join(to,fname)] }
+    end
+
+    list.each do |from, fname|
+      template(from, fname, opts)
+    end
+  end
 =end
 
     # Copy template file to +dest+ with +mode+.
@@ -319,11 +401,11 @@ module Sow
     # TODO: Do we need a new context every time?
     #++
     def render(file, ext)
-      data = Context.new(self, metadata)
+      data = Context.new(self)
       #ERB.new(text).result(context.to_binding)
       #data = metadata.data
       ext  = ext.to_s.sub(/^\./, '')  # FIXME Malt should handle this
-      Malt.render(:file=>file, :data=>data, :to=>ext)
+      Malt.render(:file=>file.to_s, :data=>data, :type=>ext)
     end
 
     #
@@ -382,189 +464,15 @@ module Sow
     end
 
     #
-    def fileutils
-      FileUtils
+    def transaction(&block)
+      Transaction.new(self, &block).commit!
     end
 
     #
-    def scaffold(&block)
-      Scaffold.new(self, &block).commit!
-    end
-
-    # Encapsulate a set of copy transactions. This is better than using
-    # copy directly b/c it allows multiple copy commands to be resolved
-    # into a single copy operation, which can prevent duplicate copying.
-    # The last copy command takes precedence over the first.
-    class Scaffold
-      #
-      attr :sower
-
-      #
-      attr :copylist
-
-      #
-      def initialize(sower, &block)
-        @sower       = sower
-        @copy_list   = {}
-        @append_list = {}
-        instance_eval(&block)
-      end
-
-      #
-      def copy(options={})
-        from  = options.delete(:from)
-        to    = options.delete(:to)
-        files = options.delete(:files) || '**/*'
-
-        tmpl = sower.seed.directory
-
-        list = []
-
-        if from
-          (tmpl + from).glob_relative(files).each do |f|
-            next if f.basename.to_s == "Sowfile"
-            next if f.basename.to_s == "_Sowfile"
-            list << [File.join(from, f), f.to_s]
-          end
-        else
-          tmpl.glob_relative(files).each do |f|
-            next if f.basename.to_s == "Sowfile"
-            next if f.basename.to_s == "_Sowfile"
-            list << [f.to_s, f.to_s]
-          end
-        end
-
-        if to
-          list.map!{ |src, dest| [src, File.join(to,dest)] }
-        end
-
-        list.each do |src, dest|
-          @copy_list[dest] = [src, options]
-        end
-      end
-
-      #
-      def append(file, text)
-        @append_list << [file, text]
-      end
-
-      # Copies occur before appends.
-      def commit!
-        @copy_list.each do |dest, (src, opts)|
-          sower.template(src, dest, opts)
-        end
-        @append_list.each do |file, text|
-          sower.append(file, text)
-        end
-      end
-
-    end
-
-    # Metdata access for filing in template slots.
-    class Metadata
-      alias_method :__class__, :class
-
-      instance_methods.each{ |m| undef_method(m) unless m.to_s =~ /^__/ }
-
-      #
-      def initialize(sower)
-        @sower = sower
-        @data  = sower.settings
-      end
-
-      #
-      def data
-        @data
-      end
-
-      # Get metadata entry.
-      def [](name)
-        @data[name.to_s]
-      end
-
-      # Set metadata entry.
-      def []=(name, value)
-        @data[name.to_s] = value
-      end
-
-      #
-      def method_missing(sym, *args)
-        sym = sym.to_s
-        case sym
-        when /\=$/
-          name = sym.chomp('=')
-          self[name] = args.first
-        when /\?$/
-          self[sym.chomp('?')]
-        when /\!$/
-          # TODO: if method_missing ends in '!'
-        else
-          self[sym]
-        end
-      end
-    end
-
-    # Templates are all rendered within the scope of a context object.
-    # This limits access to information pertinent. All metadata
-    # can be accessed by name, as this this object delegate missing methods
-    # to a Metadata instance.
-    class Context
-      instance_methods.each{ |m| undef_method(m) unless m.to_s =~ /^(__|respond_to\?$)/ }
-
-      #
-      def initialize(sower, metadata)
-        @sower    = sower
-        @metadata = metadata.data.rekey(&:to_s)
-      end
-
-      #
-      def to_binding
-        binding
-      end
-
-      #
-      def render(file, options={})
-        options[:file] = file
-        options[:data] ||= @metadata #binding
-        Malt.render(options)
-      end
-
-      #
-      #def working_directory
-      #  @metadata.seed.working_directory
-      #end
-
-      #
-      def method_missing(s,*a,&b)
-        if @metadata.key?(s.to_s)
-          @metadata[s.to_s]
-        else
-          super(s,*a,&b)
-        end
-      end
-
-      #
-      #def method_missing(s, *a, &b)
-      #  @metadata[s.to_s] || "___#{s}___"  # "__'#{s}'__"
-      #end
-
-      #
-      def to_h
-        metadata.data
-      end
-
-      #
-      def to_binding
-        binding
-      end
-
-      #
-      def inspect
-        "#<Sow::SowerEval::Context>"
-      end
+    def fileutils
+      $DEBUG ? FileUtils::Verbose : FileUtils
     end
 
   end
 
 end
-

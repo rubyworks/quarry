@@ -1,6 +1,6 @@
 Feature: Your Feature Title
 
-FIXME: As a (something) I want to (do something)
+As a (something) I want to (do something)
 So that I can (achieve some goal)
 
 Scenario: Your Scenario Title

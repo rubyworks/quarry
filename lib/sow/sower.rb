@@ -1,6 +1,8 @@
 require 'tmpdir'
+require 'sow/core_ext'
+require 'sow/manager'
 require 'sow/seed'
-require 'sow/sower_eval'
+require 'sow/sowfile'
 
 module Sow
 
@@ -12,8 +14,8 @@ module Sow
     # ## ARGUMENTS
     #
     #   * `seeds`:
-    #     An Array of Seed objects, or an Array of seed parameters
-    #     for creating seeds, i.e. `[[name, args, data]...]`.
+    #     An array of seed parameters, `[[name, pick, args, data], ...]`,
+    #     for creating seeds, as would be given on the command line.
     #
     # ## OPTIONS
     #
@@ -21,11 +23,22 @@ module Sow
     #     The output directory for the seed(s).
     #
     def initialize(seeds, options)
-      @seeds   = seeds.map{ |seed| Seed === seed ? seed : Seed.new(*seed) }
+      @seeds   = initialize_seeds(seeds)
       @options = options
+
       @options[:output] ||= Dir.pwd
+      @options[:stage]  ||= stage  # FIXME ?
     end
- 
+
+    #
+    def initialize_seeds(seeds)
+      seeds.map do |(name, args, data)|
+        #name, pick = parse_index(index)
+        seed = Sow.find_seed(name)
+        [seed, args, data]
+      end
+    end
+
     # sow! -- Sow those seeds! 
     # ========================
     #
@@ -37,19 +50,30 @@ module Sow
     def sow!
       report_startup
       setup_stage
-      seeds.each do |seed|
-        seeder = SowerEval.new(seed, options)
-        seeder.sow!(stage)
-      end
+      stage_seeds
       managed_copy
       remove_stage
       report_complete
     end
 
-    ## Add a seed to be sowen.
-    ##def seed(name, *args)
-    ##  @seeds << Seed.new(name, *args)
-    ##end
+    #
+    def stage_seeds
+      seeds.each do |(seed, args, data)|
+        Sowfile.run(seed, args, data, options)
+      end
+    end
+
+#    #
+#    #def parse_index(index)
+#    #  seed, pick = index.split(':')
+#    #  pick = 'default' if pick.nil?
+#    #  return seed, pick
+#    #end
+#
+#    # Add a seed to be sowen.
+#    #def seed(name, *args)
+#    #  @seeds << Seed.new(name, *args)
+#    #end
 
     # Seeds to germinate.
     def seeds
@@ -63,7 +87,7 @@ module Sow
 
     # Job name.
     def job
-      seeds.map{ |seed| seed.name }.join(',')
+      seeds.map{ |seed| seed.first }.join(',')
     end
 
     # Temporary staging directory.
@@ -83,10 +107,14 @@ module Sow
     #alias_method :destination, :output
 
     #
-    def quiet? ; options[:quiet] ; end
+    def quiet?
+      options[:quiet]
+    end
 
     #
-    def mode   ; options[:mode]  ; end
+    def mode
+      options[:mode]
+    end
 
     #
     #def config
@@ -171,6 +199,17 @@ module Sow
         end
       end
       list.uniq
+    end
+
+
+    # Find a seed location by +name+.
+    def find(name)
+      manager.find_seed(name)
+    end
+
+    # Reterun an instance of a seed manager.
+    def manager
+      @manager ||= Manager.new
     end
 
   end

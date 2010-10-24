@@ -5,7 +5,7 @@ require 'color'
 
 module Sow
 
-  class SowerEval
+  class Sowfile
 
     #class Context
 

@@ -20,6 +20,11 @@ module Sow
     @manager ||= Manager.new
   end
 
+  # Returns a Seed mathcing +name+.
+  def self.find_seed(name)
+    manager.find_seed(name)
+  end
+
   # Initialize a directory for use with Sow.
   # TODO: Do we really need this?
   def self.init(output)
@@ -54,9 +59,9 @@ module Sow
 
   # Print a list of all available seeds.
   def self.seed_list
-    seeds = manager.seeds
-    seeds.each do |seed|
-      puts "  * #{seed}"
+    names = manager.seed_list
+    names.each do |name|
+      puts "  * #{name}"
     end
   end
 
@@ -80,11 +85,16 @@ module Sow
   # Undo the previous sowing.
   # FIXME: what is being restored? Also, while this will overwrite changed
   # files, it won't remove new files created by the seed. Need to fix!
-  def undo(output, options)
+  def self.undo(output, options)
     backup = Dir[File.join(output, '.sow/undo/*')].sort.last
     copier = Sow::Copier.new(backup, output, options)
     copier.copy
     FileUtils.rm_r(backup)
+  end
+
+  #
+  def self.help(name)
+    puts manager.help(name)
   end
 
 end

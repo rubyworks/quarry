@@ -53,6 +53,7 @@ module Sow
     #++
     def initialize #(options=nil)
       #@options = (options || OpenStruct.new).to_ostruct
+      @namespaces = {}
     end
 
     #
@@ -78,17 +79,30 @@ module Sow
       @silo_folder ||= self.class.silo_folder
     end
 
-    # TODO: look for exact match first
+    # 
     def find_seed(match)
-      loc = nil
-      seed_map.each do |name, dir|
-        loc = dir if /^#{match}\./ =~ name
+      hits = match_seed(match)
+      if hits.size == 0
+        raise "No mathcing seeds."
       end
-      seed_map.each do |name, dir|
-        loc = dir if match == name
+      if hits.size > 1
+        raise "More than one matching seed:\n  " + hits.map{|name, dir|name}.join("\n  ")
       end
-      loc = Pathname.new(loc) if loc
-      loc
+      seed = hits.first
+      seed
+    end
+
+    # 
+    def match_seed(match)
+      hits = seeds.select do |seed|
+        match == seed.name
+      end
+      if hits.size == 0
+        hits = seeds.select do |seed|
+          /^#{match}/ =~ seed.name
+        end
+      end
+      return hits
     end
 
     #
@@ -96,72 +110,78 @@ module Sow
       $DRYRUN
     end
 
-    #
-    def seeds
-      @seeds ||= seed_map.map{ |a| a.first }
+    # Returns a list of seed names.
+    def seed_list
+      seeds.map{ |seed| seed.name }.sort_by{ |a|
+        i = a.index('.')
+        i ? [a[i+1..-1], a] : [a, a]
+      }
     end
 
-    alias_method :list, :seeds
+    #
+    alias_method :list, :seed_list
 
-    # Returns an Array of [seed name, seed directory] pairs.
-    def seed_map
+    #
+    def seeds
+      @seeds ||= collect_seeds
+    end
+
+    # Returns an Array of Seed objects.
+    def collect_seeds
       list = []
 
-      # project silo
-      dirs = work_folder.glob('sow/**/{,_}Sowfile') # .sow/ ?
+      # project work directory
+      dirs = work_folder.glob('sow/**/{_,}Sowfile') # .sow/ ?
       dirs = dirs.map{ |d| d.parent }
-      dirs.each do |d|
-        n = d.sub(work_folder.to_s,'')
-        k = path_to_name(n)
-        list << [k, d]
+      dirs.each do |dir|
+        seed = Seed.new(dir, :type=>'work')
+        list << seed
       end
 
       # personal silo
-      dirs = silo_folder.glob('**/{,_}Sowfile')
+      dirs = silo_folder.glob('**/{_,}Sowfile')
       dirs = dirs.map{ |d| d.parent }
-      dirs.each do |d|
-        n = d.sub(silo_folder.to_s,'')
-        k = path_to_name(n)
-        list << [k, d]
+      dirs.each do |dir|
+        seed = Seed.new(dir, :type=>'silo')
+        list << seed
       end
 
       # seed bank
-      dirs = bank_folder.glob('**/{,_}Sowfile')
+      dirs = bank_folder.glob('**/{_,}Sowfile')
       dirs = dirs.map{ |d| d.parent }
-      dirs.each do |d|
-        n = d.sub(bank_folder.to_s,'')
-        k = path_to_name(n)
-        list << [k, d]
+      dirs.each do |dir|
+        seed = Seed.new(dir, :type=>'bank')
+        list << seed
       end
 
       # seed plugins
-      dirs = ::Plugin.find(File.join('sow', '**/{,_}Sowfile'))
+      dirs = ::Plugin.find(File.join('sow', '**/{_,}Sowfile'))
       dirs = dirs.map{ |d| File.dirname(d) }
-      dirs.each do |d|
-        n = d[d.rindex('/sow/')+5..-1]
-        k = path_to_name(n)
-        list << [k, d]
+      dirs.each do |dir|
+        seed = Seed.new(dir, :type=>'plugin')
+        list << seed
       end
 
       list
     end
 
-    # Lookup seed and and return the contents of it's
-    # README file. If it does not have a README file
-    # it will return 'No README'.
-    def readme(name)
+    # Lookup seed and return the comment at the top
+    # of it's Sowfile. If it does not have a comment
+    # it will return 'No help.'.
+    def help(name)
       dir = find_seed(name)
       if dir
-        readme = File.join(dir, 'README')
-        return File.read(readme) if File.exist?(readme)
+        seed = Seed.new(name)
+        seed.help
+      else
+        raise "No matching seed."
       end
-      return 'No README' unless dir
     end
 
     # Install a seed bank.
     def install(uri, alt=nil)
       alt  = alt || uri_to_name(uri)
-      dir  = bank_folder
+      dir  = bank_folder()
       out  = dir + alt
       name = File.basename(uri).chomp(File.extname(uri))
       if File.exist?(out + name)
@@ -186,15 +206,27 @@ module Sow
       end
     end
 
+=begin
     #
     def path_to_name(path)
-      div  = path.to_s.split('/') # File::SEPARATOR ?
+      div   = path.to_s.split('/') # File::SEPARATOR ?
+      div.pop if div.last == 'default'
+      #name  = div.pop
+      #group = div.pop
       name = div.reverse.join('.').chomp('.')
-      if md = /default\./.match(name)
-        name = md.post_match
-      end
-      name
+
+      #if group
+      #  name = "#{group}:#{name}"
+      #  name.chomp!(".default")
+      #end
+
+      #if !ns.empty?
+      #  name = "#{name}-#{ns}"
+      #end
+
+      return name, namespace
     end
+=end
 
     # Update seed bank(s).
     def update(name=nil)
@@ -286,12 +318,13 @@ module Sow
     def uri_to_name(uri)
       uri = URI.parse(uri)
       path = uri.path
+      #name = File.basename(uri.path)
       path = path.chomp(File.extname(path))
-      path = path.split('/').reverse.join('.')
-      path + uri.host
+      #path = path.split('/').reverse.join('.').chomp('.')
+      File.join(uri.host,path)
     end
 
-    ; ; ; private ; ; ;
+    private
 
     # Interface to FileUtils or FileUtils::DryRun.
     def shell
