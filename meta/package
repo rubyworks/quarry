@@ -6,6 +6,7 @@ requires:
   - facets >=2.4.3
   - plugin
   - syckle (build)
+  - ronn   (build)
   - qed    (test)
   - lemon  (test)
 
