@@ -1,9 +1,27 @@
 #!/usr/bin/env ruby
 
-# ## DESCRIPTION
-#
 # Generate a basic standard Ruby project layout.
 # This is a no-frills scaffold.
 
-copy '**/*', :render=>'erb'
+utilize 'gemdo'
+
+#ensure_empty('PROFILE', 'VERSION')
+
+argument :name, :default => destname
+
+#let :name, destname
+
+raise "Name is required."         unless data.name
+raise "Name must be single word." unless data.name =~ /\w+/
+
+#metadata.name    = name  # TODO
+data.title   = data.title   || data.name.capitalize
+data.contact = data.contact || ENV['EMAIL']
+
+# TODO: Do not overwrite PROFILE or VERSION if they exist
+scaffold do
+  copy "**/*", :render=>'erb'
+  copy "bin/*", :mode=>0744
+  #skip('PROFILE', 'VERSION')
+end
 

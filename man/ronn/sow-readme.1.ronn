@@ -1,0 +1,22 @@
+sow-readme(1) - generate starter README file
+============================================
+
+## SYNOPSIS
+
+  `sow readme`
+
+## DESCRIPTION
+
+Generate a starter README file for a project. This seed utilizes
+GEM DO POM metadata, if available, to fill out the README more
+extensively.
+
+The README is in RDoc format.
+
+## COPYRIGHT
+
+Copyright (c) 2010 Thomas Sawyer
+
+## SEE ALSO
+
+sow(1)

@@ -4,6 +4,7 @@ module Sow::CLI
 
   class SeedList < Abstract
 
+    command 'list'  # TODO make a separate command with better layout
     command 'seed list'
     command 'seed ls'
 

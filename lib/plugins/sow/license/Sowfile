@@ -1,31 +1,18 @@
 #!/usr/bin/env ruby
 
 # Add a specified license to your project.
-# 
-# Usage:
-# 
+#
 #   sow license <name>
 # 
-# If no license name is given, it defaults to
-# the Apache 2.0 License.
+# If no license name is given a list of available license it printed.
 
 licenses = %w{apache gpl lpgl mit ruby}
 
-licenses.each do |license|
+argument :license
 
-  select license do
-    copy '*', :from=>license
-  end
-
+if data.license && (seed.path + data.license).directory?
+  copy '*', :from=>data.license
+else
+  abort "License not found. Try:\n  " + licenses.join("\n  ")
 end
-
-select :default do
-  copy '*', :from=>'apache'
-end
-
-#select_missing do
-#  abort "License not found. Try:\n  " + licenses.join("\n  ")
-#end
-
-
 

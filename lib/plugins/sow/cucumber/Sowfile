@@ -19,24 +19,21 @@
 # TODO: Perhaps add automatic detection of location of features?
 #++
 
-select :default do
-  argument :feature, :default => 'new'
-  argument :directory
+argument :feature #, :default => 'new'
+argument :directory
 
-  let :directory, 'features'  # TODO: way to make an argument option?
+let :directory, 'features'  # TODO: way to make this argument() option?
 
-  #abort "feature name is required" unless data.feature
+abort "feature name is required" unless data.feature
 
-  if (output + data.directory).exist?
-    copy "___feature___.feature", data.directory, :from=>'features'
-  else
-    copy "**/*", data.directory, :from=>'features'
-  end
-end
-
-
-select :setup do
-  argument :directory, :default=>'features'
+if (output + data.directory).exist?
+  copy "___feature___.feature", data.directory, :from=>'features'
+else
   copy "**/*", data.directory, :from=>'features'
 end
+
+#select :setup do
+#  argument :directory, :default=>'features'
+#  copy "**/*", data.directory, :from=>'features'
+#end
 

@@ -94,7 +94,9 @@ module Sow
 
   #
   def self.help(name)
+    puts
     puts manager.help(name)
+    puts
   end
 
 end

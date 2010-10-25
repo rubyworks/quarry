@@ -1,0 +1,25 @@
+sow-license(1) - provide a license file
+=======================================
+
+## SYNOPSIS
+
+  `sow license <name>`
+
+## DESCRIPTION
+
+Add a specified license to your project. Usually the file created
+is called `LICENSE`. But the `gpl` license uses `COPYING` instead.
+The `apache` license also provides a `NOTICE` file.
+
+Available licenses inclide `mit`, `lgpl`, `bsd`, and so on.
+
+If no license name is given, a list of available licenses will be
+shown.
+
+## COPYRIGHT
+
+Copyright (c) Thomas Sawyer 2010
+
+## SEE ALSO
+
+sow(1)

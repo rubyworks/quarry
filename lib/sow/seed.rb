@@ -11,10 +11,13 @@ module Sow
     IGNORE = %w{. .. .svn}
 
     # Files to remove in template files.
-    REMOVE = %w{Sowfile _Sowfile}
+    REMOVE = %w{Sowfile _Sowfile Sowfile.ronn _Sofile.ronn}
 
     #
     SOWFILE_PATTERN = '{_,}Sowfile'
+
+    #
+    SOWRONN_PATTERN = '{_,}Sowfile.ronn'
 
     #
     SOWCTRL_PATTERN = '../{_,}Sowctrl'
@@ -48,6 +51,7 @@ module Sow
 
       @sowfile = Dir[File.join(@path,SOWFILE_PATTERN)].first 
       @sowctrl = Dir[File.join(@path,SOWCTRL_PATTERN)].first
+      @sowronn = Dir[File.join(@path,SOWRONN_PATTERN)].first 
 
       raise "not a seed - #{name}" unless @sowfile
     end
@@ -102,6 +106,11 @@ module Sow
     end
 
     #
+    def sowronn
+      @sowronn
+    end
+
+    #
     def script
       @script ||= (
         s = ""
@@ -137,21 +146,26 @@ module Sow
     #end
 
     def help
-      docs = false
-      text = ""
-      File.readlines(sowfile).each do |line|
-        if docs
-          break if line !~ /^\#/
-          text << line
-        else
-          next  if line =~ /^\#\!/
-          next  if line =~ /^\s*$/
-          break if line !~ /^\#/
-          text << line
-          docs = true
-        end
+      if sowronn
+        File.read(sowronn)
+      else
+        "No documentation."
       end
-      text
+      #docs = false
+      #text = ""
+      #File.readlines(sowfile).each do |line|
+      #  if docs
+      #    break if line !~ /^\#/
+      #    text << line
+      #  else
+      #    next  if line =~ /^\#\!/
+      #    next  if line =~ /^\s*$/
+      #    break if line !~ /^\#/
+      #    text << line
+      #    docs = true
+      #  end
+      #end
+      #text
     end
 
     #

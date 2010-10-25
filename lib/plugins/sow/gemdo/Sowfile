@@ -16,24 +16,21 @@
 
 utilize 'gemdo'
 
-setup do
-  argument :name
+argument :name
 
-  name = data.name
+name = data.name
 
-  #name = arguments.first || metadata['name'] #|| destination.basename.to_s
+#name = arguments.first || metadata['name'] #|| destination.basename.to_s
 
-  abort "Name is required."         unless name
-  abort "Name must be single word." unless name =~ /\w+/
+abort "Name is required."         unless name
+abort "Name must be single word." unless name =~ /\w+/
 
-  data.title   = data['title']   || name.capitalize
-  data.contact = data['contact'] || data['email']
-end
+data.title   = data['title']   || name.capitalize
+data.contact = data['contact'] || data['email']
 
-select :meta do
+if data.top
+  copy "**/*", :render=>'erb', :from=>'top'
+else
   copy "**/*", :render=>'erb', :from=>'meta'
 end
 
-select :top do
-  copy "**/*", :render=>'erb', :from=>'top'
-end

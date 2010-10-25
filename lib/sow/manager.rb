@@ -169,9 +169,8 @@ module Sow
     # of it's Sowfile. If it does not have a comment
     # it will return 'No help.'.
     def help(name)
-      dir = find_seed(name)
-      if dir
-        seed = Seed.new(name)
+      seed = find_seed(name)
+      if seed
         seed.help
       else
         raise "No matching seed."

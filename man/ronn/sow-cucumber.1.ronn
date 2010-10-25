@@ -1,0 +1,33 @@
+sow-cucumber(1) - create a cucumber feature
+===========================================
+
+## SYNOPSIS
+
+  `sow cucumber <name> [directory]
+
+## DESCRIPTION
+
+Create a new cucumber feature file. If the project is not yet
+setup for Cucumber then basic setup files will be provided in
+addition to the feature file.
+
+## ARGUMENTS
+
+The cucuumber seed takes two arguments.
+
+  * `feature`:
+    The name of the new feature (required).
+
+  * `directory`
+    The features directory (default `features/`).
+
+If you are using a non-standard location for features, always be
+sure to provide it as the second argument.
+
+## COPYRIGHT
+
+Copyright (c) 2010 Thomas Sawyer
+
+## SEE ALSO
+
+sow(1)
