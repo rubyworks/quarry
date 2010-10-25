@@ -16,7 +16,7 @@ def `(command)    # comment here b/c of dumb syntax highligters`
   command.sub!(/^sow/,'')
   argv = Shellwords.shellwords(command)
   $stdout, $stderr = StringIO.new, StringIO.new
-  Sow.main(*argv)
+  Sow.cli(*argv)
   $stdout.rewind; $stderr.rewind
   @out, @err = $stdout.read, $stderr.read
   $stdout, $stderr = STDOUT, STDERR
