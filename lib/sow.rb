@@ -8,6 +8,8 @@
 module Sow
 
   require 'sow/meta/data'
+  require 'sow/manager'
+  #require 'sow/sower'
 
   # Run sow command line interface.
   def self.cli(*argv)

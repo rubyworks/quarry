@@ -5,7 +5,7 @@ module Sow::CLI
   # Sow a new project.
   class New < Seed
 
-    command 'seed new'
+    command 'new'
 
     #
     def call(argv)
@@ -27,6 +27,8 @@ module Sow::CLI
     #
     def opts
       OptionParser.new{ |o|
+        o.banner = "Usage: sow new <dir> <seed> [*args]"
+        o.separator "Sow seed into new directory."
         #o.on('--output', '-o PATH'){ |path| options.output = path }
         #o.on('--write' , '-w'){ options.mode = :write }
         #o.on('--prompt', '-p'){ options.mode = :prompt }

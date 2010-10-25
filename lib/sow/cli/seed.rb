@@ -20,6 +20,8 @@ module Sow::CLI
     #
     def opts
       OptionParser.new{ |o|
+        o.banner = "Usage: sow <seed>"
+        o.separator "Sow a seed."
         o.on('--output', '-o PATH'){ |path| options.output = path }
         o.on('--write' , '-w'){ options.mode = :write }
         o.on('--prompt', '-p'){ options.mode = :prompt }
