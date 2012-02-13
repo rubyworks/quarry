@@ -1,6 +1,6 @@
 module Sow
 
-  class Sowfile
+  class CopyScript
 
     # Metdata access for filing in template slots.
     class Metadata

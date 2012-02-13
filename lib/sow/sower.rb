@@ -2,7 +2,7 @@ require 'tmpdir'
 require 'sow/core_ext'
 require 'sow/manager'
 require 'sow/seed'
-require 'sow/sowfile'
+require 'sow/copy_script'
 
 module Sow
 
@@ -66,7 +66,7 @@ module Sow
     #
     def stage_seeds
       seeds.each do |(seed, args, data)|
-        Sowfile.run(seed, args, data, options)
+        CopyScript.run(seed, args, data, options)
       end
     end
 
@@ -155,25 +155,30 @@ module Sow
       FileUtils
     end
 
+    #
     # Output to provide on startup of generation.
+    #
     def report_startup
       @time = Time.now
       #dir = File.basename(source) #File.basename(File.dirname(source))
       report "Generating #{job} in #{File.basename(output)}:\n\n"
     end
 
+    #
     # Output to provide when generation is complete.
+    #
     def report_complete
       report "\nFinished in %.3f seconds." % [Time.now - @time]
     end
 
     #
+    #
+    #
     def report(message)
       puts message unless options[:quiet] or options[:trial]
     end
 
-    MARKER = /___.*?___/
-
+    #
     # Use this to report any "templating" that needs to done by hand.
     #
     # files  - array of file names to check
@@ -190,14 +195,16 @@ module Sow
       end
     end
 
+    #
     # Grep each file in +files+ for occurance of +marker+.
     #
     # files  - array of file names to check
     # marker - the Regexp to search for
     #
     # Returns an Array of file names containing the marker.
-    def check_for_fixes(files, marker)
-      marker ||= MARKER
+    #
+    def check_for_fixes(files, marker=nil)
+      marker ||= EDIT_MARKER
       list = []
       files.each do |file|
         next if File.directory?(file)
@@ -208,13 +215,16 @@ module Sow
       list.uniq
     end
 
-
+    #
     # Find a seed location by +name+.
+    #
     def find(name)
       manager.find_seed(name)
     end
 
+    #
     # Reterun an instance of a seed manager.
+    #
     def manager
       @manager ||= Manager.new
     end

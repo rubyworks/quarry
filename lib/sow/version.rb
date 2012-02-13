@@ -1,26 +1,28 @@
 module Sow
 
+  #
+  # Local library directory.
+  #
   def self.__DIR__
     File.dirname(__FILE__)
   end
 
-  def self.package
-    @package ||= (
+  #
+  # Access to project metadata.
+  #
+  def self.metadata
+    @metadata ||= (
       require 'yaml'
-      YAML.load(File.new(__DIR__ + '/package'))
+      YAML.load(File.new(__DIR__ + '/../sow.yml'))
     )
   end
 
-  def self.profile
-    @profile ||= (
-      require 'yaml'
-      YAML.load(File.new(__DIR__ + '/profile'))
-    )
-  end
-
+  #
+  # Try missing constants as metadata lookups.
+  #
   def self.const_missing(name)
     key = name.to_s.downcase
-    package[key] || profile[key] || super(name)
+    metadata[key] || super(name)
   end
 
 end

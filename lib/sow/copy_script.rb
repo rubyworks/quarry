@@ -1,30 +1,20 @@
 require 'erb'
-require 'malt'
+#require 'malt'
 require 'fileutils'
 require 'tmpdir'
 
-require 'sow/sowfile/context'
-require 'sow/sowfile/metadata'
-require 'sow/sowfile/commit'
-#require 'sow/sowfile/transaction'
+require 'sow/constants'
+require 'sow/copy_script/context'
+require 'sow/copy_script/metadata'
+require 'sow/copy_script/commit'
+#require 'sow/copy_script/transaction'
 
 module Sow
 
-  # Evaluation context for a seed's Sowfile, which "sows" the seed's
+  # Evaluation context for a seed's copy script, which "sows" the seed's
   # files to a staging ground.
   #
-  # TODO: Rename this class.
-  #
-  class Sowfile
-
-    # Location of Sow user configuration. Uses XDG directrory standard!!!
-    HOME_CONFIG = ENV['XDG_CONFIG_HOME'] || '~/.config'
-
-    # File pattern for looking up user matadata.
-    HOME_METADATA = File.join(HOME_CONFIG,'sow/metadata.{yml,yaml}')
-
-    # File pattern for looking up desination matadata.
-    DEST_METADATA = '{.sow,.config,config}/sow/metadata.{yml,yaml}'
+  class CopyScript
 
     #
     def self.run(seed, arguments, settings, options)
@@ -89,12 +79,16 @@ module Sow
     end
 
     #
+    #
+    #
     def scaffold(&block)
       instance_eval(&block)
       Commit.new(self).commit!
       reset
     end
 
+    #
+    #
     #
     def seed
       @seed

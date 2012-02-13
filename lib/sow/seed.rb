@@ -4,7 +4,8 @@ require 'sow/manager'
 
 module Sow
 
-  # A Seed is simpl the location in the file system of a Sowfile.
+  # A Seed encapsulates the location in the file system of the scaffolding.
+  #
   class Seed
 
     # Basenames of files to ignore in template files.

@@ -4,26 +4,9 @@ require 'sow/copier'
 
 module Sow
 
-  SEED_MARK = ".seed"
-
   # The Manager class manages and locates sow seeds.
   #
   class Manager
-
-    #
-    # Where to install seed banks. This sow configuration directory defaults
-    # to '~/.sow', but it can be changes with the `$SOW_BANK` environment
-    # variable. For example, if you want to use XDG base directory standard,
-    # you can set that with:
-    #
-    #   export SOW_BANK="$XDG_CONFIG_HOME/sow"
-    #
-    SOW_BANK = ENV['SOW_BANK'] || File.expand_path('~/.sow')
-
-    #
-    # Where to store personal seeds. This default to `$SOW_BANK/silo`.
-    # 
-    #SOW_SILO = ENV['SOW_SILO'] || SOW_BANK + '/silo'
 
     #
     # Full path to sow banks.
@@ -391,6 +374,8 @@ module Sow
     #  silo_folder.glob('*').map{ |s| s.basename.to_s }
     #end
 
+  private
+
     #
     # Convert an URI into a suitable directory name for storing banks.
     #
@@ -401,8 +386,6 @@ module Sow
       #File.join(uri.host,path).split('/').reverse.join('.')
       path.split('/').reverse.join('.')
     end
-
-  private
 
     #
     # Interface to FileUtils or FileUtils::DryRun.

@@ -1,6 +1,6 @@
 module Sow
 
-  class Sowfile
+  class CopyScript
 
     # Templates are all rendered within the scope of a context object.
     # This limits access to information pertinent. All metadata
@@ -8,13 +8,15 @@ module Sow
     # to a Metadata instance.
     #
     class Context
+
+      # Remove all non-essential methods.
       instance_methods.each{ |m| undef_method(m) unless m.to_s =~ /^(__|object_id$|respond_to\?$)/ }
 
       #
       def initialize(sower)
-        @sower     = sower
-        @sowfile   = sower.sowfile
-        @metadata  = sower.metadata
+        @sower       = sower
+        @copy_script = sower.copy_script
+        @metadata    = sower.metadata
         #@metadata = metadata.data.rekey(&:to_s)
       end
 
@@ -34,10 +36,10 @@ module Sow
       def method_missing(s,*a,&b)
         if result = @metadata[s]
           result
-        elsif @sowfile.interactive?
+        elsif @copy_script.interactive?
           @metadata[s] = ask("#{s}: ")
         else
-          @metadata[s] = "__#{s}__"
+          @metadata[s] = "___#{s}___"
           #super(s,*a,&b)
         end
       end
@@ -59,7 +61,7 @@ module Sow
 
       #
       def inspect
-        "#<Sow::Sowfile::Context>"
+        "#<Sow::CopyScript::Context>"
       end
     end
 

@@ -1,14 +1,18 @@
-#require 'sow/sower'
-require 'ostruct'
-
 module Sow
 
+  # Command line interface.
   #
   module CLI
 
+    #
     # Entry point for commandline interface.
+    #
     def self.run(*argv)
       argv.shift if argv.first == '-'
+
+      # if not command given, then display help
+      # in future this might look for an "auto template"
+      # in Dir.pwd first
       argv << 'help' if argv.empty?
 
       cls, argv = parse(argv)
@@ -25,7 +29,9 @@ module Sow
       end
     end
 
-    # TODO: This could be used instead, but it's awfully complex.
+    #
+    # Parse arguments into command class and remaining arguments.
+    #
     def self.parse(argv)
       args   = argv.join(' ')
       lookup = registry.sort_by{ |cmd, cls| cmd.size }.reverse
@@ -39,12 +45,19 @@ module Sow
       return cls, argv
     end
 
+    #
+    # Load command subclasses.
+    #
+    def self.require_commands
+      Dir[File.dirname(__FILE__) + '/cli/*'].each do |file|
+        require file
+      end
+    end
+
   end
 
 end
 
-# load command subclasses
-Dir[File.dirname(__FILE__) + '/cli/*'].each do |file|
-  require file
-end
+# Load command subclasses.
+Sow::CLI.require_commands
 
