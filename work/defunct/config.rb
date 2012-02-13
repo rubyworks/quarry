@@ -1,4 +1,4 @@
-module Sow
+module Quarry
 
   #
   class Config
@@ -24,7 +24,7 @@ module Sow
       nil
     end
 
-    # Metadata gathered from the project's .sow configuration.
+    # Metadata gathered from the project's .quarry configuration.
     def metadata_proj
       @metadata_proj ||= (
         if file = file_metadata_proj
@@ -35,7 +35,7 @@ module Sow
       )
     end
 
-    # Metadata gathered from the user's sow configuration.
+    # Metadata gathered from the user's quarry configuration.
     def metadata_home
       @metadata_home ||= (
         if file = file_metadata_home
@@ -46,14 +46,14 @@ module Sow
       )
     end
 
-    # TODO: support .config/sow too ?
+    # TODO: support .config/quarry too ?
     def file_metadata_proj
-      @file_metadata_proj ||= Dir[File.join(@stage, '.sow/metadata{,.yml,.yaml}')].first
+      @file_metadata_proj ||= Dir[File.join(@stage, '.quarry/metadata{,.yml,.yaml}')].first
     end
 
     #
     def file_metadata_home
-      @file_metadata_home ||= Dir[File.expand_path('~/.config/sow/metadata{,.yml,.yaml}')].first
+      @file_metadata_home ||= Dir[File.expand_path('~/.config/quarry/metadata{,.yml,.yaml}')].first
     end
 
   end
