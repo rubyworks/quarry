@@ -1,0 +1,37 @@
+---
+name: quarry
+version: 0.1.0
+
+title: Quarry
+summary: Rock-solid file scaffolding
+created: 2009-10-17
+
+description:
+  Quarry is a flexible and straight-forward file scaffolding system.
+
+requirements:
+  - facets >=2.4.3
+  - finder
+  - detroit (build)
+  - ronn    (build)  # or md2man ?
+  - qed     (test)
+  - ae      (test)
+  - lemon   (test)
+
+resources:
+  home: https://rubyworks.github.com/quarry
+  code: https://github.com/rubyworks/quarry
+  bugs: https://github.com/rubyworks/quarry/issues
+  wiki: https://github.com/rubyworks/quarry/wiki
+  gem:  http://rubygems.org/gems/quarry
+
+repositories:
+  upstream: git://github.com/rubyworks/quarry.git
+
+authors:
+  - Trans <transfire@gmail.com>
+
+organization: rubyworks
+
+copyrights:
+  - Copyright (c) 2006 Rubyworks (BSD-2-Clause)

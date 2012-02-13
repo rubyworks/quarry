@@ -1,6 +1,6 @@
 ---
 source:
-- meta
+- ruby.yml
 authors:
 - name: Trans
   email: transfire@gmail.com
@@ -13,8 +13,8 @@ alternatives: []
 requirements:
 - name: facets
   version: ! '>=2.4.3'
-- name: plugin
-- name: dstroit
+- name: finder
+- name: detroit
   groups:
   - build
   development: true
@@ -26,25 +26,35 @@ requirements:
   groups:
   - test
   development: true
+- name: ae
+  groups:
+  - test
+  development: true
 - name: lemon
   groups:
   - test
   development: true
 dependencies: []
 conflicts: []
-repositories: []
+repositories:
+- uri: git://github.com/rubyworks/quarry.git
+  scm: git
+  name: upstream
 resources:
-  home: http://rubyworks.github.com/sow
-  gem: http://rubygems.org/gems/sow
-  repo: git://github.com/wubyworks/sow.git
+  home: https://rubyworks.github.com/quarry
+  code: https://github.com/rubyworks/quarry
+  bugs: https://github.com/rubyworks/quarry/issues
+  wiki: https://github.com/rubyworks/quarry/wiki
+  gem: http://rubygems.org/gems/quarry
 extra: {}
 load_path:
 - lib
 revision: 0
-summary: Project file generation system.
-title: Sow
-version: 1.0.0
-name: sow
-description: Sow is a flexible and straightforward project file generation system.
+name: quarry
+title: Quarry
+version: 0.1.0
+summary: Rock-solid file scaffolding
+created: '2009-10-17'
+description: Quarry is a flexible and straight-forward file scaffolding system.
 organization: rubyworks
-date: '2012-02-10'
+date: '2012-02-13'

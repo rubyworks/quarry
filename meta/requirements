@@ -1,8 +1,0 @@
----
-- facets >=2.4.3
-- plugin
-- dstroit (build)
-- ronn    (build)
-- qed     (test)
-- lemon   (test)
-

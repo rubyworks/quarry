@@ -1,76 +1,35 @@
 ---
-email:
-  service : Email
-  file    : ~
-  subject : ~
-  mailto  : ruby-talk@ruby-lang.org
-  active  : true
-
-box:
-  service  : Box
-  types    : [gem]
-  active   : true
-
-grancher:
-  active: true
 
 qedoc:
-  service  : Custom
-  cycle    : main
-  document : |
-    system "qedoc -t 'Sow' -o site/docs/qed qed/**/*.rdoc"
-
-rdoc:
-  service  : RDoc
-  template : newfish
-  include  : [ lib/sow/**/*.rb, lib/sow.rb, README, LICENSE, HISTORY ]
-  main     : ~
-  extra    : ~
-  output   : site/docs/api
-  active   : true
-
-ridoc:
-  service: RIDoc
-  include: [ lib/sow/**/*.rb, lib/sow.rb ]
-  output : ri
-  active : true
+  files: qed/**/*.md
+  title: Qaurry Demonstrations
+  output:
+    - DEMO.md
+    #- web/demo.html
 
 dnote:
-  service: DNote
-  loadpath : ~
-  labels   : ~
-  output   : ~
-  format   : ~
-  active   : true
+  labels: ~
+  output: log/notes.html
 
-stats:
-  service  : Stats
-  title    : ~
-  loadpath : ~
-  exclude  : ~
-  output   : ~
-  active   : true
-
-syntax:
-  service  : Syntax
-  loadpath : ~
-  exclude  : ~
-  active   : false
-
-testrb:
-  service  : testrb
-  tests    : ~
-  exclude  : ~
-  loadpath : ~
-  requires : ~
-  live     : false   
-  active   : false
+locat:
+  output: log/locat.html
 
 vclog:
-  service  : VClog
-  format   : html   # xml, txt
-  layout   : rel    # gnu
-  typed    : false
-  output   : ~
-  active   : false
+  service: VClog
+  output:
+    - log/changes.html
+    - log/history.html
+
+github:
+  gh_pages: web
+
+gem:
+  active: true
+
+email:
+  file    : ~
+  subject : ~
+  mailto  :
+    - ruby-talk@ruby-lang.org
+    - rubyworks-mailinglist@googlegroups.com
 
