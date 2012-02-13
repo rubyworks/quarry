@@ -8,19 +8,19 @@ module Sow
   class Seed
 
     # Basenames of files to ignore in template files.
-    IGNORE = %w{. .. .svn}
+    IGNORE = %w{. .. .svn _}
 
     # Files to remove in template files.
-    REMOVE = %w{Sowfile _Sowfile Sowfile.ronn _Sofile.ronn}
+    #REMOVE = [CTRL]
 
     #
-    SOWFILE_PATTERN = '{_,}Sowfile'
+    MARKER = '.seed'
 
     #
-    SOWRONN_PATTERN = '{_,}Sowfile.ronn'
+    COPY_SCRIPT = "#{MARKER}/copy.rb"
 
     #
-    SOWCTRL_PATTERN = '../{_,}Sowctrl'
+    README_FILE = "#{MARKER}/README{,.*}"
 
     # Find a seed by +name+.
     def self.find(name)
@@ -38,95 +38,106 @@ module Sow
     #  new(path)
     #end
 
-    # New Seed.
     #
-    # ## ARGUMENTS
+    # Initialize new seed.
     #
-    #   * `name`:
-    #     Name of the seed (or best prefix match).
+    # @param [String] path
+    #   Location of the seed in the file system.
     #
     def initialize(path, options={})
       @path = Pathname.new(path)
       @type = options[:type].to_s
 
-      @sowfile = Dir[File.join(@path,SOWFILE_PATTERN)].first 
-      @sowctrl = Dir[File.join(@path,SOWCTRL_PATTERN)].first
-      @sowronn = Dir[File.join(@path,SOWRONN_PATTERN)].first 
+      @copyfile = Dir[File.join(@path, COPY_SCRIPT)].first
+      @readme   = Dir[File.join(@path, README_FILE)].first  
 
-      raise "not a seed - #{name}" unless @sowfile
+      raise "not a seed - #{name}" unless (@path + MARKER).exist?
     end
 
     #
     attr :type
 
-    # Name of seed.
+    #
+    # The name of a seed is essentially the directory in which
+    # it is store, but modified to be more utlitilitarian to the
+    # end user when specifying a seed on the command line.
+    #
+    # @return [String] Name of seed.
+    #
     def name
       @name ||= (
         rpath = path.to_s.sub(/^#{location}/, '')
-        parts = rpath.split('/')  
-        parts.reverse.join('.').chomp('.')
+        rpath = rpath[1..-1] if rpath.start_with?('/')
+
+        return rpath
+
+        i = rpath.index('/')
+        if i
+          base = rpath.to_s[0...i]
+          name = rpath.to_s[i+1..-1]
+          "#{name}@#{base}"
+        else
+          rpath
+        end
+        #rpath = path.to_s.sub(/^#{location}/, '')
+        #parts = rpath.split('/')  
+        #parts.reverse.join('.').chomp('.')
       )
     end
 
+    #
+    # The type of seed determines where it is located.
     #
     def location
       case type
       when 'bank'
         Manager.bank_folder
-      when 'silo'
-        Manager.silo_folder
+      #when 'silo'
+      #  Manager.silo_folder
       when 'work'  # should be output dir ?
         Dir.pwd
       when 'plugin'
-        path.to_s[0..path.to_s.rindex('/sow/')+4]
+        path.to_s[0..path.to_s.rindex('/sow')+4]
       else
-        path.to_s[0..path.to_s.rindex('/sow/')+4]
+        path.to_s[0..path.to_s.rindex('/sow')+4]
       end
     end
 
-    # Seed directory.
+    #
+    # Location of seed.
+    #
     def path
       @path
     end
 
     #
+    #
+    #
     alias_method :directory, :path
 
-    # Full file system path to the seed's Sowfile.
     #
-    #   `sowfile() -> String`
+    # Full file system path to the seed's copy script.
     #
-    def sowfile
-      @sowfile
+    # @return [String] Full path to copy file.
+    #
+    def copyfile
+      @copyfile
     end
 
     #
-    def sowctrl
-      @sowctrl
-    end
-
-    #
-    def sowronn
-      @sowronn
-    end
-
+    # Read the `sowfile.rb` script.
     #
     def script
       @script ||= (
-        s = ""
-        if sowctrl
-          s << File.read(sowctrl)
-          s << "\n"
-        end
-        s << File.read(sowfile)
-        s.strip!
+        s = File.read(copyfile).strip
         s.empty? ? "copy '**/*'" : s   # don't really need this
       )
     end
 
+    #
     # Returns the list of seed files, less files to ignore.
     #
-    #   `files() -> Array`
+    # @return [Array] List of files.
     #
     def files
       @files ||= (
@@ -135,7 +146,7 @@ module Sow
           next if IGNORE.include?(File.basename(path))
           files << path.sub(directory.to_s+'/','')
         end
-        files - REMOVE
+        files.reject{ |f| File.match?(COPYRB_PATTERN) || File.match?(README_PATTERN) }
       )
     end
 
@@ -145,29 +156,19 @@ module Sow
     #  seeder.call
     #end
 
+    #
+    # Contents of the help text at top of Sowfile, if any.
+    #
     def help
-      if sowronn
-        File.read(sowronn)
+      if readme
+        File.read(readme).strip
       else
-        "No documentation."
+        'No documentation.'
       end
-      #docs = false
-      #text = ""
-      #File.readlines(sowfile).each do |line|
-      #  if docs
-      #    break if line !~ /^\#/
-      #    text << line
-      #  else
-      #    next  if line =~ /^\#\!/
-      #    next  if line =~ /^\s*$/
-      #    break if line !~ /^\#/
-      #    text << line
-      #    docs = true
-      #  end
-      #end
-      #text
     end
 
+    #
+    # Same as seed name.
     #
     def to_s
       name.to_s
@@ -176,4 +177,3 @@ module Sow
   end
 
 end
-

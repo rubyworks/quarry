@@ -2,7 +2,8 @@ $LOAD_PATH.unshift('lib')
 
 require 'sow'
 require 'shellwords'
-require "stringio"
+require 'stringio'
+require 'fileutils'
 
 SAMPLES = File.dirname(File.dirname(__FILE__)) + '/samples'
 TEMPDIR = 'tmp/qed/system'
@@ -23,7 +24,7 @@ def `(command)    # comment here b/c of dumb syntax highligters`
   @out
 end
 
-Before :document do
+Before :demo do
   FileUtils.rm_rf('tmp/qed') if File.exist?('tmp/qed')
   FileUtils.mkdir_p(File.dirname(TEMPDIR))
   FileUtils.cp_r(SAMPLES, TEMPDIR)

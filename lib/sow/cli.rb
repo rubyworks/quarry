@@ -20,6 +20,7 @@ module Sow
           cls.run(*argv)
         rescue => error
           $stderr << error.to_s + "\n"
+          $stderr.puts error.backtrace
         end
       end
     end

@@ -6,12 +6,14 @@ module Sow
     # This limits access to information pertinent. All metadata
     # can be accessed by name, as this this object delegate missing methods
     # to a Metadata instance.
+    #
     class Context
       instance_methods.each{ |m| undef_method(m) unless m.to_s =~ /^(__|object_id$|respond_to\?$)/ }
 
       #
       def initialize(sower)
         @sower     = sower
+        @sowfile   = sower.sowfile
         @metadata  = sower.metadata
         #@metadata = metadata.data.rekey(&:to_s)
       end
@@ -31,19 +33,18 @@ module Sow
       #
       def method_missing(s,*a,&b)
         if result = @metadata[s]
-          return result
-        end
-        #if @metadata.key?(s.to_s)
-        #  @metadata[s.to_s]
-        #else
-          "___#{s}___"
+          result
+        elsif @sowfile.interactive?
+          @metadata[s] = ask("#{s}: ")
+        else
+          @metadata[s] = "__#{s}__"
           #super(s,*a,&b)
-        #end
+        end
       end
 
       #
       #def method_missing(s, *a, &b)
-      #  @metadata[s.to_s] || "___#{s}___"  # "__'#{s}'__"
+      #  @metadata[s.to_s] || "__#{s}__"  # "__'#{s}'__"
       #end
 
       # FIXME: include resources
@@ -58,7 +59,7 @@ module Sow
 
       #
       def inspect
-        "#<Sow::Sower::Context>"
+        "#<Sow::Sowfile::Context>"
       end
     end
 

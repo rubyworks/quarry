@@ -32,11 +32,18 @@ module Sow
 
     #
     def initialize_seeds(seeds)
-      seeds.map do |(name, args, data)|
-        #name, pick = parse_index(index)
-        seed = Sow.find_seed(name)
+      seeds.map do |(uri, args, data)|
+        uri  = Sow.fetch_seed(uri) if url?(uri)
+        seed = Sow.find_seed(uri)
         [seed, args, data]
       end
+    end
+
+    #
+    #
+    #
+    def url?(uri)
+      /\w+\:\/\// =~ uri
     end
 
     # sow! -- Sow those seeds! 

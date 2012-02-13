@@ -1,8 +1,0 @@
-#!/usr/bin/env ruby
-
-# Create a README file.
-
-utilize 'gemdo'
-
-copy '*', render=>'erb'
-

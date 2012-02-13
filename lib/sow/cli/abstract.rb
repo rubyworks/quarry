@@ -39,7 +39,7 @@ module CLI
 
     #
     def initialize()
-      @options = OpenStruct.new
+      @options = {}
     end
 
     #

@@ -9,12 +9,12 @@ module Sow
       instance_methods.each{ |m| undef_method(m) unless m.to_s =~ /^(__|object_id$)/ }
 
       #
-      def initialize(sower)
-        @sower = sower
-        @resources = sower.resources
+      def initialize(sowfile)
+        @sowfile = sowfile
+        @resources = sowfile.resources
         @data  = {}
         #@sources = [user_settings, work_settings, seed_settings]
-        #@data  = sower.settings
+        #@data  = sowfile.settings
       end
 
       #
@@ -24,11 +24,12 @@ module Sow
 
       # Get metadata entry.
       def [](name)
+        name = name.to_s
         @resources.each do |resource|
           result = resource[name]
           return result if result
         end
-        @data[name.to_s]
+        @data[name]
       end
 
       # Set metadata entry.

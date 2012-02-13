@@ -20,16 +20,17 @@ module Sow::CLI
     #
     def opts
       OptionParser.new{ |o|
-        o.banner = "Usage: sow <seed>"
+        o.banner = "Usage: sow <seed> [- <seed> ...]"
         o.separator "Sow a seed."
-        o.on('--output', '-o PATH'){ |path| options.output = path }
-        o.on('--write' , '-w'){ options.mode = :write }
-        o.on('--prompt', '-p'){ options.mode = :prompt }
-        o.on('--skip'  , '-s'){ options.mode = :skip }
-        o.on('--force' , '-f'){ $FORCE  = true }
+        o.on('-o', '--output PATH'){ |path| options[:output] = path }
+        o.on('-w', '--write'      ){ options[:mode] = :write }
+        o.on('-p', '--prompt'     ){ options[:mode] = :prompt }
+        o.on('-s', '--skip'       ){ options[:mode] = :skip }
+        o.on('-i', '--interactive'){ options[:interactive] = true }
+        o.on('-f', '--force' ){ $FORCE  = true }
         o.on('--dryrun'      ){ $DRYRUN = true }
         o.on('--debug'       ){ $DEBUG  = true }
-        o.on('--help', '-h'  ){ puts o; exit }
+        o.on('-h', '--help'  ){ puts o; exit }
       }
     end
 
@@ -46,8 +47,8 @@ module Sow::CLI
       end
       groups.map do |args|
         settings, arguments = parse_settings(args)
-        name = arguments.shift
-        [name, arguments, settings]
+        uri = arguments.shift
+        [uri, arguments, settings]
       end
     end
 

@@ -7,7 +7,7 @@
 # in the area and reduce potential name conflicts.
 module Sow
 
-  require 'sow/meta/data'
+  require 'sow/version'
   require 'sow/manager'
   #require 'sow/sower'
 
@@ -22,7 +22,7 @@ module Sow
     @manager ||= Manager.new
   end
 
-  # Returns a Seed mathcing +name+.
+  # Returns a Seed matching +name+.
   def self.find_seed(name)
     manager.find_seed(name)
   end
@@ -34,16 +34,16 @@ module Sow
   end
 
   # Print a list of installed seed banks.
-  def self.bank_list
-    banks = manager.banks
-    banks.each do |bank|
-      puts "  * #{bank}"
-    end
-  end
+  #def self.bank_list
+  #  banks = manager.banks
+  #  banks.each do |bank|
+  #    puts "  * #{bank}"
+  #  end
+  #end
 
-  # Install a new seed bank.
-  def self.bank_install(*arguments)
-    manager.install(*arguments)
+  # Fetch seed.
+  def self.fetch_seed(uri, options={})
+    manager.fetch_seed(uri, options)
   end
 
   # Uninstall a seed bank.

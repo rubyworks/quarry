@@ -51,7 +51,7 @@ For example, given an empty temporary directory 'foo' we can generate
 the demo seed.
 
   Dir.chdir('tmp/qed/foo') {
-    `sow gen demo name=CoolCat`
+    `sow seed demo name=CoolCat`
   }
 
 We will find the demo seed's files present.
@@ -70,7 +70,7 @@ skip any conflicting files via the --skip option, leaving the original
 intact.
 
   Dir.chdir('tmp/qed/foo') {
-    `sow gen demo name=CoolCat --skip`
+    `sow seed demo name=CoolCat --skip`
   }
 
 We can verify,
@@ -82,7 +82,7 @@ Or we can instruct sow to automatically overwrite any conflicting files
 via the --write option.
 
   Dir.chdir('tmp/qed/foo') {
-    `sow gen demo name=CoolCat --write`
+    `sow seed demo name=CoolCat --write`
   }
 
 We can verify,

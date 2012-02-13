@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+argument :name, :default => 'anonymous'
+
+copy '*', :render=>'erb'
+
