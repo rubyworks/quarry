@@ -5,7 +5,7 @@ begin
 
   module Quarry
 
-    class CopyScript
+    class Script
 
       # Access to POM project object. Thus is useful for scaffoling
       # Ruby project's that conform to POM specs. Keep in mind that

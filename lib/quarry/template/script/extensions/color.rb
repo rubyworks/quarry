@@ -5,7 +5,7 @@ require 'color'
 
 module Quarry
 
-  class CopyScript
+  class Script
 
     #class Context
 

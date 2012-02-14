@@ -10,8 +10,12 @@ module Quarry::CLI
 
     #
     def call(argv)
-      name = argv.first
-      manager.update(name)
+      if trial?
+        $stderr.puts("Dryrun: cd #{path}; scm #{pull}")
+      else
+        name = argv.first
+        manager.update(name)
+      end
     end
 
     #

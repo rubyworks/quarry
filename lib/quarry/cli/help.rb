@@ -9,7 +9,7 @@ module Quarry::CLI
     #
     def call(argv)
       if name = argv.first
-        Quarry.help(name)
+        puts Quarry.help(name)
       else
         puts "quarry <name> ...                 # quarry a mine"
         puts "quarry mine <name> ...            # quarry a mine (same as `quarry <name>`)"

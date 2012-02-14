@@ -6,70 +6,84 @@
 #
 module Quarry
 
-  require 'quarry/version'
-  require 'quarry/manager'
+  require 'erb'
+  #require 'malt'
+  require 'fileutils'
+  require 'tmpdir'
+  require 'uri'
 
+  require 'finder'
+
+  require 'quarry/version'
+  require 'quarry/error'
+  require 'quarry/cli'
+  require 'quarry/config'
+  require 'quarry/copier'
+  require 'quarry/generator'
+  require 'quarry/template'
+  require 'quarry/template/management'
+  require 'quarry/template/readme'
+  require 'quarry/template/script'
+  require 'quarry/template/script/context'
+  require 'quarry/template/script/metadata'
+  require 'quarry/template/script/commit'  # transaction?
+
+  #
   # Run quarry command line interface.
+  #
   def self.cli(*argv)
-    require 'quarry/cli'
     CLI.run(*argv)
   end
 
-  # Returns a cached instance of mine Manager.
-  def self.manager
-    @manager ||= Manager.new
-  end
-
+  #
   # Returns a Seed matching +name+.
+  #
   def self.find(name)
-    manager.find(name)
+    Template.find(name)
   end
 
+  #
   # Initialize a directory for use with Quarry.
+  #
   # TODO: Do we really need this?
+  #
   def self.init(output)
-    FileUtils.mkdir_p(File.join(output, '.quarry'))
-  end
-
-  # Print a list of installed mine banks.
-  #def self.bank_list
-  #  banks = manager.banks
-  #  banks.each do |bank|
-  #    puts "  * #{bank}"
-  #  end
-  #end
-
-  # Fetch ore from URL.
-  def self.fetch(uri, options={})
-    manager.fetch(uri, options)
-  end
-
-  #
-  # Update scm based mine(s).
-  #
-  def self.update(name=nil)
-    manager.update(name)
+    FileUtils.mkdir_p(File.join(output, '.0re'))
   end
 
   #
   # Print a list of all available ore.
   #
   def self.list
-    manager.list
+    Template.list
+  end
+
+  #
+  # Fetch template from remote location.
+  #
+  def self.fetch(uri, options={})
+    Template.fetch(uri, options)
+  end
+
+  #
+  # Update scm based mine(s).
+  #
+  def self.update(name=nil)
+    Template.update(name)
   end
 
   #
   # Save a directory as a mine to a user's personal mine bank, i.e. "silo".
   #
   def self.save(name, path=nil)
-    manager.save(name, path)
+    Template.save(name, path)
   end
 
   #
   # Remove mine.
   #
   def self.remove(name)
-    manager.remove(name)
+    Template.remove(name)
   end
 
   #
@@ -96,10 +110,10 @@ module Quarry
   end
 
   #
+  #
+  #
   def self.help(name)
-    puts
-    puts manager.help(name)
-    puts
+    Template.help(name)
   end
 
 end

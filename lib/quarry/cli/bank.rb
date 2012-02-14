@@ -18,7 +18,14 @@ module Quarry::CLI
 
       abort opts.to_s if argv.shift
 
-      manager.clone(uri, :name=>name)
+      if trial?
+        #$stderr.puts("  mkdir -p #{dir}")
+        #$stderr.puts("  cd #{dir}")
+        #$stderr.puts("  #{cmd}")
+        $stderr.puts "Dryrun: scm clone #{uri}"
+      else
+        manager.clone(uri, :name=>name)
+      end
     end
 
     #

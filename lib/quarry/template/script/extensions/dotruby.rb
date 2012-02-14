@@ -1,6 +1,6 @@
 module Quarry
 
-  class CopyScript
+  class Script
 
     #
     # Access to .ruby project metadata. This is useful for scaffoling
@@ -23,7 +23,7 @@ module Quarry
     # respond to #[].
     #
     def resources
-      [mine_settings, work_settings, dotruby, user_settings]
+      [template_settings, work_settings, dotruby, user_settings]
     end
 
     class Context

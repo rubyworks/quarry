@@ -1,15 +1,13 @@
 require 'tmpdir'
 require 'quarry/core_ext'
-require 'quarry/manager'
-require 'quarry/mine'
-require 'quarry/copy_script'
+require 'quarry/template'
 
 module Quarry
 
-  # The Miner class is used to <i>mine ore</i>, i.e. render a set files
-  # from one or more *mines* to a destination.
+  # You think of the Generator class as miner(s) working out the ore, i.e. it
+  # renders each specified template to the desinated destination.
   #
-  class Miner
+  class Generator
 
     #
     # Initialize new Miner instance.
@@ -33,11 +31,13 @@ module Quarry
     end
 
     #
+    #
+    #
     def initialize_operations(operations)
       operations.map do |(uri, args, data)|
-        uri = Quarry.fetch(uri) if url?(uri)
-        ore = Quarry.find(uri)
-        [ore, args, data]
+        uri      = Template.fetch(uri) if url?(uri)
+        template = Template.find(uri)
+        [template, args, data]
       end
     end
 
@@ -53,7 +53,7 @@ module Quarry
     # staging ground for the operations and then run copy script to render
     # files to the destination.
     #
-    def quarry!
+    def run!
       report_startup
       setup_stage
       stage_operations
@@ -66,8 +66,8 @@ module Quarry
     # Collect CopyScripts for operations.
     #
     def stage_operations
-      operations.each do |(ore, args, data)|
-        CopyScript.run(ore, args, data, options)
+      operations.each do |(tmpl, args, data)|
+        Template::Script.run(tmpl, args, data, options)
       end
     end
 
@@ -232,14 +232,7 @@ module Quarry
     # Find a mine location by +name+.
     #
     def find(name)
-      manager.find(name)
-    end
-
-    #
-    # Reterun an instance of a mine manager.
-    #
-    def manager
-      @manager ||= Manager.new
+      Template.find(name)
     end
 
   end

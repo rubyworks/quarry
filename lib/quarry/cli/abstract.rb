@@ -1,5 +1,4 @@
 require 'optparse'
-require 'quarry/manager'
 
 module Quarry
   module CLI

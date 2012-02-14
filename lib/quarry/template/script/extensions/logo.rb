@@ -6,7 +6,7 @@
 
 module Quarry
 
-  class CopyScript
+  class Script
 
     # Fallback logo file (if all else fails).
     LOGO = "assets/logo.png"

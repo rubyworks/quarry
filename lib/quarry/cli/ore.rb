@@ -1,20 +1,19 @@
 require 'quarry/cli/abstract'
-require 'quarry/miner'
 
 module Quarry::CLI
 
   # Quarry ore(s). This is the deafult commandline interface.
   #
-  class Mine < Abstract
+  class Ore < Abstract
 
     command ''
-    command 'mine'
+    command 'ore'
 
     #
     def call(argv)
-      mines = parse_arguments(argv)
-      miner = Quarry::Miner.new(mines, options)
-      miner.quarry!
+      templates = parse_arguments(argv)
+      generator = Quarry::Generator.new(templates, options)
+      generator.run!
     end
 
     #
