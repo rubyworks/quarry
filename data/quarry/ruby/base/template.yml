@@ -1,0 +1,48 @@
+---
+README: |
+  # quarry-basic-ruby(1) - create a basic Ruby project layout
+
+  ## SYNOPSIS
+
+    `sow basic.ruby <name>`
+
+  ## DESCRIPTION
+
+  Traditional Ruby project scaffolding. This provides the common structure
+  for a standard Ruby project. This seed takes a single argument for the
+  project's name. The name must a single alphanumeric word --what is often
+  called a "unixname". If the name is not given the basename of the destination
+  directory will be used.
+
+  ## COPYRIGHT
+
+  Copyright (c) 2010 Thomas Sawyer
+
+  ## SEE ALSO
+
+  quarry(1)
+
+script: |
+  #utilize 'pom'
+
+  #ensure_empty('PROFILE', 'VERSION')
+
+  #argument :name, :default => File.basename(output).chomp('/')
+
+  data.name ||= File.basename(output).chomp('/')
+
+  #let :name, destname
+
+  raise "Name is required."         unless data.name
+  raise "Name must be single word." unless data.name =~ /\w+/
+
+  #metadata.name    = name  # TODO
+  data.title   = data.title   || data.name.capitalize
+  data.contact = data.contact || ENV['EMAIL']
+
+  copy "**/*", :render=>'erb'
+  copy "bin/*", :mode=>0744
+
+  # TODO: Should we protect certain files from ever being overwrite?
+  #skip('PROFILE', 'VERSION')
+
