@@ -13,12 +13,23 @@ module Quarry
     #   Location of the template in the file system.
     #
     def initialize(path, options={})
-      @path = Pathname.new(path)
+      @directory = Directory.new(self, path)
+
       @type = options[:type].to_s
 
-      @config = Config.new(self)
-
       #raise "not a template - #{name}" unless @config_file
+    end
+
+    #
+    attr :directory
+
+    #
+    # Location of template as Pathname.
+    #
+    # @return [Pathname] Template path.
+    #
+    def path
+      @directory.path
     end
 
     #
@@ -27,22 +38,38 @@ module Quarry
     attr :type
 
     #
-    # Location of template as Pathname.
+    # Template configuration.
     #
-    # @return [Pathname] Template path.
-    #
-    attr :path
-
-    #
-    #
-    #
-    attr :config
+    def config
+      @config ||= Config.new(self)
+    end
 
     #
     # @deprecated Use `config.file` instead.
     #
     def config_file
-      @config.file
+      config.file
+    end
+
+    #
+    # Copy script. Defaults to `copy all`.
+    #
+    def script
+      @script || = Script.new(self)
+    end
+
+    #
+    #
+    #
+    def readme
+      @readme ||= Readme.new(self)
+    end
+
+    #
+    # Contents of the README file.
+    #
+    def help(lang='en')
+      readme.to_s(lang)
     end
 
     #
@@ -52,14 +79,26 @@ module Quarry
     # @return [Array] List of scaffolding files.
     #
     def files
-      @files ||= (
-        files = []
-        Dir.recurse(directory.to_s) do |path|
-          next if IGNORE_FILES.include?(File.basename(path))
-          files << path.sub(directory.to_s+'/','')
-        end
-        files.reject{ |f| File.match?(CONFIG_FILE) }
-      )
+      directory.files
+
+      #@files ||= (
+      #  files = []
+      #  Dir.recurse(directory.to_s) do |path|
+      #    next if IGNORE_FILES.include?(File.basename(path))
+      #    files << path.sub(directory.to_s+'/','')
+      #  end
+      #  files.reject{ |f| File.match?(CONFIG_FILE) }
+      #)
+    end
+
+    #
+    # Returns the list of template directories, less those to be ignored
+    # for scaffolding.
+    #
+    # @return [Array] List of scaffolding directories.
+    #
+    def directories
+      directory.directoires
     end
 
     #
@@ -108,35 +147,11 @@ module Quarry
       end
     end
 
-    #
-    # Script section of config file. Defaults to `copy all`.
-    #
-    def script
-      #@script ||= (
-        text = @config['script'] || 'copy all'  # TODO: do we even need the copy all ?
-      #  Script.new(text)
-      #)
-    end
-
     # Do it!
     #def quarry!(selection, arguments, settings, options)
     #  Seeder.new(self, selection, arguments, settings, options)
     #  mineer.call
     #end
-
-    #
-    #
-    #
-    def readme(lang='en')
-      config.readme(lang)
-    end
-
-    #
-    # Contents of the README file.
-    #
-    def help(lang='en')
-      readme(lang).to_s
-    end
 
     #
     # Same as template name.

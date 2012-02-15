@@ -67,7 +67,8 @@ module Quarry
     #
     def stage_operations
       operations.each do |(tmpl, args, data)|
-        Template::Script.run(tmpl, args, data, options)
+        #Template::Script.run(tmpl, args, data, options)
+        templ.script.setup(options).call(args, data)
       end
     end
 

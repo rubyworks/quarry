@@ -17,16 +17,15 @@ module Quarry
   end
 
   class ArgumentError < ::ArgumentError
+    include Error
   end
 
   #
   class MissingTemplate < ArgumentError
-    include Error
   end
 
   #
   class DuplicateTemplate < ArgumentError
-    include Error
   end
 
 end

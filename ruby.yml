@@ -12,11 +12,11 @@ description:
 requirements:
   - facets >=2.4.3
   - finder
+  - scm
   - detroit (build)
   - ronn    (build)  # or md2man ?
-  - qed     (test)
-  - ae      (test)
   - lemon   (test)
+  - ae      (test)
 
 resources:
   home: https://rubyworks.github.com/quarry

@@ -2,10 +2,34 @@ module Quarry
 
   class Template
 
-    # The Template::Management module extends the Template module
-    # providing it class methods for wokring with templates.
+    # The Template::Management module extends the Template class
+    # providing it class methods for finding templates.
+    #
+    # IMPORTANT! To have access to project templates, the present
+    # working directory must be the project/destination directory
+    # or `Template.output = path` must be set as such **prior** to
+    # using these methods.
     #
     module Management
+
+      #
+      # @todo: What name sould this be?
+      #
+      LOCAL_DIRECTORY = "mine"
+
+      #
+      #
+      #
+      def output
+        @output ||= Pathname.new(Dir.pwd)
+      end
+ 
+      #
+      #
+      #
+      def output=(directory)
+        @output = Pathname.new(File.expand_path(directory))
+      end
 
       #def self.load(name)
       #  path = find(name)
@@ -43,7 +67,7 @@ module Quarry
       #
       # Find template given it's name, or first unique portion of it's name.
       #
-      # @return [Template::Directory]
+      # @return [Template]
       #
       # @raise [MissingTemplate]
       #
@@ -167,12 +191,11 @@ module Quarry
       # Collect templates from present working project.
       #
       def templates_from_project
-        # project directory  (TODO: locate project root ?)
-        dirs = Quarry.work_folder.glob("quarry/*/")
-        dirs = dirs.map{ |d| d.expand_path }  # clears off the trialing '/'
+        list = []
+        dirs = Dir.glob(File.join(output, LOCAL_DIRECTORY, '**', TEMPLATE_DIRECTORY))
+        dirs = dirs.uniq.map{ |d| File.dirname(d) }
         dirs.each do |dir|
-          ore = Template::Directory.new(dir, :type=>'work')
-          list << ore
+          list << Template.new(dir, :project)
         end
       end
 
@@ -196,11 +219,10 @@ module Quarry
       #
       def templates_from_remotes
         list = []
-        dirs = Quarry.bank_folder.glob("*/")
-        dirs = dirs.map{ |d| d.expand_path }  # clears off the trialing '/'
+        dirs = Dir.glob(File.join(QUARRY_BANK, '**', TEMPLATE_DIRECTORY))
+        dirs = dirs.uniq.map{ |d| File.dirname(d) }
         dirs.each do |dir|
-          ore = Template.new(dir, :type=>'bank')
-          list << ore
+          list << Template.new(dir, :bank)
         end
         list
       end
@@ -210,11 +232,10 @@ module Quarry
       #
       def templates_from_plugins
         list = []
-        dirs = ::Find.data_path("quarry/**/#{CONFIG_FILE}")
+        dirs = ::Find.data_path(File.join('quarry/templates', '**', TEMPLATE_DIRECTORY))
         dirs = dirs.uniq.map{ |d| File.dirname(d) }
         dirs.each do |dir|
-          ore = Template.new(dir, :type=>'plugin')
-          list << ore
+          list << Template.new(dir, :plugin)
         end
         list
       end

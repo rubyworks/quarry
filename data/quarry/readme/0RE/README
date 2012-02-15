@@ -1,0 +1,24 @@
+quarry-readme(1) - generate starter README file
+===============================================
+
+## SYNOPSIS
+
+  `quarry readme`
+
+## DESCRIPTION
+
+Generate a starter README file for a project. This seed utilizes
+project metadata, if available, to fill out the README more
+extensively.
+
+The README can be in either RDoc, Markdown or Textitle format,
+depending on the project's or user's `markup` config setting.
+
+## COPYRIGHT
+
+Copyright (c) 2010 Rubyworks
+
+## SEE ALSO
+
+quarry(1)
+

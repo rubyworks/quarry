@@ -57,6 +57,11 @@ module Quarry
           @resources.reverse.inject({}){ |h,r| h.merge!(r.to_h) }.merge!(@data)
         end
 
+        #
+        def to_binding
+          binding
+        end
+
       end
 
     end

@@ -22,6 +22,7 @@ module Quarry
   require 'quarry/generator'
   require 'quarry/template'
   require 'quarry/template/management'
+  require 'quarry/template/directory'
   require 'quarry/template/readme'
   require 'quarry/template/script'
   require 'quarry/template/script/context'
@@ -36,7 +37,7 @@ module Quarry
   end
 
   #
-  # Returns a Seed matching +name+.
+  # Returns a template matching +name+.
   #
   def self.find(name)
     Template.find(name)

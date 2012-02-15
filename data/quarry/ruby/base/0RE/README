@@ -1,0 +1,22 @@
+quarry-basic-ruby(1) - create a basic Ruby project layout
+=========================================================
+
+## SYNOPSIS
+
+  `sow basic.ruby <name>`
+
+## DESCRIPTION
+
+Traditional Ruby project scaffolding. This provides the common structure
+for a standard Ruby project. This seed takes a single argument for the
+project's name. The name must a single alphanumeric word --what is often
+called a "unixname". If the name is not given the basename of the destination
+directory will be used.
+
+## COPYRIGHT
+
+Copyright (c) 2010 Thomas Sawyer
+
+## SEE ALSO
+
+quarry(1)

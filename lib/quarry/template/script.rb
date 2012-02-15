@@ -6,12 +6,14 @@ module Quarry
     #
     class Script
 
-      #
-      #
-      #
-      def self.run(template, arguments, settings, options)
-        new(template, options).call(arguments, settings)
-      end
+      GLOB = TEMPLATE_DIRECTORY + "/copy.rb"
+
+      ##
+      ##
+      ##
+      #def self.run(template, arguments, settings, options)
+      #  new(template).call(options, arguments, settings)
+      #end
 
       #
       # Initialize CopyScript.
@@ -19,13 +21,14 @@ module Quarry
       # @param [Template] template
       #   Template the copy script is going to processes.
       #
-      def initialize(template, options)
+      def initialize(template)
         @template = template
-        @options  = options
-
-        @output   = Pathname.new(options[:output] || Dir.pwd)
-        #@work    = Pathname.new(Dir.pwd)
-        @stage    = options[:stage]
+        @file     = Dir.glob(template.path + GLOB).first
+        if @file
+          @script = File.read(@file.to_s)
+        else
+          @script = 'copy all'
+        end
 
         reset
       end
@@ -44,12 +47,31 @@ module Quarry
       # for missing metadata.
       #
       def interactive?
-        @options[:interactive]
+        @interact
+      end
+
+      # TODO: Maybe there should ba a Script::Runner class instead ?
+
+      # Setup generation options for executing the script.
+      #
+      # @param [Hash] config
+      #   Configuration options for generation.
+      #
+      # @return [self]
+      #
+      def setup(options)
+        @output   = Pathname.new(options[:output] || Dir.pwd)
+        @stage    = options[:stage]
+        #@work    = Pathname.new(Dir.pwd)
+        @interact = options[:interactive]
+
+        reset
+
+        self
       end
 
       #
       # Parse copy file.
-      #
       # @param [Array] arguments
       #   Templates can accept an Array of *arguments* which can refine their 
       #   behvior.
@@ -116,11 +138,6 @@ module Quarry
       def name
         template.name
       end
-
-      #
-      #def selection
-      #  @selection
-      #end
 
       #
       # Ordered arguments, from the command line.
@@ -202,75 +219,80 @@ module Quarry
       end
 
       #
-      #
-      #
-      def resources
-        [template_settings, work_settings, user_settings]
-      end
-
-      #
-      # Merged settings from template_settings, work_settings and user_settings,
+      # Settings from template_settings, work_settings and user_settings,
       # in that order of precedence.
       #
-      #--
-      # TODO: Should we include ENV at the end of settings?
-      #++
       def settings
-        @settings ||= (
-          sets = [user_settings, work_settings, template_settings]
-          sets.inject({}){ |h,s| h.merge!(s); h }
-        )
+        [call_settings, work_settings, user_settings]
       end
 
       #
       # Invocation settings are passed in via #initialize along with the template.
-      # These settings typically come from the command line.
+      # These settings normally come from the command line and take precedence
+      # over other settings.
       #
-      def template_settings
+      def call_settings
         @call_settings
       end
 
       #
-      # Work settings are found in the output directory (which is usually the
-      # current working directory) in a `.quarry/settings.yml` file.
+      # Work settings are found in the project directory (which is usually the
+      # current working directory) in the `WORK` configuration directory.
+      # Common settings are stored in `settings.yml`, per-template settings
+      # are store in a file named after the template, e.g. `name.yml`.
       #
       def work_settings
         @work_settings ||= (
-          file = output.glob(DEST_METADATA).first
-          data = file ? YAML.load(File.new(file)) : {}
+          data = {}
+
+          file = output.glob(File.join(WORK,'settings.{yml,yaml}')).first
+          data.update(YAML.load(File.new(file)) if file
+
+          file = output.glob(File.join(WORK,template.name+'.{yml,yaml}')).first
+          data.update(YAML.load(File.new(file)) if file
+
           data
         )
       end
 
       #
       # User settings are found in a users home directory in the
-      # `.quarry/settings.yml` or `.config/quarry/settings.yml` file.
+      # `.quarry/settings.yml` or possibly `.config/quarry/settings.yml`.
       #
       def user_settings
         @user_settings ||= (
-          file = Dir[File.expand_path(HOME_METADATA)].first
-          text = File.read(file)
-          yaml = ERB.new(text).result(binding)  # TODO: what binding ?
-          #yaml = Malt.render(:file=>file, :type=>:erb, :data=>binding)
-          data = file ? YAML.load(yaml) : {}
+          data = {}
+
+          file = Dir[HOME_METADATA].first
+          if file
+            text = File.read(file)
+            yaml = ERB.new(text).result(metadata.to_binding)  # TODO: correct binding ?
+            data.update(YAML.load(yaml)
+          end
+
           data
         )
       end
 
       #
-      # TODO: Make extensions plugable?
+      # Load script extension.
+      #
+      # @todo Use regular reuquire if not found?
+      # @todo Make these pluggable?
       #
       def utilize(libname)
-        require "quarry/extensions/#{libname}"
+        if RUBY_VERSION < '1.9'
+          require "quarry/template/script/extensions/#{libname}"
+        else
+          require "script/extensions/#{libname}"
+        end
       end
 
       #
       # Evaluate external script in copy file context.
       #
-      # TODO: should his be relative to CTRL directory?
-      #
       def import(relpath)
-        file = File.join(template.path, relpath)
+        file = File.join(template.path, TEMPLATE_DIRECTORY, relpath)
         instance_eval(File.read(file), file)
       end
 
@@ -380,26 +402,6 @@ module Quarry
       #def plant(template_name)
       #  #template = Template.new(name, template.arguments, template.settings)
       #  #Templater.new(template, @options).quarry!(@stage)
-      #end
-
-      #
-      #def setup(&block)
-      #  @setup = block if block
-      #  @setup
-      #end
-
-      #
-      #def select(name, &block)
-      #  if selection == name.to_s
-      #    setup.call if setup
-      #    block.call
-      #  end
-      #end
-
-
-      #
-      #def altext(ext)
-      #  Malt.rendered_extension(ext)
       #end
 
       #
