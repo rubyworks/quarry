@@ -10,27 +10,25 @@ module Quarry
         instance_methods.each{ |m| undef_method(m) unless m.to_s =~ /^(__|object_id$)/ }
 
         #
-        def initialize(copy_script)
-          @copy_script = copy_script
-          @resources = copy_script.resources
+        #
+        #
+        def initialize(script)
+          @script    = script
+          @resources = script.resources
           @data  = {}
-          #@sources = [user_settings, work_settings, mine_settings]
-          #@data  = copy_script.settings
         end
 
         #
-        #def data
-        #  @data
-        #end
-
         # Get metadata entry.
+        #
         def [](name)
           name = name.to_s
+          return @data[name] if @data.key?(name)
           @resources.each do |resource|
             result = resource[name]
-            return result if result
+            return(@data[name] = result) if result
           end
-          @data[name]
+          nil
         end
 
         # Set metadata entry.

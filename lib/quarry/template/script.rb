@@ -138,6 +138,7 @@ module Quarry
         @output #@work
       end
 
+      #
       # Give a commandline argument a name, assign it to
       # metadata and shift it off the arguments list.
       # If the argument is nil, fallback to :default option.
@@ -151,14 +152,15 @@ module Quarry
         metadata[name] = value if value
       end
 
+      #
       # Does the output directory contain any files?
+      #
       def empty?
         output.children.empty?
       end
 
       #
-      # Metadata access, returns values from config metadata, 
-      # ENV and POM metadata.
+      # Metadata access.
       #
       def metadata
         @metadata ||= Metadata.new(self)

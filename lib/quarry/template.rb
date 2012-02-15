@@ -16,15 +16,9 @@ module Quarry
       @path = Pathname.new(path)
       @type = options[:type].to_s
 
-      @config_file = Dir.glob(@path + CONFIG_FILE).first
+      @config = Config.new(self)
 
       #raise "not a template - #{name}" unless @config_file
-
-      if @config_file
-        @config = YAML.load_file(@config_file)
-      else
-        @config = {}
-      end
     end
 
     #
@@ -38,6 +32,18 @@ module Quarry
     # @return [Pathname] Template path.
     #
     attr :path
+
+    #
+    #
+    #
+    attr :config
+
+    #
+    # @deprecated Use `config.file` instead.
+    #
+    def config_file
+      @config.file
+    end
 
     #
     # Returns the list of template files, less files to be ignored
@@ -54,13 +60,6 @@ module Quarry
         end
         files.reject{ |f| File.match?(CONFIG_FILE) }
       )
-    end
-
-    #
-    #
-    #
-    def config_file
-      @config_file
     end
 
     #
@@ -125,18 +124,18 @@ module Quarry
     #  mineer.call
     #end
 
-    def readme
-      @readme ||= (
-        doc = config['readme'] || config['README']
-        Readme.new(doc)
-      )
+    #
+    #
+    #
+    def readme(lang='en')
+      config.readme(lang)
     end
 
     #
     # Contents of the README file.
     #
-    def help
-      readme.to_s
+    def help(lang='en')
+      readme(lang).to_s
     end
 
     #

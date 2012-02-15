@@ -149,7 +149,7 @@ module Quarry
         #
         #
         def erb(file)
-          scope = Context.new(self).to_binding
+          scope = Context.new(script).to_binding
           text  = File.read(file)
           ERB.new(text).result(scope)
         end
