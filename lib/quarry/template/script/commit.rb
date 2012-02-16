@@ -1,8 +1,10 @@
+require 'facets/hash/weave'
+
 module Quarry
   class Template
     class Script
 
-      # The Commit class does the actual writing to disk for the Copyscript.
+      # The Commit class does the actual writing to disk for the copy script.
       # This provides a level of controllable transaction to the rendering
       # process.
       #
@@ -50,19 +52,63 @@ module Quarry
         end
 
         #
-        # Append +text+ to the end of a +file+.
+        # Merge data files together.
         #
-        def append(file, text)
-          if File.exist?(file)
-            File.open(file, 'a'){ |f| f << text.to_s }
-          else # c.o.w. procedure
-            src = output + file
-            if src.exist?
-              mkdir(File.dirname(file))
-              fileutils.cp(src, file)
-              File.open(file, 'a'){ |f| f << text.to_s }
+        # IMPORTANT! This currently only supports YAML files.
+        #
+        def merge(src, dest, opts={})
+          from = template.path + src
+          dest = fill_in_the_blanks(dest)
+
+          if File.exist?(dest)  # it's already bee merged once
+            data1 = YAML.load_file(dest)
+          else
+            orig = output + dest
+            if orig.exist?
+              data1 = YAML.load_file(orig)
+            else
+              data1 = {}
             end
           end
+
+          if erb?(from, opts)
+            dest  = dest.chomp('.erb')
+            data2 = YAML.load_file(erb(from))
+          else
+            data2 = YAML.load_file(from)
+          end
+
+          data = hash_merge(data1, data2)
+          text = data.to_yaml
+
+          write(dest, text, opts)
+        end
+
+        #
+        # Append template +src+ to the end of +dest+ file.
+        #
+        def append(src, dest, opts={})
+          from = template.path + src
+          dest = fill_in_the_blanks(dest)
+          text = File.read(from)
+
+          opts[:source] = output + dest
+
+          append_text(dest, text, opts)
+
+          #if File.exist?(dest)  # an appending has already occured
+          #  File.open(dest, 'a'){ |f| f << text }
+          #else # c.o.w. procedure
+          #  orig = output + dest
+          #  if orig.exist?
+          #    mkdir(File.dirname(dest))
+          #    fileutils.cp(orig, dest)
+          #    File.open(dest, 'a'){ |f| f << text }
+          #  elsif opts[:force]
+          #    mkdir(File.dirname(dest))
+          #    File.open(dest, 'w'){ |f| f << text }
+          #  end
+          #end
         end
 
         #
@@ -88,50 +134,58 @@ module Quarry
         #   File permission mode to apply to file once copied.
         #
         def copy(src, dest, opts={})
-          render(src, dest, opts)
-        end
-
-        #
-        # Copy template file to +dest+ with +mode+.
-        # Or create template directory as +dest+ with +mode+.
-        #
-        # This method uses Malt to render the template.
-        #
-        def render(src, dest, opts={})
-          mode = opts[:mode]
           from = template.path + src
           dest = fill_in_the_blanks(dest)
           if from.directory?
             mkdir(dest)
           else
-            if erb?(dest, opts)
-              #if ext = opts[:render]
-              #  if Malt.engine?(ext)
-              #    result = malt(from, ext)
-              #    dest = dest.chomp(File.extname(from)) # TODO: what about rhtml -> html, etc ?
-              #  end
-              #else
-              #  result = File.read(from)
-              #end
-              dest   = dest.chomp('.erb')
-              result = erb(from)
-              parent = File.dirname(dest)
-              mkdir(parent)
-              File.open(dest, 'w'){|f| f << result.to_s}
-              fileutils.chmod(mode, dest) if mode
+            if erb?(from, opts)
+              dest = dest.chomp('.erb')
+              text = erb(from)
             else
-              iopts  = mode ? {:mode=>mode} : {}
-              parent = File.dirname(dest)
-              mkdir(parent)
-              fileutils.install(from, dest, iopts)
+              text = File.read(from)
             end
+            write(dest, text, opts)
+          end
+        end
+
+        # TODO: Does render functionality really need to be supported?
+
+        #
+        # Same as copy but render the file through format filter(s).
+        #
+        # This method uses the Malt library for rendering.
+        #
+        def render(src, dest, opts={})
+          require 'malt'
+
+          from = template.path + src
+          dest = fill_in_the_blanks(dest)
+          if from.directory?
+            mkdir(dest)
+          else
+            if erb?(from, opts)
+              dest = dest.chomp('.erb')
+              text = erb(from)
+            else
+              text = File.read(from)
+            end
+
+            fmt = opts[:type] || File.extname(from)
+            if Malt.engine?(fmt)
+              text = Malt.text(text, :type=>fmt)
+              # chomp extension from destination
+              dest = dest.chomp(File.extname(from)) unless opts[:type]
+            end
+
+            write(dest, text, opts)
           end
         end
 
       private
 
         #
-        # Should a given file be processed as a template (via ERB).
+        # Is a given file an ERB template?
         #
         def erb?(file, opts={})
           return true if opts[:erb]
@@ -143,7 +197,7 @@ module Quarry
           end
         end
 
-        # TODO: Do we need a new context every time?
+        # QUESTION: Do we need a new ERB context every time?
 
         #
         #
@@ -178,6 +232,48 @@ module Quarry
         #  Transaction.new(self, &block).commit!
         #end
 
+        #
+        # Write `text` to a `file`.
+        #
+        def write(file, text, opts={})
+          # make sure we have the directory to write into
+          mkdir(File.dirname(file))
+          # write the file
+          File.open(file, 'w'){ |f| f << text.to_s }
+          # change the mode if option given
+          File.chmod(opts[:mode], file) if opts[:mode]
+          # return the file name
+          file
+        end
+
+        #
+        # Append +text+ to the end of a +file+.
+        #
+        def append_text(file, text, opts={})
+          if not File.exist?(file)
+            return nil unless opts[:force]
+            mkdir(File.dirname(file))
+            if opts[:source]
+              fileutils.cp(source, file)
+            else
+              write(file, '')
+            end
+          end
+          # append text to file
+          File.open(file, 'a'){ |f| f << text.to_s }
+          # change the mode if option given
+          File.chmod(opts[:mode], file) if opts[:mode]
+        end
+
+        #
+        # 
+        #
+        def hash_merge(into, data)
+          into.weave(data)
+        end
+
+        #
+        # @todo Support DRYRUN mode (?)
         #
         def fileutils
           $DEBUG ? FileUtils::Verbose : FileUtils

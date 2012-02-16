@@ -219,11 +219,15 @@ module Quarry
       end
 
       #
-      # Settings from template_settings, work_settings and user_settings,
-      # in that order of precedence.
+      # List of settings from call_settings, work_settings, conf_settings and
+      # user_settings, in that order of precedence.
+      #
+      # @todo Should `conf_settings` come before `work_settings` ?
+      #
+      # @return [Array] List of settings.
       #
       def settings
-        [call_settings, work_settings, user_settings]
+        [call_settings, work_settings, conf_settings, user_settings]
       end
 
       #
@@ -238,18 +242,18 @@ module Quarry
       #
       # Work settings are found in the project directory (which is usually the
       # current working directory) in the `WORK` configuration directory.
-      # Common settings are stored in `settings.yml`, per-template settings
-      # are store in a file named after the template, e.g. `name.yml`.
+      # Common settings are stored in `settings.yml` and per-template settings
+      # are stored in a file named after the template, e.g. `name.yml`.
       #
       def work_settings
         @work_settings ||= (
           data = {}
 
           file = output.glob(File.join(WORK,'settings.{yml,yaml}')).first
-          data.update(YAML.load(File.new(file)) if file
+          data.update( YAML.load_file(file) ) if file
 
           file = output.glob(File.join(WORK,template.name+'.{yml,yaml}')).first
-          data.update(YAML.load(File.new(file)) if file
+          data.update( YAML.load_file(file) ) if file
 
           data
         )
@@ -267,11 +271,40 @@ module Quarry
           if file
             text = File.read(file)
             yaml = ERB.new(text).result(metadata.to_binding)  # TODO: correct binding ?
-            data.update(YAML.load(yaml)
+            data.update( YAML.load(yaml) )
           end
 
           data
         )
+      end
+
+      #
+      # Configuration settings are resources designated by the template to
+      # be looked for in the project.
+      #
+      def conf_settings
+        data = {}
+
+        [config.resource].flatten.map do |file|
+          path = File.join(output, file)
+          if File.exist?(path)
+            begin
+              case File.extname(path)
+              when '.yml', '.yaml'
+                path_data = YAML.load_file(path)
+              when '.json'
+                path_data = JSON.load_file(path)  # FIXME
+              else
+                path_data = YAML.load_file(path)
+              end
+            rescue => err
+              warn err.to_S
+            end
+            data = path_data.merge(data)
+          end
+        end
+
+        data
       end
 
       #

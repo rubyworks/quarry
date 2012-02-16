@@ -3,7 +3,7 @@ module Quarry
     class Directory
 
       #
-      IGNORE = [TEMPORARY_DIRECTORY, '.', '..', '.git', '.hg', '.svn', '_darcs']
+      IGNORE = [TEMPLATE_DIRECTORY, '.', '..', '.git', '.hg', '.svn', '_darcs']
 
       #
       def initialize(template, path)
@@ -12,17 +12,21 @@ module Quarry
       end
 
       #
+      # The template object for this directory.
       #
+      # @return [Template]
       #
       attr :template
 
       #
+      # The pathname for this directory.
       #
+      # @return [Pathname]
       #
       attr :path
 
       #
-      #
+      # List of directories to be scaffold.
       #
       def directoires
         read unless read?
@@ -30,7 +34,7 @@ module Quarry
       end
 
       #
-      #
+      # List of files to be scaffold.
       #
       def files
         read unless read?
@@ -51,7 +55,7 @@ module Quarry
       end
 
       #
-      #
+      # Iterate over each file.
       #
       def each_file(&block)
         files.each(&block)
@@ -78,7 +82,10 @@ module Quarry
 
       def read_directory(dir)
         Dir.entries(dir) do |name|
+          # skip specific paths to be ignored
           next if IGNORE.include?(name)
+          # skip partials
+          next if name.start_with?('_')
 
           path = File.join(dir, name)
 

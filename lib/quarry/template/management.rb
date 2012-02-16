@@ -87,12 +87,12 @@ module Quarry
       # Search for templates by name.
       #
       def search(match)
-        hits = templates.select do |mine|
-          match == mine.name
+        hits = templates.select do |template|
+          match == template.name
         end
         if hits.size == 0
-          hits = templates.select do |ore|
-            /^#{match}/ =~ mine.name
+          hits = templates.select do |template|
+            /^#{match}/ =~ template.name
           end
         end
         return hits
@@ -192,11 +192,13 @@ module Quarry
       #
       def templates_from_project
         list = []
-        dirs = Dir.glob(File.join(output, LOCAL_DIRECTORY, '**', TEMPLATE_DIRECTORY))
-        dirs = dirs.uniq.map{ |d| File.dirname(d) }
+        dirs = Dir.glob(File.join(output, LOCAL_DIRECTORY, '*/'))
+        dirs = dirs.uniq.map{ |d| d.chomp('/') }
         dirs.each do |dir|
-          list << Template.new(dir, :project)
+          name = dir.sub(File.join(output, LOCAL_DIRECTORY)+'/', '')
+          list << Template.new(name, dir, :type=>:project)
         end
+        list
       end
 
       # TODO: Should remote templates and personal templates 
@@ -219,10 +221,11 @@ module Quarry
       #
       def templates_from_remotes
         list = []
-        dirs = Dir.glob(File.join(QUARRY_BANK, '**', TEMPLATE_DIRECTORY))
-        dirs = dirs.uniq.map{ |d| File.dirname(d) }
+        dirs = Dir.glob(File.join(QUARRY_BANK, '*/'))
+        dirs = dirs.uniq.map{ |d| d.chomp('/') }
         dirs.each do |dir|
-          list << Template.new(dir, :bank)
+          name = dir.sub(QUARRY_BANK+'/', '')
+          list << Template.new(name, dir, :type=>:remote)
         end
         list
       end
@@ -232,10 +235,12 @@ module Quarry
       #
       def templates_from_plugins
         list = []
-        dirs = ::Find.data_path(File.join('quarry/templates', '**', TEMPLATE_DIRECTORY))
-        dirs = dirs.uniq.map{ |d| File.dirname(d) }
+        dirs = ::Find.data_path(File.join('quarry', '*/'))
+        dirs = dirs.uniq.map{ |d| d.chomp('/') }
         dirs.each do |dir|
-          list << Template.new(dir, :plugin)
+          i = dir.rindex('quarry/')
+          name = dir[i+7..-1]
+          list << Template.new(name, dir, :type=>:plugin)
         end
         list
       end
@@ -254,8 +259,9 @@ module Quarry
         uri = URI.parse(uri)
         path = uri.path
         path = path.chomp(File.extname(path))
-        #File.join(uri.host,path).split('/').reverse.join('.')
-        path.split('/').reverse.join('.')
+        path = path.chomp('trunk')
+        File.join(uri.host,path).split('/').reverse.join('.')
+        #path.split('/').reverse.join('.')
       end
 
       #

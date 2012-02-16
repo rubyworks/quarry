@@ -25,7 +25,7 @@ module Quarry
   require 'quarry/template/directory'
   require 'quarry/template/readme'
   require 'quarry/template/script'
-  require 'quarry/template/script/context'
+  require 'quarry/template/context'
   require 'quarry/template/script/metadata'
   require 'quarry/template/script/commit'  # transaction?
 

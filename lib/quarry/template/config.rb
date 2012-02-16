@@ -32,8 +32,22 @@ module Quarry
         @config[key.to_s]
       end
 
+      #
+      # Project files to use as metadata resources, if they exist.
+      # Supported formats are YAML and JSON. YAML is assumed if the
+      # file lacks an extension.
+      #
+      # @example
+      #   resource:
+      #     - .ruby
+      #
+      def resource
+        self[:resource] || self[:resources]
+      end
+
     end
 
   end
 
 end
+

@@ -20,7 +20,7 @@ module Quarry
   #
   #   export QUARRY_HOME="$XDG_CONFIG_HOME/quarry"
   #
-  HOME = ENV['QUARRY_HOME'] || '~/.quarry'
+  HOME = ENV['QUARRY_HOME'] || File.expand_path('~/.quarry')
 
   # Location relative to destination/project directory. If this needs
   # to be a hidden location trhen use `.quarry`, if not use `admin/quarry`.
@@ -30,7 +30,7 @@ module Quarry
   #
   # File pattern for looking up user matadata.
   #
-  HOME_METADATA = File.join(HOME_CONFIG,'metadata.{yml,yaml}')
+  HOME_METADATA = File.join(HOME,'metadata.{yml,yaml}')
 
   #
   # File pattern for looking up desination matadata.

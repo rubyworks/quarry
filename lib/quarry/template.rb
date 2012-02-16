@@ -12,16 +12,34 @@ module Quarry
     # @param [String] path
     #   Location of the template in the file system.
     #
-    def initialize(path, options={})
+    def initialize(name, path, options={})
+      @name      = polish(name)
       @directory = Directory.new(self, path)
-
-      @type = options[:type].to_s
+      @type      = options[:type]
 
       #raise "not a template - #{name}" unless @config_file
     end
 
     #
+    # The name of a template is essentially the directory in which
+    # it is stored, but modified to be more utlitilitarian to the
+    # end-user when referencing it on the command line. This is done
+    # by spliting the path at the path dividers (`/`) and rejoining
+    # themin reverse order with a dot (`.`).
+    #
+    # @return [String] Name of template.
+    #
+    attr :name
+
+    #
+    # Instance of Template::Directory.
+    #
     attr :directory
+
+    #
+    # Type of template: `:remote`, `:project`, `:plugin`.
+    #
+    attr :type
 
     #
     # Location of template as Pathname.
@@ -31,11 +49,6 @@ module Quarry
     def path
       @directory.path
     end
-
-    #
-    # Type of template: bank, work, plugin
-    #
-    attr :type
 
     #
     # Template configuration.
@@ -55,7 +68,7 @@ module Quarry
     # Copy script. Defaults to `copy all`.
     #
     def script
-      @script || = Script.new(self)
+      @script ||= Script.new(self)
     end
 
     #
@@ -101,13 +114,7 @@ module Quarry
       directory.directoires
     end
 
-    #
-    # The name of a tempalte is essentially the directory in which
-    # it is stored, but modified to be more utlitilitarian to the
-    # end-user when specifying it on the command line.
-    #
-    # @return [String] Name of template.
-    #
+=begin
     def name
       @name ||= (
         rpath = path.to_s.sub(/^#{location}/, '')
@@ -128,24 +135,7 @@ module Quarry
         #parts.reverse.join('.').chomp('.')
       )
     end
-
-    #
-    # The type of template determines where it is located.
-    #
-    def location
-      case type
-      when 'bank'
-        Manager.bank_folder
-      #when 'silo'
-      #  Manager.silo_folder
-      when 'work'  # should be output dir ?
-        Dir.pwd
-      when 'plugin'
-        path.to_s[0..path.to_s.rindex('/quarry')+7]
-      else
-        path.to_s[0..path.to_s.rindex('/quarry')+7]
-      end
-    end
+=end
 
     # Do it!
     #def quarry!(selection, arguments, settings, options)
@@ -170,6 +160,12 @@ module Quarry
       rescue ArgumentError
         # not a scm repo
       end
+    end
+
+  private
+
+    def polish(name)
+      name.split('/').reverse.join('.')
     end
 
   end

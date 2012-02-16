@@ -1,0 +1,18 @@
+require 'lemon'
+require 'ae'
+require './test/helper'
+
+Test.run(:default) do |run|
+  run.files << 'test/case_*.rb'
+end
+
+Test.run(:cov) do |run|
+  require 'lemon'
+  require 'ae'
+
+  run.files << 'test/case_*.rb'
+  SimpleCov.start do |cov|
+    cov.coverage_dir = 'log/coverage'
+  end
+end
+
