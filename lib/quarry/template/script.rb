@@ -24,6 +24,7 @@ module Quarry
       def initialize(template)
         @template = template
         @file     = Dir.glob(template.path + GLOB).first
+
         if @file
           @script = File.read(@file.to_s)
         else
@@ -40,6 +41,13 @@ module Quarry
         @mkdir_list  = []
         @copy_list   = {}
         @append_list = []
+      end
+
+      #
+      #
+      #
+      def to_s
+        @script
       end
 
       #
@@ -86,7 +94,7 @@ module Quarry
 
         Dir.chdir(stage_directory) do
           scaffold do
-            instance_eval(template.script, template.config_file)  # TODO: line_number in config_file
+            instance_eval(to_s, template.config.file)
           end
         end
       end
@@ -137,6 +145,13 @@ module Quarry
       #
       def name
         template.name
+      end
+
+      #
+      # Template configurtion data.
+      #
+      def config
+        template.config
       end
 
       #
@@ -198,15 +213,27 @@ module Quarry
       #
       # Set metadata entry.
       #
-      def set(key, value)
-        data[key] = value
+      def set(key, value=nil, &block)
+        data[key] = (
+          if block_given?
+            block.call
+          else
+            value
+          end
+        )
       end
 
       #
       # Set metadata entry if not already set.
       #
-      def let(key, value)
-        data[key] ||= value
+      def let(key, value=nil, &block)
+        data[key] ||= (
+          if block_given?
+            block.call
+          else
+            value
+          end
+        )
       end
 
       #def template_files
@@ -270,7 +297,7 @@ module Quarry
           file = Dir[HOME_METADATA].first
           if file
             text = File.read(file)
-            yaml = ERB.new(text).result(metadata.to_binding)  # TODO: correct binding ?
+            yaml = ERB.new(text).result(binding) #metadata.to_binding)  # TODO: correct binding ?
             data.update( YAML.load(yaml) )
           end
 
@@ -288,7 +315,7 @@ module Quarry
         [config.resource].flatten.map do |file|
           path = File.join(output, file)
           if File.exist?(path)
-            begin
+            #begin
               case File.extname(path)
               when '.yml', '.yaml'
                 path_data = YAML.load_file(path)
@@ -297,9 +324,9 @@ module Quarry
               else
                 path_data = YAML.load_file(path)
               end
-            rescue => err
-              warn err.to_S
-            end
+            #rescue => err
+            #  warn err.to_s
+            #end
             data = path_data.merge(data)
           end
         end
@@ -346,7 +373,6 @@ module Quarry
           arguments << {}
         end
         options = arguments.last
-        options[:verbatim] = true unless options[:render]
         render(*arguments)
       end
 
@@ -467,7 +493,7 @@ module Quarry
       #
       #
       def control_file?(file)
-        CONFIG_FILE == File.basename(file.to_s)
+        file.to_s.start_with?(TEMPLATE_DIRECTORY)
       end
 
     end

@@ -5,16 +5,16 @@ module Quarry
       # Metdata access for filing in template slots.
       #
       class Metadata
-        alias_method :__class__, :class
+        alias_method :object_class, :class
 
-        instance_methods.each{ |m| undef_method(m) unless m.to_s =~ /^(__|object_id$)/ }
+        instance_methods.each{ |m| undef_method(m) unless m.to_s =~ /^(__|object_id$|object_class$)/ }
 
         #
         #
         #
         def initialize(script)
-          @script    = script
-          @resources = script.resources
+          @script   = script
+          @settings = script.settings
           @data  = {}
         end
 
@@ -24,8 +24,8 @@ module Quarry
         def [](name)
           name = name.to_s
           return @data[name] if @data.key?(name)
-          @resources.each do |resource|
-            result = resource[name]
+          @settings.each do |s|
+            result = s[name]
             return(@data[name] = result) if result
           end
           nil
@@ -53,10 +53,18 @@ module Quarry
         end
 
         #
+        # Merge all settings resources into a single hash.
+        #
+        # @return [Hash]
+        #
         def to_h
-          @resources.reverse.inject({}){ |h,r| h.merge!(r.to_h) }.merge!(@data)
+          @settings.reverse.inject({}){ |h,r| h.merge!(r.to_h) }.merge!(@data)
         end
 
+        #
+        # Clean binding, useful for rending in this context with ERB.
+        #
+        # @return [Binding]
         #
         def to_binding
           binding

@@ -139,7 +139,7 @@ module Quarry
           if from.directory?
             mkdir(dest)
           else
-            if erb?(from, opts)
+            if erb?(from, opts) && !opts[:verbatim]
               dest = dest.chomp('.erb')
               text = erb(from)
             else
@@ -226,11 +226,6 @@ module Quarry
             metadata[$1]
           end
         end
-
-        #
-        #def transaction(&block)
-        #  Transaction.new(self, &block).commit!
-        #end
 
         #
         # Write `text` to a `file`.

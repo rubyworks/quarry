@@ -75,19 +75,23 @@ module Quarry
       end
 
       def read
-        Dir.chdir(@path) do
+        @files = []
+        @directories = []
+
+        Dir.chdir(@path.to_s) do
           read_directory('.')
         end
       end
 
       def read_directory(dir)
-        Dir.entries(dir) do |name|
+        Dir.entries(dir).each do |name|
+
           # skip specific paths to be ignored
           next if IGNORE.include?(name)
           # skip partials
           next if name.start_with?('_')
 
-          path = File.join(dir, name)
+          path = File.join(dir, name).sub('./', '')
 
           if File.directory?(path)
             @directories << path

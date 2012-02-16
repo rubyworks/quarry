@@ -23,6 +23,7 @@ module Quarry
   require 'quarry/template'
   require 'quarry/template/management'
   require 'quarry/template/directory'
+  require 'quarry/template/config'
   require 'quarry/template/readme'
   require 'quarry/template/script'
   require 'quarry/template/context'

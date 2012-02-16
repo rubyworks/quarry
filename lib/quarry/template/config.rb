@@ -12,7 +12,12 @@ module Quarry
       def initialize(template)
         @template = template
         @file     = Dir.glob(template.path + GLOB).first
-        @config   = YAML.load_file(@file.to_s)
+
+        if @file
+          @config = YAML.load_file(@file.to_s) || {}
+        else
+          @config = {}
+        end
       end
 
       #
