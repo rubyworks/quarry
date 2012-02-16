@@ -1,35 +1,33 @@
-quarry-cucumber(1) - create a cucumber feature
-==============================================
+quarry-cucumber(1) - setup for using cucumber
+=============================================
 
 ## SYNOPSIS
 
-  `sow cucumber <name> [directory]
+  `quarry cucumber [features_directory]
 
 ## DESCRIPTION
 
-Create a new cucumber feature file. If the project is not yet
-setup for Cucumber then basic setup files will be provided in
-addition to the feature file.
+Setup project for using cumcumber and place cucumber feature template
+in project's mine for creating new cucumber feature files.
 
 ## ARGUMENTS
 
-The cucuumber template takes two arguments.
+The cucuumber template takes one arguments.
 
-  * `feature`:
-    The name of the new feature (required).
-
-  * `directory`
+  * `features_directory`
     The features directory (default `features/`).
 
 This see will create the step_features and support directories
 each with some minimal starter files to get up moving quickly.
 
-If you are using a non-standard location for features, always be
-sure to provide it as the second argument.
+If you are using a non-standard location for features, it's best
+to provide the directory as an argument, but if not given an 
+intelligent guess will be made by loolking to pre-existing `.feature`
+files. If not found then it will fallback to `features`.
 
 ## COPYRIGHT
 
-Copyright (c) 2010 Thomas Sawyer
+Copyright (c) 2012 Rubyworks
 
 ## SEE ALSO
 

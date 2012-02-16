@@ -1,0 +1,34 @@
+quarry-feature.cucumber(1) - setup for using cucumber
+=====================================================
+
+## SYNOPSIS
+
+  `quarry feature.cucumber <feature_name> [features_directory]
+
+## DESCRIPTION
+
+Create a new cucumber feature.
+
+## ARGUMENTS
+
+The cucumber feature template takes two arguments.
+
+  * `feature_name`
+    The name of the feature (required).
+
+  * `features_directory`
+    The features directory (default `features/`).
+
+If you are using a non-standard location for features, it's best
+to provide the directory argument, but if not given an intelligent
+guess is made by looking to pre-existing `.feature` files. If none
+found then it will fallback to `features`.
+
+## COPYRIGHT
+
+Copyright (c) 2012 Rubyworks
+
+## SEE ALSO
+
+quarry(1), quarry-cucumber(1)
+
