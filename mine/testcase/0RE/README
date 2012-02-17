@@ -1,0 +1,10 @@
+# quarry mine/testcase
+
+## SYNOPSIS
+
+    `quarry mine/testcase <case_name>`
+
+## DESCRIPTION
+
+Create a simple test case skeleton.
+
