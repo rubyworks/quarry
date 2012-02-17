@@ -1,0 +1,18 @@
+= Mint
+
+Mint is a manged copy tool. It's a low-level utility
+for copy a set of files from one location to another
+in a highly managed way.
+
+* http://proutils.github.com/mint
+* http://github.com/proutils/mint
+
+== SYNOPSIS
+
+  $ mint src/ dest/
+
+
+== COPYRIGHT
+
+Copyright (c) 2008 Thomas Sawyer
+

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet href="layout.xsl" type="text/xsl" ?>
+
+<content>
+
+<p style="color: red"> IMPORTANT Mint is still in early stages of development. Becuase of this
+the following documentation might not refect the actualy state of functionailty.</p>
+
+<img style="padding: 0 10px; float: left;" src="img/mint.png"/>
+
+<h1>Mint</h1>
+
+<h2>Managed Copy</h2>
+
+<p>Mint is a copy tool. Really. The <code>mint</code> command is that simple.
+What makes it special is that <b>1</b>) it copies interactively, verifying pontial
+overwrites, <b>2</b> it can readily copy from special mint-ready reppositories, and
+<b>3</b> dynamic behavior can be incorporated into threse repositories. These three
+small distictions allow <code>mint</code> to become a very powerful tool for
+managing file transfers that require "smarts" rather than just dumb copies.</p>
+
+<h2>Basic Usage</h2>
+
+<p>Using <code>mint</code> is super easy. Here is the most basic example:</p>
+
+<pre>
+  $ mint FROM.txt TO.txt
+</pre>
+
+<p>This simply copies FROM.txt file to TO.txt. Just like using <code>cp</code>.
+Of course we assume FROM.txt already exits, and TO.txt does not. If FROM.txt
+doesn't exit it will report an error, as expected. But if TO.txt already exits?</p>
+
+<pre>
+  $ mint FROM.txt TO.txt
+  KEY (d)iff (c)opy (s)kip (a)ll (q)uit?
+    exits: TO.txt ?
+</pre>
+
+<p>Now we have a choice. We can examine the difference between what the current file
+looks like and what it will become, or we can choose to go ahead and copy the file,
+overwriting the current file, or we can skip it and not copy it after all.</p>
+
+<p>The last two options only mater if you're copying more that one file at a time,
+in which case 'all' allows you to skip all remaining files that already exist,
+and 'quit' allows you to stop copying altogether. There is an option to copy all
+remaining files irregardless, but we only get thet by passing the --force option to
+to the <code>mint</code> command. This is an added precaution. We don't want to delete
+important files on accident!</p>
+
+<br/>
+
+<img style="padding: 0 10px; float: left;" src="img/radio_earth.jpg" />
+
+<h1>Project Generation</h1>
+
+<h2>Creating a New Project</h2>
+
+<p>As mentioned, <code>mint</code> is useful for scaffolding projects. After all,
+the basis of any project scaffolding is just a copy of another directories
+contents. Mint can be used used to generate whole new project scaffoldings
+or add additional parts to an existing project.</p>
+
+<p>Lets look at creating a new project. To do this, first create a directory for the
+new project, then invoke mint as follows.</p>
+
+  <pre>
+  $ mkdir myproject
+  $ mint -s website myproject/
+  KEY: (d)iff (r)eplace (s)kip skip(a)ll (q)uit
+      make img/
+      copy index.html
+      copy css/clean.css
+  Commit y/N?
+  </pre>
+
+<p>By answering <code>Y</code> here, these files will be copied to the myproject directory.
+And just like that, a fairly standard website project is created.</p>
+
+<p>Let's try another type of project, a Ruby project.</p>
+
+  <pre>
+  $ mkdir rubyproject
+  $ mint -s ruby rubyproject/
+  KEY: (d)iff (r)eplace (s)kip skip(a)ll (q)uit
+    make bin/
+    make data/
+    make doc/note/
+    make ext/
+    make lib/
+    make test/
+    copy README.first
+    copy README.license
+    copy README
+    copy doc/log/ChangeLog
+    copy doc/log/TODO
+    copy doc/index.html
+    copy meta/name-1.0.0.roll
+    copy meta/MANIFEST
+    copy script/setup
+    copy script/finish_scaffold
+  Commit y/N?
+  </pre>
+
+<p>If you commit, and look at the contents of the directory you will see conventional folders like
+<code>bin/</code> <code>lib/</code> and <code>data/</code>. The conventions followed are according
+to those established by Minero Akoi's <a href="http://i.loveruby.net/en/projects/setup/doc/">setup.rb</a>.
+If you are relatively new to Ruby it is a good idea to familiarize yourself with this material.</p>
+
+<p style="color: red"> IMPORTANT From here on is not implemented yet. This is just the current conjecture
+on how this functionality will be added.</p>
+
+<p>Besides the standard layout, <code>new</code> can also create a subversion layout which includes
+the associated <code>branches  tags  trunk</code> tier. Simply specify the option as <code>--svn</code>
+or <code>--subversion</code> after <code>new</code>.</p>
+
+<p>Mint can create even better project scaffolding if we first provide some information about our
+project. To do that we must first mint a <i>project information file</i>.
+The information in this file can then be used by mint to enhance the new scaffolding. Information
+files are often per-scaffolding type. So you should specify the scaffolding you want.</p>
+
+  <pre>
+  $ mkdir myproject
+  $ cd myproject
+  $ mint -i ruby
+  KEY: (d)iff (r)eplace (s)kip skip(a)ll (q)uit
+    copy mint-ruby.yaml
+  Commit y/N?
+  </pre>
+
+<p>As you can see this creates a special file called mint.yaml. Once you have edited this file
+subsequnelty running the @mint@ and passing in thi file will create the project.</p>
+
+  <pre>
+  $ mint &lt; mint-ruby.yaml
+  </pre>
+
+<p>The scaffolding will be as before, but it will now have enhanced details that further ease
+the creation of a the new project. For instance, in this case the lib/ subdirectory will already
+have been named appropriately.</p>
+
+<p>The enhanced information scaffolding is barely implemented as of yet. But will continue to
+improve with future releases.</p>
+
+</content>

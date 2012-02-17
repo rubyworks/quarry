@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet href="layout.xsl" type="text/xsl" ?>
+
+<content>
+
+<img style="padding: 0 10px; float: right;" src="../images/mint.png"/>
+
+<h1>cp-m</h1>
+
+<p style="color: red"> IMPORTANT cp-m is still in early stages of development. Becuase of this
+the following documentation might not refect the actualy state of functionailty.</p>
+
+<h2>Managed Copy</h2>
+
+<p>cp-m is a managed copy tool. It much like the standard cp command with the interacive
+-i option set, but goes even further, by allowing the end user to see diffs and to 
+commit or abort the entire copy procedure before actually making and writes to disk.</p>
+
+<h2>Basic Usage</h2>
+
+<p>Using <code>cp-m</code> is super easy. Here is the most basic example:</p>
+
+  <pre>
+    $ cp-m FROM.txt TO.txt
+  </pre>
+
+<p>This simply copies FROM.txt file to TO.txt. Just like using <code>cp</code>.
+Of course we assume FROM.txt already exits, and TO.txt does not. If FROM.txt
+doesn't exit it will report an error, as expected. But if TO.txt already exits?</p>
+
+  <pre>
+    $ cp-m FROM.txt TO.txt
+    KEY (d)iff (c)opy (s)kip (a)ll (q)uit?
+      exits: TO.txt ?
+  </pre>
+
+<p>Now we have a choice. We can examine the difference between what the current file
+looks like and what it will become, or we can choose to go ahead and copy the file,
+overwriting the current file, or we can skip it and not copy it after all.</p>
+
+<p>The last two options only mater if you're copying more that one file at a time,
+in which case 'all' allows you to skip all remaining files that already exist,
+and 'quit' allows you to abort any copying altogether. There is an option to copy all
+remaining files irregardless, but we only get thet by passing the --force option to
+to the <code>cp-m</code> command. This is an added precaution. We don't want to delete
+important files on accident!</p>
+
+<p>Finally, after we have made out choice we we be asked if we wish to commit out
+selections.</p>
+
+  <pre>
+    $ cp-m FROM.txt TO.txt
+    KEY (d)iff (c)opy (s)kip (a)ll (q)uit?
+      exits: TO.txt ?
+    Commit (y/N)? 
+  </pre>
+
+<p>Only by entering 'y' here is the copy made.</p>
+
+<br/>
+
+</content>
+
