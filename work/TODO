@@ -1,15 +1,9 @@
 = TODO List
 
-== Statics
+== Partial Scaffolding
 
-Allow for a static/ directory in a plugin. The files in
-this directory will be copied verbatim.
+Can scaffolds support partial scaffolding? For instance how might
+we scaffold just the Rakefile of the `ruby` template?
 
-== Partials
-
-Scaffolds themselves support partial scaffolding when sow is in
-generation mode. For instance you may want to add a standard
-Rakefile. You can do that with Sow:
-
-  $ sow ruby -m Rakefile
+  $ sow ruby/Rakefile
 
