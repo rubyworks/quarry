@@ -70,7 +70,6 @@ module Quarry
       def setup(options)
         @output   = Pathname.new(options[:output] || Dir.pwd)
         @stage    = options[:stage]
-        #@work    = Pathname.new(Dir.pwd)
         @interact = options[:interactive]
 
         reset
@@ -109,7 +108,9 @@ module Quarry
       end
 
       #
+      # Template instance.
       #
+      # @return [Template]
       #
       def template
         @template
@@ -122,12 +123,7 @@ module Quarry
         @output
       end
 
-      # Basename of output destination directory.
-      #def destname
-      #  @destname ||= (
-      #    File.basename((template.options.output || Dir.pwd).chomp('/'))
-      #  )
-      #end
+      alias_method :work, :output
 
       #
       # Temporary staging directory.
@@ -159,15 +155,6 @@ module Quarry
       #
       def arguments
         @arguments
-      end
-
-      #
-      # Current working directory.
-      #
-      # @todo Should this be the same as the #output directory?
-      #
-      def work
-        @output #@work
       end
 
       #
