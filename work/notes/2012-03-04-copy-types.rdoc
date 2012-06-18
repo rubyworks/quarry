@@ -1,0 +1,9 @@
+There a six different "copy" functions:
+
+* copy, but if present ignore
+* copy, and if present overwrite
+* append, if not present write
+* append, if not present ignore
+* merge, if not present write
+* merge, if not present ignore
+
