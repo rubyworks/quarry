@@ -8,13 +8,6 @@ module Quarry
 
       GLOB = TEMPLATE_DIRECTORY + "/copy.rb"
 
-      ##
-      ##
-      ##
-      #def self.run(template, arguments, settings, options)
-      #  new(template).call(options, arguments, settings)
-      #end
-
       #
       # Initialize CopyScript.
       #
@@ -78,7 +71,8 @@ module Quarry
       end
 
       #
-      # Parse copy file.
+      # Evaluate copy script.
+      #
       # @param [Array] arguments
       #   Templates can accept an Array of *arguments* which can refine their 
       #   behvior.
@@ -87,9 +81,14 @@ module Quarry
       #   Template can accept a Hash of `key=>value` *settings* which refine
       #   their behavior.
       #
-      def call(arguments, settings)
+      def call(arguments, settings={})
         @arguments = arguments
         @call_settings  = settings
+
+        # arguments can be specified in config.yml
+        template.script_arguments.each do |name, opts|
+          argument name, opts
+        end
 
         Dir.chdir(stage_directory) do
           scaffold do
@@ -104,7 +103,7 @@ module Quarry
       def scaffold(&block)
         instance_eval(&block)
         Commit.new(self).commit!
-        reset
+        reset  # TODO: commit should hand reset ?
       end
 
       #
@@ -117,7 +116,8 @@ module Quarry
       end
 
       #
-      # Destination directory.
+      # Destination directory is where template files will ultimately be
+      # copied.
       #
       def output
         @output
@@ -126,7 +126,10 @@ module Quarry
       alias_method :work, :output
 
       #
-      # Temporary staging directory.
+      # Temporary staging directory is the current working directory while
+      # the copy script is being evaluated.
+      #
+      # @return [Pathname]
       #
       def stage_directory
         @stage ||= (
@@ -167,7 +170,7 @@ module Quarry
       #   metadata.<name> = arguments.shift || default
       #
       def argument(name, options={})
-        value = arguments.shift || metadata[name] || options[:default]
+        value = arguments.shift || options[:default] || metadata[name]
         metadata[name] = value if value
       end
 

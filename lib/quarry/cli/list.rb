@@ -18,9 +18,14 @@ module Quarry::CLI
     # List all available ore.
     #
     def call(argv)
-      names = Quarry.list
-      names.each do |name|
-        puts "  * #{name}"
+      templates = Quarry::Template.templates
+      groups    = templates.group_by{ |t| t.type }
+
+      groups.each do |group, tmpls|
+        puts "#{group}"
+        tmpls.each do |tmpl|
+          puts "  * #{tmpl.name}"
+        end
       end
     end
 

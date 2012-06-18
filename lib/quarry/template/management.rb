@@ -31,12 +31,6 @@ module Quarry
         @output = Pathname.new(File.expand_path(directory))
       end
 
-      #def self.load(name)
-      #  path = find(name)
-      #  raise "No mine -- #{name}" unless path
-      #  new(path)
-      #end
-
       #
       # Cached list of all available templates.
       #
@@ -48,7 +42,7 @@ module Quarry
           list.concat templates_from_project
           list.concat templates_from_remotes
           list.concat templates_from_plugins
-          list
+          list.sort_by{ |t| t.name }
         )
       end
 
@@ -87,6 +81,11 @@ module Quarry
       # Search for templates by name.
       #
       def search(match)
+        if File.directory?(match)
+          name = File.basename(match)
+          return [Template.new(name, match, :type=>:project)]
+        end
+
         hits = templates.select do |template|
           match == template.name
         end

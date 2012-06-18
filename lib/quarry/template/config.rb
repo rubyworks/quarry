@@ -50,9 +50,46 @@ module Quarry
         self[:resource] || self[:resources]
       end
 
-    end
+      #
+      # Get `arguments` from config file.
+      #
+      def arguments
+        self['arguments']
+      end
 
-  end
+      # Take arguments from config and transform
+      # them into `name, options` form.
+      #
+      def script_arguments
+        @script_arguments ||= name_and_options(arguments)
+      end
 
-end
+    private
 
+      #
+      def name_and_options(arguments)
+        case arguments
+        when Hash
+          args.map do |name, default|
+            [name, {:default=>default}]
+          end
+        else # Array
+          args.map do |entry|
+            case entry
+            when Hash
+              entry = entry.rekey
+              name  = entry.delete(:name)
+              [name, entry]
+            when Array
+              [entry.first, :default=>entry.last]
+            else
+              [entry, {}]
+            end
+          end
+        end
+      end
+
+    end #class Config
+
+  end #class Template
+end #module Quarry

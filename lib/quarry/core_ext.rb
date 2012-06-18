@@ -2,6 +2,7 @@
 require 'facets/kernel/ask'
 require 'facets/dir/recurse'
 require 'facets/hash/to_h'
+require 'facets/hash/rekey'
 
 # Facets Standard
 require 'facets/pathname'
